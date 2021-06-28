@@ -1,0 +1,2817 @@
+ARM GAS  C:\Users\linar\AppData\Local\Temp\ccgDfqog.s 			page 1
+
+
+   1              		.syntax unified
+   2              		.cpu cortex-m3
+   3              		.fpu softvfp
+   4              		.eabi_attribute 20, 1
+   5              		.eabi_attribute 21, 1
+   6              		.eabi_attribute 23, 3
+   7              		.eabi_attribute 24, 1
+   8              		.eabi_attribute 25, 1
+   9              		.eabi_attribute 26, 1
+  10              		.eabi_attribute 30, 1
+  11              		.eabi_attribute 34, 1
+  12              		.eabi_attribute 18, 4
+  13              		.thumb
+  14              		.syntax unified
+  15              		.file	"USBFS_SCSI_operations.c"
+  16              		.text
+  17              	.Ltext0:
+  18              		.cfi_sections	.debug_frame
+  19              		.section	.text.USBFS_MSC_SCSI_PreventMediaRemoval,"ax",%progbits
+  20              		.align	2
+  21              		.global	USBFS_MSC_SCSI_PreventMediaRemoval
+  22              		.thumb
+  23              		.thumb_func
+  24              		.type	USBFS_MSC_SCSI_PreventMediaRemoval, %function
+  25              	USBFS_MSC_SCSI_PreventMediaRemoval:
+  26              	.LFB63:
+  27              		.file 1 "USBFS_SCSI_operations.c"
+   1:USBFS_SCSI_operations.c **** /*****************************************************************************
+   2:USBFS_SCSI_operations.c **** * File Name: USBFS_SCSI_operations.c
+   3:USBFS_SCSI_operations.c **** *
+   4:USBFS_SCSI_operations.c **** * Version 2.19
+   5:USBFS_SCSI_operations.c **** *
+   6:USBFS_SCSI_operations.c **** * Description: This file provides routines to handle the SCSI requests from 
+   7:USBFS_SCSI_operations.c **** *   the host.
+   8:USBFS_SCSI_operations.c **** *
+   9:USBFS_SCSI_operations.c **** * Owner:
+  10:USBFS_SCSI_operations.c **** *	Ranjith M, Applications Engineer (rnjt@cypress.com)
+  11:USBFS_SCSI_operations.c **** *   Ivan Grytsyk, Applications Engineer Sr (gryt@cypress.com)
+  12:USBFS_SCSI_operations.c **** *   Vasyl Rodionov, Staff Systems Engr (rodi@cypress.com)
+  13:USBFS_SCSI_operations.c **** *
+  14:USBFS_SCSI_operations.c **** * Related Document:
+  15:USBFS_SCSI_operations.c **** * 	SCSI Command Reference Manual:
+  16:USBFS_SCSI_operations.c **** *	http://www.seagate.com/staticfiles/support/disc/manuals/scsi/100293068a.pdf
+  17:USBFS_SCSI_operations.c **** *
+  18:USBFS_SCSI_operations.c **** * Hardware Dependency:
+  19:USBFS_SCSI_operations.c **** * 	CY8CKIT-042, 
+  20:USBFS_SCSI_operations.c **** *   CY3280-MBR3, 
+  21:USBFS_SCSI_operations.c **** *   CY8CKIT-193,
+  22:USBFS_SCSI_operations.c **** *   CY3679 Atlas EVK,
+  23:USBFS_SCSI_operations.c **** *   CY8CKIT-044,
+  24:USBFS_SCSI_operations.c **** *   CY8CKIT-046,
+  25:USBFS_SCSI_operations.c **** *   CY8CKIT-042 BLE,
+  26:USBFS_SCSI_operations.c **** *   CY3676  Hercules EVK,
+  27:USBFS_SCSI_operations.c **** *   CY3677  Hercules EVK
+  28:USBFS_SCSI_operations.c **** *
+  29:USBFS_SCSI_operations.c **** * Code Tested With:
+  30:USBFS_SCSI_operations.c **** * 	Creator 3.3 CP3(3.3.0.9604)
+ARM GAS  C:\Users\linar\AppData\Local\Temp\ccgDfqog.s 			page 2
+
+
+  31:USBFS_SCSI_operations.c **** *	GCC 4.9-2015-q1-update(Cypress provided)
+  32:USBFS_SCSI_operations.c **** *	CY8CKIT-044, -046, -042, -042 BLE, BLE Dongle, -040, -042 BLE-A
+  33:USBFS_SCSI_operations.c **** *
+  34:USBFS_SCSI_operations.c **** ******************************************************************************
+  35:USBFS_SCSI_operations.c **** * Copyright (2016), Cypress Semiconductor Corporation.
+  36:USBFS_SCSI_operations.c **** ******************************************************************************
+  37:USBFS_SCSI_operations.c **** * This software is owned by Cypress Semiconductor Corporation (Cypress) and is
+  38:USBFS_SCSI_operations.c **** * protected by and subject to worldwide patent protection (United States and
+  39:USBFS_SCSI_operations.c **** * foreign), United States copyright laws and international treaty provisions.
+  40:USBFS_SCSI_operations.c **** * Cypress hereby grants to licensee a personal, non-exclusive, non-transferable
+  41:USBFS_SCSI_operations.c **** * license to copy, use, modify, create derivative works of, and compile the
+  42:USBFS_SCSI_operations.c **** * Cypress Source Code and derivative works for the sole purpose of creating
+  43:USBFS_SCSI_operations.c **** * custom software in support of licensee product to be used only in conjunction
+  44:USBFS_SCSI_operations.c **** * with a Cypress integrated circuit as specified in the applicable agreement.
+  45:USBFS_SCSI_operations.c **** * Any reproduction, modification, translation, compilation, or representation of
+  46:USBFS_SCSI_operations.c **** * this software except as specified above is prohibited without the express
+  47:USBFS_SCSI_operations.c **** * written permission of Cypress.
+  48:USBFS_SCSI_operations.c **** *
+  49:USBFS_SCSI_operations.c **** * Disclaimer: CYPRESS MAKES NO WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, WITH
+  50:USBFS_SCSI_operations.c **** * REGARD TO THIS MATERIAL, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
+  51:USBFS_SCSI_operations.c **** * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE.
+  52:USBFS_SCSI_operations.c **** * Cypress reserves the right to make changes without further notice to the
+  53:USBFS_SCSI_operations.c **** * materials described herein. Cypress does not assume any liability arising out
+  54:USBFS_SCSI_operations.c **** * of the application or use of any product or circuit described herein. Cypress
+  55:USBFS_SCSI_operations.c **** * does not authorize its products for use as critical components in life-support
+  56:USBFS_SCSI_operations.c **** * systems where a malfunction or failure may reasonably be expected to result in
+  57:USBFS_SCSI_operations.c **** * significant injury to the user. The inclusion of Cypress' product in a life-
+  58:USBFS_SCSI_operations.c **** * support systems application implies that the manufacturer assumes all risk of
+  59:USBFS_SCSI_operations.c **** * such use and in doing so indemnifies Cypress against all charges. Use may be
+  60:USBFS_SCSI_operations.c **** * limited by and subject to the applicable Cypress software license agreement.
+  61:USBFS_SCSI_operations.c **** *****************************************************************************/
+  62:USBFS_SCSI_operations.c **** //#include "version.h"
+  63:USBFS_SCSI_operations.c **** #include "project.h"
+  64:USBFS_SCSI_operations.c **** #include "USBFS_msc_cust.h"
+  65:USBFS_SCSI_operations.c **** #include "USBFS_SCSI_operations.h"
+  66:USBFS_SCSI_operations.c **** 
+  67:USBFS_SCSI_operations.c **** 
+  68:USBFS_SCSI_operations.c **** #define	VERSION_STRING      "0219"
+  69:USBFS_SCSI_operations.c **** 
+  70:USBFS_SCSI_operations.c **** /* Variable to keep track of when to send a Test Unit Ready
+  71:USBFS_SCSI_operations.c ****  * fail status to force a read from the host. */
+  72:USBFS_SCSI_operations.c **** uint8 forceOS = FALSE;
+  73:USBFS_SCSI_operations.c **** 
+  74:USBFS_SCSI_operations.c **** uint8 statusFileTimer = ZERO;
+  75:USBFS_SCSI_operations.c **** 
+  76:USBFS_SCSI_operations.c **** static uint8 mediaEjectedState = FALSE;
+  77:USBFS_SCSI_operations.c **** 
+  78:USBFS_SCSI_operations.c **** /* Variable to keep track of failed commands. */
+  79:USBFS_SCSI_operations.c **** static uint8 commandFailed = FALSE;
+  80:USBFS_SCSI_operations.c **** 
+  81:USBFS_SCSI_operations.c **** /* Should not exceet 8 characters. */
+  82:USBFS_SCSI_operations.c **** CYCODE unsigned char vendorIDT10[] = "ANKS ";
+  83:USBFS_SCSI_operations.c **** 
+  84:USBFS_SCSI_operations.c **** /* Should not exceet 16 characters. */
+  85:USBFS_SCSI_operations.c **** CYCODE unsigned char productID[] = "HIMA";
+  86:USBFS_SCSI_operations.c **** 
+  87:USBFS_SCSI_operations.c **** /* Match this with VER_MAJOR, VER_MINOR defined in version.h */
+ARM GAS  C:\Users\linar\AppData\Local\Temp\ccgDfqog.s 			page 3
+
+
+  88:USBFS_SCSI_operations.c **** CYCODE unsigned char productRev[] = VERSION_STRING;
+  89:USBFS_SCSI_operations.c **** 
+  90:USBFS_SCSI_operations.c **** /*******************************************************************************
+  91:USBFS_SCSI_operations.c **** * Function Name: USBFS_MSC_SCSI_TestUnitReady()
+  92:USBFS_SCSI_operations.c **** ********************************************************************************
+  93:USBFS_SCSI_operations.c **** * Summary:
+  94:USBFS_SCSI_operations.c **** *  Responds to the periodic Test Unit Ready Command from host. Send PASS by default.
+  95:USBFS_SCSI_operations.c **** *
+  96:USBFS_SCSI_operations.c **** * Parameters:
+  97:USBFS_SCSI_operations.c **** *  void
+  98:USBFS_SCSI_operations.c **** *
+  99:USBFS_SCSI_operations.c **** * Return:
+ 100:USBFS_SCSI_operations.c **** *  cystatus: PASS/FAIL.
+ 101:USBFS_SCSI_operations.c **** *
+ 102:USBFS_SCSI_operations.c **** *******************************************************************************/
+ 103:USBFS_SCSI_operations.c **** cystatus USBFS_MSC_SCSI_PreventMediaRemoval(uint8 prevent)
+ 104:USBFS_SCSI_operations.c **** {
+  28              		.loc 1 104 0
+  29              		.cfi_startproc
+  30              		@ args = 0, pretend = 0, frame = 0
+  31              		@ frame_needed = 0, uses_anonymous_args = 0
+  32              		@ link register save eliminated.
+  33              	.LVL0:
+ 105:USBFS_SCSI_operations.c **** 	cystatus commandStatus = USBFS_MSC_CSW_FAIL;
+ 106:USBFS_SCSI_operations.c **** 
+ 107:USBFS_SCSI_operations.c **** 	if(prevent == FALSE)
+  34              		.loc 1 107 0
+  35 0000 18B1     		cbz	r0, .L3
+ 108:USBFS_SCSI_operations.c **** 	{
+ 109:USBFS_SCSI_operations.c **** 		/* Send pass if prevent is not enabled. */
+ 110:USBFS_SCSI_operations.c **** 		commandStatus = USBFS_MSC_CSW_PASS;
+ 111:USBFS_SCSI_operations.c **** 	}
+ 112:USBFS_SCSI_operations.c **** 	else
+ 113:USBFS_SCSI_operations.c **** 	{
+ 114:USBFS_SCSI_operations.c **** 		/* Send a fail response for command to force
+ 115:USBFS_SCSI_operations.c **** 		 * the OS to initiate a Request Sense. */
+ 116:USBFS_SCSI_operations.c **** 		commandStatus = USBFS_MSC_CSW_FAIL;
+ 117:USBFS_SCSI_operations.c **** 		commandFailed = TRUE;
+  36              		.loc 1 117 0
+  37 0002 0120     		movs	r0, #1
+  38              	.LVL1:
+  39 0004 024B     		ldr	r3, .L4
+  40 0006 1870     		strb	r0, [r3]
+  41 0008 7047     		bx	lr
+  42              	.LVL2:
+  43              	.L3:
+ 110:USBFS_SCSI_operations.c **** 	}
+  44              		.loc 1 110 0
+  45 000a 0020     		movs	r0, #0
+  46              	.LVL3:
+ 118:USBFS_SCSI_operations.c **** 	}
+ 119:USBFS_SCSI_operations.c **** 	
+ 120:USBFS_SCSI_operations.c **** 	return(commandStatus);
+ 121:USBFS_SCSI_operations.c **** }
+  47              		.loc 1 121 0
+  48 000c 7047     		bx	lr
+  49              	.L5:
+ARM GAS  C:\Users\linar\AppData\Local\Temp\ccgDfqog.s 			page 4
+
+
+  50 000e 00BF     		.align	2
+  51              	.L4:
+  52 0010 00000000 		.word	.LANCHOR0
+  53              		.cfi_endproc
+  54              	.LFE63:
+  55              		.size	USBFS_MSC_SCSI_PreventMediaRemoval, .-USBFS_MSC_SCSI_PreventMediaRemoval
+  56              		.section	.text.USBFS_MSC_SCSI_TestUnitReady,"ax",%progbits
+  57              		.align	2
+  58              		.global	USBFS_MSC_SCSI_TestUnitReady
+  59              		.thumb
+  60              		.thumb_func
+  61              		.type	USBFS_MSC_SCSI_TestUnitReady, %function
+  62              	USBFS_MSC_SCSI_TestUnitReady:
+  63              	.LFB64:
+ 122:USBFS_SCSI_operations.c **** 
+ 123:USBFS_SCSI_operations.c **** /*******************************************************************************
+ 124:USBFS_SCSI_operations.c **** * Function Name: USBFS_MSC_SCSI_TestUnitReady()
+ 125:USBFS_SCSI_operations.c **** ********************************************************************************
+ 126:USBFS_SCSI_operations.c **** * Summary:
+ 127:USBFS_SCSI_operations.c **** *  Responds to the periodic Test Unit Ready Command from host. Send PASS by default.
+ 128:USBFS_SCSI_operations.c **** *
+ 129:USBFS_SCSI_operations.c **** * Parameters:
+ 130:USBFS_SCSI_operations.c **** *  void
+ 131:USBFS_SCSI_operations.c **** *
+ 132:USBFS_SCSI_operations.c **** * Return:
+ 133:USBFS_SCSI_operations.c **** *  cystatus: PASS/FAIL.
+ 134:USBFS_SCSI_operations.c **** *
+ 135:USBFS_SCSI_operations.c **** *******************************************************************************/
+ 136:USBFS_SCSI_operations.c **** cystatus USBFS_MSC_SCSI_TestUnitReady(void)
+ 137:USBFS_SCSI_operations.c **** {
+  64              		.loc 1 137 0
+  65              		.cfi_startproc
+  66              		@ args = 0, pretend = 0, frame = 0
+  67              		@ frame_needed = 0, uses_anonymous_args = 0
+  68              		@ link register save eliminated.
+  69              	.LVL4:
+ 138:USBFS_SCSI_operations.c **** 	cystatus commandStatus = USBFS_MSC_CSW_FAIL;
+ 139:USBFS_SCSI_operations.c **** 	
+ 140:USBFS_SCSI_operations.c **** 	if(mediaEjectedState == TRUE)
+  70              		.loc 1 140 0
+  71 0000 0A4B     		ldr	r3, .L11
+  72 0002 5B78     		ldrb	r3, [r3, #1]	@ zero_extendqisi2
+  73 0004 012B     		cmp	r3, #1
+  74 0006 0BD0     		beq	.L8
+ 141:USBFS_SCSI_operations.c **** 	{
+ 142:USBFS_SCSI_operations.c **** 		/* Send a fail response for Test Unit Ready command 
+ 143:USBFS_SCSI_operations.c **** 		 * since the media is in ejected state. */
+ 144:USBFS_SCSI_operations.c **** 		commandStatus = USBFS_MSC_CSW_FAIL;
+ 145:USBFS_SCSI_operations.c **** 	}
+ 146:USBFS_SCSI_operations.c **** 	else
+ 147:USBFS_SCSI_operations.c **** 	{
+ 148:USBFS_SCSI_operations.c **** 		if(forceOS == FALSE)
+  75              		.loc 1 148 0
+  76 0008 084B     		ldr	r3, .L11
+  77 000a 9B78     		ldrb	r3, [r3, #2]	@ zero_extendqisi2
+  78 000c 53B1     		cbz	r3, .L9
+ 149:USBFS_SCSI_operations.c **** 		{
+ARM GAS  C:\Users\linar\AppData\Local\Temp\ccgDfqog.s 			page 5
+
+
+ 150:USBFS_SCSI_operations.c **** 			/*Send pass by default. */
+ 151:USBFS_SCSI_operations.c **** 			commandStatus = USBFS_MSC_CSW_PASS;
+ 152:USBFS_SCSI_operations.c **** 		}
+ 153:USBFS_SCSI_operations.c **** 		else
+ 154:USBFS_SCSI_operations.c **** 		{
+ 155:USBFS_SCSI_operations.c **** 			if(statusFileTimer >= STATUS_FILE_TIMEOUT)
+  79              		.loc 1 155 0
+  80 000e 074B     		ldr	r3, .L11
+  81 0010 DB78     		ldrb	r3, [r3, #3]	@ zero_extendqisi2
+  82 0012 C72B     		cmp	r3, #199
+  83 0014 08D9     		bls	.L10
+ 156:USBFS_SCSI_operations.c **** 			{
+ 157:USBFS_SCSI_operations.c **** 				statusFileTimer = ZERO;
+  84              		.loc 1 157 0
+  85 0016 0022     		movs	r2, #0
+  86 0018 044B     		ldr	r3, .L11
+  87 001a DA70     		strb	r2, [r3, #3]
+ 158:USBFS_SCSI_operations.c **** 				
+ 159:USBFS_SCSI_operations.c **** 				/* Send a fail response for Test Unit Ready command to force
+ 160:USBFS_SCSI_operations.c **** 				 * the OS to initiate a Request Sense. */
+ 161:USBFS_SCSI_operations.c **** 				commandStatus = USBFS_MSC_CSW_FAIL;
+  88              		.loc 1 161 0
+  89 001c 0120     		movs	r0, #1
+  90 001e 7047     		bx	lr
+  91              	.L8:
+ 144:USBFS_SCSI_operations.c **** 	}
+  92              		.loc 1 144 0
+  93 0020 0120     		movs	r0, #1
+  94 0022 7047     		bx	lr
+  95              	.L9:
+ 151:USBFS_SCSI_operations.c **** 		}
+  96              		.loc 1 151 0
+  97 0024 0020     		movs	r0, #0
+  98 0026 7047     		bx	lr
+  99              	.L10:
+ 162:USBFS_SCSI_operations.c **** 			}
+ 163:USBFS_SCSI_operations.c **** 			else
+ 164:USBFS_SCSI_operations.c **** 			{
+ 165:USBFS_SCSI_operations.c **** 				/*Send pass for one more request before failing. */
+ 166:USBFS_SCSI_operations.c **** 				commandStatus = USBFS_MSC_CSW_PASS;
+ 100              		.loc 1 166 0
+ 101 0028 0020     		movs	r0, #0
+ 102              	.LVL5:
+ 167:USBFS_SCSI_operations.c **** 			}
+ 168:USBFS_SCSI_operations.c **** 		}
+ 169:USBFS_SCSI_operations.c **** 	}
+ 170:USBFS_SCSI_operations.c **** 	
+ 171:USBFS_SCSI_operations.c **** 	return(commandStatus);
+ 172:USBFS_SCSI_operations.c **** }
+ 103              		.loc 1 172 0
+ 104 002a 7047     		bx	lr
+ 105              	.L12:
+ 106              		.align	2
+ 107              	.L11:
+ 108 002c 00000000 		.word	.LANCHOR0
+ 109              		.cfi_endproc
+ 110              	.LFE64:
+ARM GAS  C:\Users\linar\AppData\Local\Temp\ccgDfqog.s 			page 6
+
+
+ 111              		.size	USBFS_MSC_SCSI_TestUnitReady, .-USBFS_MSC_SCSI_TestUnitReady
+ 112              		.section	.text.USBFS_MSC_SCSI_RequestSense,"ax",%progbits
+ 113              		.align	2
+ 114              		.global	USBFS_MSC_SCSI_RequestSense
+ 115              		.thumb
+ 116              		.thumb_func
+ 117              		.type	USBFS_MSC_SCSI_RequestSense, %function
+ 118              	USBFS_MSC_SCSI_RequestSense:
+ 119              	.LFB65:
+ 173:USBFS_SCSI_operations.c **** 
+ 174:USBFS_SCSI_operations.c **** /*******************************************************************************
+ 175:USBFS_SCSI_operations.c **** * Function Name: USBFS_MSC_SCSI_RequestSense()
+ 176:USBFS_SCSI_operations.c **** ********************************************************************************
+ 177:USBFS_SCSI_operations.c **** * Summary:
+ 178:USBFS_SCSI_operations.c **** *  
+ 179:USBFS_SCSI_operations.c **** *
+ 180:USBFS_SCSI_operations.c **** * Parameters:
+ 181:USBFS_SCSI_operations.c **** *  void
+ 182:USBFS_SCSI_operations.c **** *
+ 183:USBFS_SCSI_operations.c **** * Return:
+ 184:USBFS_SCSI_operations.c **** *  cystatus: PASS
+ 185:USBFS_SCSI_operations.c **** *
+ 186:USBFS_SCSI_operations.c **** *******************************************************************************/
+ 187:USBFS_SCSI_operations.c **** cystatus USBFS_MSC_SCSI_RequestSense(uint8 *numOfBytes)
+ 188:USBFS_SCSI_operations.c **** {
+ 120              		.loc 1 188 0
+ 121              		.cfi_startproc
+ 122              		@ args = 0, pretend = 0, frame = 0
+ 123              		@ frame_needed = 0, uses_anonymous_args = 0
+ 124              	.LVL6:
+ 125 0000 38B5     		push	{r3, r4, r5, lr}
+ 126              		.cfi_def_cfa_offset 16
+ 127              		.cfi_offset 3, -16
+ 128              		.cfi_offset 4, -12
+ 129              		.cfi_offset 5, -8
+ 130              		.cfi_offset 14, -4
+ 131 0002 0546     		mov	r5, r0
+ 132              	.LVL7:
+ 189:USBFS_SCSI_operations.c **** 	cystatus commandStatus = USBFS_MSC_CSW_PASS;
+ 190:USBFS_SCSI_operations.c **** 	
+ 191:USBFS_SCSI_operations.c **** 	memset(USBFS_MSC_InEPBuffer, ZERO, *numOfBytes);
+ 133              		.loc 1 191 0
+ 134 0004 1F4C     		ldr	r4, .L19
+ 135 0006 0278     		ldrb	r2, [r0]	@ zero_extendqisi2
+ 136 0008 0021     		movs	r1, #0
+ 137 000a 2046     		mov	r0, r4
+ 138              	.LVL8:
+ 139 000c FFF7FEFF 		bl	memset
+ 140              	.LVL9:
+ 192:USBFS_SCSI_operations.c **** 	
+ 193:USBFS_SCSI_operations.c **** 	USBFS_MSC_InEPBuffer[ 0] = SENSE_RESPONSE_CODE;
+ 141              		.loc 1 193 0
+ 142 0010 7023     		movs	r3, #112
+ 143 0012 2370     		strb	r3, [r4]
+ 194:USBFS_SCSI_operations.c **** 
+ 195:USBFS_SCSI_operations.c **** 	USBFS_MSC_InEPBuffer[ 7] = SENSE_ADDITIONAL_LENGTH;
+ 144              		.loc 1 195 0
+ARM GAS  C:\Users\linar\AppData\Local\Temp\ccgDfqog.s 			page 7
+
+
+ 145 0014 0A23     		movs	r3, #10
+ 146 0016 E371     		strb	r3, [r4, #7]
+ 196:USBFS_SCSI_operations.c **** 	
+ 197:USBFS_SCSI_operations.c **** 	if((forceOS == FALSE) && (commandFailed == FALSE) && (mediaEjectedState == FALSE))
+ 147              		.loc 1 197 0
+ 148 0018 1B4B     		ldr	r3, .L19+4
+ 149 001a 9B78     		ldrb	r3, [r3, #2]	@ zero_extendqisi2
+ 150 001c 4BB9     		cbnz	r3, .L14
+ 151              		.loc 1 197 0 is_stmt 0 discriminator 1
+ 152 001e 1A4A     		ldr	r2, .L19+4
+ 153 0020 1278     		ldrb	r2, [r2]	@ zero_extendqisi2
+ 154 0022 32B9     		cbnz	r2, .L14
+ 155              		.loc 1 197 0 discriminator 2
+ 156 0024 184A     		ldr	r2, .L19+4
+ 157 0026 5278     		ldrb	r2, [r2, #1]	@ zero_extendqisi2
+ 158 0028 1AB9     		cbnz	r2, .L14
+ 198:USBFS_SCSI_operations.c **** 	{
+ 199:USBFS_SCSI_operations.c **** 		USBFS_MSC_InEPBuffer[ 2] = SENSE_KEY_NO_SENSE;
+ 159              		.loc 1 199 0 is_stmt 1
+ 160 002a A270     		strb	r2, [r4, #2]
+ 200:USBFS_SCSI_operations.c **** 		
+ 201:USBFS_SCSI_operations.c **** 		USBFS_MSC_InEPBuffer[12] = SENSE_ASC_NO_SENSE;  
+ 161              		.loc 1 201 0
+ 162 002c 2273     		strb	r2, [r4, #12]
+ 202:USBFS_SCSI_operations.c **** 		USBFS_MSC_InEPBuffer[13] = SENSE_ASCQ_NO_SENSE; 
+ 163              		.loc 1 202 0
+ 164 002e 6273     		strb	r2, [r4, #13]
+ 165 0030 23E0     		b	.L15
+ 166              	.L14:
+ 203:USBFS_SCSI_operations.c **** 	}
+ 204:USBFS_SCSI_operations.c **** 	else
+ 205:USBFS_SCSI_operations.c **** 	{
+ 206:USBFS_SCSI_operations.c **** 		if(commandFailed == TRUE)
+ 167              		.loc 1 206 0
+ 168 0032 154A     		ldr	r2, .L19+4
+ 169 0034 1278     		ldrb	r2, [r2]	@ zero_extendqisi2
+ 170 0036 012A     		cmp	r2, #1
+ 171 0038 08D1     		bne	.L16
+ 207:USBFS_SCSI_operations.c **** 		{
+ 208:USBFS_SCSI_operations.c **** 			USBFS_MSC_InEPBuffer[ 2] = SENSE_KEY_ILLEGAL_REQUEST;
+ 172              		.loc 1 208 0
+ 173 003a 124A     		ldr	r2, .L19
+ 174 003c 0521     		movs	r1, #5
+ 175 003e 9170     		strb	r1, [r2, #2]
+ 209:USBFS_SCSI_operations.c **** 			
+ 210:USBFS_SCSI_operations.c **** 			USBFS_MSC_InEPBuffer[12] = SENSE_ASC_INVALID_FIELD_IN_CDB;
+ 176              		.loc 1 210 0
+ 177 0040 2421     		movs	r1, #36
+ 178 0042 1173     		strb	r1, [r2, #12]
+ 211:USBFS_SCSI_operations.c **** 			USBFS_MSC_InEPBuffer[13] = SENSE_ASCQ_NO_SENSE;    
+ 179              		.loc 1 211 0
+ 180 0044 0021     		movs	r1, #0
+ 181 0046 5173     		strb	r1, [r2, #13]
+ 212:USBFS_SCSI_operations.c **** 			commandFailed = FALSE;
+ 182              		.loc 1 212 0
+ 183 0048 0F4A     		ldr	r2, .L19+4
+ 184 004a 1170     		strb	r1, [r2]
+ARM GAS  C:\Users\linar\AppData\Local\Temp\ccgDfqog.s 			page 8
+
+
+ 185              	.L16:
+ 213:USBFS_SCSI_operations.c **** 		}
+ 214:USBFS_SCSI_operations.c **** 		
+ 215:USBFS_SCSI_operations.c **** 		if(forceOS == TRUE)
+ 186              		.loc 1 215 0
+ 187 004c 012B     		cmp	r3, #1
+ 188 004e 09D1     		bne	.L17
+ 216:USBFS_SCSI_operations.c **** 		{
+ 217:USBFS_SCSI_operations.c **** 			USBFS_MSC_InEPBuffer[ 2] = SENSE_KEY_UNIT_ATTENTION;
+ 189              		.loc 1 217 0
+ 190 0050 0C4A     		ldr	r2, .L19
+ 191 0052 0623     		movs	r3, #6
+ 192 0054 9370     		strb	r3, [r2, #2]
+ 218:USBFS_SCSI_operations.c **** 			
+ 219:USBFS_SCSI_operations.c **** 			USBFS_MSC_InEPBuffer[12] = SENSE_ASC_MEDIA_REMOVAL;
+ 193              		.loc 1 219 0
+ 194 0056 3A23     		movs	r3, #58
+ 195 0058 1373     		strb	r3, [r2, #12]
+ 220:USBFS_SCSI_operations.c **** 			USBFS_MSC_InEPBuffer[13] = SENSE_ASCQ_NO_SENSE;    
+ 196              		.loc 1 220 0
+ 197 005a 0023     		movs	r3, #0
+ 198 005c 5373     		strb	r3, [r2, #13]
+ 221:USBFS_SCSI_operations.c **** 			forceOS = FALSE;
+ 199              		.loc 1 221 0
+ 200 005e 0A4A     		ldr	r2, .L19+4
+ 201 0060 9370     		strb	r3, [r2, #2]
+ 222:USBFS_SCSI_operations.c **** 			statusFileTimer = ZERO;
+ 202              		.loc 1 222 0
+ 203 0062 D370     		strb	r3, [r2, #3]
+ 204              	.L17:
+ 223:USBFS_SCSI_operations.c **** 		}
+ 224:USBFS_SCSI_operations.c **** 		
+ 225:USBFS_SCSI_operations.c **** 		/* If the host has sent a command to eject the drive,
+ 226:USBFS_SCSI_operations.c **** 		 * send not ready until re-mounted. */
+ 227:USBFS_SCSI_operations.c **** 		if(mediaEjectedState == TRUE)
+ 205              		.loc 1 227 0
+ 206 0064 084B     		ldr	r3, .L19+4
+ 207 0066 5B78     		ldrb	r3, [r3, #1]	@ zero_extendqisi2
+ 208 0068 012B     		cmp	r3, #1
+ 209 006a 06D1     		bne	.L15
+ 228:USBFS_SCSI_operations.c **** 		{
+ 229:USBFS_SCSI_operations.c **** 			USBFS_MSC_InEPBuffer[ 2] = SENSE_KEY_NOT_READY;
+ 210              		.loc 1 229 0
+ 211 006c 054B     		ldr	r3, .L19
+ 212 006e 0222     		movs	r2, #2
+ 213 0070 9A70     		strb	r2, [r3, #2]
+ 230:USBFS_SCSI_operations.c **** 			
+ 231:USBFS_SCSI_operations.c **** 			USBFS_MSC_InEPBuffer[12] = SENSE_ASC_MEDIA_REMOVAL;
+ 214              		.loc 1 231 0
+ 215 0072 3A22     		movs	r2, #58
+ 216 0074 1A73     		strb	r2, [r3, #12]
+ 232:USBFS_SCSI_operations.c **** 			USBFS_MSC_InEPBuffer[13] = SENSE_ASCQ_NO_SENSE;    
+ 217              		.loc 1 232 0
+ 218 0076 0022     		movs	r2, #0
+ 219 0078 5A73     		strb	r2, [r3, #13]
+ 220              	.L15:
+ 233:USBFS_SCSI_operations.c **** 		}
+ARM GAS  C:\Users\linar\AppData\Local\Temp\ccgDfqog.s 			page 9
+
+
+ 234:USBFS_SCSI_operations.c **** 	}
+ 235:USBFS_SCSI_operations.c **** 	
+ 236:USBFS_SCSI_operations.c **** 	*numOfBytes = 18;
+ 221              		.loc 1 236 0
+ 222 007a 1223     		movs	r3, #18
+ 223 007c 2B70     		strb	r3, [r5]
+ 237:USBFS_SCSI_operations.c **** 	return(commandStatus);
+ 238:USBFS_SCSI_operations.c **** }
+ 224              		.loc 1 238 0
+ 225 007e 0020     		movs	r0, #0
+ 226 0080 38BD     		pop	{r3, r4, r5, pc}
+ 227              	.LVL10:
+ 228              	.L20:
+ 229 0082 00BF     		.align	2
+ 230              	.L19:
+ 231 0084 00000000 		.word	USBFS_MSC_InEPBuffer
+ 232 0088 00000000 		.word	.LANCHOR0
+ 233              		.cfi_endproc
+ 234              	.LFE65:
+ 235              		.size	USBFS_MSC_SCSI_RequestSense, .-USBFS_MSC_SCSI_RequestSense
+ 236              		.section	.text.USBFS_MSC_SCSI_FormatUnit,"ax",%progbits
+ 237              		.align	2
+ 238              		.global	USBFS_MSC_SCSI_FormatUnit
+ 239              		.thumb
+ 240              		.thumb_func
+ 241              		.type	USBFS_MSC_SCSI_FormatUnit, %function
+ 242              	USBFS_MSC_SCSI_FormatUnit:
+ 243              	.LFB66:
+ 239:USBFS_SCSI_operations.c **** 
+ 240:USBFS_SCSI_operations.c **** /*******************************************************************************
+ 241:USBFS_SCSI_operations.c **** * Function Name: USBFS_MSC_SCSI_FormatUnit()
+ 242:USBFS_SCSI_operations.c **** ********************************************************************************
+ 243:USBFS_SCSI_operations.c **** * Summary:
+ 244:USBFS_SCSI_operations.c **** *  Function returns fail as the file system does not support formatting.
+ 245:USBFS_SCSI_operations.c **** *
+ 246:USBFS_SCSI_operations.c **** * Parameters:
+ 247:USBFS_SCSI_operations.c **** *  void
+ 248:USBFS_SCSI_operations.c **** *
+ 249:USBFS_SCSI_operations.c **** * Return:
+ 250:USBFS_SCSI_operations.c **** *  cystatus: FAIL
+ 251:USBFS_SCSI_operations.c **** *
+ 252:USBFS_SCSI_operations.c **** *******************************************************************************/
+ 253:USBFS_SCSI_operations.c **** cystatus USBFS_MSC_SCSI_FormatUnit(uint8 *numOfBytes)
+ 254:USBFS_SCSI_operations.c **** {
+ 244              		.loc 1 254 0
+ 245              		.cfi_startproc
+ 246              		@ args = 0, pretend = 0, frame = 0
+ 247              		@ frame_needed = 0, uses_anonymous_args = 0
+ 248              		@ link register save eliminated.
+ 249              	.LVL11:
+ 255:USBFS_SCSI_operations.c **** 	cystatus commandStatus = USBFS_MSC_CSW_FAIL;
+ 256:USBFS_SCSI_operations.c **** 	
+ 257:USBFS_SCSI_operations.c **** 	commandFailed = TRUE;
+ 250              		.loc 1 257 0
+ 251 0000 0123     		movs	r3, #1
+ 252 0002 034A     		ldr	r2, .L22
+ 253 0004 1370     		strb	r3, [r2]
+ARM GAS  C:\Users\linar\AppData\Local\Temp\ccgDfqog.s 			page 10
+
+
+ 258:USBFS_SCSI_operations.c **** 	
+ 259:USBFS_SCSI_operations.c **** 	*numOfBytes = ZERO;
+ 254              		.loc 1 259 0
+ 255 0006 0022     		movs	r2, #0
+ 256 0008 0270     		strb	r2, [r0]
+ 260:USBFS_SCSI_operations.c **** 	
+ 261:USBFS_SCSI_operations.c **** 	return(commandStatus);
+ 262:USBFS_SCSI_operations.c **** }
+ 257              		.loc 1 262 0
+ 258 000a 1846     		mov	r0, r3
+ 259              	.LVL12:
+ 260 000c 7047     		bx	lr
+ 261              	.L23:
+ 262 000e 00BF     		.align	2
+ 263              	.L22:
+ 264 0010 00000000 		.word	.LANCHOR0
+ 265              		.cfi_endproc
+ 266              	.LFE66:
+ 267              		.size	USBFS_MSC_SCSI_FormatUnit, .-USBFS_MSC_SCSI_FormatUnit
+ 268              		.section	.text.USBFS_MSC_SCSI_Inquiry,"ax",%progbits
+ 269              		.align	2
+ 270              		.global	USBFS_MSC_SCSI_Inquiry
+ 271              		.thumb
+ 272              		.thumb_func
+ 273              		.type	USBFS_MSC_SCSI_Inquiry, %function
+ 274              	USBFS_MSC_SCSI_Inquiry:
+ 275              	.LFB67:
+ 263:USBFS_SCSI_operations.c **** 
+ 264:USBFS_SCSI_operations.c **** /*******************************************************************************
+ 265:USBFS_SCSI_operations.c **** * Function Name: USBFS_MSC_SCSI_Inquiry()
+ 266:USBFS_SCSI_operations.c **** ********************************************************************************
+ 267:USBFS_SCSI_operations.c **** * Summary:
+ 268:USBFS_SCSI_operations.c **** *  Sends the details about the Mass Storage device to host. 
+ 269:USBFS_SCSI_operations.c **** *
+ 270:USBFS_SCSI_operations.c **** * Parameters:
+ 271:USBFS_SCSI_operations.c **** *  void
+ 272:USBFS_SCSI_operations.c **** *
+ 273:USBFS_SCSI_operations.c **** * Return:
+ 274:USBFS_SCSI_operations.c **** *  cystatus: PASS
+ 275:USBFS_SCSI_operations.c **** *
+ 276:USBFS_SCSI_operations.c **** *******************************************************************************/
+ 277:USBFS_SCSI_operations.c **** cystatus USBFS_MSC_SCSI_Inquiry(uint8 *numOfBytes)
+ 278:USBFS_SCSI_operations.c **** {
+ 276              		.loc 1 278 0
+ 277              		.cfi_startproc
+ 278              		@ args = 0, pretend = 0, frame = 0
+ 279              		@ frame_needed = 0, uses_anonymous_args = 0
+ 280              		@ link register save eliminated.
+ 281              	.LVL13:
+ 282 0000 10B4     		push	{r4}
+ 283              		.cfi_def_cfa_offset 4
+ 284              		.cfi_offset 4, -4
+ 285              	.LVL14:
+ 279:USBFS_SCSI_operations.c **** 	cystatus commandStatus = USBFS_MSC_CSW_PASS;
+ 280:USBFS_SCSI_operations.c **** 	uint8 index = ZERO;
+ 281:USBFS_SCSI_operations.c **** 	
+ 282:USBFS_SCSI_operations.c **** 	USBFS_MSC_InEPBuffer[ 0] = INQUIRY_PERIPHERAL_TYPE; 
+ARM GAS  C:\Users\linar\AppData\Local\Temp\ccgDfqog.s 			page 11
+
+
+ 286              		.loc 1 282 0
+ 287 0002 1C4A     		ldr	r2, .L32
+ 288 0004 0023     		movs	r3, #0
+ 289 0006 1370     		strb	r3, [r2]
+ 283:USBFS_SCSI_operations.c **** 	USBFS_MSC_InEPBuffer[ 1] = INQUIRY_REMOVABLE;        
+ 290              		.loc 1 283 0
+ 291 0008 8021     		movs	r1, #128
+ 292 000a 5170     		strb	r1, [r2, #1]
+ 284:USBFS_SCSI_operations.c **** 	USBFS_MSC_InEPBuffer[ 2] = INQUIRY_NO_STANDARD;      
+ 293              		.loc 1 284 0
+ 294 000c 9370     		strb	r3, [r2, #2]
+ 285:USBFS_SCSI_operations.c **** 	USBFS_MSC_InEPBuffer[ 3] = INQUIRY_RESPONSE_DATA_FORMAT;
+ 295              		.loc 1 285 0
+ 296 000e 0124     		movs	r4, #1
+ 297 0010 D470     		strb	r4, [r2, #3]
+ 286:USBFS_SCSI_operations.c **** 
+ 287:USBFS_SCSI_operations.c **** 	USBFS_MSC_InEPBuffer[ 4] = INQUIRY_ADDITIONAL_LENGTH; 
+ 298              		.loc 1 287 0
+ 299 0012 2024     		movs	r4, #32
+ 300 0014 1471     		strb	r4, [r2, #4]
+ 288:USBFS_SCSI_operations.c **** 	USBFS_MSC_InEPBuffer[ 5] = INQUIRY_SCSI_STORAGE_CONTROLLER_PRESENT; 
+ 301              		.loc 1 288 0
+ 302 0016 5171     		strb	r1, [r2, #5]
+ 289:USBFS_SCSI_operations.c **** 	USBFS_MSC_InEPBuffer[ 6] = INQUIRY_MEDIUM_CHANGER_DEVICE;
+ 303              		.loc 1 289 0
+ 304 0018 0821     		movs	r1, #8
+ 305 001a 9171     		strb	r1, [r2, #6]
+ 290:USBFS_SCSI_operations.c **** 	USBFS_MSC_InEPBuffer[ 7] = ZERO;
+ 306              		.loc 1 290 0
+ 307 001c D371     		strb	r3, [r2, #7]
+ 291:USBFS_SCSI_operations.c **** 
+ 292:USBFS_SCSI_operations.c **** 	/* T10 Vendor Identification. */
+ 293:USBFS_SCSI_operations.c **** 	for(index = ZERO; index < sizeof(vendorIDT10); index++)
+ 308              		.loc 1 293 0
+ 309 001e 07E0     		b	.L25
+ 310              	.LVL15:
+ 311              	.L26:
+ 294:USBFS_SCSI_operations.c **** 	{
+ 295:USBFS_SCSI_operations.c **** 		USBFS_MSC_InEPBuffer[8 + index] = vendorIDT10[index];
+ 312              		.loc 1 295 0 discriminator 3
+ 313 0020 03F10802 		add	r2, r3, #8
+ 314 0024 1449     		ldr	r1, .L32+4
+ 315 0026 CC5C     		ldrb	r4, [r1, r3]	@ zero_extendqisi2
+ 316 0028 1249     		ldr	r1, .L32
+ 317 002a 8C54     		strb	r4, [r1, r2]
+ 293:USBFS_SCSI_operations.c **** 	{
+ 318              		.loc 1 293 0 discriminator 3
+ 319 002c 0133     		adds	r3, r3, #1
+ 320              	.LVL16:
+ 321 002e DBB2     		uxtb	r3, r3
+ 322              	.LVL17:
+ 323              	.L25:
+ 293:USBFS_SCSI_operations.c **** 	{
+ 324              		.loc 1 293 0 is_stmt 0 discriminator 1
+ 325 0030 052B     		cmp	r3, #5
+ 326 0032 F5D9     		bls	.L26
+ 327 0034 0023     		movs	r3, #0
+ARM GAS  C:\Users\linar\AppData\Local\Temp\ccgDfqog.s 			page 12
+
+
+ 328              	.LVL18:
+ 329 0036 08E0     		b	.L27
+ 330              	.LVL19:
+ 331              	.L28:
+ 296:USBFS_SCSI_operations.c **** 	}
+ 297:USBFS_SCSI_operations.c **** 
+ 298:USBFS_SCSI_operations.c **** 	/* Product Identification */
+ 299:USBFS_SCSI_operations.c **** 	for(index = ZERO; index < sizeof(productID); index++)
+ 300:USBFS_SCSI_operations.c **** 	{
+ 301:USBFS_SCSI_operations.c **** 		USBFS_MSC_InEPBuffer[16 + index] = productID[index];
+ 332              		.loc 1 301 0 is_stmt 1 discriminator 3
+ 333 0038 03F11001 		add	r1, r3, #16
+ 334 003c 0E4A     		ldr	r2, .L32+4
+ 335 003e 1A44     		add	r2, r2, r3
+ 336 0040 147A     		ldrb	r4, [r2, #8]	@ zero_extendqisi2
+ 337 0042 0C4A     		ldr	r2, .L32
+ 338 0044 5454     		strb	r4, [r2, r1]
+ 299:USBFS_SCSI_operations.c **** 	{
+ 339              		.loc 1 299 0 discriminator 3
+ 340 0046 0133     		adds	r3, r3, #1
+ 341              	.LVL20:
+ 342 0048 DBB2     		uxtb	r3, r3
+ 343              	.LVL21:
+ 344              	.L27:
+ 299:USBFS_SCSI_operations.c **** 	{
+ 345              		.loc 1 299 0 is_stmt 0 discriminator 1
+ 346 004a 042B     		cmp	r3, #4
+ 347 004c F4D9     		bls	.L28
+ 348 004e 0023     		movs	r3, #0
+ 349              	.LVL22:
+ 350 0050 08E0     		b	.L29
+ 351              	.LVL23:
+ 352              	.L30:
+ 302:USBFS_SCSI_operations.c **** 	}
+ 303:USBFS_SCSI_operations.c **** 
+ 304:USBFS_SCSI_operations.c **** 	/* Product Revision Level */
+ 305:USBFS_SCSI_operations.c **** 	for(index = ZERO; index < sizeof(productRev); index++)
+ 306:USBFS_SCSI_operations.c **** 	{
+ 307:USBFS_SCSI_operations.c **** 		USBFS_MSC_InEPBuffer[32 + index] = productRev[index];
+ 353              		.loc 1 307 0 is_stmt 1 discriminator 3
+ 354 0052 03F12001 		add	r1, r3, #32
+ 355 0056 084A     		ldr	r2, .L32+4
+ 356 0058 1A44     		add	r2, r2, r3
+ 357 005a 147C     		ldrb	r4, [r2, #16]	@ zero_extendqisi2
+ 358 005c 054A     		ldr	r2, .L32
+ 359 005e 5454     		strb	r4, [r2, r1]
+ 305:USBFS_SCSI_operations.c **** 	{
+ 360              		.loc 1 305 0 discriminator 3
+ 361 0060 0133     		adds	r3, r3, #1
+ 362              	.LVL24:
+ 363 0062 DBB2     		uxtb	r3, r3
+ 364              	.LVL25:
+ 365              	.L29:
+ 305:USBFS_SCSI_operations.c **** 	{
+ 366              		.loc 1 305 0 is_stmt 0 discriminator 1
+ 367 0064 042B     		cmp	r3, #4
+ 368 0066 F4D9     		bls	.L30
+ARM GAS  C:\Users\linar\AppData\Local\Temp\ccgDfqog.s 			page 13
+
+
+ 308:USBFS_SCSI_operations.c **** 	}
+ 309:USBFS_SCSI_operations.c **** 
+ 310:USBFS_SCSI_operations.c **** 	*numOfBytes = 36;
+ 369              		.loc 1 310 0 is_stmt 1
+ 370 0068 2423     		movs	r3, #36
+ 371              	.LVL26:
+ 372 006a 0370     		strb	r3, [r0]
+ 311:USBFS_SCSI_operations.c **** 	
+ 312:USBFS_SCSI_operations.c **** 	return(commandStatus);
+ 313:USBFS_SCSI_operations.c **** }
+ 373              		.loc 1 313 0
+ 374 006c 0020     		movs	r0, #0
+ 375              	.LVL27:
+ 376 006e 10BC     		pop	{r4}
+ 377              		.cfi_restore 4
+ 378              		.cfi_def_cfa_offset 0
+ 379 0070 7047     		bx	lr
+ 380              	.L33:
+ 381 0072 00BF     		.align	2
+ 382              	.L32:
+ 383 0074 00000000 		.word	USBFS_MSC_InEPBuffer
+ 384 0078 00000000 		.word	.LANCHOR1
+ 385              		.cfi_endproc
+ 386              	.LFE67:
+ 387              		.size	USBFS_MSC_SCSI_Inquiry, .-USBFS_MSC_SCSI_Inquiry
+ 388              		.section	.text.USBFS_MSC_SCSI_ModeSelect6,"ax",%progbits
+ 389              		.align	2
+ 390              		.global	USBFS_MSC_SCSI_ModeSelect6
+ 391              		.thumb
+ 392              		.thumb_func
+ 393              		.type	USBFS_MSC_SCSI_ModeSelect6, %function
+ 394              	USBFS_MSC_SCSI_ModeSelect6:
+ 395              	.LFB68:
+ 314:USBFS_SCSI_operations.c **** 
+ 315:USBFS_SCSI_operations.c **** /*******************************************************************************
+ 316:USBFS_SCSI_operations.c **** * Function Name: USBFS_MSC_SCSI_ModeSelect6()
+ 317:USBFS_SCSI_operations.c **** ********************************************************************************
+ 318:USBFS_SCSI_operations.c **** * Summary:
+ 319:USBFS_SCSI_operations.c **** *  This command is not supported as of now.
+ 320:USBFS_SCSI_operations.c **** *
+ 321:USBFS_SCSI_operations.c **** * Parameters:
+ 322:USBFS_SCSI_operations.c **** *  void
+ 323:USBFS_SCSI_operations.c **** *
+ 324:USBFS_SCSI_operations.c **** * Return:
+ 325:USBFS_SCSI_operations.c **** *  cystatus: FAIL
+ 326:USBFS_SCSI_operations.c **** *
+ 327:USBFS_SCSI_operations.c **** *******************************************************************************/
+ 328:USBFS_SCSI_operations.c **** cystatus USBFS_MSC_SCSI_ModeSelect6(uint8 *numOfBytes)
+ 329:USBFS_SCSI_operations.c **** {
+ 396              		.loc 1 329 0
+ 397              		.cfi_startproc
+ 398              		@ args = 0, pretend = 0, frame = 0
+ 399              		@ frame_needed = 0, uses_anonymous_args = 0
+ 400              		@ link register save eliminated.
+ 401              	.LVL28:
+ 330:USBFS_SCSI_operations.c **** 	cystatus commandStatus = USBFS_MSC_CSW_FAIL;
+ 331:USBFS_SCSI_operations.c **** 	
+ARM GAS  C:\Users\linar\AppData\Local\Temp\ccgDfqog.s 			page 14
+
+
+ 332:USBFS_SCSI_operations.c **** 	commandFailed = TRUE;
+ 402              		.loc 1 332 0
+ 403 0000 0123     		movs	r3, #1
+ 404 0002 034A     		ldr	r2, .L35
+ 405 0004 1370     		strb	r3, [r2]
+ 333:USBFS_SCSI_operations.c **** 	
+ 334:USBFS_SCSI_operations.c **** 	*numOfBytes = ZERO;
+ 406              		.loc 1 334 0
+ 407 0006 0022     		movs	r2, #0
+ 408 0008 0270     		strb	r2, [r0]
+ 335:USBFS_SCSI_operations.c **** 	
+ 336:USBFS_SCSI_operations.c **** 	return(commandStatus);
+ 337:USBFS_SCSI_operations.c **** }
+ 409              		.loc 1 337 0
+ 410 000a 1846     		mov	r0, r3
+ 411              	.LVL29:
+ 412 000c 7047     		bx	lr
+ 413              	.L36:
+ 414 000e 00BF     		.align	2
+ 415              	.L35:
+ 416 0010 00000000 		.word	.LANCHOR0
+ 417              		.cfi_endproc
+ 418              	.LFE68:
+ 419              		.size	USBFS_MSC_SCSI_ModeSelect6, .-USBFS_MSC_SCSI_ModeSelect6
+ 420              		.section	.text.USBFS_MSC_SCSI_ModeSense6,"ax",%progbits
+ 421              		.align	2
+ 422              		.global	USBFS_MSC_SCSI_ModeSense6
+ 423              		.thumb
+ 424              		.thumb_func
+ 425              		.type	USBFS_MSC_SCSI_ModeSense6, %function
+ 426              	USBFS_MSC_SCSI_ModeSense6:
+ 427              	.LFB69:
+ 338:USBFS_SCSI_operations.c **** 
+ 339:USBFS_SCSI_operations.c **** /*******************************************************************************
+ 340:USBFS_SCSI_operations.c **** * Function Name: USBFS_MSC_SCSI_ModeSense6()
+ 341:USBFS_SCSI_operations.c **** ********************************************************************************
+ 342:USBFS_SCSI_operations.c **** * Summary:
+ 343:USBFS_SCSI_operations.c **** *  Responds to the SCSI Mode Sense6 command. (Ref: Section 4.3 of SCSI Manual)
+ 344:USBFS_SCSI_operations.c **** *
+ 345:USBFS_SCSI_operations.c **** * Parameters:
+ 346:USBFS_SCSI_operations.c **** *  void
+ 347:USBFS_SCSI_operations.c **** *
+ 348:USBFS_SCSI_operations.c **** * Return:
+ 349:USBFS_SCSI_operations.c **** *  cystatus: PASS
+ 350:USBFS_SCSI_operations.c **** *
+ 351:USBFS_SCSI_operations.c **** *******************************************************************************/
+ 352:USBFS_SCSI_operations.c **** cystatus USBFS_MSC_SCSI_ModeSense6(uint8 *numOfBytes)
+ 353:USBFS_SCSI_operations.c **** {
+ 428              		.loc 1 353 0
+ 429              		.cfi_startproc
+ 430              		@ args = 0, pretend = 0, frame = 0
+ 431              		@ frame_needed = 0, uses_anonymous_args = 0
+ 432              		@ link register save eliminated.
+ 433              	.LVL30:
+ 354:USBFS_SCSI_operations.c **** 	cystatus commandStatus = USBFS_MSC_CSW_PASS;
+ 355:USBFS_SCSI_operations.c **** 	
+ 356:USBFS_SCSI_operations.c **** 	USBFS_MSC_InEPBuffer[ 0] = MODE_SENSE6_BLOCK_LENGTH;
+ARM GAS  C:\Users\linar\AppData\Local\Temp\ccgDfqog.s 			page 15
+
+
+ 434              		.loc 1 356 0
+ 435 0000 054A     		ldr	r2, .L38
+ 436 0002 0323     		movs	r3, #3
+ 437 0004 1370     		strb	r3, [r2]
+ 357:USBFS_SCSI_operations.c **** 	USBFS_MSC_InEPBuffer[ 1] = DEFAULT_MEDIUM_TYPE;
+ 438              		.loc 1 357 0
+ 439 0006 0023     		movs	r3, #0
+ 440 0008 5370     		strb	r3, [r2, #1]
+ 358:USBFS_SCSI_operations.c **** 	USBFS_MSC_InEPBuffer[ 2] = ZERO;
+ 441              		.loc 1 358 0
+ 442 000a 9370     		strb	r3, [r2, #2]
+ 359:USBFS_SCSI_operations.c **** 	USBFS_MSC_InEPBuffer[ 3] = ZERO;
+ 443              		.loc 1 359 0
+ 444 000c D370     		strb	r3, [r2, #3]
+ 360:USBFS_SCSI_operations.c **** 
+ 361:USBFS_SCSI_operations.c **** 	*numOfBytes = 4;
+ 445              		.loc 1 361 0
+ 446 000e 0422     		movs	r2, #4
+ 447 0010 0270     		strb	r2, [r0]
+ 362:USBFS_SCSI_operations.c **** 	
+ 363:USBFS_SCSI_operations.c **** 	return(commandStatus);
+ 364:USBFS_SCSI_operations.c **** }
+ 448              		.loc 1 364 0
+ 449 0012 1846     		mov	r0, r3
+ 450              	.LVL31:
+ 451 0014 7047     		bx	lr
+ 452              	.L39:
+ 453 0016 00BF     		.align	2
+ 454              	.L38:
+ 455 0018 00000000 		.word	USBFS_MSC_InEPBuffer
+ 456              		.cfi_endproc
+ 457              	.LFE69:
+ 458              		.size	USBFS_MSC_SCSI_ModeSense6, .-USBFS_MSC_SCSI_ModeSense6
+ 459              		.section	.text.USBFS_MSC_SCSI_ModeSense10,"ax",%progbits
+ 460              		.align	2
+ 461              		.global	USBFS_MSC_SCSI_ModeSense10
+ 462              		.thumb
+ 463              		.thumb_func
+ 464              		.type	USBFS_MSC_SCSI_ModeSense10, %function
+ 465              	USBFS_MSC_SCSI_ModeSense10:
+ 466              	.LFB70:
+ 365:USBFS_SCSI_operations.c **** 
+ 366:USBFS_SCSI_operations.c **** /*******************************************************************************
+ 367:USBFS_SCSI_operations.c **** * Function Name: USBFS_MSC_SCSI_ModeSense10()
+ 368:USBFS_SCSI_operations.c **** ********************************************************************************
+ 369:USBFS_SCSI_operations.c **** * Summary:
+ 370:USBFS_SCSI_operations.c **** *  Polls the status of the programmer 
+ 371:USBFS_SCSI_operations.c **** *
+ 372:USBFS_SCSI_operations.c **** * Parameters:
+ 373:USBFS_SCSI_operations.c **** *  void
+ 374:USBFS_SCSI_operations.c **** *
+ 375:USBFS_SCSI_operations.c **** * Return:
+ 376:USBFS_SCSI_operations.c **** *  cystatus: PASS
+ 377:USBFS_SCSI_operations.c **** *
+ 378:USBFS_SCSI_operations.c **** *******************************************************************************/
+ 379:USBFS_SCSI_operations.c **** cystatus USBFS_MSC_SCSI_ModeSense10(uint8 *numOfBytes)
+ 380:USBFS_SCSI_operations.c **** {
+ARM GAS  C:\Users\linar\AppData\Local\Temp\ccgDfqog.s 			page 16
+
+
+ 467              		.loc 1 380 0
+ 468              		.cfi_startproc
+ 469              		@ args = 0, pretend = 0, frame = 0
+ 470              		@ frame_needed = 0, uses_anonymous_args = 0
+ 471              	.LVL32:
+ 472 0000 38B5     		push	{r3, r4, r5, lr}
+ 473              		.cfi_def_cfa_offset 16
+ 474              		.cfi_offset 3, -16
+ 475              		.cfi_offset 4, -12
+ 476              		.cfi_offset 5, -8
+ 477              		.cfi_offset 14, -4
+ 478 0002 0546     		mov	r5, r0
+ 479              	.LVL33:
+ 381:USBFS_SCSI_operations.c **** 	cystatus commandStatus = USBFS_MSC_CSW_PASS;
+ 382:USBFS_SCSI_operations.c **** 	
+ 383:USBFS_SCSI_operations.c **** 	memset(USBFS_MSC_InEPBuffer, ZERO, *numOfBytes);
+ 480              		.loc 1 383 0
+ 481 0004 064C     		ldr	r4, .L42
+ 482 0006 0278     		ldrb	r2, [r0]	@ zero_extendqisi2
+ 483 0008 0021     		movs	r1, #0
+ 484 000a 2046     		mov	r0, r4
+ 485              	.LVL34:
+ 486 000c FFF7FEFF 		bl	memset
+ 487              	.LVL35:
+ 384:USBFS_SCSI_operations.c **** 	
+ 385:USBFS_SCSI_operations.c **** 	USBFS_MSC_InEPBuffer[ 1] = MODE_SENSE10_BLOCK_LENGTH;
+ 488              		.loc 1 385 0
+ 489 0010 0623     		movs	r3, #6
+ 490 0012 6370     		strb	r3, [r4, #1]
+ 386:USBFS_SCSI_operations.c **** 	USBFS_MSC_InEPBuffer[ 2] = DEFAULT_MEDIUM_TYPE;
+ 491              		.loc 1 386 0
+ 492 0014 0020     		movs	r0, #0
+ 493 0016 A070     		strb	r0, [r4, #2]
+ 387:USBFS_SCSI_operations.c **** 
+ 388:USBFS_SCSI_operations.c **** 	*numOfBytes = 8;
+ 494              		.loc 1 388 0
+ 495 0018 0823     		movs	r3, #8
+ 496 001a 2B70     		strb	r3, [r5]
+ 389:USBFS_SCSI_operations.c **** 	return(commandStatus);
+ 390:USBFS_SCSI_operations.c **** }
+ 497              		.loc 1 390 0
+ 498 001c 38BD     		pop	{r3, r4, r5, pc}
+ 499              	.LVL36:
+ 500              	.L43:
+ 501 001e 00BF     		.align	2
+ 502              	.L42:
+ 503 0020 00000000 		.word	USBFS_MSC_InEPBuffer
+ 504              		.cfi_endproc
+ 505              	.LFE70:
+ 506              		.size	USBFS_MSC_SCSI_ModeSense10, .-USBFS_MSC_SCSI_ModeSense10
+ 507              		.section	.text.USBFS_MSC_SCSI_StartStopUnit,"ax",%progbits
+ 508              		.align	2
+ 509              		.global	USBFS_MSC_SCSI_StartStopUnit
+ 510              		.thumb
+ 511              		.thumb_func
+ 512              		.type	USBFS_MSC_SCSI_StartStopUnit, %function
+ 513              	USBFS_MSC_SCSI_StartStopUnit:
+ARM GAS  C:\Users\linar\AppData\Local\Temp\ccgDfqog.s 			page 17
+
+
+ 514              	.LFB71:
+ 391:USBFS_SCSI_operations.c **** 	
+ 392:USBFS_SCSI_operations.c **** /*******************************************************************************
+ 393:USBFS_SCSI_operations.c **** * Function Name: USBFS_MSC_SCSI_StartStopUnit()
+ 394:USBFS_SCSI_operations.c **** ********************************************************************************
+ 395:USBFS_SCSI_operations.c **** * Summary:
+ 396:USBFS_SCSI_operations.c **** *  This command responds to the eject/mount requests from the host.
+ 397:USBFS_SCSI_operations.c **** *
+ 398:USBFS_SCSI_operations.c **** * Parameters:
+ 399:USBFS_SCSI_operations.c **** *  void
+ 400:USBFS_SCSI_operations.c **** *
+ 401:USBFS_SCSI_operations.c **** * Return:
+ 402:USBFS_SCSI_operations.c **** *  cystatus: FAIL
+ 403:USBFS_SCSI_operations.c **** *
+ 404:USBFS_SCSI_operations.c **** *******************************************************************************/
+ 405:USBFS_SCSI_operations.c **** cystatus USBFS_MSC_SCSI_StartStopUnit(uint8 ejectIndicator)
+ 406:USBFS_SCSI_operations.c **** {
+ 515              		.loc 1 406 0
+ 516              		.cfi_startproc
+ 517              		@ args = 0, pretend = 0, frame = 0
+ 518              		@ frame_needed = 0, uses_anonymous_args = 0
+ 519              		@ link register save eliminated.
+ 520              	.LVL37:
+ 407:USBFS_SCSI_operations.c **** 	cystatus commandStatus = USBFS_MSC_CSW_PASS;
+ 408:USBFS_SCSI_operations.c **** 	
+ 409:USBFS_SCSI_operations.c **** 	if((ejectIndicator & LOEJ_BIT_FIELD) != ZERO)
+ 521              		.loc 1 409 0
+ 522 0000 10F0020F 		tst	r0, #2
+ 523 0004 09D0     		beq	.L45
+ 410:USBFS_SCSI_operations.c **** 	{
+ 411:USBFS_SCSI_operations.c **** 		if((ejectIndicator & START_BIT_FIELD) == TRUE)
+ 524              		.loc 1 411 0
+ 525 0006 10F0010F 		tst	r0, #1
+ 526 000a 03D0     		beq	.L46
+ 412:USBFS_SCSI_operations.c **** 		{
+ 413:USBFS_SCSI_operations.c **** 			mediaEjectedState = FALSE;
+ 527              		.loc 1 413 0
+ 528 000c 0022     		movs	r2, #0
+ 529 000e 044B     		ldr	r3, .L47
+ 530 0010 5A70     		strb	r2, [r3, #1]
+ 531 0012 02E0     		b	.L45
+ 532              	.L46:
+ 414:USBFS_SCSI_operations.c **** 		}
+ 415:USBFS_SCSI_operations.c **** 		else
+ 416:USBFS_SCSI_operations.c **** 		{
+ 417:USBFS_SCSI_operations.c **** 			mediaEjectedState = TRUE;
+ 533              		.loc 1 417 0
+ 534 0014 0122     		movs	r2, #1
+ 535 0016 024B     		ldr	r3, .L47
+ 536 0018 5A70     		strb	r2, [r3, #1]
+ 537              	.L45:
+ 418:USBFS_SCSI_operations.c **** 		}
+ 419:USBFS_SCSI_operations.c **** 	}
+ 420:USBFS_SCSI_operations.c **** 	
+ 421:USBFS_SCSI_operations.c **** 	return(commandStatus);	
+ 422:USBFS_SCSI_operations.c **** }
+ 538              		.loc 1 422 0
+ARM GAS  C:\Users\linar\AppData\Local\Temp\ccgDfqog.s 			page 18
+
+
+ 539 001a 0020     		movs	r0, #0
+ 540              	.LVL38:
+ 541 001c 7047     		bx	lr
+ 542              	.L48:
+ 543 001e 00BF     		.align	2
+ 544              	.L47:
+ 545 0020 00000000 		.word	.LANCHOR0
+ 546              		.cfi_endproc
+ 547              	.LFE71:
+ 548              		.size	USBFS_MSC_SCSI_StartStopUnit, .-USBFS_MSC_SCSI_StartStopUnit
+ 549              		.section	.text.USBFS_MSC_SCSI_ReadFormatCapacities,"ax",%progbits
+ 550              		.align	2
+ 551              		.global	USBFS_MSC_SCSI_ReadFormatCapacities
+ 552              		.thumb
+ 553              		.thumb_func
+ 554              		.type	USBFS_MSC_SCSI_ReadFormatCapacities, %function
+ 555              	USBFS_MSC_SCSI_ReadFormatCapacities:
+ 556              	.LFB72:
+ 423:USBFS_SCSI_operations.c **** 
+ 424:USBFS_SCSI_operations.c **** /*******************************************************************************
+ 425:USBFS_SCSI_operations.c **** * Function Name: USBFS_MSC_SCSI_ReadFormatCapacities()
+ 426:USBFS_SCSI_operations.c **** ********************************************************************************
+ 427:USBFS_SCSI_operations.c **** * Summary:
+ 428:USBFS_SCSI_operations.c **** *  Supported since required by Windows. 
+ 429:USBFS_SCSI_operations.c **** *  Ref: ftp://www.t10.org/t10/t10r/2003/r0310162.htm
+ 430:USBFS_SCSI_operations.c **** *  http://janaxelson.com/mass_storage_faq.htm
+ 431:USBFS_SCSI_operations.c **** *  http://www.13thmonkey.org/documentation/SCSI/mmc2r11a.pdf
+ 432:USBFS_SCSI_operations.c **** * 
+ 433:USBFS_SCSI_operations.c **** *
+ 434:USBFS_SCSI_operations.c **** * Parameters:
+ 435:USBFS_SCSI_operations.c **** *  void
+ 436:USBFS_SCSI_operations.c **** *
+ 437:USBFS_SCSI_operations.c **** * Return:
+ 438:USBFS_SCSI_operations.c **** *  cystatus: PASS
+ 439:USBFS_SCSI_operations.c **** *
+ 440:USBFS_SCSI_operations.c **** *******************************************************************************/
+ 441:USBFS_SCSI_operations.c **** cystatus USBFS_MSC_SCSI_ReadFormatCapacities(uint8 *numOfBytes)
+ 442:USBFS_SCSI_operations.c **** {
+ 557              		.loc 1 442 0
+ 558              		.cfi_startproc
+ 559              		@ args = 0, pretend = 0, frame = 0
+ 560              		@ frame_needed = 0, uses_anonymous_args = 0
+ 561              		@ link register save eliminated.
+ 562              	.LVL39:
+ 443:USBFS_SCSI_operations.c **** 	cystatus commandStatus = USBFS_MSC_CSW_PASS;
+ 444:USBFS_SCSI_operations.c **** 	
+ 445:USBFS_SCSI_operations.c **** 	USBFS_MSC_InEPBuffer[ 0] = 0x00;
+ 563              		.loc 1 445 0
+ 564 0000 0A4B     		ldr	r3, .L50
+ 565 0002 0022     		movs	r2, #0
+ 566 0004 1A70     		strb	r2, [r3]
+ 446:USBFS_SCSI_operations.c **** 	USBFS_MSC_InEPBuffer[ 1] = 0x00;
+ 567              		.loc 1 446 0
+ 568 0006 5A70     		strb	r2, [r3, #1]
+ 447:USBFS_SCSI_operations.c **** 	USBFS_MSC_InEPBuffer[ 2] = 0x00;
+ 569              		.loc 1 447 0
+ 570 0008 9A70     		strb	r2, [r3, #2]
+ARM GAS  C:\Users\linar\AppData\Local\Temp\ccgDfqog.s 			page 19
+
+
+ 448:USBFS_SCSI_operations.c **** 	USBFS_MSC_InEPBuffer[ 3] = FORMAT_CAP_LIST_LENGTH;
+ 571              		.loc 1 448 0
+ 572 000a 0821     		movs	r1, #8
+ 573 000c D970     		strb	r1, [r3, #3]
+ 449:USBFS_SCSI_operations.c **** 
+ 450:USBFS_SCSI_operations.c **** 	/* Number of Blocks */
+ 451:USBFS_SCSI_operations.c **** 	USBFS_MSC_InEPBuffer[ 4] = HI8(HI16(USBFS_MSC_NUM_OF_BLOCKS)); 
+ 574              		.loc 1 451 0
+ 575 000e 1A71     		strb	r2, [r3, #4]
+ 452:USBFS_SCSI_operations.c **** 	USBFS_MSC_InEPBuffer[ 5] = LO8(HI16(USBFS_MSC_NUM_OF_BLOCKS)); 
+ 576              		.loc 1 452 0
+ 577 0010 5A71     		strb	r2, [r3, #5]
+ 453:USBFS_SCSI_operations.c **** 	USBFS_MSC_InEPBuffer[ 6] = HI8(LO16(USBFS_MSC_NUM_OF_BLOCKS)); 
+ 578              		.loc 1 453 0
+ 579 0012 0421     		movs	r1, #4
+ 580 0014 9971     		strb	r1, [r3, #6]
+ 454:USBFS_SCSI_operations.c **** 	USBFS_MSC_InEPBuffer[ 7] = LO8(LO16(USBFS_MSC_NUM_OF_BLOCKS)); 
+ 581              		.loc 1 454 0
+ 582 0016 9321     		movs	r1, #147
+ 583 0018 D971     		strb	r1, [r3, #7]
+ 455:USBFS_SCSI_operations.c **** 
+ 456:USBFS_SCSI_operations.c **** 	/* Block Length */
+ 457:USBFS_SCSI_operations.c **** 	USBFS_MSC_InEPBuffer[ 8] = FORMAT_CAP_FORMATTED_MEDIA;        
+ 584              		.loc 1 457 0
+ 585 001a 0221     		movs	r1, #2
+ 586 001c 1972     		strb	r1, [r3, #8]
+ 458:USBFS_SCSI_operations.c **** 	USBFS_MSC_InEPBuffer[ 9] = LO8(HI16(USBFS_MSC_BLOCKSIZE)); 
+ 587              		.loc 1 458 0
+ 588 001e 5A72     		strb	r2, [r3, #9]
+ 459:USBFS_SCSI_operations.c **** 	USBFS_MSC_InEPBuffer[10] = HI8(LO16(USBFS_MSC_BLOCKSIZE)); 
+ 589              		.loc 1 459 0
+ 590 0020 9972     		strb	r1, [r3, #10]
+ 460:USBFS_SCSI_operations.c **** 	USBFS_MSC_InEPBuffer[11] = LO8(LO16(USBFS_MSC_BLOCKSIZE)); 
+ 591              		.loc 1 460 0
+ 592 0022 DA72     		strb	r2, [r3, #11]
+ 461:USBFS_SCSI_operations.c **** 
+ 462:USBFS_SCSI_operations.c **** 	*numOfBytes = 12;
+ 593              		.loc 1 462 0
+ 594 0024 0C23     		movs	r3, #12
+ 595 0026 0370     		strb	r3, [r0]
+ 463:USBFS_SCSI_operations.c **** 	
+ 464:USBFS_SCSI_operations.c **** 	return(commandStatus);
+ 465:USBFS_SCSI_operations.c **** }
+ 596              		.loc 1 465 0
+ 597 0028 1046     		mov	r0, r2
+ 598              	.LVL40:
+ 599 002a 7047     		bx	lr
+ 600              	.L51:
+ 601              		.align	2
+ 602              	.L50:
+ 603 002c 00000000 		.word	USBFS_MSC_InEPBuffer
+ 604              		.cfi_endproc
+ 605              	.LFE72:
+ 606              		.size	USBFS_MSC_SCSI_ReadFormatCapacities, .-USBFS_MSC_SCSI_ReadFormatCapacities
+ 607              		.section	.text.USBFS_MSC_SCSI_ReadCapacity,"ax",%progbits
+ 608              		.align	2
+ 609              		.global	USBFS_MSC_SCSI_ReadCapacity
+ARM GAS  C:\Users\linar\AppData\Local\Temp\ccgDfqog.s 			page 20
+
+
+ 610              		.thumb
+ 611              		.thumb_func
+ 612              		.type	USBFS_MSC_SCSI_ReadCapacity, %function
+ 613              	USBFS_MSC_SCSI_ReadCapacity:
+ 614              	.LFB73:
+ 466:USBFS_SCSI_operations.c **** 
+ 467:USBFS_SCSI_operations.c **** /*******************************************************************************
+ 468:USBFS_SCSI_operations.c **** * Function Name: USBFS_MSC_SCSI_ReadCapacity()
+ 469:USBFS_SCSI_operations.c **** ********************************************************************************
+ 470:USBFS_SCSI_operations.c **** * Summary:
+ 471:USBFS_SCSI_operations.c **** *  Polls the status of the programmer 
+ 472:USBFS_SCSI_operations.c **** *
+ 473:USBFS_SCSI_operations.c **** * Parameters:
+ 474:USBFS_SCSI_operations.c **** *  void
+ 475:USBFS_SCSI_operations.c **** *
+ 476:USBFS_SCSI_operations.c **** * Return:
+ 477:USBFS_SCSI_operations.c **** *  cystatus: PASS
+ 478:USBFS_SCSI_operations.c **** *
+ 479:USBFS_SCSI_operations.c **** *******************************************************************************/
+ 480:USBFS_SCSI_operations.c **** cystatus USBFS_MSC_SCSI_ReadCapacity(uint8 *numOfBytes)
+ 481:USBFS_SCSI_operations.c **** {
+ 615              		.loc 1 481 0
+ 616              		.cfi_startproc
+ 617              		@ args = 0, pretend = 0, frame = 0
+ 618              		@ frame_needed = 0, uses_anonymous_args = 0
+ 619              		@ link register save eliminated.
+ 620              	.LVL41:
+ 482:USBFS_SCSI_operations.c **** 	cystatus commandStatus = USBFS_MSC_CSW_PASS;
+ 483:USBFS_SCSI_operations.c **** 	
+ 484:USBFS_SCSI_operations.c **** 	/* Returned Logical Block Address of Last Block */
+ 485:USBFS_SCSI_operations.c **** 	USBFS_MSC_InEPBuffer[ 0] = HI8(HI16(USBFS_MSC_TOTAL_MEM_SIZE)); 
+ 621              		.loc 1 485 0
+ 622 0000 084B     		ldr	r3, .L53
+ 623 0002 0022     		movs	r2, #0
+ 624 0004 1A70     		strb	r2, [r3]
+ 486:USBFS_SCSI_operations.c **** 	USBFS_MSC_InEPBuffer[ 1] = LO8(HI16(USBFS_MSC_TOTAL_MEM_SIZE)); 
+ 625              		.loc 1 486 0
+ 626 0006 0921     		movs	r1, #9
+ 627 0008 5970     		strb	r1, [r3, #1]
+ 487:USBFS_SCSI_operations.c **** 	USBFS_MSC_InEPBuffer[ 2] = HI8(LO16(USBFS_MSC_TOTAL_MEM_SIZE)); 
+ 628              		.loc 1 487 0
+ 629 000a 2721     		movs	r1, #39
+ 630 000c 9970     		strb	r1, [r3, #2]
+ 488:USBFS_SCSI_operations.c **** 	USBFS_MSC_InEPBuffer[ 3] = LO8(LO16(USBFS_MSC_TOTAL_MEM_SIZE)); 
+ 631              		.loc 1 488 0
+ 632 000e C021     		movs	r1, #192
+ 633 0010 D970     		strb	r1, [r3, #3]
+ 489:USBFS_SCSI_operations.c **** 
+ 490:USBFS_SCSI_operations.c **** 	/* Block Length */
+ 491:USBFS_SCSI_operations.c **** 	USBFS_MSC_InEPBuffer[ 4] = HI8(HI16(USBFS_MSC_BLOCKSIZE)); 
+ 634              		.loc 1 491 0
+ 635 0012 1A71     		strb	r2, [r3, #4]
+ 492:USBFS_SCSI_operations.c **** 	USBFS_MSC_InEPBuffer[ 5] = LO8(HI16(USBFS_MSC_BLOCKSIZE)); 
+ 636              		.loc 1 492 0
+ 637 0014 5A71     		strb	r2, [r3, #5]
+ 493:USBFS_SCSI_operations.c **** 	USBFS_MSC_InEPBuffer[ 6] = HI8(LO16(USBFS_MSC_BLOCKSIZE)); 
+ 638              		.loc 1 493 0
+ARM GAS  C:\Users\linar\AppData\Local\Temp\ccgDfqog.s 			page 21
+
+
+ 639 0016 0221     		movs	r1, #2
+ 640 0018 9971     		strb	r1, [r3, #6]
+ 494:USBFS_SCSI_operations.c **** 	USBFS_MSC_InEPBuffer[ 7] = LO8(LO16(USBFS_MSC_BLOCKSIZE)); 
+ 641              		.loc 1 494 0
+ 642 001a DA71     		strb	r2, [r3, #7]
+ 495:USBFS_SCSI_operations.c **** 
+ 496:USBFS_SCSI_operations.c **** 	*numOfBytes = 8;
+ 643              		.loc 1 496 0
+ 644 001c 0823     		movs	r3, #8
+ 645 001e 0370     		strb	r3, [r0]
+ 497:USBFS_SCSI_operations.c **** 	
+ 498:USBFS_SCSI_operations.c **** 	return(commandStatus);
+ 499:USBFS_SCSI_operations.c **** }
+ 646              		.loc 1 499 0
+ 647 0020 1046     		mov	r0, r2
+ 648              	.LVL42:
+ 649 0022 7047     		bx	lr
+ 650              	.L54:
+ 651              		.align	2
+ 652              	.L53:
+ 653 0024 00000000 		.word	USBFS_MSC_InEPBuffer
+ 654              		.cfi_endproc
+ 655              	.LFE73:
+ 656              		.size	USBFS_MSC_SCSI_ReadCapacity, .-USBFS_MSC_SCSI_ReadCapacity
+ 657              		.section	.text.USBFS_MSC_SCSI_ModeSelect10,"ax",%progbits
+ 658              		.align	2
+ 659              		.global	USBFS_MSC_SCSI_ModeSelect10
+ 660              		.thumb
+ 661              		.thumb_func
+ 662              		.type	USBFS_MSC_SCSI_ModeSelect10, %function
+ 663              	USBFS_MSC_SCSI_ModeSelect10:
+ 664              	.LFB74:
+ 500:USBFS_SCSI_operations.c **** 
+ 501:USBFS_SCSI_operations.c **** /*******************************************************************************
+ 502:USBFS_SCSI_operations.c **** * Function Name: USBFS_MSC_SCSI_ModeSelect10()
+ 503:USBFS_SCSI_operations.c **** ********************************************************************************
+ 504:USBFS_SCSI_operations.c **** * Summary:
+ 505:USBFS_SCSI_operations.c **** *  This command is not supported as of now.
+ 506:USBFS_SCSI_operations.c **** *
+ 507:USBFS_SCSI_operations.c **** * Parameters:
+ 508:USBFS_SCSI_operations.c **** *  void
+ 509:USBFS_SCSI_operations.c **** *
+ 510:USBFS_SCSI_operations.c **** * Return:
+ 511:USBFS_SCSI_operations.c **** *  cystatus: FAIL
+ 512:USBFS_SCSI_operations.c **** *
+ 513:USBFS_SCSI_operations.c **** *******************************************************************************/
+ 514:USBFS_SCSI_operations.c **** cystatus USBFS_MSC_SCSI_ModeSelect10(uint8 *numOfBytes)
+ 515:USBFS_SCSI_operations.c **** {
+ 665              		.loc 1 515 0
+ 666              		.cfi_startproc
+ 667              		@ args = 0, pretend = 0, frame = 0
+ 668              		@ frame_needed = 0, uses_anonymous_args = 0
+ 669              		@ link register save eliminated.
+ 670              	.LVL43:
+ 516:USBFS_SCSI_operations.c **** 	cystatus commandStatus = USBFS_MSC_CSW_FAIL;
+ 517:USBFS_SCSI_operations.c **** 	
+ 518:USBFS_SCSI_operations.c **** 	commandFailed = TRUE;
+ARM GAS  C:\Users\linar\AppData\Local\Temp\ccgDfqog.s 			page 22
+
+
+ 671              		.loc 1 518 0
+ 672 0000 0123     		movs	r3, #1
+ 673 0002 034A     		ldr	r2, .L56
+ 674 0004 1370     		strb	r3, [r2]
+ 519:USBFS_SCSI_operations.c **** 	
+ 520:USBFS_SCSI_operations.c **** 	*numOfBytes = ZERO;
+ 675              		.loc 1 520 0
+ 676 0006 0022     		movs	r2, #0
+ 677 0008 0270     		strb	r2, [r0]
+ 521:USBFS_SCSI_operations.c **** 	
+ 522:USBFS_SCSI_operations.c **** 	return(commandStatus);
+ 523:USBFS_SCSI_operations.c **** }
+ 678              		.loc 1 523 0
+ 679 000a 1846     		mov	r0, r3
+ 680              	.LVL44:
+ 681 000c 7047     		bx	lr
+ 682              	.L57:
+ 683 000e 00BF     		.align	2
+ 684              	.L56:
+ 685 0010 00000000 		.word	.LANCHOR0
+ 686              		.cfi_endproc
+ 687              	.LFE74:
+ 688              		.size	USBFS_MSC_SCSI_ModeSelect10, .-USBFS_MSC_SCSI_ModeSelect10
+ 689              		.global	productRev
+ 690              		.global	productID
+ 691              		.global	vendorIDT10
+ 692              		.global	statusFileTimer
+ 693              		.global	forceOS
+ 694              		.comm	USBFS_MSC_OutEPBuffer,64,4
+ 695              		.comm	USBFS_MSC_InEPBuffer,64,4
+ 696              		.data
+ 697              		.align	2
+ 698              		.set	.LANCHOR1,. + 0
+ 699              		.type	vendorIDT10, %object
+ 700              		.size	vendorIDT10, 6
+ 701              	vendorIDT10:
+ 702 0000 414E4B53 		.ascii	"ANKS \000"
+ 702      2000
+ 703 0006 0000     		.space	2
+ 704              		.type	productID, %object
+ 705              		.size	productID, 5
+ 706              	productID:
+ 707 0008 48494D41 		.ascii	"HIMA\000"
+ 707      00
+ 708 000d 000000   		.space	3
+ 709              		.type	productRev, %object
+ 710              		.size	productRev, 5
+ 711              	productRev:
+ 712 0010 30323139 		.ascii	"0219\000"
+ 712      00
+ 713              		.bss
+ 714              		.set	.LANCHOR0,. + 0
+ 715              		.type	commandFailed, %object
+ 716              		.size	commandFailed, 1
+ 717              	commandFailed:
+ 718 0000 00       		.space	1
+ 719              		.type	mediaEjectedState, %object
+ARM GAS  C:\Users\linar\AppData\Local\Temp\ccgDfqog.s 			page 23
+
+
+ 720              		.size	mediaEjectedState, 1
+ 721              	mediaEjectedState:
+ 722 0001 00       		.space	1
+ 723              		.type	forceOS, %object
+ 724              		.size	forceOS, 1
+ 725              	forceOS:
+ 726 0002 00       		.space	1
+ 727              		.type	statusFileTimer, %object
+ 728              		.size	statusFileTimer, 1
+ 729              	statusFileTimer:
+ 730 0003 00       		.space	1
+ 731              		.text
+ 732              	.Letext0:
+ 733              		.file 2 "c:\\program files (x86)\\cypress\\psoc creator\\4.4\\psoc creator\\import\\gnu\\arm\\5.4.
+ 734              		.file 3 "c:\\program files (x86)\\cypress\\psoc creator\\4.4\\psoc creator\\import\\gnu\\arm\\5.4.
+ 735              		.file 4 "Generated_Source\\PSoC5/cytypes.h"
+ 736              		.file 5 "Generated_Source\\PSoC5/core_cm3.h"
+ 737              		.file 6 "USBFS_msc_cust.h"
+ 738              		.section	.debug_info,"",%progbits
+ 739              	.Ldebug_info0:
+ 740 0000 7F040000 		.4byte	0x47f
+ 741 0004 0400     		.2byte	0x4
+ 742 0006 00000000 		.4byte	.Ldebug_abbrev0
+ 743 000a 04       		.byte	0x4
+ 744 000b 01       		.uleb128 0x1
+ 745 000c E6000000 		.4byte	.LASF47
+ 746 0010 0C       		.byte	0xc
+ 747 0011 2C000000 		.4byte	.LASF48
+ 748 0015 C7020000 		.4byte	.LASF49
+ 749 0019 00000000 		.4byte	.Ldebug_ranges0+0
+ 750 001d 00000000 		.4byte	0
+ 751 0021 00000000 		.4byte	.Ldebug_line0
+ 752 0025 02       		.uleb128 0x2
+ 753 0026 01       		.byte	0x1
+ 754 0027 06       		.byte	0x6
+ 755 0028 C4030000 		.4byte	.LASF0
+ 756 002c 02       		.uleb128 0x2
+ 757 002d 01       		.byte	0x1
+ 758 002e 08       		.byte	0x8
+ 759 002f D8000000 		.4byte	.LASF1
+ 760 0033 02       		.uleb128 0x2
+ 761 0034 02       		.byte	0x2
+ 762 0035 05       		.byte	0x5
+ 763 0036 BD020000 		.4byte	.LASF2
+ 764 003a 02       		.uleb128 0x2
+ 765 003b 02       		.byte	0x2
+ 766 003c 07       		.byte	0x7
+ 767 003d 86010000 		.4byte	.LASF3
+ 768 0041 03       		.uleb128 0x3
+ 769 0042 53000000 		.4byte	.LASF9
+ 770 0046 02       		.byte	0x2
+ 771 0047 3F       		.byte	0x3f
+ 772 0048 4C000000 		.4byte	0x4c
+ 773 004c 02       		.uleb128 0x2
+ 774 004d 04       		.byte	0x4
+ 775 004e 05       		.byte	0x5
+ 776 004f 7B030000 		.4byte	.LASF4
+ARM GAS  C:\Users\linar\AppData\Local\Temp\ccgDfqog.s 			page 24
+
+
+ 777 0053 02       		.uleb128 0x2
+ 778 0054 04       		.byte	0x4
+ 779 0055 07       		.byte	0x7
+ 780 0056 74010000 		.4byte	.LASF5
+ 781 005a 02       		.uleb128 0x2
+ 782 005b 08       		.byte	0x8
+ 783 005c 05       		.byte	0x5
+ 784 005d 73020000 		.4byte	.LASF6
+ 785 0061 02       		.uleb128 0x2
+ 786 0062 08       		.byte	0x8
+ 787 0063 07       		.byte	0x7
+ 788 0064 C1000000 		.4byte	.LASF7
+ 789 0068 04       		.uleb128 0x4
+ 790 0069 04       		.byte	0x4
+ 791 006a 05       		.byte	0x5
+ 792 006b 696E7400 		.ascii	"int\000"
+ 793 006f 02       		.uleb128 0x2
+ 794 0070 04       		.byte	0x4
+ 795 0071 07       		.byte	0x7
+ 796 0072 30020000 		.4byte	.LASF8
+ 797 0076 03       		.uleb128 0x3
+ 798 0077 62020000 		.4byte	.LASF10
+ 799 007b 03       		.byte	0x3
+ 800 007c 2C       		.byte	0x2c
+ 801 007d 41000000 		.4byte	0x41
+ 802 0081 05       		.uleb128 0x5
+ 803 0082 34030000 		.4byte	.LASF11
+ 804 0086 04       		.byte	0x4
+ 805 0087 E801     		.2byte	0x1e8
+ 806 0089 2C000000 		.4byte	0x2c
+ 807 008d 05       		.uleb128 0x5
+ 808 008e 06020000 		.4byte	.LASF12
+ 809 0092 04       		.byte	0x4
+ 810 0093 E901     		.2byte	0x1e9
+ 811 0095 3A000000 		.4byte	0x3a
+ 812 0099 05       		.uleb128 0x5
+ 813 009a 0D020000 		.4byte	.LASF13
+ 814 009e 04       		.byte	0x4
+ 815 009f EA01     		.2byte	0x1ea
+ 816 00a1 53000000 		.4byte	0x53
+ 817 00a5 02       		.uleb128 0x2
+ 818 00a6 04       		.byte	0x4
+ 819 00a7 04       		.byte	0x4
+ 820 00a8 BB000000 		.4byte	.LASF14
+ 821 00ac 02       		.uleb128 0x2
+ 822 00ad 08       		.byte	0x8
+ 823 00ae 04       		.byte	0x4
+ 824 00af FF010000 		.4byte	.LASF15
+ 825 00b3 02       		.uleb128 0x2
+ 826 00b4 01       		.byte	0x1
+ 827 00b5 08       		.byte	0x8
+ 828 00b6 96020000 		.4byte	.LASF16
+ 829 00ba 05       		.uleb128 0x5
+ 830 00bb 23000000 		.4byte	.LASF17
+ 831 00bf 04       		.byte	0x4
+ 832 00c0 8A02     		.2byte	0x28a
+ 833 00c2 53000000 		.4byte	0x53
+ARM GAS  C:\Users\linar\AppData\Local\Temp\ccgDfqog.s 			page 25
+
+
+ 834 00c6 02       		.uleb128 0x2
+ 835 00c7 08       		.byte	0x8
+ 836 00c8 04       		.byte	0x4
+ 837 00c9 A8030000 		.4byte	.LASF18
+ 838 00cd 02       		.uleb128 0x2
+ 839 00ce 04       		.byte	0x4
+ 840 00cf 07       		.byte	0x7
+ 841 00d0 6A020000 		.4byte	.LASF19
+ 842 00d4 06       		.uleb128 0x6
+ 843 00d5 00000000 		.4byte	.LASF20
+ 844 00d9 01       		.byte	0x1
+ 845 00da 67       		.byte	0x67
+ 846 00db BA000000 		.4byte	0xba
+ 847 00df 00000000 		.4byte	.LFB63
+ 848 00e3 14000000 		.4byte	.LFE63-.LFB63
+ 849 00e7 01       		.uleb128 0x1
+ 850 00e8 9C       		.byte	0x9c
+ 851 00e9 0C010000 		.4byte	0x10c
+ 852 00ed 07       		.uleb128 0x7
+ 853 00ee 5A020000 		.4byte	.LASF24
+ 854 00f2 01       		.byte	0x1
+ 855 00f3 67       		.byte	0x67
+ 856 00f4 81000000 		.4byte	0x81
+ 857 00f8 00000000 		.4byte	.LLST0
+ 858 00fc 08       		.uleb128 0x8
+ 859 00fd 26030000 		.4byte	.LASF22
+ 860 0101 01       		.byte	0x1
+ 861 0102 69       		.byte	0x69
+ 862 0103 BA000000 		.4byte	0xba
+ 863 0107 3A000000 		.4byte	.LLST1
+ 864 010b 00       		.byte	0
+ 865 010c 06       		.uleb128 0x6
+ 866 010d 3D020000 		.4byte	.LASF21
+ 867 0111 01       		.byte	0x1
+ 868 0112 88       		.byte	0x88
+ 869 0113 BA000000 		.4byte	0xba
+ 870 0117 00000000 		.4byte	.LFB64
+ 871 011b 30000000 		.4byte	.LFE64-.LFB64
+ 872 011f 01       		.uleb128 0x1
+ 873 0120 9C       		.byte	0x9c
+ 874 0121 35010000 		.4byte	0x135
+ 875 0125 08       		.uleb128 0x8
+ 876 0126 26030000 		.4byte	.LASF22
+ 877 012a 01       		.byte	0x1
+ 878 012b 8A       		.byte	0x8a
+ 879 012c BA000000 		.4byte	0xba
+ 880 0130 59000000 		.4byte	.LLST2
+ 881 0134 00       		.byte	0
+ 882 0135 06       		.uleb128 0x6
+ 883 0136 A1020000 		.4byte	.LASF23
+ 884 013a 01       		.byte	0x1
+ 885 013b BB       		.byte	0xbb
+ 886 013c BA000000 		.4byte	0xba
+ 887 0140 00000000 		.4byte	.LFB65
+ 888 0144 8C000000 		.4byte	.LFE65-.LFB65
+ 889 0148 01       		.uleb128 0x1
+ 890 0149 9C       		.byte	0x9c
+ARM GAS  C:\Users\linar\AppData\Local\Temp\ccgDfqog.s 			page 26
+
+
+ 891 014a 7F010000 		.4byte	0x17f
+ 892 014e 07       		.uleb128 0x7
+ 893 014f A5000000 		.4byte	.LASF25
+ 894 0153 01       		.byte	0x1
+ 895 0154 BB       		.byte	0xbb
+ 896 0155 7F010000 		.4byte	0x17f
+ 897 0159 78000000 		.4byte	.LLST3
+ 898 015d 09       		.uleb128 0x9
+ 899 015e 26030000 		.4byte	.LASF22
+ 900 0162 01       		.byte	0x1
+ 901 0163 BD       		.byte	0xbd
+ 902 0164 BA000000 		.4byte	0xba
+ 903 0168 00       		.byte	0
+ 904 0169 0A       		.uleb128 0xa
+ 905 016a 10000000 		.4byte	.LVL9
+ 906 016e 79040000 		.4byte	0x479
+ 907 0172 0B       		.uleb128 0xb
+ 908 0173 01       		.uleb128 0x1
+ 909 0174 50       		.byte	0x50
+ 910 0175 02       		.uleb128 0x2
+ 911 0176 74       		.byte	0x74
+ 912 0177 00       		.sleb128 0
+ 913 0178 0B       		.uleb128 0xb
+ 914 0179 01       		.uleb128 0x1
+ 915 017a 51       		.byte	0x51
+ 916 017b 01       		.uleb128 0x1
+ 917 017c 30       		.byte	0x30
+ 918 017d 00       		.byte	0
+ 919 017e 00       		.byte	0
+ 920 017f 0C       		.uleb128 0xc
+ 921 0180 04       		.byte	0x4
+ 922 0181 81000000 		.4byte	0x81
+ 923 0185 06       		.uleb128 0x6
+ 924 0186 57030000 		.4byte	.LASF26
+ 925 018a 01       		.byte	0x1
+ 926 018b FD       		.byte	0xfd
+ 927 018c BA000000 		.4byte	0xba
+ 928 0190 00000000 		.4byte	.LFB66
+ 929 0194 14000000 		.4byte	.LFE66-.LFB66
+ 930 0198 01       		.uleb128 0x1
+ 931 0199 9C       		.byte	0x9c
+ 932 019a BA010000 		.4byte	0x1ba
+ 933 019e 07       		.uleb128 0x7
+ 934 019f A5000000 		.4byte	.LASF25
+ 935 01a3 01       		.byte	0x1
+ 936 01a4 FD       		.byte	0xfd
+ 937 01a5 7F010000 		.4byte	0x17f
+ 938 01a9 A4000000 		.4byte	.LLST4
+ 939 01ad 09       		.uleb128 0x9
+ 940 01ae 26030000 		.4byte	.LASF22
+ 941 01b2 01       		.byte	0x1
+ 942 01b3 FF       		.byte	0xff
+ 943 01b4 BA000000 		.4byte	0xba
+ 944 01b8 01       		.byte	0x1
+ 945 01b9 00       		.byte	0
+ 946 01ba 0D       		.uleb128 0xd
+ 947 01bb D0030000 		.4byte	.LASF27
+ARM GAS  C:\Users\linar\AppData\Local\Temp\ccgDfqog.s 			page 27
+
+
+ 948 01bf 01       		.byte	0x1
+ 949 01c0 1501     		.2byte	0x115
+ 950 01c2 BA000000 		.4byte	0xba
+ 951 01c6 00000000 		.4byte	.LFB67
+ 952 01ca 7C000000 		.4byte	.LFE67-.LFB67
+ 953 01ce 01       		.uleb128 0x1
+ 954 01cf 9C       		.byte	0x9c
+ 955 01d0 02020000 		.4byte	0x202
+ 956 01d4 0E       		.uleb128 0xe
+ 957 01d5 A5000000 		.4byte	.LASF25
+ 958 01d9 01       		.byte	0x1
+ 959 01da 1501     		.2byte	0x115
+ 960 01dc 7F010000 		.4byte	0x17f
+ 961 01e0 C5000000 		.4byte	.LLST5
+ 962 01e4 0F       		.uleb128 0xf
+ 963 01e5 26030000 		.4byte	.LASF22
+ 964 01e9 01       		.byte	0x1
+ 965 01ea 1701     		.2byte	0x117
+ 966 01ec BA000000 		.4byte	0xba
+ 967 01f0 00       		.byte	0
+ 968 01f1 10       		.uleb128 0x10
+ 969 01f2 9B020000 		.4byte	.LASF28
+ 970 01f6 01       		.byte	0x1
+ 971 01f7 1801     		.2byte	0x118
+ 972 01f9 81000000 		.4byte	0x81
+ 973 01fd E6000000 		.4byte	.LLST6
+ 974 0201 00       		.byte	0
+ 975 0202 0D       		.uleb128 0xd
+ 976 0203 99010000 		.4byte	.LASF29
+ 977 0207 01       		.byte	0x1
+ 978 0208 4801     		.2byte	0x148
+ 979 020a BA000000 		.4byte	0xba
+ 980 020e 00000000 		.4byte	.LFB68
+ 981 0212 14000000 		.4byte	.LFE68-.LFB68
+ 982 0216 01       		.uleb128 0x1
+ 983 0217 9C       		.byte	0x9c
+ 984 0218 3A020000 		.4byte	0x23a
+ 985 021c 0E       		.uleb128 0xe
+ 986 021d A5000000 		.4byte	.LASF25
+ 987 0221 01       		.byte	0x1
+ 988 0222 4801     		.2byte	0x148
+ 989 0224 7F010000 		.4byte	0x17f
+ 990 0228 3C010000 		.4byte	.LLST7
+ 991 022c 0F       		.uleb128 0xf
+ 992 022d 26030000 		.4byte	.LASF22
+ 993 0231 01       		.byte	0x1
+ 994 0232 4A01     		.2byte	0x14a
+ 995 0234 BA000000 		.4byte	0xba
+ 996 0238 01       		.byte	0x1
+ 997 0239 00       		.byte	0
+ 998 023a 0D       		.uleb128 0xd
+ 999 023b 7F000000 		.4byte	.LASF30
+ 1000 023f 01       		.byte	0x1
+ 1001 0240 6001     		.2byte	0x160
+ 1002 0242 BA000000 		.4byte	0xba
+ 1003 0246 00000000 		.4byte	.LFB69
+ 1004 024a 1C000000 		.4byte	.LFE69-.LFB69
+ARM GAS  C:\Users\linar\AppData\Local\Temp\ccgDfqog.s 			page 28
+
+
+ 1005 024e 01       		.uleb128 0x1
+ 1006 024f 9C       		.byte	0x9c
+ 1007 0250 72020000 		.4byte	0x272
+ 1008 0254 0E       		.uleb128 0xe
+ 1009 0255 A5000000 		.4byte	.LASF25
+ 1010 0259 01       		.byte	0x1
+ 1011 025a 6001     		.2byte	0x160
+ 1012 025c 7F010000 		.4byte	0x17f
+ 1013 0260 5D010000 		.4byte	.LLST8
+ 1014 0264 0F       		.uleb128 0xf
+ 1015 0265 26030000 		.4byte	.LASF22
+ 1016 0269 01       		.byte	0x1
+ 1017 026a 6201     		.2byte	0x162
+ 1018 026c BA000000 		.4byte	0xba
+ 1019 0270 00       		.byte	0
+ 1020 0271 00       		.byte	0
+ 1021 0272 0D       		.uleb128 0xd
+ 1022 0273 64000000 		.4byte	.LASF31
+ 1023 0277 01       		.byte	0x1
+ 1024 0278 7B01     		.2byte	0x17b
+ 1025 027a BA000000 		.4byte	0xba
+ 1026 027e 00000000 		.4byte	.LFB70
+ 1027 0282 24000000 		.4byte	.LFE70-.LFB70
+ 1028 0286 01       		.uleb128 0x1
+ 1029 0287 9C       		.byte	0x9c
+ 1030 0288 BF020000 		.4byte	0x2bf
+ 1031 028c 0E       		.uleb128 0xe
+ 1032 028d A5000000 		.4byte	.LASF25
+ 1033 0291 01       		.byte	0x1
+ 1034 0292 7B01     		.2byte	0x17b
+ 1035 0294 7F010000 		.4byte	0x17f
+ 1036 0298 7E010000 		.4byte	.LLST9
+ 1037 029c 0F       		.uleb128 0xf
+ 1038 029d 26030000 		.4byte	.LASF22
+ 1039 02a1 01       		.byte	0x1
+ 1040 02a2 7D01     		.2byte	0x17d
+ 1041 02a4 BA000000 		.4byte	0xba
+ 1042 02a8 00       		.byte	0
+ 1043 02a9 0A       		.uleb128 0xa
+ 1044 02aa 10000000 		.4byte	.LVL35
+ 1045 02ae 79040000 		.4byte	0x479
+ 1046 02b2 0B       		.uleb128 0xb
+ 1047 02b3 01       		.uleb128 0x1
+ 1048 02b4 50       		.byte	0x50
+ 1049 02b5 02       		.uleb128 0x2
+ 1050 02b6 74       		.byte	0x74
+ 1051 02b7 00       		.sleb128 0
+ 1052 02b8 0B       		.uleb128 0xb
+ 1053 02b9 01       		.uleb128 0x1
+ 1054 02ba 51       		.byte	0x51
+ 1055 02bb 01       		.uleb128 0x1
+ 1056 02bc 30       		.byte	0x30
+ 1057 02bd 00       		.byte	0
+ 1058 02be 00       		.byte	0
+ 1059 02bf 0D       		.uleb128 0xd
+ 1060 02c0 3A030000 		.4byte	.LASF32
+ 1061 02c4 01       		.byte	0x1
+ARM GAS  C:\Users\linar\AppData\Local\Temp\ccgDfqog.s 			page 29
+
+
+ 1062 02c5 9501     		.2byte	0x195
+ 1063 02c7 BA000000 		.4byte	0xba
+ 1064 02cb 00000000 		.4byte	.LFB71
+ 1065 02cf 24000000 		.4byte	.LFE71-.LFB71
+ 1066 02d3 01       		.uleb128 0x1
+ 1067 02d4 9C       		.byte	0x9c
+ 1068 02d5 F7020000 		.4byte	0x2f7
+ 1069 02d9 0E       		.uleb128 0xe
+ 1070 02da 44000000 		.4byte	.LASF33
+ 1071 02de 01       		.byte	0x1
+ 1072 02df 9501     		.2byte	0x195
+ 1073 02e1 81000000 		.4byte	0x81
+ 1074 02e5 AA010000 		.4byte	.LLST10
+ 1075 02e9 0F       		.uleb128 0xf
+ 1076 02ea 26030000 		.4byte	.LASF22
+ 1077 02ee 01       		.byte	0x1
+ 1078 02ef 9701     		.2byte	0x197
+ 1079 02f1 BA000000 		.4byte	0xba
+ 1080 02f5 00       		.byte	0
+ 1081 02f6 00       		.byte	0
+ 1082 02f7 0D       		.uleb128 0xd
+ 1083 02f8 84030000 		.4byte	.LASF34
+ 1084 02fc 01       		.byte	0x1
+ 1085 02fd B901     		.2byte	0x1b9
+ 1086 02ff BA000000 		.4byte	0xba
+ 1087 0303 00000000 		.4byte	.LFB72
+ 1088 0307 30000000 		.4byte	.LFE72-.LFB72
+ 1089 030b 01       		.uleb128 0x1
+ 1090 030c 9C       		.byte	0x9c
+ 1091 030d 2F030000 		.4byte	0x32f
+ 1092 0311 0E       		.uleb128 0xe
+ 1093 0312 A5000000 		.4byte	.LASF25
+ 1094 0316 01       		.byte	0x1
+ 1095 0317 B901     		.2byte	0x1b9
+ 1096 0319 7F010000 		.4byte	0x17f
+ 1097 031d CB010000 		.4byte	.LLST11
+ 1098 0321 0F       		.uleb128 0xf
+ 1099 0322 26030000 		.4byte	.LASF22
+ 1100 0326 01       		.byte	0x1
+ 1101 0327 BB01     		.2byte	0x1bb
+ 1102 0329 BA000000 		.4byte	0xba
+ 1103 032d 00       		.byte	0
+ 1104 032e 00       		.byte	0
+ 1105 032f 0D       		.uleb128 0xd
+ 1106 0330 E7030000 		.4byte	.LASF35
+ 1107 0334 01       		.byte	0x1
+ 1108 0335 E001     		.2byte	0x1e0
+ 1109 0337 BA000000 		.4byte	0xba
+ 1110 033b 00000000 		.4byte	.LFB73
+ 1111 033f 28000000 		.4byte	.LFE73-.LFB73
+ 1112 0343 01       		.uleb128 0x1
+ 1113 0344 9C       		.byte	0x9c
+ 1114 0345 67030000 		.4byte	0x367
+ 1115 0349 0E       		.uleb128 0xe
+ 1116 034a A5000000 		.4byte	.LASF25
+ 1117 034e 01       		.byte	0x1
+ 1118 034f E001     		.2byte	0x1e0
+ARM GAS  C:\Users\linar\AppData\Local\Temp\ccgDfqog.s 			page 30
+
+
+ 1119 0351 7F010000 		.4byte	0x17f
+ 1120 0355 EC010000 		.4byte	.LLST12
+ 1121 0359 0F       		.uleb128 0xf
+ 1122 035a 26030000 		.4byte	.LASF22
+ 1123 035e 01       		.byte	0x1
+ 1124 035f E201     		.2byte	0x1e2
+ 1125 0361 BA000000 		.4byte	0xba
+ 1126 0365 00       		.byte	0
+ 1127 0366 00       		.byte	0
+ 1128 0367 0D       		.uleb128 0xd
+ 1129 0368 14020000 		.4byte	.LASF36
+ 1130 036c 01       		.byte	0x1
+ 1131 036d 0202     		.2byte	0x202
+ 1132 036f BA000000 		.4byte	0xba
+ 1133 0373 00000000 		.4byte	.LFB74
+ 1134 0377 14000000 		.4byte	.LFE74-.LFB74
+ 1135 037b 01       		.uleb128 0x1
+ 1136 037c 9C       		.byte	0x9c
+ 1137 037d 9F030000 		.4byte	0x39f
+ 1138 0381 0E       		.uleb128 0xe
+ 1139 0382 A5000000 		.4byte	.LASF25
+ 1140 0386 01       		.byte	0x1
+ 1141 0387 0202     		.2byte	0x202
+ 1142 0389 7F010000 		.4byte	0x17f
+ 1143 038d 0D020000 		.4byte	.LLST13
+ 1144 0391 0F       		.uleb128 0xf
+ 1145 0392 26030000 		.4byte	.LASF22
+ 1146 0396 01       		.byte	0x1
+ 1147 0397 0402     		.2byte	0x204
+ 1148 0399 BA000000 		.4byte	0xba
+ 1149 039d 01       		.byte	0x1
+ 1150 039e 00       		.byte	0
+ 1151 039f 11       		.uleb128 0x11
+ 1152 03a0 C1010000 		.4byte	.LASF37
+ 1153 03a4 01       		.byte	0x1
+ 1154 03a5 4C       		.byte	0x4c
+ 1155 03a6 81000000 		.4byte	0x81
+ 1156 03aa 05       		.uleb128 0x5
+ 1157 03ab 03       		.byte	0x3
+ 1158 03ac 01000000 		.4byte	mediaEjectedState
+ 1159 03b0 11       		.uleb128 0x11
+ 1160 03b1 F1010000 		.4byte	.LASF38
+ 1161 03b5 01       		.byte	0x1
+ 1162 03b6 4F       		.byte	0x4f
+ 1163 03b7 81000000 		.4byte	0x81
+ 1164 03bb 05       		.uleb128 0x5
+ 1165 03bc 03       		.byte	0x3
+ 1166 03bd 00000000 		.4byte	commandFailed
+ 1167 03c1 12       		.uleb128 0x12
+ 1168 03c2 B4010000 		.4byte	.LASF39
+ 1169 03c6 05       		.byte	0x5
+ 1170 03c7 1207     		.2byte	0x712
+ 1171 03c9 CD030000 		.4byte	0x3cd
+ 1172 03cd 13       		.uleb128 0x13
+ 1173 03ce 76000000 		.4byte	0x76
+ 1174 03d2 14       		.uleb128 0x14
+ 1175 03d3 81000000 		.4byte	0x81
+ARM GAS  C:\Users\linar\AppData\Local\Temp\ccgDfqog.s 			page 31
+
+
+ 1176 03d7 E2030000 		.4byte	0x3e2
+ 1177 03db 15       		.uleb128 0x15
+ 1178 03dc CD000000 		.4byte	0xcd
+ 1179 03e0 3F       		.byte	0x3f
+ 1180 03e1 00       		.byte	0
+ 1181 03e2 16       		.uleb128 0x16
+ 1182 03e3 81020000 		.4byte	.LASF40
+ 1183 03e7 06       		.byte	0x6
+ 1184 03e8 72       		.byte	0x72
+ 1185 03e9 D2030000 		.4byte	0x3d2
+ 1186 03ed 05       		.uleb128 0x5
+ 1187 03ee 03       		.byte	0x3
+ 1188 03ef 00000000 		.4byte	USBFS_MSC_InEPBuffer
+ 1189 03f3 16       		.uleb128 0x16
+ 1190 03f4 D3010000 		.4byte	.LASF41
+ 1191 03f8 06       		.byte	0x6
+ 1192 03f9 73       		.byte	0x73
+ 1193 03fa D2030000 		.4byte	0x3d2
+ 1194 03fe 05       		.uleb128 0x5
+ 1195 03ff 03       		.byte	0x3
+ 1196 0400 00000000 		.4byte	USBFS_MSC_OutEPBuffer
+ 1197 0404 16       		.uleb128 0x16
+ 1198 0405 E9010000 		.4byte	.LASF42
+ 1199 0409 01       		.byte	0x1
+ 1200 040a 48       		.byte	0x48
+ 1201 040b 81000000 		.4byte	0x81
+ 1202 040f 05       		.uleb128 0x5
+ 1203 0410 03       		.byte	0x3
+ 1204 0411 00000000 		.4byte	forceOS
+ 1205 0415 16       		.uleb128 0x16
+ 1206 0416 B4030000 		.4byte	.LASF43
+ 1207 041a 01       		.byte	0x1
+ 1208 041b 4A       		.byte	0x4a
+ 1209 041c 81000000 		.4byte	0x81
+ 1210 0420 05       		.uleb128 0x5
+ 1211 0421 03       		.byte	0x3
+ 1212 0422 00000000 		.4byte	statusFileTimer
+ 1213 0426 14       		.uleb128 0x14
+ 1214 0427 2C000000 		.4byte	0x2c
+ 1215 042b 36040000 		.4byte	0x436
+ 1216 042f 15       		.uleb128 0x15
+ 1217 0430 CD000000 		.4byte	0xcd
+ 1218 0434 05       		.byte	0x5
+ 1219 0435 00       		.byte	0
+ 1220 0436 16       		.uleb128 0x16
+ 1221 0437 99000000 		.4byte	.LASF44
+ 1222 043b 01       		.byte	0x1
+ 1223 043c 52       		.byte	0x52
+ 1224 043d 26040000 		.4byte	0x426
+ 1225 0441 05       		.uleb128 0x5
+ 1226 0442 03       		.byte	0x3
+ 1227 0443 00000000 		.4byte	vendorIDT10
+ 1228 0447 14       		.uleb128 0x14
+ 1229 0448 2C000000 		.4byte	0x2c
+ 1230 044c 57040000 		.4byte	0x457
+ 1231 0450 15       		.uleb128 0x15
+ 1232 0451 CD000000 		.4byte	0xcd
+ARM GAS  C:\Users\linar\AppData\Local\Temp\ccgDfqog.s 			page 32
+
+
+ 1233 0455 04       		.byte	0x4
+ 1234 0456 00       		.byte	0
+ 1235 0457 16       		.uleb128 0x16
+ 1236 0458 71030000 		.4byte	.LASF45
+ 1237 045c 01       		.byte	0x1
+ 1238 045d 55       		.byte	0x55
+ 1239 045e 47040000 		.4byte	0x447
+ 1240 0462 05       		.uleb128 0x5
+ 1241 0463 03       		.byte	0x3
+ 1242 0464 00000000 		.4byte	productID
+ 1243 0468 16       		.uleb128 0x16
+ 1244 0469 B0000000 		.4byte	.LASF46
+ 1245 046d 01       		.byte	0x1
+ 1246 046e 58       		.byte	0x58
+ 1247 046f 47040000 		.4byte	0x447
+ 1248 0473 05       		.uleb128 0x5
+ 1249 0474 03       		.byte	0x3
+ 1250 0475 00000000 		.4byte	productRev
+ 1251 0479 17       		.uleb128 0x17
+ 1252 047a 5D000000 		.4byte	.LASF50
+ 1253 047e 5D000000 		.4byte	.LASF50
+ 1254 0482 00       		.byte	0
+ 1255              		.section	.debug_abbrev,"",%progbits
+ 1256              	.Ldebug_abbrev0:
+ 1257 0000 01       		.uleb128 0x1
+ 1258 0001 11       		.uleb128 0x11
+ 1259 0002 01       		.byte	0x1
+ 1260 0003 25       		.uleb128 0x25
+ 1261 0004 0E       		.uleb128 0xe
+ 1262 0005 13       		.uleb128 0x13
+ 1263 0006 0B       		.uleb128 0xb
+ 1264 0007 03       		.uleb128 0x3
+ 1265 0008 0E       		.uleb128 0xe
+ 1266 0009 1B       		.uleb128 0x1b
+ 1267 000a 0E       		.uleb128 0xe
+ 1268 000b 55       		.uleb128 0x55
+ 1269 000c 17       		.uleb128 0x17
+ 1270 000d 11       		.uleb128 0x11
+ 1271 000e 01       		.uleb128 0x1
+ 1272 000f 10       		.uleb128 0x10
+ 1273 0010 17       		.uleb128 0x17
+ 1274 0011 00       		.byte	0
+ 1275 0012 00       		.byte	0
+ 1276 0013 02       		.uleb128 0x2
+ 1277 0014 24       		.uleb128 0x24
+ 1278 0015 00       		.byte	0
+ 1279 0016 0B       		.uleb128 0xb
+ 1280 0017 0B       		.uleb128 0xb
+ 1281 0018 3E       		.uleb128 0x3e
+ 1282 0019 0B       		.uleb128 0xb
+ 1283 001a 03       		.uleb128 0x3
+ 1284 001b 0E       		.uleb128 0xe
+ 1285 001c 00       		.byte	0
+ 1286 001d 00       		.byte	0
+ 1287 001e 03       		.uleb128 0x3
+ 1288 001f 16       		.uleb128 0x16
+ 1289 0020 00       		.byte	0
+ARM GAS  C:\Users\linar\AppData\Local\Temp\ccgDfqog.s 			page 33
+
+
+ 1290 0021 03       		.uleb128 0x3
+ 1291 0022 0E       		.uleb128 0xe
+ 1292 0023 3A       		.uleb128 0x3a
+ 1293 0024 0B       		.uleb128 0xb
+ 1294 0025 3B       		.uleb128 0x3b
+ 1295 0026 0B       		.uleb128 0xb
+ 1296 0027 49       		.uleb128 0x49
+ 1297 0028 13       		.uleb128 0x13
+ 1298 0029 00       		.byte	0
+ 1299 002a 00       		.byte	0
+ 1300 002b 04       		.uleb128 0x4
+ 1301 002c 24       		.uleb128 0x24
+ 1302 002d 00       		.byte	0
+ 1303 002e 0B       		.uleb128 0xb
+ 1304 002f 0B       		.uleb128 0xb
+ 1305 0030 3E       		.uleb128 0x3e
+ 1306 0031 0B       		.uleb128 0xb
+ 1307 0032 03       		.uleb128 0x3
+ 1308 0033 08       		.uleb128 0x8
+ 1309 0034 00       		.byte	0
+ 1310 0035 00       		.byte	0
+ 1311 0036 05       		.uleb128 0x5
+ 1312 0037 16       		.uleb128 0x16
+ 1313 0038 00       		.byte	0
+ 1314 0039 03       		.uleb128 0x3
+ 1315 003a 0E       		.uleb128 0xe
+ 1316 003b 3A       		.uleb128 0x3a
+ 1317 003c 0B       		.uleb128 0xb
+ 1318 003d 3B       		.uleb128 0x3b
+ 1319 003e 05       		.uleb128 0x5
+ 1320 003f 49       		.uleb128 0x49
+ 1321 0040 13       		.uleb128 0x13
+ 1322 0041 00       		.byte	0
+ 1323 0042 00       		.byte	0
+ 1324 0043 06       		.uleb128 0x6
+ 1325 0044 2E       		.uleb128 0x2e
+ 1326 0045 01       		.byte	0x1
+ 1327 0046 3F       		.uleb128 0x3f
+ 1328 0047 19       		.uleb128 0x19
+ 1329 0048 03       		.uleb128 0x3
+ 1330 0049 0E       		.uleb128 0xe
+ 1331 004a 3A       		.uleb128 0x3a
+ 1332 004b 0B       		.uleb128 0xb
+ 1333 004c 3B       		.uleb128 0x3b
+ 1334 004d 0B       		.uleb128 0xb
+ 1335 004e 27       		.uleb128 0x27
+ 1336 004f 19       		.uleb128 0x19
+ 1337 0050 49       		.uleb128 0x49
+ 1338 0051 13       		.uleb128 0x13
+ 1339 0052 11       		.uleb128 0x11
+ 1340 0053 01       		.uleb128 0x1
+ 1341 0054 12       		.uleb128 0x12
+ 1342 0055 06       		.uleb128 0x6
+ 1343 0056 40       		.uleb128 0x40
+ 1344 0057 18       		.uleb128 0x18
+ 1345 0058 9742     		.uleb128 0x2117
+ 1346 005a 19       		.uleb128 0x19
+ARM GAS  C:\Users\linar\AppData\Local\Temp\ccgDfqog.s 			page 34
+
+
+ 1347 005b 01       		.uleb128 0x1
+ 1348 005c 13       		.uleb128 0x13
+ 1349 005d 00       		.byte	0
+ 1350 005e 00       		.byte	0
+ 1351 005f 07       		.uleb128 0x7
+ 1352 0060 05       		.uleb128 0x5
+ 1353 0061 00       		.byte	0
+ 1354 0062 03       		.uleb128 0x3
+ 1355 0063 0E       		.uleb128 0xe
+ 1356 0064 3A       		.uleb128 0x3a
+ 1357 0065 0B       		.uleb128 0xb
+ 1358 0066 3B       		.uleb128 0x3b
+ 1359 0067 0B       		.uleb128 0xb
+ 1360 0068 49       		.uleb128 0x49
+ 1361 0069 13       		.uleb128 0x13
+ 1362 006a 02       		.uleb128 0x2
+ 1363 006b 17       		.uleb128 0x17
+ 1364 006c 00       		.byte	0
+ 1365 006d 00       		.byte	0
+ 1366 006e 08       		.uleb128 0x8
+ 1367 006f 34       		.uleb128 0x34
+ 1368 0070 00       		.byte	0
+ 1369 0071 03       		.uleb128 0x3
+ 1370 0072 0E       		.uleb128 0xe
+ 1371 0073 3A       		.uleb128 0x3a
+ 1372 0074 0B       		.uleb128 0xb
+ 1373 0075 3B       		.uleb128 0x3b
+ 1374 0076 0B       		.uleb128 0xb
+ 1375 0077 49       		.uleb128 0x49
+ 1376 0078 13       		.uleb128 0x13
+ 1377 0079 02       		.uleb128 0x2
+ 1378 007a 17       		.uleb128 0x17
+ 1379 007b 00       		.byte	0
+ 1380 007c 00       		.byte	0
+ 1381 007d 09       		.uleb128 0x9
+ 1382 007e 34       		.uleb128 0x34
+ 1383 007f 00       		.byte	0
+ 1384 0080 03       		.uleb128 0x3
+ 1385 0081 0E       		.uleb128 0xe
+ 1386 0082 3A       		.uleb128 0x3a
+ 1387 0083 0B       		.uleb128 0xb
+ 1388 0084 3B       		.uleb128 0x3b
+ 1389 0085 0B       		.uleb128 0xb
+ 1390 0086 49       		.uleb128 0x49
+ 1391 0087 13       		.uleb128 0x13
+ 1392 0088 1C       		.uleb128 0x1c
+ 1393 0089 0B       		.uleb128 0xb
+ 1394 008a 00       		.byte	0
+ 1395 008b 00       		.byte	0
+ 1396 008c 0A       		.uleb128 0xa
+ 1397 008d 898201   		.uleb128 0x4109
+ 1398 0090 01       		.byte	0x1
+ 1399 0091 11       		.uleb128 0x11
+ 1400 0092 01       		.uleb128 0x1
+ 1401 0093 31       		.uleb128 0x31
+ 1402 0094 13       		.uleb128 0x13
+ 1403 0095 00       		.byte	0
+ARM GAS  C:\Users\linar\AppData\Local\Temp\ccgDfqog.s 			page 35
+
+
+ 1404 0096 00       		.byte	0
+ 1405 0097 0B       		.uleb128 0xb
+ 1406 0098 8A8201   		.uleb128 0x410a
+ 1407 009b 00       		.byte	0
+ 1408 009c 02       		.uleb128 0x2
+ 1409 009d 18       		.uleb128 0x18
+ 1410 009e 9142     		.uleb128 0x2111
+ 1411 00a0 18       		.uleb128 0x18
+ 1412 00a1 00       		.byte	0
+ 1413 00a2 00       		.byte	0
+ 1414 00a3 0C       		.uleb128 0xc
+ 1415 00a4 0F       		.uleb128 0xf
+ 1416 00a5 00       		.byte	0
+ 1417 00a6 0B       		.uleb128 0xb
+ 1418 00a7 0B       		.uleb128 0xb
+ 1419 00a8 49       		.uleb128 0x49
+ 1420 00a9 13       		.uleb128 0x13
+ 1421 00aa 00       		.byte	0
+ 1422 00ab 00       		.byte	0
+ 1423 00ac 0D       		.uleb128 0xd
+ 1424 00ad 2E       		.uleb128 0x2e
+ 1425 00ae 01       		.byte	0x1
+ 1426 00af 3F       		.uleb128 0x3f
+ 1427 00b0 19       		.uleb128 0x19
+ 1428 00b1 03       		.uleb128 0x3
+ 1429 00b2 0E       		.uleb128 0xe
+ 1430 00b3 3A       		.uleb128 0x3a
+ 1431 00b4 0B       		.uleb128 0xb
+ 1432 00b5 3B       		.uleb128 0x3b
+ 1433 00b6 05       		.uleb128 0x5
+ 1434 00b7 27       		.uleb128 0x27
+ 1435 00b8 19       		.uleb128 0x19
+ 1436 00b9 49       		.uleb128 0x49
+ 1437 00ba 13       		.uleb128 0x13
+ 1438 00bb 11       		.uleb128 0x11
+ 1439 00bc 01       		.uleb128 0x1
+ 1440 00bd 12       		.uleb128 0x12
+ 1441 00be 06       		.uleb128 0x6
+ 1442 00bf 40       		.uleb128 0x40
+ 1443 00c0 18       		.uleb128 0x18
+ 1444 00c1 9742     		.uleb128 0x2117
+ 1445 00c3 19       		.uleb128 0x19
+ 1446 00c4 01       		.uleb128 0x1
+ 1447 00c5 13       		.uleb128 0x13
+ 1448 00c6 00       		.byte	0
+ 1449 00c7 00       		.byte	0
+ 1450 00c8 0E       		.uleb128 0xe
+ 1451 00c9 05       		.uleb128 0x5
+ 1452 00ca 00       		.byte	0
+ 1453 00cb 03       		.uleb128 0x3
+ 1454 00cc 0E       		.uleb128 0xe
+ 1455 00cd 3A       		.uleb128 0x3a
+ 1456 00ce 0B       		.uleb128 0xb
+ 1457 00cf 3B       		.uleb128 0x3b
+ 1458 00d0 05       		.uleb128 0x5
+ 1459 00d1 49       		.uleb128 0x49
+ 1460 00d2 13       		.uleb128 0x13
+ARM GAS  C:\Users\linar\AppData\Local\Temp\ccgDfqog.s 			page 36
+
+
+ 1461 00d3 02       		.uleb128 0x2
+ 1462 00d4 17       		.uleb128 0x17
+ 1463 00d5 00       		.byte	0
+ 1464 00d6 00       		.byte	0
+ 1465 00d7 0F       		.uleb128 0xf
+ 1466 00d8 34       		.uleb128 0x34
+ 1467 00d9 00       		.byte	0
+ 1468 00da 03       		.uleb128 0x3
+ 1469 00db 0E       		.uleb128 0xe
+ 1470 00dc 3A       		.uleb128 0x3a
+ 1471 00dd 0B       		.uleb128 0xb
+ 1472 00de 3B       		.uleb128 0x3b
+ 1473 00df 05       		.uleb128 0x5
+ 1474 00e0 49       		.uleb128 0x49
+ 1475 00e1 13       		.uleb128 0x13
+ 1476 00e2 1C       		.uleb128 0x1c
+ 1477 00e3 0B       		.uleb128 0xb
+ 1478 00e4 00       		.byte	0
+ 1479 00e5 00       		.byte	0
+ 1480 00e6 10       		.uleb128 0x10
+ 1481 00e7 34       		.uleb128 0x34
+ 1482 00e8 00       		.byte	0
+ 1483 00e9 03       		.uleb128 0x3
+ 1484 00ea 0E       		.uleb128 0xe
+ 1485 00eb 3A       		.uleb128 0x3a
+ 1486 00ec 0B       		.uleb128 0xb
+ 1487 00ed 3B       		.uleb128 0x3b
+ 1488 00ee 05       		.uleb128 0x5
+ 1489 00ef 49       		.uleb128 0x49
+ 1490 00f0 13       		.uleb128 0x13
+ 1491 00f1 02       		.uleb128 0x2
+ 1492 00f2 17       		.uleb128 0x17
+ 1493 00f3 00       		.byte	0
+ 1494 00f4 00       		.byte	0
+ 1495 00f5 11       		.uleb128 0x11
+ 1496 00f6 34       		.uleb128 0x34
+ 1497 00f7 00       		.byte	0
+ 1498 00f8 03       		.uleb128 0x3
+ 1499 00f9 0E       		.uleb128 0xe
+ 1500 00fa 3A       		.uleb128 0x3a
+ 1501 00fb 0B       		.uleb128 0xb
+ 1502 00fc 3B       		.uleb128 0x3b
+ 1503 00fd 0B       		.uleb128 0xb
+ 1504 00fe 49       		.uleb128 0x49
+ 1505 00ff 13       		.uleb128 0x13
+ 1506 0100 02       		.uleb128 0x2
+ 1507 0101 18       		.uleb128 0x18
+ 1508 0102 00       		.byte	0
+ 1509 0103 00       		.byte	0
+ 1510 0104 12       		.uleb128 0x12
+ 1511 0105 34       		.uleb128 0x34
+ 1512 0106 00       		.byte	0
+ 1513 0107 03       		.uleb128 0x3
+ 1514 0108 0E       		.uleb128 0xe
+ 1515 0109 3A       		.uleb128 0x3a
+ 1516 010a 0B       		.uleb128 0xb
+ 1517 010b 3B       		.uleb128 0x3b
+ARM GAS  C:\Users\linar\AppData\Local\Temp\ccgDfqog.s 			page 37
+
+
+ 1518 010c 05       		.uleb128 0x5
+ 1519 010d 49       		.uleb128 0x49
+ 1520 010e 13       		.uleb128 0x13
+ 1521 010f 3F       		.uleb128 0x3f
+ 1522 0110 19       		.uleb128 0x19
+ 1523 0111 3C       		.uleb128 0x3c
+ 1524 0112 19       		.uleb128 0x19
+ 1525 0113 00       		.byte	0
+ 1526 0114 00       		.byte	0
+ 1527 0115 13       		.uleb128 0x13
+ 1528 0116 35       		.uleb128 0x35
+ 1529 0117 00       		.byte	0
+ 1530 0118 49       		.uleb128 0x49
+ 1531 0119 13       		.uleb128 0x13
+ 1532 011a 00       		.byte	0
+ 1533 011b 00       		.byte	0
+ 1534 011c 14       		.uleb128 0x14
+ 1535 011d 01       		.uleb128 0x1
+ 1536 011e 01       		.byte	0x1
+ 1537 011f 49       		.uleb128 0x49
+ 1538 0120 13       		.uleb128 0x13
+ 1539 0121 01       		.uleb128 0x1
+ 1540 0122 13       		.uleb128 0x13
+ 1541 0123 00       		.byte	0
+ 1542 0124 00       		.byte	0
+ 1543 0125 15       		.uleb128 0x15
+ 1544 0126 21       		.uleb128 0x21
+ 1545 0127 00       		.byte	0
+ 1546 0128 49       		.uleb128 0x49
+ 1547 0129 13       		.uleb128 0x13
+ 1548 012a 2F       		.uleb128 0x2f
+ 1549 012b 0B       		.uleb128 0xb
+ 1550 012c 00       		.byte	0
+ 1551 012d 00       		.byte	0
+ 1552 012e 16       		.uleb128 0x16
+ 1553 012f 34       		.uleb128 0x34
+ 1554 0130 00       		.byte	0
+ 1555 0131 03       		.uleb128 0x3
+ 1556 0132 0E       		.uleb128 0xe
+ 1557 0133 3A       		.uleb128 0x3a
+ 1558 0134 0B       		.uleb128 0xb
+ 1559 0135 3B       		.uleb128 0x3b
+ 1560 0136 0B       		.uleb128 0xb
+ 1561 0137 49       		.uleb128 0x49
+ 1562 0138 13       		.uleb128 0x13
+ 1563 0139 3F       		.uleb128 0x3f
+ 1564 013a 19       		.uleb128 0x19
+ 1565 013b 02       		.uleb128 0x2
+ 1566 013c 18       		.uleb128 0x18
+ 1567 013d 00       		.byte	0
+ 1568 013e 00       		.byte	0
+ 1569 013f 17       		.uleb128 0x17
+ 1570 0140 2E       		.uleb128 0x2e
+ 1571 0141 00       		.byte	0
+ 1572 0142 3F       		.uleb128 0x3f
+ 1573 0143 19       		.uleb128 0x19
+ 1574 0144 3C       		.uleb128 0x3c
+ARM GAS  C:\Users\linar\AppData\Local\Temp\ccgDfqog.s 			page 38
+
+
+ 1575 0145 19       		.uleb128 0x19
+ 1576 0146 6E       		.uleb128 0x6e
+ 1577 0147 0E       		.uleb128 0xe
+ 1578 0148 03       		.uleb128 0x3
+ 1579 0149 0E       		.uleb128 0xe
+ 1580 014a 00       		.byte	0
+ 1581 014b 00       		.byte	0
+ 1582 014c 00       		.byte	0
+ 1583              		.section	.debug_loc,"",%progbits
+ 1584              	.Ldebug_loc0:
+ 1585              	.LLST0:
+ 1586 0000 00000000 		.4byte	.LVL0
+ 1587 0004 04000000 		.4byte	.LVL1
+ 1588 0008 0100     		.2byte	0x1
+ 1589 000a 50       		.byte	0x50
+ 1590 000b 04000000 		.4byte	.LVL1
+ 1591 000f 0A000000 		.4byte	.LVL2
+ 1592 0013 0400     		.2byte	0x4
+ 1593 0015 F3       		.byte	0xf3
+ 1594 0016 01       		.uleb128 0x1
+ 1595 0017 50       		.byte	0x50
+ 1596 0018 9F       		.byte	0x9f
+ 1597 0019 0A000000 		.4byte	.LVL2
+ 1598 001d 0C000000 		.4byte	.LVL3
+ 1599 0021 0100     		.2byte	0x1
+ 1600 0023 50       		.byte	0x50
+ 1601 0024 0C000000 		.4byte	.LVL3
+ 1602 0028 14000000 		.4byte	.LFE63
+ 1603 002c 0400     		.2byte	0x4
+ 1604 002e F3       		.byte	0xf3
+ 1605 002f 01       		.uleb128 0x1
+ 1606 0030 50       		.byte	0x50
+ 1607 0031 9F       		.byte	0x9f
+ 1608 0032 00000000 		.4byte	0
+ 1609 0036 00000000 		.4byte	0
+ 1610              	.LLST1:
+ 1611 003a 00000000 		.4byte	.LVL0
+ 1612 003e 0C000000 		.4byte	.LVL3
+ 1613 0042 0200     		.2byte	0x2
+ 1614 0044 31       		.byte	0x31
+ 1615 0045 9F       		.byte	0x9f
+ 1616 0046 0C000000 		.4byte	.LVL3
+ 1617 004a 14000000 		.4byte	.LFE63
+ 1618 004e 0100     		.2byte	0x1
+ 1619 0050 50       		.byte	0x50
+ 1620 0051 00000000 		.4byte	0
+ 1621 0055 00000000 		.4byte	0
+ 1622              	.LLST2:
+ 1623 0059 00000000 		.4byte	.LVL4
+ 1624 005d 2A000000 		.4byte	.LVL5
+ 1625 0061 0200     		.2byte	0x2
+ 1626 0063 31       		.byte	0x31
+ 1627 0064 9F       		.byte	0x9f
+ 1628 0065 2A000000 		.4byte	.LVL5
+ 1629 0069 30000000 		.4byte	.LFE64
+ 1630 006d 0100     		.2byte	0x1
+ 1631 006f 50       		.byte	0x50
+ARM GAS  C:\Users\linar\AppData\Local\Temp\ccgDfqog.s 			page 39
+
+
+ 1632 0070 00000000 		.4byte	0
+ 1633 0074 00000000 		.4byte	0
+ 1634              	.LLST3:
+ 1635 0078 00000000 		.4byte	.LVL6
+ 1636 007c 0C000000 		.4byte	.LVL8
+ 1637 0080 0100     		.2byte	0x1
+ 1638 0082 50       		.byte	0x50
+ 1639 0083 0C000000 		.4byte	.LVL8
+ 1640 0087 82000000 		.4byte	.LVL10
+ 1641 008b 0100     		.2byte	0x1
+ 1642 008d 55       		.byte	0x55
+ 1643 008e 82000000 		.4byte	.LVL10
+ 1644 0092 8C000000 		.4byte	.LFE65
+ 1645 0096 0400     		.2byte	0x4
+ 1646 0098 F3       		.byte	0xf3
+ 1647 0099 01       		.uleb128 0x1
+ 1648 009a 50       		.byte	0x50
+ 1649 009b 9F       		.byte	0x9f
+ 1650 009c 00000000 		.4byte	0
+ 1651 00a0 00000000 		.4byte	0
+ 1652              	.LLST4:
+ 1653 00a4 00000000 		.4byte	.LVL11
+ 1654 00a8 0C000000 		.4byte	.LVL12
+ 1655 00ac 0100     		.2byte	0x1
+ 1656 00ae 50       		.byte	0x50
+ 1657 00af 0C000000 		.4byte	.LVL12
+ 1658 00b3 14000000 		.4byte	.LFE66
+ 1659 00b7 0400     		.2byte	0x4
+ 1660 00b9 F3       		.byte	0xf3
+ 1661 00ba 01       		.uleb128 0x1
+ 1662 00bb 50       		.byte	0x50
+ 1663 00bc 9F       		.byte	0x9f
+ 1664 00bd 00000000 		.4byte	0
+ 1665 00c1 00000000 		.4byte	0
+ 1666              	.LLST5:
+ 1667 00c5 00000000 		.4byte	.LVL13
+ 1668 00c9 6E000000 		.4byte	.LVL27
+ 1669 00cd 0100     		.2byte	0x1
+ 1670 00cf 50       		.byte	0x50
+ 1671 00d0 6E000000 		.4byte	.LVL27
+ 1672 00d4 7C000000 		.4byte	.LFE67
+ 1673 00d8 0400     		.2byte	0x4
+ 1674 00da F3       		.byte	0xf3
+ 1675 00db 01       		.uleb128 0x1
+ 1676 00dc 50       		.byte	0x50
+ 1677 00dd 9F       		.byte	0x9f
+ 1678 00de 00000000 		.4byte	0
+ 1679 00e2 00000000 		.4byte	0
+ 1680              	.LLST6:
+ 1681 00e6 02000000 		.4byte	.LVL14
+ 1682 00ea 20000000 		.4byte	.LVL15
+ 1683 00ee 0200     		.2byte	0x2
+ 1684 00f0 30       		.byte	0x30
+ 1685 00f1 9F       		.byte	0x9f
+ 1686 00f2 20000000 		.4byte	.LVL15
+ 1687 00f6 2E000000 		.4byte	.LVL16
+ 1688 00fa 0100     		.2byte	0x1
+ARM GAS  C:\Users\linar\AppData\Local\Temp\ccgDfqog.s 			page 40
+
+
+ 1689 00fc 53       		.byte	0x53
+ 1690 00fd 30000000 		.4byte	.LVL17
+ 1691 0101 36000000 		.4byte	.LVL18
+ 1692 0105 0100     		.2byte	0x1
+ 1693 0107 53       		.byte	0x53
+ 1694 0108 38000000 		.4byte	.LVL19
+ 1695 010c 48000000 		.4byte	.LVL20
+ 1696 0110 0100     		.2byte	0x1
+ 1697 0112 53       		.byte	0x53
+ 1698 0113 4A000000 		.4byte	.LVL21
+ 1699 0117 50000000 		.4byte	.LVL22
+ 1700 011b 0100     		.2byte	0x1
+ 1701 011d 53       		.byte	0x53
+ 1702 011e 52000000 		.4byte	.LVL23
+ 1703 0122 62000000 		.4byte	.LVL24
+ 1704 0126 0100     		.2byte	0x1
+ 1705 0128 53       		.byte	0x53
+ 1706 0129 64000000 		.4byte	.LVL25
+ 1707 012d 6A000000 		.4byte	.LVL26
+ 1708 0131 0100     		.2byte	0x1
+ 1709 0133 53       		.byte	0x53
+ 1710 0134 00000000 		.4byte	0
+ 1711 0138 00000000 		.4byte	0
+ 1712              	.LLST7:
+ 1713 013c 00000000 		.4byte	.LVL28
+ 1714 0140 0C000000 		.4byte	.LVL29
+ 1715 0144 0100     		.2byte	0x1
+ 1716 0146 50       		.byte	0x50
+ 1717 0147 0C000000 		.4byte	.LVL29
+ 1718 014b 14000000 		.4byte	.LFE68
+ 1719 014f 0400     		.2byte	0x4
+ 1720 0151 F3       		.byte	0xf3
+ 1721 0152 01       		.uleb128 0x1
+ 1722 0153 50       		.byte	0x50
+ 1723 0154 9F       		.byte	0x9f
+ 1724 0155 00000000 		.4byte	0
+ 1725 0159 00000000 		.4byte	0
+ 1726              	.LLST8:
+ 1727 015d 00000000 		.4byte	.LVL30
+ 1728 0161 14000000 		.4byte	.LVL31
+ 1729 0165 0100     		.2byte	0x1
+ 1730 0167 50       		.byte	0x50
+ 1731 0168 14000000 		.4byte	.LVL31
+ 1732 016c 1C000000 		.4byte	.LFE69
+ 1733 0170 0400     		.2byte	0x4
+ 1734 0172 F3       		.byte	0xf3
+ 1735 0173 01       		.uleb128 0x1
+ 1736 0174 50       		.byte	0x50
+ 1737 0175 9F       		.byte	0x9f
+ 1738 0176 00000000 		.4byte	0
+ 1739 017a 00000000 		.4byte	0
+ 1740              	.LLST9:
+ 1741 017e 00000000 		.4byte	.LVL32
+ 1742 0182 0C000000 		.4byte	.LVL34
+ 1743 0186 0100     		.2byte	0x1
+ 1744 0188 50       		.byte	0x50
+ 1745 0189 0C000000 		.4byte	.LVL34
+ARM GAS  C:\Users\linar\AppData\Local\Temp\ccgDfqog.s 			page 41
+
+
+ 1746 018d 1E000000 		.4byte	.LVL36
+ 1747 0191 0100     		.2byte	0x1
+ 1748 0193 55       		.byte	0x55
+ 1749 0194 1E000000 		.4byte	.LVL36
+ 1750 0198 24000000 		.4byte	.LFE70
+ 1751 019c 0400     		.2byte	0x4
+ 1752 019e F3       		.byte	0xf3
+ 1753 019f 01       		.uleb128 0x1
+ 1754 01a0 50       		.byte	0x50
+ 1755 01a1 9F       		.byte	0x9f
+ 1756 01a2 00000000 		.4byte	0
+ 1757 01a6 00000000 		.4byte	0
+ 1758              	.LLST10:
+ 1759 01aa 00000000 		.4byte	.LVL37
+ 1760 01ae 1C000000 		.4byte	.LVL38
+ 1761 01b2 0100     		.2byte	0x1
+ 1762 01b4 50       		.byte	0x50
+ 1763 01b5 1C000000 		.4byte	.LVL38
+ 1764 01b9 24000000 		.4byte	.LFE71
+ 1765 01bd 0400     		.2byte	0x4
+ 1766 01bf F3       		.byte	0xf3
+ 1767 01c0 01       		.uleb128 0x1
+ 1768 01c1 50       		.byte	0x50
+ 1769 01c2 9F       		.byte	0x9f
+ 1770 01c3 00000000 		.4byte	0
+ 1771 01c7 00000000 		.4byte	0
+ 1772              	.LLST11:
+ 1773 01cb 00000000 		.4byte	.LVL39
+ 1774 01cf 2A000000 		.4byte	.LVL40
+ 1775 01d3 0100     		.2byte	0x1
+ 1776 01d5 50       		.byte	0x50
+ 1777 01d6 2A000000 		.4byte	.LVL40
+ 1778 01da 30000000 		.4byte	.LFE72
+ 1779 01de 0400     		.2byte	0x4
+ 1780 01e0 F3       		.byte	0xf3
+ 1781 01e1 01       		.uleb128 0x1
+ 1782 01e2 50       		.byte	0x50
+ 1783 01e3 9F       		.byte	0x9f
+ 1784 01e4 00000000 		.4byte	0
+ 1785 01e8 00000000 		.4byte	0
+ 1786              	.LLST12:
+ 1787 01ec 00000000 		.4byte	.LVL41
+ 1788 01f0 22000000 		.4byte	.LVL42
+ 1789 01f4 0100     		.2byte	0x1
+ 1790 01f6 50       		.byte	0x50
+ 1791 01f7 22000000 		.4byte	.LVL42
+ 1792 01fb 28000000 		.4byte	.LFE73
+ 1793 01ff 0400     		.2byte	0x4
+ 1794 0201 F3       		.byte	0xf3
+ 1795 0202 01       		.uleb128 0x1
+ 1796 0203 50       		.byte	0x50
+ 1797 0204 9F       		.byte	0x9f
+ 1798 0205 00000000 		.4byte	0
+ 1799 0209 00000000 		.4byte	0
+ 1800              	.LLST13:
+ 1801 020d 00000000 		.4byte	.LVL43
+ 1802 0211 0C000000 		.4byte	.LVL44
+ARM GAS  C:\Users\linar\AppData\Local\Temp\ccgDfqog.s 			page 42
+
+
+ 1803 0215 0100     		.2byte	0x1
+ 1804 0217 50       		.byte	0x50
+ 1805 0218 0C000000 		.4byte	.LVL44
+ 1806 021c 14000000 		.4byte	.LFE74
+ 1807 0220 0400     		.2byte	0x4
+ 1808 0222 F3       		.byte	0xf3
+ 1809 0223 01       		.uleb128 0x1
+ 1810 0224 50       		.byte	0x50
+ 1811 0225 9F       		.byte	0x9f
+ 1812 0226 00000000 		.4byte	0
+ 1813 022a 00000000 		.4byte	0
+ 1814              		.section	.debug_aranges,"",%progbits
+ 1815 0000 74000000 		.4byte	0x74
+ 1816 0004 0200     		.2byte	0x2
+ 1817 0006 00000000 		.4byte	.Ldebug_info0
+ 1818 000a 04       		.byte	0x4
+ 1819 000b 00       		.byte	0
+ 1820 000c 0000     		.2byte	0
+ 1821 000e 0000     		.2byte	0
+ 1822 0010 00000000 		.4byte	.LFB63
+ 1823 0014 14000000 		.4byte	.LFE63-.LFB63
+ 1824 0018 00000000 		.4byte	.LFB64
+ 1825 001c 30000000 		.4byte	.LFE64-.LFB64
+ 1826 0020 00000000 		.4byte	.LFB65
+ 1827 0024 8C000000 		.4byte	.LFE65-.LFB65
+ 1828 0028 00000000 		.4byte	.LFB66
+ 1829 002c 14000000 		.4byte	.LFE66-.LFB66
+ 1830 0030 00000000 		.4byte	.LFB67
+ 1831 0034 7C000000 		.4byte	.LFE67-.LFB67
+ 1832 0038 00000000 		.4byte	.LFB68
+ 1833 003c 14000000 		.4byte	.LFE68-.LFB68
+ 1834 0040 00000000 		.4byte	.LFB69
+ 1835 0044 1C000000 		.4byte	.LFE69-.LFB69
+ 1836 0048 00000000 		.4byte	.LFB70
+ 1837 004c 24000000 		.4byte	.LFE70-.LFB70
+ 1838 0050 00000000 		.4byte	.LFB71
+ 1839 0054 24000000 		.4byte	.LFE71-.LFB71
+ 1840 0058 00000000 		.4byte	.LFB72
+ 1841 005c 30000000 		.4byte	.LFE72-.LFB72
+ 1842 0060 00000000 		.4byte	.LFB73
+ 1843 0064 28000000 		.4byte	.LFE73-.LFB73
+ 1844 0068 00000000 		.4byte	.LFB74
+ 1845 006c 14000000 		.4byte	.LFE74-.LFB74
+ 1846 0070 00000000 		.4byte	0
+ 1847 0074 00000000 		.4byte	0
+ 1848              		.section	.debug_ranges,"",%progbits
+ 1849              	.Ldebug_ranges0:
+ 1850 0000 00000000 		.4byte	.LFB63
+ 1851 0004 14000000 		.4byte	.LFE63
+ 1852 0008 00000000 		.4byte	.LFB64
+ 1853 000c 30000000 		.4byte	.LFE64
+ 1854 0010 00000000 		.4byte	.LFB65
+ 1855 0014 8C000000 		.4byte	.LFE65
+ 1856 0018 00000000 		.4byte	.LFB66
+ 1857 001c 14000000 		.4byte	.LFE66
+ 1858 0020 00000000 		.4byte	.LFB67
+ 1859 0024 7C000000 		.4byte	.LFE67
+ARM GAS  C:\Users\linar\AppData\Local\Temp\ccgDfqog.s 			page 43
+
+
+ 1860 0028 00000000 		.4byte	.LFB68
+ 1861 002c 14000000 		.4byte	.LFE68
+ 1862 0030 00000000 		.4byte	.LFB69
+ 1863 0034 1C000000 		.4byte	.LFE69
+ 1864 0038 00000000 		.4byte	.LFB70
+ 1865 003c 24000000 		.4byte	.LFE70
+ 1866 0040 00000000 		.4byte	.LFB71
+ 1867 0044 24000000 		.4byte	.LFE71
+ 1868 0048 00000000 		.4byte	.LFB72
+ 1869 004c 30000000 		.4byte	.LFE72
+ 1870 0050 00000000 		.4byte	.LFB73
+ 1871 0054 28000000 		.4byte	.LFE73
+ 1872 0058 00000000 		.4byte	.LFB74
+ 1873 005c 14000000 		.4byte	.LFE74
+ 1874 0060 00000000 		.4byte	0
+ 1875 0064 00000000 		.4byte	0
+ 1876              		.section	.debug_line,"",%progbits
+ 1877              	.Ldebug_line0:
+ 1878 0000 E1020000 		.section	.debug_str,"MS",%progbits,1
+ 1878      02007101 
+ 1878      00000201 
+ 1878      FB0E0D00 
+ 1878      01010101 
+ 1879              	.LASF20:
+ 1880 0000 55534246 		.ascii	"USBFS_MSC_SCSI_PreventMediaRemoval\000"
+ 1880      535F4D53 
+ 1880      435F5343 
+ 1880      53495F50 
+ 1880      72657665 
+ 1881              	.LASF17:
+ 1882 0023 63797374 		.ascii	"cystatus\000"
+ 1882      61747573 
+ 1882      00
+ 1883              	.LASF48:
+ 1884 002c 55534246 		.ascii	"USBFS_SCSI_operations.c\000"
+ 1884      535F5343 
+ 1884      53495F6F 
+ 1884      70657261 
+ 1884      74696F6E 
+ 1885              	.LASF33:
+ 1886 0044 656A6563 		.ascii	"ejectIndicator\000"
+ 1886      74496E64 
+ 1886      69636174 
+ 1886      6F7200
+ 1887              	.LASF9:
+ 1888 0053 5F5F696E 		.ascii	"__int32_t\000"
+ 1888      7433325F 
+ 1888      7400
+ 1889              	.LASF50:
+ 1890 005d 6D656D73 		.ascii	"memset\000"
+ 1890      657400
+ 1891              	.LASF31:
+ 1892 0064 55534246 		.ascii	"USBFS_MSC_SCSI_ModeSense10\000"
+ 1892      535F4D53 
+ 1892      435F5343 
+ 1892      53495F4D 
+ 1892      6F646553 
+ARM GAS  C:\Users\linar\AppData\Local\Temp\ccgDfqog.s 			page 44
+
+
+ 1893              	.LASF30:
+ 1894 007f 55534246 		.ascii	"USBFS_MSC_SCSI_ModeSense6\000"
+ 1894      535F4D53 
+ 1894      435F5343 
+ 1894      53495F4D 
+ 1894      6F646553 
+ 1895              	.LASF44:
+ 1896 0099 76656E64 		.ascii	"vendorIDT10\000"
+ 1896      6F724944 
+ 1896      54313000 
+ 1897              	.LASF25:
+ 1898 00a5 6E756D4F 		.ascii	"numOfBytes\000"
+ 1898      66427974 
+ 1898      657300
+ 1899              	.LASF46:
+ 1900 00b0 70726F64 		.ascii	"productRev\000"
+ 1900      75637452 
+ 1900      657600
+ 1901              	.LASF14:
+ 1902 00bb 666C6F61 		.ascii	"float\000"
+ 1902      7400
+ 1903              	.LASF7:
+ 1904 00c1 6C6F6E67 		.ascii	"long long unsigned int\000"
+ 1904      206C6F6E 
+ 1904      6720756E 
+ 1904      7369676E 
+ 1904      65642069 
+ 1905              	.LASF1:
+ 1906 00d8 756E7369 		.ascii	"unsigned char\000"
+ 1906      676E6564 
+ 1906      20636861 
+ 1906      7200
+ 1907              	.LASF47:
+ 1908 00e6 474E5520 		.ascii	"GNU C11 5.4.1 20160609 (release) [ARM/embedded-5-br"
+ 1908      43313120 
+ 1908      352E342E 
+ 1908      31203230 
+ 1908      31363036 
+ 1909 0119 616E6368 		.ascii	"anch revision 237715] -mcpu=cortex-m3 -mthumb -g -O"
+ 1909      20726576 
+ 1909      6973696F 
+ 1909      6E203233 
+ 1909      37373135 
+ 1910 014c 67202D66 		.ascii	"g -ffunction-sections -ffat-lto-objects\000"
+ 1910      66756E63 
+ 1910      74696F6E 
+ 1910      2D736563 
+ 1910      74696F6E 
+ 1911              	.LASF5:
+ 1912 0174 6C6F6E67 		.ascii	"long unsigned int\000"
+ 1912      20756E73 
+ 1912      69676E65 
+ 1912      6420696E 
+ 1912      7400
+ 1913              	.LASF3:
+ 1914 0186 73686F72 		.ascii	"short unsigned int\000"
+ 1914      7420756E 
+ARM GAS  C:\Users\linar\AppData\Local\Temp\ccgDfqog.s 			page 45
+
+
+ 1914      7369676E 
+ 1914      65642069 
+ 1914      6E7400
+ 1915              	.LASF29:
+ 1916 0199 55534246 		.ascii	"USBFS_MSC_SCSI_ModeSelect6\000"
+ 1916      535F4D53 
+ 1916      435F5343 
+ 1916      53495F4D 
+ 1916      6F646553 
+ 1917              	.LASF39:
+ 1918 01b4 49544D5F 		.ascii	"ITM_RxBuffer\000"
+ 1918      52784275 
+ 1918      66666572 
+ 1918      00
+ 1919              	.LASF37:
+ 1920 01c1 6D656469 		.ascii	"mediaEjectedState\000"
+ 1920      61456A65 
+ 1920      63746564 
+ 1920      53746174 
+ 1920      6500
+ 1921              	.LASF41:
+ 1922 01d3 55534246 		.ascii	"USBFS_MSC_OutEPBuffer\000"
+ 1922      535F4D53 
+ 1922      435F4F75 
+ 1922      74455042 
+ 1922      75666665 
+ 1923              	.LASF42:
+ 1924 01e9 666F7263 		.ascii	"forceOS\000"
+ 1924      654F5300 
+ 1925              	.LASF38:
+ 1926 01f1 636F6D6D 		.ascii	"commandFailed\000"
+ 1926      616E6446 
+ 1926      61696C65 
+ 1926      6400
+ 1927              	.LASF15:
+ 1928 01ff 646F7562 		.ascii	"double\000"
+ 1928      6C6500
+ 1929              	.LASF12:
+ 1930 0206 75696E74 		.ascii	"uint16\000"
+ 1930      313600
+ 1931              	.LASF13:
+ 1932 020d 75696E74 		.ascii	"uint32\000"
+ 1932      333200
+ 1933              	.LASF36:
+ 1934 0214 55534246 		.ascii	"USBFS_MSC_SCSI_ModeSelect10\000"
+ 1934      535F4D53 
+ 1934      435F5343 
+ 1934      53495F4D 
+ 1934      6F646553 
+ 1935              	.LASF8:
+ 1936 0230 756E7369 		.ascii	"unsigned int\000"
+ 1936      676E6564 
+ 1936      20696E74 
+ 1936      00
+ 1937              	.LASF21:
+ 1938 023d 55534246 		.ascii	"USBFS_MSC_SCSI_TestUnitReady\000"
+ 1938      535F4D53 
+ARM GAS  C:\Users\linar\AppData\Local\Temp\ccgDfqog.s 			page 46
+
+
+ 1938      435F5343 
+ 1938      53495F54 
+ 1938      65737455 
+ 1939              	.LASF24:
+ 1940 025a 70726576 		.ascii	"prevent\000"
+ 1940      656E7400 
+ 1941              	.LASF10:
+ 1942 0262 696E7433 		.ascii	"int32_t\000"
+ 1942      325F7400 
+ 1943              	.LASF19:
+ 1944 026a 73697A65 		.ascii	"sizetype\000"
+ 1944      74797065 
+ 1944      00
+ 1945              	.LASF6:
+ 1946 0273 6C6F6E67 		.ascii	"long long int\000"
+ 1946      206C6F6E 
+ 1946      6720696E 
+ 1946      7400
+ 1947              	.LASF40:
+ 1948 0281 55534246 		.ascii	"USBFS_MSC_InEPBuffer\000"
+ 1948      535F4D53 
+ 1948      435F496E 
+ 1948      45504275 
+ 1948      66666572 
+ 1949              	.LASF16:
+ 1950 0296 63686172 		.ascii	"char\000"
+ 1950      00
+ 1951              	.LASF28:
+ 1952 029b 696E6465 		.ascii	"index\000"
+ 1952      7800
+ 1953              	.LASF23:
+ 1954 02a1 55534246 		.ascii	"USBFS_MSC_SCSI_RequestSense\000"
+ 1954      535F4D53 
+ 1954      435F5343 
+ 1954      53495F52 
+ 1954      65717565 
+ 1955              	.LASF2:
+ 1956 02bd 73686F72 		.ascii	"short int\000"
+ 1956      7420696E 
+ 1956      7400
+ 1957              	.LASF49:
+ 1958 02c7 433A5C55 		.ascii	"C:\\Users\\linar\\OneDrive\\Documents\\PSoC Creator"
+ 1958      73657273 
+ 1958      5C6C696E 
+ 1958      61725C4F 
+ 1958      6E654472 
+ 1959 02f5 5C70736F 		.ascii	"\\psocRandomWorkspace\\usb-fatfs-flash-usbfs.cydsn\000"
+ 1959      6352616E 
+ 1959      646F6D57 
+ 1959      6F726B73 
+ 1959      70616365 
+ 1960              	.LASF22:
+ 1961 0326 636F6D6D 		.ascii	"commandStatus\000"
+ 1961      616E6453 
+ 1961      74617475 
+ 1961      7300
+ 1962              	.LASF11:
+ARM GAS  C:\Users\linar\AppData\Local\Temp\ccgDfqog.s 			page 47
+
+
+ 1963 0334 75696E74 		.ascii	"uint8\000"
+ 1963      3800
+ 1964              	.LASF32:
+ 1965 033a 55534246 		.ascii	"USBFS_MSC_SCSI_StartStopUnit\000"
+ 1965      535F4D53 
+ 1965      435F5343 
+ 1965      53495F53 
+ 1965      74617274 
+ 1966              	.LASF26:
+ 1967 0357 55534246 		.ascii	"USBFS_MSC_SCSI_FormatUnit\000"
+ 1967      535F4D53 
+ 1967      435F5343 
+ 1967      53495F46 
+ 1967      6F726D61 
+ 1968              	.LASF45:
+ 1969 0371 70726F64 		.ascii	"productID\000"
+ 1969      75637449 
+ 1969      4400
+ 1970              	.LASF4:
+ 1971 037b 6C6F6E67 		.ascii	"long int\000"
+ 1971      20696E74 
+ 1971      00
+ 1972              	.LASF34:
+ 1973 0384 55534246 		.ascii	"USBFS_MSC_SCSI_ReadFormatCapacities\000"
+ 1973      535F4D53 
+ 1973      435F5343 
+ 1973      53495F52 
+ 1973      65616446 
+ 1974              	.LASF18:
+ 1975 03a8 6C6F6E67 		.ascii	"long double\000"
+ 1975      20646F75 
+ 1975      626C6500 
+ 1976              	.LASF43:
+ 1977 03b4 73746174 		.ascii	"statusFileTimer\000"
+ 1977      75734669 
+ 1977      6C655469 
+ 1977      6D657200 
+ 1978              	.LASF0:
+ 1979 03c4 7369676E 		.ascii	"signed char\000"
+ 1979      65642063 
+ 1979      68617200 
+ 1980              	.LASF27:
+ 1981 03d0 55534246 		.ascii	"USBFS_MSC_SCSI_Inquiry\000"
+ 1981      535F4D53 
+ 1981      435F5343 
+ 1981      53495F49 
+ 1981      6E717569 
+ 1982              	.LASF35:
+ 1983 03e7 55534246 		.ascii	"USBFS_MSC_SCSI_ReadCapacity\000"
+ 1983      535F4D53 
+ 1983      435F5343 
+ 1983      53495F52 
+ 1983      65616443 
+ 1984              		.ident	"GCC: (GNU Tools for ARM Embedded Processors) 5.4.1 20160609 (release) [ARM/embedded-5-bran

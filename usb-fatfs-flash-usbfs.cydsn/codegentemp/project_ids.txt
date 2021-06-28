@@ -1,0 +1,21 @@
+C:\Users\linar\OneDrive\Documents\PSoC Creator\psocRandomWorkspace\Tutorial-1.cydsn\Tutorial-1.cyprj|5239553d-3c5e-4898-a2d2-b6ee294d5f5d
+C:\Program Files (x86)\Cypress\PSoC Creator\4.4\PSoC Creator\psoc\content\default\CyAnnotationLibrary\CyAnnotationLibrary.cylib\CyAnnotationLibrary.cyprj|eaf4d347-a79e-4b79-9e13-8e1bcb52b937
+C:\Users\linar\OneDrive\Documents\PSoC Creator\4.4\Downloads ( 4.4).cylib\Downloads ( 4.4).cyprj|aab821c6-5118-4d24-90ac-b531fd5381a8
+C:\Program Files (x86)\Cypress\PSoC Creator\4.4\PSoC Creator\psoc\content\cycomponentlibraryupdates\CyComponentLibraryUpdates.cylib\CyComponentLibraryUpdates.cyprj|85c3ed0b-354e-4e9d-9474-97564efe094f
+C:\Program Files (x86)\Cypress\PSoC Creator\4.4\PSoC Creator\psoc\content\cycomponentlibrary\CyComponentLibrary.cylib\CyComponentLibrary.cyprj|0d5afd00-c4ce-40f7-bc2a-ac50b1560cbe
+C:\Program Files (x86)\Cypress\PSoC Creator\4.4\PSoC Creator\psoc\content\cyprimitives\CyPrimitives.cylib\CyPrimitives.cyprj|d71a8a15-2d47-47d2-b174-4ad3b5ae7429
+C:\Users\linar\OneDrive\Documents\PSoC Creator\psocRandomWorkspace\blinkLedTutorial1.cydsn\blinkLedTutorial1.cyprj|a57fc467-c40b-41e3-a6d8-ec78b400e18a
+C:\Users\linar\OneDrive\Documents\PSoC Creator\psocRandomWorkspace\readButtonTutorial2.cydsn\readButtonTutorial2.cyprj|4cb61efb-3890-42ea-83a5-69f46258b8de
+C:\Users\linar\OneDrive\Documents\PSoC Creator\psocRandomWorkspace\interruptButtonTutorial3.cydsn\interruptButtonTutorial3.cyprj|5d175f94-5b4f-4de9-b0c0-43b44a3a0fe0
+C:\Users\linar\OneDrive\Documents\PSoC Creator\psocRandomWorkspace\usb-test.cydsn\usb-test.cyprj|e89bb32e-aeba-40ef-bf87-6ed0a3e84453
+C:\Users\linar\OneDrive\Documents\PSoC Creator\psocRandomWorkspace\usb-cdc.cydsn\usb-cdc.cyprj|fd86353d-72b5-4b43-83b8-7d2fbddc5683
+C:\Users\linar\OneDrive\Documents\PSoC Creator\psocRandomWorkspace\usb-cdc-2.cydsn\usb-cdc-2.cyprj|3f62efb7-dec6-466b-b573-1f5c4ab4cb14
+C:\Users\linar\OneDrive\Documents\PSoC Creator\psocRandomWorkspace\usb-msc-test-1.cydsn\usb-msc-test-1.cyprj|cd21e452-b4ad-4e58-8daf-30f8fcbc0720
+C:\Users\linar\OneDrive\Documents\PSoC Creator\psocRandomWorkspace\usb-fatfs-debug-uart.cydsn\usb-fatfs-debug-uart.cyprj|1cba9955-1d4f-4d45-b57b-294c317e3a31
+C:\Users\linar\OneDrive\Documents\PSoC Creator\psocRandomWorkspace\memory_test.cydsn\memory_test.cyprj|f14f7d4d-3c59-4e13-a724-8808db2def1d
+C:\Users\linar\OneDrive\Documents\PSoC Creator\psocRandomWorkspace\spi-tester-1.cydsn\spi-tester-1.cyprj|34cbd97f-8bf8-407c-9f0a-50479ed6ee32
+C:\Users\linar\OneDrive\Documents\PSoC Creator\psocRandomWorkspace\usb-fatfs-flash.cydsn\usb-fatfs-flash.cyprj|e3c2ee94-7068-491f-9fe5-4e54c8e38af5
+C:\Users\linar\OneDrive\Documents\PSoC Creator\psocRandomWorkspace\usb-fatfs-flash-ok.cydsn\usb-fatfs-flash-ok.cyprj|ae99a37c-7909-4d78-9b10-4535ff75b21b
+C:\Users\linar\OneDrive\Documents\PSoC Creator\psocRandomWorkspace\usb-fatfs-flash-debug-uart.cydsn\usb-fatfs-flash-debug-uart.cyprj|d1e06708-493b-4b62-a748-ca75b7921634
+C:\Users\linar\OneDrive\Documents\PSoC Creator\psocRandomWorkspace\usb-fatfs-flash-debug-uart-ok.cydsn\usb-fatfs-flash-debug-uart-ok.cyprj|fe300b03-a424-4a07-9307-55f48183fa8b
+C:\Users\linar\OneDrive\Documents\PSoC Creator\psocRandomWorkspace\usb-fatfs-flash-usbfs.cydsn\usb-fatfs-flash-usbfs.cyprj|12724d63-a7b7-4757-a915-12641badda91

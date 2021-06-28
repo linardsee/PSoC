@@ -1,0 +1,1724 @@
+ARM GAS  C:\Users\linar\AppData\Local\Temp\ccmlCLsa.s 			page 1
+
+
+   1              		.syntax unified
+   2              		.cpu cortex-m3
+   3              		.fpu softvfp
+   4              		.eabi_attribute 20, 1
+   5              		.eabi_attribute 21, 1
+   6              		.eabi_attribute 23, 3
+   7              		.eabi_attribute 24, 1
+   8              		.eabi_attribute 25, 1
+   9              		.eabi_attribute 26, 1
+  10              		.eabi_attribute 30, 1
+  11              		.eabi_attribute 34, 1
+  12              		.eabi_attribute 18, 4
+  13              		.thumb
+  14              		.syntax unified
+  15              		.file	"main.c"
+  16              		.text
+  17              	.Ltext0:
+  18              		.cfi_sections	.debug_frame
+  19              		.section	.text.main,"ax",%progbits
+  20              		.align	2
+  21              		.global	main
+  22              		.thumb
+  23              		.thumb_func
+  24              		.type	main, %function
+  25              	main:
+  26              	.LFB64:
+  27              		.file 1 "main.c"
+   1:main.c        **** /* ========================================
+   2:main.c        ****  *
+   3:main.c        ****  * Copyright YOUR COMPANY, THE YEAR
+   4:main.c        ****  * All Rights Reserved
+   5:main.c        ****  * UNPUBLISHED, LICENSED SOFTWARE.
+   6:main.c        ****  *
+   7:main.c        ****  * CONFIDENTIAL AND PROPRIETARY INFORMATION
+   8:main.c        ****  * WHICH IS THE PROPERTY OF your company.
+   9:main.c        ****  *
+  10:main.c        ****  * ========================================
+  11:main.c        **** */
+  12:main.c        **** #include <stdio.h>
+  13:main.c        **** 
+  14:main.c        **** #include "project.h"
+  15:main.c        **** #include "diskio.h"
+  16:main.c        **** #include "ff.h"
+  17:main.c        **** #include "USBFS_msc_cust.h"
+  18:main.c        **** #include "USBFS_SCSI_operations.h"
+  19:main.c        **** #include "general.h"
+  20:main.c        **** 
+  21:main.c        **** extern void USBFS_HandleMassStorageInRequests(void);
+  22:main.c        **** void USBFS_HandleMassStorageOutRequests(void);
+  23:main.c        **** 
+  24:main.c        **** uint8 cr = 13;
+  25:main.c        **** uint8 nl = 10;
+  26:main.c        **** 
+  27:main.c        **** int main(void)
+  28:main.c        **** {
+  28              		.loc 1 28 0
+  29              		.cfi_startproc
+ARM GAS  C:\Users\linar\AppData\Local\Temp\ccmlCLsa.s 			page 2
+
+
+  30              		@ args = 0, pretend = 0, frame = 1600
+  31              		@ frame_needed = 0, uses_anonymous_args = 0
+  32 0000 10B5     		push	{r4, lr}
+  33              		.cfi_def_cfa_offset 8
+  34              		.cfi_offset 4, -8
+  35              		.cfi_offset 14, -4
+  36 0002 ADF5C86D 		sub	sp, sp, #1600
+  37              		.cfi_def_cfa_offset 1608
+  29:main.c        ****     uint8 recvBuff[1024];
+  30:main.c        ****     uint8 sendbuff[6];
+  31:main.c        ****     
+  32:main.c        ****     memset(sendbuff, 0, 6);
+  38              		.loc 1 32 0
+  39 0006 0024     		movs	r4, #0
+  40 0008 8E94     		str	r4, [sp, #568]
+  41 000a ADF83C42 		strh	r4, [sp, #572]	@ movhi
+  33:main.c        ****     memset(recvBuff, 0, sizeof(recvBuff));
+  42              		.loc 1 33 0
+  43 000e 4FF48062 		mov	r2, #1024
+  44 0012 2146     		mov	r1, r4
+  45 0014 90A8     		add	r0, sp, #576
+  46 0016 FFF7FEFF 		bl	memset
+  47              	.LVL0:
+  34:main.c        ****     
+  35:main.c        ****     CyGlobalIntEnable; /* Enable global interrupts. */
+  48              		.loc 1 35 0
+  49              		.syntax unified
+  50              	@ 35 "main.c" 1
+  51 001a 62B6     		CPSIE   i
+  52              	@ 0 "" 2
+  36:main.c        ****     SPIM_1_Start();
+  53              		.loc 1 36 0
+  54              		.thumb
+  55              		.syntax unified
+  56 001c FFF7FEFF 		bl	SPIM_1_Start
+  57              	.LVL1:
+  37:main.c        ****     
+  38:main.c        ****     USBFS_Start(0,USBFS_3V_OPERATION);
+  58              		.loc 1 38 0
+  59 0020 2146     		mov	r1, r4
+  60 0022 2046     		mov	r0, r4
+  61 0024 FFF7FEFF 		bl	USBFS_Start
+  62              	.LVL2:
+  39:main.c        ****     /* Place your initialization/startup code here (e.g. MyInst_Start()) */
+  40:main.c        ****     if(USBFS_GetConfiguration())
+  63              		.loc 1 40 0
+  64 0028 FFF7FEFF 		bl	USBFS_GetConfiguration
+  65              	.LVL3:
+  66 002c 10B1     		cbz	r0, .L2
+  41:main.c        **** 	{
+  42:main.c        **** 		/* Re-enable the OUT EP */
+  43:main.c        **** 		USBFS_EnableOutEP(2);
+  67              		.loc 1 43 0
+  68 002e 0220     		movs	r0, #2
+  69 0030 FFF7FEFF 		bl	USBFS_EnableOutEP
+  70              	.LVL4:
+  71              	.L2:
+ARM GAS  C:\Users\linar\AppData\Local\Temp\ccmlCLsa.s 			page 3
+
+
+  44:main.c        ****     } 
+  45:main.c        ****    
+  46:main.c        ****     CyDelay(10000);
+  72              		.loc 1 46 0
+  73 0034 42F21070 		movw	r0, #10000
+  74 0038 FFF7FEFF 		bl	CyDelay
+  75              	.LVL5:
+  47:main.c        ****   
+  48:main.c        ****     /* Place your initialization/startup code here (e.g. MyInst_Start()) */
+  49:main.c        ****   
+  50:main.c        ****     //FATFS fatFs;
+  51:main.c        ****     FATFS fs;
+  52:main.c        ****     FIL fileO;
+  53:main.c        ****     //DIR directoryO;
+  54:main.c        ****     //FILINFO fileInfo;
+  55:main.c        ****     uint8 resultF;
+  56:main.c        ****     //FATFS *fatFsPtr;
+  57:main.c        ****     
+  58:main.c        ****     resultF = f_mount(&fs, "", 0);
+  76              		.loc 1 58 0
+  77 003c 164C     		ldr	r4, .L9
+  78 003e 0022     		movs	r2, #0
+  79 0040 2146     		mov	r1, r4
+  80 0042 01A8     		add	r0, sp, #4
+  81 0044 FFF7FEFF 		bl	f_mount
+  82              	.LVL6:
+  59:main.c        ****     resultF = f_mkfs("", 1, 0);
+  83              		.loc 1 59 0
+  84 0048 0022     		movs	r2, #0
+  85 004a 0121     		movs	r1, #1
+  86 004c 2046     		mov	r0, r4
+  87 004e FFF7FEFF 		bl	f_mkfs
+  88              	.LVL7:
+  89              	.L3:
+  60:main.c        ****     
+  61:main.c        ****     while(disk_read(0, recvBuff, 0, 2) == 3){}
+  90              		.loc 1 61 0 discriminator 1
+  91 0052 0223     		movs	r3, #2
+  92 0054 0022     		movs	r2, #0
+  93 0056 90A9     		add	r1, sp, #576
+  94 0058 1046     		mov	r0, r2
+  95 005a FFF7FEFF 		bl	disk_read
+  96              	.LVL8:
+  97 005e 0328     		cmp	r0, #3
+  98 0060 F7D0     		beq	.L3
+  62:main.c        ****  /*   
+  63:main.c        ****     for(int i = 0; i < 1024; i++)
+  64:main.c        ****     {
+  65:main.c        ****         if( !(i % 15) ) 
+  66:main.c        ****         {
+  67:main.c        ****             USBUART_1_PutData(&nl, 1);
+  68:main.c        ****             CyDelay(10);
+  69:main.c        ****             USBUART_1_PutData(&cr, 1);
+  70:main.c        ****             CyDelay(10);
+  71:main.c        ****         }  
+  72:main.c        ****         sprintf((char*)sendbuff, "%x ", recvBuff[i]);
+  73:main.c        ****         //sprintf((char*)sendbuff, "%d ", rand);
+ARM GAS  C:\Users\linar\AppData\Local\Temp\ccmlCLsa.s 			page 4
+
+
+  74:main.c        ****         USBUART_1_PutData(sendbuff, 6);
+  75:main.c        ****         memset(sendbuff, 0, 6);
+  76:main.c        ****         CyDelay(10); 
+  77:main.c        ****     }
+  78:main.c        ****  */   
+  79:main.c        ****     USBFS_InitializeMSC();
+  99              		.loc 1 79 0
+ 100 0062 FFF7FEFF 		bl	USBFS_InitializeMSC
+ 101              	.LVL9:
+ 102              	.L6:
+  80:main.c        ****     
+  81:main.c        ****     for(;;)
+  82:main.c        ****     {
+  83:main.c        ****         /* Place your application code here. */
+  84:main.c        ****         if(USBFS_GetConfiguration())
+ 103              		.loc 1 84 0
+ 104 0066 FFF7FEFF 		bl	USBFS_GetConfiguration
+ 105              	.LVL10:
+ 106 006a 28B1     		cbz	r0, .L4
+  85:main.c        **** 	    {
+  86:main.c        ****     		/* Check for the Configuration to Change, if so then re-enable the OUT EP */
+  87:main.c        ****     		if(USBFS_IsConfigurationChanged())
+ 107              		.loc 1 87 0
+ 108 006c FFF7FEFF 		bl	USBFS_IsConfigurationChanged
+ 109              	.LVL11:
+ 110 0070 10B1     		cbz	r0, .L4
+  88:main.c        ****     		{
+  89:main.c        ****     			USBFS_EnableOutEP(2);
+ 111              		.loc 1 89 0
+ 112 0072 0220     		movs	r0, #2
+ 113 0074 FFF7FEFF 		bl	USBFS_EnableOutEP
+ 114              	.LVL12:
+ 115              	.L4:
+  90:main.c        ****     		}
+  91:main.c        ****         }
+  92:main.c        ****         
+  93:main.c        ****         /* Check buffer status and handle mass storage events. Execute SCSI commands in the next le
+  94:main.c        **** 		if(USBFS_GetEPState(MSC_EP_IN) == USBFS_IN_BUFFER_EMPTY)
+ 116              		.loc 1 94 0
+ 117 0078 0120     		movs	r0, #1
+ 118 007a FFF7FEFF 		bl	USBFS_GetEPState
+ 119              	.LVL13:
+ 120 007e 0128     		cmp	r0, #1
+ 121 0080 01D1     		bne	.L5
+  95:main.c        **** 		{
+  96:main.c        **** 			USBFS_HandleMassStorageInRequests();
+ 122              		.loc 1 96 0
+ 123 0082 FFF7FEFF 		bl	USBFS_HandleMassStorageInRequests
+ 124              	.LVL14:
+ 125              	.L5:
+  97:main.c        **** 		}
+  98:main.c        **** 		if(USBFS_GetEPState(MSC_EP_OUT) == USBFS_EVENT_PENDING)
+ 126              		.loc 1 98 0
+ 127 0086 0220     		movs	r0, #2
+ 128 0088 FFF7FEFF 		bl	USBFS_GetEPState
+ 129              	.LVL15:
+ 130 008c 0128     		cmp	r0, #1
+ARM GAS  C:\Users\linar\AppData\Local\Temp\ccmlCLsa.s 			page 5
+
+
+ 131 008e EAD1     		bne	.L6
+  99:main.c        **** 		{
+ 100:main.c        **** 			USBFS_HandleMassStorageOutRequests(); 
+ 132              		.loc 1 100 0
+ 133 0090 FFF7FEFF 		bl	USBFS_HandleMassStorageOutRequests
+ 134              	.LVL16:
+ 135 0094 E7E7     		b	.L6
+ 136              	.L10:
+ 137 0096 00BF     		.align	2
+ 138              	.L9:
+ 139 0098 00000000 		.word	.LC0
+ 140              		.cfi_endproc
+ 141              	.LFE64:
+ 142              		.size	main, .-main
+ 143              		.global	nl
+ 144              		.global	cr
+ 145              		.comm	USBFS_MSC_OutEPBuffer,64,4
+ 146              		.comm	USBFS_MSC_InEPBuffer,64,4
+ 147              		.data
+ 148              		.type	nl, %object
+ 149              		.size	nl, 1
+ 150              	nl:
+ 151 0000 0A       		.byte	10
+ 152              		.type	cr, %object
+ 153              		.size	cr, 1
+ 154              	cr:
+ 155 0001 0D       		.byte	13
+ 156              		.section	.rodata.str1.4,"aMS",%progbits,1
+ 157              		.align	2
+ 158              	.LC0:
+ 159 0000 00       		.ascii	"\000"
+ 160              		.text
+ 161              	.Letext0:
+ 162              		.file 2 "c:\\program files (x86)\\cypress\\psoc creator\\4.4\\psoc creator\\import\\gnu\\arm\\5.4.
+ 163              		.file 3 "c:\\program files (x86)\\cypress\\psoc creator\\4.4\\psoc creator\\import\\gnu\\arm\\5.4.
+ 164              		.file 4 "Generated_Source\\PSoC5/cytypes.h"
+ 165              		.file 5 "integer.h"
+ 166              		.file 6 "ff.h"
+ 167              		.file 7 "Generated_Source\\PSoC5/core_cm3.h"
+ 168              		.file 8 "USBFS_msc_cust.h"
+ 169              		.file 9 "Generated_Source\\PSoC5/SPIM_1.h"
+ 170              		.file 10 "Generated_Source\\PSoC5/USBFS.h"
+ 171              		.file 11 "Generated_Source\\PSoC5/CyLib.h"
+ 172              		.file 12 "diskio.h"
+ 173              		.section	.debug_info,"",%progbits
+ 174              	.Ldebug_info0:
+ 175 0000 41050000 		.4byte	0x541
+ 176 0004 0400     		.2byte	0x4
+ 177 0006 00000000 		.4byte	.Ldebug_abbrev0
+ 178 000a 04       		.byte	0x4
+ 179 000b 01       		.uleb128 0x1
+ 180 000c 2D030000 		.4byte	.LASF64
+ 181 0010 0C       		.byte	0xc
+ 182 0011 87020000 		.4byte	.LASF65
+ 183 0015 D9010000 		.4byte	.LASF66
+ 184 0019 00000000 		.4byte	.Ldebug_ranges0+0
+ 185 001d 00000000 		.4byte	0
+ARM GAS  C:\Users\linar\AppData\Local\Temp\ccmlCLsa.s 			page 6
+
+
+ 186 0021 00000000 		.4byte	.Ldebug_line0
+ 187 0025 02       		.uleb128 0x2
+ 188 0026 01       		.byte	0x1
+ 189 0027 06       		.byte	0x6
+ 190 0028 EA000000 		.4byte	.LASF0
+ 191 002c 02       		.uleb128 0x2
+ 192 002d 01       		.byte	0x1
+ 193 002e 08       		.byte	0x8
+ 194 002f 4F010000 		.4byte	.LASF1
+ 195 0033 02       		.uleb128 0x2
+ 196 0034 02       		.byte	0x2
+ 197 0035 05       		.byte	0x5
+ 198 0036 51000000 		.4byte	.LASF2
+ 199 003a 02       		.uleb128 0x2
+ 200 003b 02       		.byte	0x2
+ 201 003c 07       		.byte	0x7
+ 202 003d 40020000 		.4byte	.LASF3
+ 203 0041 03       		.uleb128 0x3
+ 204 0042 D0020000 		.4byte	.LASF12
+ 205 0046 02       		.byte	0x2
+ 206 0047 3F       		.byte	0x3f
+ 207 0048 4C000000 		.4byte	0x4c
+ 208 004c 02       		.uleb128 0x2
+ 209 004d 04       		.byte	0x4
+ 210 004e 05       		.byte	0x5
+ 211 004f 17010000 		.4byte	.LASF4
+ 212 0053 02       		.uleb128 0x2
+ 213 0054 04       		.byte	0x4
+ 214 0055 07       		.byte	0x7
+ 215 0056 8E020000 		.4byte	.LASF5
+ 216 005a 02       		.uleb128 0x2
+ 217 005b 08       		.byte	0x8
+ 218 005c 05       		.byte	0x5
+ 219 005d 76000000 		.4byte	.LASF6
+ 220 0061 02       		.uleb128 0x2
+ 221 0062 08       		.byte	0x8
+ 222 0063 07       		.byte	0x7
+ 223 0064 A4010000 		.4byte	.LASF7
+ 224 0068 04       		.uleb128 0x4
+ 225 0069 04       		.byte	0x4
+ 226 006a 05       		.byte	0x5
+ 227 006b 696E7400 		.ascii	"int\000"
+ 228 006f 02       		.uleb128 0x2
+ 229 0070 04       		.byte	0x4
+ 230 0071 07       		.byte	0x7
+ 231 0072 BB010000 		.4byte	.LASF8
+ 232 0076 02       		.uleb128 0x2
+ 233 0077 08       		.byte	0x8
+ 234 0078 04       		.byte	0x4
+ 235 0079 6C010000 		.4byte	.LASF9
+ 236 007d 02       		.uleb128 0x2
+ 237 007e 04       		.byte	0x4
+ 238 007f 07       		.byte	0x7
+ 239 0080 FE020000 		.4byte	.LASF10
+ 240 0084 02       		.uleb128 0x2
+ 241 0085 01       		.byte	0x1
+ 242 0086 08       		.byte	0x8
+ARM GAS  C:\Users\linar\AppData\Local\Temp\ccmlCLsa.s 			page 7
+
+
+ 243 0087 53020000 		.4byte	.LASF11
+ 244 008b 03       		.uleb128 0x3
+ 245 008c 65020000 		.4byte	.LASF13
+ 246 0090 03       		.byte	0x3
+ 247 0091 2C       		.byte	0x2c
+ 248 0092 41000000 		.4byte	0x41
+ 249 0096 05       		.uleb128 0x5
+ 250 0097 DF000000 		.4byte	.LASF14
+ 251 009b 04       		.byte	0x4
+ 252 009c E801     		.2byte	0x1e8
+ 253 009e 2C000000 		.4byte	0x2c
+ 254 00a2 02       		.uleb128 0x2
+ 255 00a3 04       		.byte	0x4
+ 256 00a4 04       		.byte	0x4
+ 257 00a5 F6000000 		.4byte	.LASF15
+ 258 00a9 02       		.uleb128 0x2
+ 259 00aa 08       		.byte	0x8
+ 260 00ab 04       		.byte	0x4
+ 261 00ac A0020000 		.4byte	.LASF16
+ 262 00b0 03       		.uleb128 0x3
+ 263 00b1 8D000000 		.4byte	.LASF17
+ 264 00b5 05       		.byte	0x5
+ 265 00b6 10       		.byte	0x10
+ 266 00b7 2C000000 		.4byte	0x2c
+ 267 00bb 03       		.uleb128 0x3
+ 268 00bc D5000000 		.4byte	.LASF18
+ 269 00c0 05       		.byte	0x5
+ 270 00c1 14       		.byte	0x14
+ 271 00c2 3A000000 		.4byte	0x3a
+ 272 00c6 03       		.uleb128 0x3
+ 273 00c7 5D010000 		.4byte	.LASF19
+ 274 00cb 05       		.byte	0x5
+ 275 00cc 1D       		.byte	0x1d
+ 276 00cd 53000000 		.4byte	0x53
+ 277 00d1 06       		.uleb128 0x6
+ 278 00d2 3402     		.2byte	0x234
+ 279 00d4 06       		.byte	0x6
+ 280 00d5 4E       		.byte	0x4e
+ 281 00d6 BE010000 		.4byte	0x1be
+ 282 00da 07       		.uleb128 0x7
+ 283 00db 32000000 		.4byte	.LASF20
+ 284 00df 06       		.byte	0x6
+ 285 00e0 4F       		.byte	0x4f
+ 286 00e1 B0000000 		.4byte	0xb0
+ 287 00e5 00       		.byte	0
+ 288 00e6 08       		.uleb128 0x8
+ 289 00e7 64727600 		.ascii	"drv\000"
+ 290 00eb 06       		.byte	0x6
+ 291 00ec 50       		.byte	0x50
+ 292 00ed B0000000 		.4byte	0xb0
+ 293 00f1 01       		.byte	0x1
+ 294 00f2 07       		.uleb128 0x7
+ 295 00f3 31010000 		.4byte	.LASF21
+ 296 00f7 06       		.byte	0x6
+ 297 00f8 51       		.byte	0x51
+ 298 00f9 B0000000 		.4byte	0xb0
+ 299 00fd 02       		.byte	0x2
+ARM GAS  C:\Users\linar\AppData\Local\Temp\ccmlCLsa.s 			page 8
+
+
+ 300 00fe 07       		.uleb128 0x7
+ 301 00ff 00000000 		.4byte	.LASF22
+ 302 0103 06       		.byte	0x6
+ 303 0104 52       		.byte	0x52
+ 304 0105 B0000000 		.4byte	0xb0
+ 305 0109 03       		.byte	0x3
+ 306 010a 07       		.uleb128 0x7
+ 307 010b 9E010000 		.4byte	.LASF23
+ 308 010f 06       		.byte	0x6
+ 309 0110 53       		.byte	0x53
+ 310 0111 B0000000 		.4byte	0xb0
+ 311 0115 04       		.byte	0x4
+ 312 0116 07       		.uleb128 0x7
+ 313 0117 63010000 		.4byte	.LASF24
+ 314 011b 06       		.byte	0x6
+ 315 011c 54       		.byte	0x54
+ 316 011d B0000000 		.4byte	0xb0
+ 317 0121 05       		.byte	0x5
+ 318 0122 08       		.uleb128 0x8
+ 319 0123 696400   		.ascii	"id\000"
+ 320 0126 06       		.byte	0x6
+ 321 0127 55       		.byte	0x55
+ 322 0128 BB000000 		.4byte	0xbb
+ 323 012c 06       		.byte	0x6
+ 324 012d 07       		.uleb128 0x7
+ 325 012e B5000000 		.4byte	.LASF25
+ 326 0132 06       		.byte	0x6
+ 327 0133 56       		.byte	0x56
+ 328 0134 BB000000 		.4byte	0xbb
+ 329 0138 08       		.byte	0x8
+ 330 0139 07       		.uleb128 0x7
+ 331 013a FC000000 		.4byte	.LASF26
+ 332 013e 06       		.byte	0x6
+ 333 013f 5E       		.byte	0x5e
+ 334 0140 C6000000 		.4byte	0xc6
+ 335 0144 0C       		.byte	0xc
+ 336 0145 07       		.uleb128 0x7
+ 337 0146 80010000 		.4byte	.LASF27
+ 338 014a 06       		.byte	0x6
+ 339 014b 5F       		.byte	0x5f
+ 340 014c C6000000 		.4byte	0xc6
+ 341 0150 10       		.byte	0x10
+ 342 0151 07       		.uleb128 0x7
+ 343 0152 DA000000 		.4byte	.LASF28
+ 344 0156 06       		.byte	0x6
+ 345 0157 62       		.byte	0x62
+ 346 0158 C6000000 		.4byte	0xc6
+ 347 015c 14       		.byte	0x14
+ 348 015d 07       		.uleb128 0x7
+ 349 015e 29000000 		.4byte	.LASF29
+ 350 0162 06       		.byte	0x6
+ 351 0163 64       		.byte	0x64
+ 352 0164 C6000000 		.4byte	0xc6
+ 353 0168 18       		.byte	0x18
+ 354 0169 07       		.uleb128 0x7
+ 355 016a 49010000 		.4byte	.LASF30
+ 356 016e 06       		.byte	0x6
+ARM GAS  C:\Users\linar\AppData\Local\Temp\ccmlCLsa.s 			page 9
+
+
+ 357 016f 65       		.byte	0x65
+ 358 0170 C6000000 		.4byte	0xc6
+ 359 0174 1C       		.byte	0x1c
+ 360 0175 07       		.uleb128 0x7
+ 361 0176 37010000 		.4byte	.LASF31
+ 362 017a 06       		.byte	0x6
+ 363 017b 66       		.byte	0x66
+ 364 017c C6000000 		.4byte	0xc6
+ 365 0180 20       		.byte	0x20
+ 366 0181 07       		.uleb128 0x7
+ 367 0182 58020000 		.4byte	.LASF32
+ 368 0186 06       		.byte	0x6
+ 369 0187 67       		.byte	0x67
+ 370 0188 C6000000 		.4byte	0xc6
+ 371 018c 24       		.byte	0x24
+ 372 018d 07       		.uleb128 0x7
+ 373 018e B9020000 		.4byte	.LASF33
+ 374 0192 06       		.byte	0x6
+ 375 0193 68       		.byte	0x68
+ 376 0194 C6000000 		.4byte	0xc6
+ 377 0198 28       		.byte	0x28
+ 378 0199 07       		.uleb128 0x7
+ 379 019a 84000000 		.4byte	.LASF34
+ 380 019e 06       		.byte	0x6
+ 381 019f 69       		.byte	0x69
+ 382 01a0 C6000000 		.4byte	0xc6
+ 383 01a4 2C       		.byte	0x2c
+ 384 01a5 07       		.uleb128 0x7
+ 385 01a6 25030000 		.4byte	.LASF35
+ 386 01aa 06       		.byte	0x6
+ 387 01ab 6A       		.byte	0x6a
+ 388 01ac C6000000 		.4byte	0xc6
+ 389 01b0 30       		.byte	0x30
+ 390 01b1 08       		.uleb128 0x8
+ 391 01b2 77696E00 		.ascii	"win\000"
+ 392 01b6 06       		.byte	0x6
+ 393 01b7 6B       		.byte	0x6b
+ 394 01b8 BE010000 		.4byte	0x1be
+ 395 01bc 34       		.byte	0x34
+ 396 01bd 00       		.byte	0
+ 397 01be 09       		.uleb128 0x9
+ 398 01bf B0000000 		.4byte	0xb0
+ 399 01c3 CF010000 		.4byte	0x1cf
+ 400 01c7 0A       		.uleb128 0xa
+ 401 01c8 7D000000 		.4byte	0x7d
+ 402 01cc FF01     		.2byte	0x1ff
+ 403 01ce 00       		.byte	0
+ 404 01cf 03       		.uleb128 0x3
+ 405 01d0 81020000 		.4byte	.LASF36
+ 406 01d4 06       		.byte	0x6
+ 407 01d5 6C       		.byte	0x6c
+ 408 01d6 D1000000 		.4byte	0xd1
+ 409 01da 06       		.uleb128 0x6
+ 410 01db 2402     		.2byte	0x224
+ 411 01dd 06       		.byte	0x6
+ 412 01de 72       		.byte	0x72
+ 413 01df 72020000 		.4byte	0x272
+ARM GAS  C:\Users\linar\AppData\Local\Temp\ccmlCLsa.s 			page 10
+
+
+ 414 01e3 08       		.uleb128 0x8
+ 415 01e4 667300   		.ascii	"fs\000"
+ 416 01e7 06       		.byte	0x6
+ 417 01e8 73       		.byte	0x73
+ 418 01e9 72020000 		.4byte	0x272
+ 419 01ed 00       		.byte	0
+ 420 01ee 08       		.uleb128 0x8
+ 421 01ef 696400   		.ascii	"id\000"
+ 422 01f2 06       		.byte	0x6
+ 423 01f3 74       		.byte	0x74
+ 424 01f4 BB000000 		.4byte	0xbb
+ 425 01f8 04       		.byte	0x4
+ 426 01f9 07       		.uleb128 0x7
+ 427 01fa 07030000 		.4byte	.LASF37
+ 428 01fe 06       		.byte	0x6
+ 429 01ff 75       		.byte	0x75
+ 430 0200 B0000000 		.4byte	0xb0
+ 431 0204 06       		.byte	0x6
+ 432 0205 08       		.uleb128 0x8
+ 433 0206 65727200 		.ascii	"err\000"
+ 434 020a 06       		.byte	0x6
+ 435 020b 76       		.byte	0x76
+ 436 020c B0000000 		.4byte	0xb0
+ 437 0210 07       		.byte	0x7
+ 438 0211 07       		.uleb128 0x7
+ 439 0212 E5000000 		.4byte	.LASF38
+ 440 0216 06       		.byte	0x6
+ 441 0217 77       		.byte	0x77
+ 442 0218 C6000000 		.4byte	0xc6
+ 443 021c 08       		.byte	0x8
+ 444 021d 07       		.uleb128 0x7
+ 445 021e 49010000 		.4byte	.LASF30
+ 446 0222 06       		.byte	0x6
+ 447 0223 78       		.byte	0x78
+ 448 0224 C6000000 		.4byte	0xc6
+ 449 0228 0C       		.byte	0xc
+ 450 0229 07       		.uleb128 0x7
+ 451 022a DA020000 		.4byte	.LASF39
+ 452 022e 06       		.byte	0x6
+ 453 022f 79       		.byte	0x79
+ 454 0230 C6000000 		.4byte	0xc6
+ 455 0234 10       		.byte	0x10
+ 456 0235 07       		.uleb128 0x7
+ 457 0236 98010000 		.4byte	.LASF40
+ 458 023a 06       		.byte	0x6
+ 459 023b 7A       		.byte	0x7a
+ 460 023c C6000000 		.4byte	0xc6
+ 461 0240 14       		.byte	0x14
+ 462 0241 07       		.uleb128 0x7
+ 463 0242 5B000000 		.4byte	.LASF41
+ 464 0246 06       		.byte	0x6
+ 465 0247 7B       		.byte	0x7b
+ 466 0248 C6000000 		.4byte	0xc6
+ 467 024c 18       		.byte	0x18
+ 468 024d 07       		.uleb128 0x7
+ 469 024e 07010000 		.4byte	.LASF42
+ 470 0252 06       		.byte	0x6
+ARM GAS  C:\Users\linar\AppData\Local\Temp\ccmlCLsa.s 			page 11
+
+
+ 471 0253 7D       		.byte	0x7d
+ 472 0254 C6000000 		.4byte	0xc6
+ 473 0258 1C       		.byte	0x1c
+ 474 0259 07       		.uleb128 0x7
+ 475 025a 38020000 		.4byte	.LASF43
+ 476 025e 06       		.byte	0x6
+ 477 025f 7E       		.byte	0x7e
+ 478 0260 78020000 		.4byte	0x278
+ 479 0264 20       		.byte	0x20
+ 480 0265 08       		.uleb128 0x8
+ 481 0266 62756600 		.ascii	"buf\000"
+ 482 026a 06       		.byte	0x6
+ 483 026b 87       		.byte	0x87
+ 484 026c BE010000 		.4byte	0x1be
+ 485 0270 24       		.byte	0x24
+ 486 0271 00       		.byte	0
+ 487 0272 0B       		.uleb128 0xb
+ 488 0273 04       		.byte	0x4
+ 489 0274 CF010000 		.4byte	0x1cf
+ 490 0278 0B       		.uleb128 0xb
+ 491 0279 04       		.byte	0x4
+ 492 027a B0000000 		.4byte	0xb0
+ 493 027e 0C       		.uleb128 0xc
+ 494 027f 46494C00 		.ascii	"FIL\000"
+ 495 0283 06       		.byte	0x6
+ 496 0284 89       		.byte	0x89
+ 497 0285 DA010000 		.4byte	0x1da
+ 498 0289 0D       		.uleb128 0xd
+ 499 028a 60020000 		.4byte	.LASF67
+ 500 028e 01       		.byte	0x1
+ 501 028f 1B       		.byte	0x1b
+ 502 0290 68000000 		.4byte	0x68
+ 503 0294 00000000 		.4byte	.LFB64
+ 504 0298 9C000000 		.4byte	.LFE64-.LFB64
+ 505 029c 01       		.uleb128 0x1
+ 506 029d 9C       		.byte	0x9c
+ 507 029e 23040000 		.4byte	0x423
+ 508 02a2 0E       		.uleb128 0xe
+ 509 02a3 D0010000 		.4byte	.LASF44
+ 510 02a7 01       		.byte	0x1
+ 511 02a8 1D       		.byte	0x1d
+ 512 02a9 23040000 		.4byte	0x423
+ 513 02ad 03       		.uleb128 0x3
+ 514 02ae 91       		.byte	0x91
+ 515 02af F877     		.sleb128 -1032
+ 516 02b1 0E       		.uleb128 0xe
+ 517 02b2 C7020000 		.4byte	.LASF45
+ 518 02b6 01       		.byte	0x1
+ 519 02b7 1E       		.byte	0x1e
+ 520 02b8 34040000 		.4byte	0x434
+ 521 02bc 03       		.uleb128 0x3
+ 522 02bd 91       		.byte	0x91
+ 523 02be F077     		.sleb128 -1040
+ 524 02c0 0F       		.uleb128 0xf
+ 525 02c1 667300   		.ascii	"fs\000"
+ 526 02c4 01       		.byte	0x1
+ 527 02c5 33       		.byte	0x33
+ARM GAS  C:\Users\linar\AppData\Local\Temp\ccmlCLsa.s 			page 12
+
+
+ 528 02c6 CF010000 		.4byte	0x1cf
+ 529 02ca 03       		.uleb128 0x3
+ 530 02cb 91       		.byte	0x91
+ 531 02cc BC73     		.sleb128 -1604
+ 532 02ce 10       		.uleb128 0x10
+ 533 02cf C1020000 		.4byte	.LASF46
+ 534 02d3 01       		.byte	0x1
+ 535 02d4 34       		.byte	0x34
+ 536 02d5 7E020000 		.4byte	0x27e
+ 537 02d9 10       		.uleb128 0x10
+ 538 02da C8010000 		.4byte	.LASF47
+ 539 02de 01       		.byte	0x1
+ 540 02df 37       		.byte	0x37
+ 541 02e0 96000000 		.4byte	0x96
+ 542 02e4 11       		.uleb128 0x11
+ 543 02e5 1A000000 		.4byte	.LVL0
+ 544 02e9 A7040000 		.4byte	0x4a7
+ 545 02ed 06030000 		.4byte	0x306
+ 546 02f1 12       		.uleb128 0x12
+ 547 02f2 01       		.uleb128 0x1
+ 548 02f3 50       		.byte	0x50
+ 549 02f4 03       		.uleb128 0x3
+ 550 02f5 91       		.byte	0x91
+ 551 02f6 F877     		.sleb128 -1032
+ 552 02f8 12       		.uleb128 0x12
+ 553 02f9 01       		.uleb128 0x1
+ 554 02fa 51       		.byte	0x51
+ 555 02fb 02       		.uleb128 0x2
+ 556 02fc 74       		.byte	0x74
+ 557 02fd 00       		.sleb128 0
+ 558 02fe 12       		.uleb128 0x12
+ 559 02ff 01       		.uleb128 0x1
+ 560 0300 52       		.byte	0x52
+ 561 0301 03       		.uleb128 0x3
+ 562 0302 0A       		.byte	0xa
+ 563 0303 0004     		.2byte	0x400
+ 564 0305 00       		.byte	0
+ 565 0306 13       		.uleb128 0x13
+ 566 0307 20000000 		.4byte	.LVL1
+ 567 030b B0040000 		.4byte	0x4b0
+ 568 030f 11       		.uleb128 0x11
+ 569 0310 28000000 		.4byte	.LVL2
+ 570 0314 BB040000 		.4byte	0x4bb
+ 571 0318 29030000 		.4byte	0x329
+ 572 031c 12       		.uleb128 0x12
+ 573 031d 01       		.uleb128 0x1
+ 574 031e 50       		.byte	0x50
+ 575 031f 02       		.uleb128 0x2
+ 576 0320 74       		.byte	0x74
+ 577 0321 00       		.sleb128 0
+ 578 0322 12       		.uleb128 0x12
+ 579 0323 01       		.uleb128 0x1
+ 580 0324 51       		.byte	0x51
+ 581 0325 02       		.uleb128 0x2
+ 582 0326 74       		.byte	0x74
+ 583 0327 00       		.sleb128 0
+ 584 0328 00       		.byte	0
+ARM GAS  C:\Users\linar\AppData\Local\Temp\ccmlCLsa.s 			page 13
+
+
+ 585 0329 13       		.uleb128 0x13
+ 586 032a 2C000000 		.4byte	.LVL3
+ 587 032e C7040000 		.4byte	0x4c7
+ 588 0332 11       		.uleb128 0x11
+ 589 0333 34000000 		.4byte	.LVL4
+ 590 0337 D3040000 		.4byte	0x4d3
+ 591 033b 45030000 		.4byte	0x345
+ 592 033f 12       		.uleb128 0x12
+ 593 0340 01       		.uleb128 0x1
+ 594 0341 50       		.byte	0x50
+ 595 0342 01       		.uleb128 0x1
+ 596 0343 32       		.byte	0x32
+ 597 0344 00       		.byte	0
+ 598 0345 11       		.uleb128 0x11
+ 599 0346 3C000000 		.4byte	.LVL5
+ 600 034a DF040000 		.4byte	0x4df
+ 601 034e 5A030000 		.4byte	0x35a
+ 602 0352 12       		.uleb128 0x12
+ 603 0353 01       		.uleb128 0x1
+ 604 0354 50       		.byte	0x50
+ 605 0355 03       		.uleb128 0x3
+ 606 0356 0A       		.byte	0xa
+ 607 0357 1027     		.2byte	0x2710
+ 608 0359 00       		.byte	0
+ 609 035a 11       		.uleb128 0x11
+ 610 035b 48000000 		.4byte	.LVL6
+ 611 035f EA040000 		.4byte	0x4ea
+ 612 0363 7A030000 		.4byte	0x37a
+ 613 0367 12       		.uleb128 0x12
+ 614 0368 01       		.uleb128 0x1
+ 615 0369 50       		.byte	0x50
+ 616 036a 03       		.uleb128 0x3
+ 617 036b 91       		.byte	0x91
+ 618 036c BC73     		.sleb128 -1604
+ 619 036e 12       		.uleb128 0x12
+ 620 036f 01       		.uleb128 0x1
+ 621 0370 51       		.byte	0x51
+ 622 0371 02       		.uleb128 0x2
+ 623 0372 74       		.byte	0x74
+ 624 0373 00       		.sleb128 0
+ 625 0374 12       		.uleb128 0x12
+ 626 0375 01       		.uleb128 0x1
+ 627 0376 52       		.byte	0x52
+ 628 0377 01       		.uleb128 0x1
+ 629 0378 30       		.byte	0x30
+ 630 0379 00       		.byte	0
+ 631 037a 11       		.uleb128 0x11
+ 632 037b 52000000 		.4byte	.LVL7
+ 633 037f F5040000 		.4byte	0x4f5
+ 634 0383 98030000 		.4byte	0x398
+ 635 0387 12       		.uleb128 0x12
+ 636 0388 01       		.uleb128 0x1
+ 637 0389 50       		.byte	0x50
+ 638 038a 02       		.uleb128 0x2
+ 639 038b 74       		.byte	0x74
+ 640 038c 00       		.sleb128 0
+ 641 038d 12       		.uleb128 0x12
+ARM GAS  C:\Users\linar\AppData\Local\Temp\ccmlCLsa.s 			page 14
+
+
+ 642 038e 01       		.uleb128 0x1
+ 643 038f 51       		.byte	0x51
+ 644 0390 01       		.uleb128 0x1
+ 645 0391 31       		.byte	0x31
+ 646 0392 12       		.uleb128 0x12
+ 647 0393 01       		.uleb128 0x1
+ 648 0394 52       		.byte	0x52
+ 649 0395 01       		.uleb128 0x1
+ 650 0396 30       		.byte	0x30
+ 651 0397 00       		.byte	0
+ 652 0398 11       		.uleb128 0x11
+ 653 0399 5E000000 		.4byte	.LVL8
+ 654 039d 00050000 		.4byte	0x500
+ 655 03a1 BC030000 		.4byte	0x3bc
+ 656 03a5 12       		.uleb128 0x12
+ 657 03a6 01       		.uleb128 0x1
+ 658 03a7 50       		.byte	0x50
+ 659 03a8 01       		.uleb128 0x1
+ 660 03a9 30       		.byte	0x30
+ 661 03aa 12       		.uleb128 0x12
+ 662 03ab 01       		.uleb128 0x1
+ 663 03ac 51       		.byte	0x51
+ 664 03ad 03       		.uleb128 0x3
+ 665 03ae 91       		.byte	0x91
+ 666 03af F877     		.sleb128 -1032
+ 667 03b1 12       		.uleb128 0x12
+ 668 03b2 01       		.uleb128 0x1
+ 669 03b3 52       		.byte	0x52
+ 670 03b4 01       		.uleb128 0x1
+ 671 03b5 30       		.byte	0x30
+ 672 03b6 12       		.uleb128 0x12
+ 673 03b7 01       		.uleb128 0x1
+ 674 03b8 53       		.byte	0x53
+ 675 03b9 01       		.uleb128 0x1
+ 676 03ba 32       		.byte	0x32
+ 677 03bb 00       		.byte	0
+ 678 03bc 13       		.uleb128 0x13
+ 679 03bd 66000000 		.4byte	.LVL9
+ 680 03c1 0B050000 		.4byte	0x50b
+ 681 03c5 13       		.uleb128 0x13
+ 682 03c6 6A000000 		.4byte	.LVL10
+ 683 03ca C7040000 		.4byte	0x4c7
+ 684 03ce 13       		.uleb128 0x13
+ 685 03cf 70000000 		.4byte	.LVL11
+ 686 03d3 16050000 		.4byte	0x516
+ 687 03d7 11       		.uleb128 0x11
+ 688 03d8 78000000 		.4byte	.LVL12
+ 689 03dc D3040000 		.4byte	0x4d3
+ 690 03e0 EA030000 		.4byte	0x3ea
+ 691 03e4 12       		.uleb128 0x12
+ 692 03e5 01       		.uleb128 0x1
+ 693 03e6 50       		.byte	0x50
+ 694 03e7 01       		.uleb128 0x1
+ 695 03e8 32       		.byte	0x32
+ 696 03e9 00       		.byte	0
+ 697 03ea 11       		.uleb128 0x11
+ 698 03eb 7E000000 		.4byte	.LVL13
+ARM GAS  C:\Users\linar\AppData\Local\Temp\ccmlCLsa.s 			page 15
+
+
+ 699 03ef 22050000 		.4byte	0x522
+ 700 03f3 FD030000 		.4byte	0x3fd
+ 701 03f7 12       		.uleb128 0x12
+ 702 03f8 01       		.uleb128 0x1
+ 703 03f9 50       		.byte	0x50
+ 704 03fa 01       		.uleb128 0x1
+ 705 03fb 31       		.byte	0x31
+ 706 03fc 00       		.byte	0
+ 707 03fd 13       		.uleb128 0x13
+ 708 03fe 86000000 		.4byte	.LVL14
+ 709 0402 2E050000 		.4byte	0x52e
+ 710 0406 11       		.uleb128 0x11
+ 711 0407 8C000000 		.4byte	.LVL15
+ 712 040b 22050000 		.4byte	0x522
+ 713 040f 19040000 		.4byte	0x419
+ 714 0413 12       		.uleb128 0x12
+ 715 0414 01       		.uleb128 0x1
+ 716 0415 50       		.byte	0x50
+ 717 0416 01       		.uleb128 0x1
+ 718 0417 32       		.byte	0x32
+ 719 0418 00       		.byte	0
+ 720 0419 13       		.uleb128 0x13
+ 721 041a 94000000 		.4byte	.LVL16
+ 722 041e 39050000 		.4byte	0x539
+ 723 0422 00       		.byte	0
+ 724 0423 09       		.uleb128 0x9
+ 725 0424 96000000 		.4byte	0x96
+ 726 0428 34040000 		.4byte	0x434
+ 727 042c 0A       		.uleb128 0xa
+ 728 042d 7D000000 		.4byte	0x7d
+ 729 0431 FF03     		.2byte	0x3ff
+ 730 0433 00       		.byte	0
+ 731 0434 09       		.uleb128 0x9
+ 732 0435 96000000 		.4byte	0x96
+ 733 0439 44040000 		.4byte	0x444
+ 734 043d 14       		.uleb128 0x14
+ 735 043e 7D000000 		.4byte	0x7d
+ 736 0442 05       		.byte	0x5
+ 737 0443 00       		.byte	0
+ 738 0444 15       		.uleb128 0x15
+ 739 0445 8B010000 		.4byte	.LASF48
+ 740 0449 07       		.byte	0x7
+ 741 044a 1207     		.2byte	0x712
+ 742 044c 50040000 		.4byte	0x450
+ 743 0450 16       		.uleb128 0x16
+ 744 0451 8B000000 		.4byte	0x8b
+ 745 0455 09       		.uleb128 0x9
+ 746 0456 96000000 		.4byte	0x96
+ 747 045a 65040000 		.4byte	0x465
+ 748 045e 14       		.uleb128 0x14
+ 749 045f 7D000000 		.4byte	0x7d
+ 750 0463 3F       		.byte	0x3f
+ 751 0464 00       		.byte	0
+ 752 0465 17       		.uleb128 0x17
+ 753 0466 61000000 		.4byte	.LASF49
+ 754 046a 08       		.byte	0x8
+ 755 046b 72       		.byte	0x72
+ARM GAS  C:\Users\linar\AppData\Local\Temp\ccmlCLsa.s 			page 16
+
+
+ 756 046c 55040000 		.4byte	0x455
+ 757 0470 05       		.uleb128 0x5
+ 758 0471 03       		.byte	0x3
+ 759 0472 00000000 		.4byte	USBFS_MSC_InEPBuffer
+ 760 0476 17       		.uleb128 0x17
+ 761 0477 BF000000 		.4byte	.LASF50
+ 762 047b 08       		.byte	0x8
+ 763 047c 73       		.byte	0x73
+ 764 047d 55040000 		.4byte	0x455
+ 765 0481 05       		.uleb128 0x5
+ 766 0482 03       		.byte	0x3
+ 767 0483 00000000 		.4byte	USBFS_MSC_OutEPBuffer
+ 768 0487 18       		.uleb128 0x18
+ 769 0488 637200   		.ascii	"cr\000"
+ 770 048b 01       		.byte	0x1
+ 771 048c 18       		.byte	0x18
+ 772 048d 96000000 		.4byte	0x96
+ 773 0491 05       		.uleb128 0x5
+ 774 0492 03       		.byte	0x3
+ 775 0493 00000000 		.4byte	cr
+ 776 0497 18       		.uleb128 0x18
+ 777 0498 6E6C00   		.ascii	"nl\000"
+ 778 049b 01       		.byte	0x1
+ 779 049c 19       		.byte	0x19
+ 780 049d 96000000 		.4byte	0x96
+ 781 04a1 05       		.uleb128 0x5
+ 782 04a2 03       		.byte	0x3
+ 783 04a3 00000000 		.4byte	nl
+ 784 04a7 19       		.uleb128 0x19
+ 785 04a8 10010000 		.4byte	.LASF68
+ 786 04ac 10010000 		.4byte	.LASF68
+ 787 04b0 1A       		.uleb128 0x1a
+ 788 04b1 0C030000 		.4byte	.LASF51
+ 789 04b5 0C030000 		.4byte	.LASF51
+ 790 04b9 09       		.byte	0x9
+ 791 04ba 4D       		.byte	0x4d
+ 792 04bb 1B       		.uleb128 0x1b
+ 793 04bc 19030000 		.4byte	.LASF52
+ 794 04c0 19030000 		.4byte	.LASF52
+ 795 04c4 0A       		.byte	0xa
+ 796 04c5 2501     		.2byte	0x125
+ 797 04c7 1B       		.uleb128 0x1b
+ 798 04c8 3A000000 		.4byte	.LASF53
+ 799 04cc 3A000000 		.4byte	.LASF53
+ 800 04d0 0A       		.byte	0xa
+ 801 04d1 2801     		.2byte	0x128
+ 802 04d3 1B       		.uleb128 0x1b
+ 803 04d4 A7020000 		.4byte	.LASF54
+ 804 04d8 A7020000 		.4byte	.LASF54
+ 805 04dc 0A       		.byte	0xa
+ 806 04dd 3101     		.2byte	0x131
+ 807 04df 1A       		.uleb128 0x1a
+ 808 04e0 BB030000 		.4byte	.LASF55
+ 809 04e4 BB030000 		.4byte	.LASF55
+ 810 04e8 0B       		.byte	0xb
+ 811 04e9 76       		.byte	0x76
+ 812 04ea 1A       		.uleb128 0x1a
+ARM GAS  C:\Users\linar\AppData\Local\Temp\ccmlCLsa.s 			page 17
+
+
+ 813 04eb 78010000 		.4byte	.LASF56
+ 814 04ef 78010000 		.4byte	.LASF56
+ 815 04f3 06       		.byte	0x6
+ 816 04f4 ED       		.byte	0xed
+ 817 04f5 1A       		.uleb128 0x1a
+ 818 04f6 C3030000 		.4byte	.LASF57
+ 819 04fa C3030000 		.4byte	.LASF57
+ 820 04fe 06       		.byte	0x6
+ 821 04ff EE       		.byte	0xee
+ 822 0500 1A       		.uleb128 0x1a
+ 823 0501 3F010000 		.4byte	.LASF58
+ 824 0505 3F010000 		.4byte	.LASF58
+ 825 0509 0C       		.byte	0xc
+ 826 050a 23       		.byte	0x23
+ 827 050b 1A       		.uleb128 0x1a
+ 828 050c 6D020000 		.4byte	.LASF59
+ 829 0510 6D020000 		.4byte	.LASF59
+ 830 0514 08       		.byte	0x8
+ 831 0515 8C       		.byte	0x8c
+ 832 0516 1B       		.uleb128 0x1b
+ 833 0517 E1020000 		.4byte	.LASF60
+ 834 051b E1020000 		.4byte	.LASF60
+ 835 051f 0A       		.byte	0xa
+ 836 0520 2901     		.2byte	0x129
+ 837 0522 1B       		.uleb128 0x1b
+ 838 0523 20010000 		.4byte	.LASF61
+ 839 0527 20010000 		.4byte	.LASF61
+ 840 052b 0A       		.byte	0xa
+ 841 052c 2B01     		.2byte	0x12b
+ 842 052e 1A       		.uleb128 0x1a
+ 843 052f 07000000 		.4byte	.LASF62
+ 844 0533 07000000 		.4byte	.LASF62
+ 845 0537 01       		.byte	0x1
+ 846 0538 15       		.byte	0x15
+ 847 0539 1A       		.uleb128 0x1a
+ 848 053a 92000000 		.4byte	.LASF63
+ 849 053e 92000000 		.4byte	.LASF63
+ 850 0542 01       		.byte	0x1
+ 851 0543 16       		.byte	0x16
+ 852 0544 00       		.byte	0
+ 853              		.section	.debug_abbrev,"",%progbits
+ 854              	.Ldebug_abbrev0:
+ 855 0000 01       		.uleb128 0x1
+ 856 0001 11       		.uleb128 0x11
+ 857 0002 01       		.byte	0x1
+ 858 0003 25       		.uleb128 0x25
+ 859 0004 0E       		.uleb128 0xe
+ 860 0005 13       		.uleb128 0x13
+ 861 0006 0B       		.uleb128 0xb
+ 862 0007 03       		.uleb128 0x3
+ 863 0008 0E       		.uleb128 0xe
+ 864 0009 1B       		.uleb128 0x1b
+ 865 000a 0E       		.uleb128 0xe
+ 866 000b 55       		.uleb128 0x55
+ 867 000c 17       		.uleb128 0x17
+ 868 000d 11       		.uleb128 0x11
+ 869 000e 01       		.uleb128 0x1
+ARM GAS  C:\Users\linar\AppData\Local\Temp\ccmlCLsa.s 			page 18
+
+
+ 870 000f 10       		.uleb128 0x10
+ 871 0010 17       		.uleb128 0x17
+ 872 0011 00       		.byte	0
+ 873 0012 00       		.byte	0
+ 874 0013 02       		.uleb128 0x2
+ 875 0014 24       		.uleb128 0x24
+ 876 0015 00       		.byte	0
+ 877 0016 0B       		.uleb128 0xb
+ 878 0017 0B       		.uleb128 0xb
+ 879 0018 3E       		.uleb128 0x3e
+ 880 0019 0B       		.uleb128 0xb
+ 881 001a 03       		.uleb128 0x3
+ 882 001b 0E       		.uleb128 0xe
+ 883 001c 00       		.byte	0
+ 884 001d 00       		.byte	0
+ 885 001e 03       		.uleb128 0x3
+ 886 001f 16       		.uleb128 0x16
+ 887 0020 00       		.byte	0
+ 888 0021 03       		.uleb128 0x3
+ 889 0022 0E       		.uleb128 0xe
+ 890 0023 3A       		.uleb128 0x3a
+ 891 0024 0B       		.uleb128 0xb
+ 892 0025 3B       		.uleb128 0x3b
+ 893 0026 0B       		.uleb128 0xb
+ 894 0027 49       		.uleb128 0x49
+ 895 0028 13       		.uleb128 0x13
+ 896 0029 00       		.byte	0
+ 897 002a 00       		.byte	0
+ 898 002b 04       		.uleb128 0x4
+ 899 002c 24       		.uleb128 0x24
+ 900 002d 00       		.byte	0
+ 901 002e 0B       		.uleb128 0xb
+ 902 002f 0B       		.uleb128 0xb
+ 903 0030 3E       		.uleb128 0x3e
+ 904 0031 0B       		.uleb128 0xb
+ 905 0032 03       		.uleb128 0x3
+ 906 0033 08       		.uleb128 0x8
+ 907 0034 00       		.byte	0
+ 908 0035 00       		.byte	0
+ 909 0036 05       		.uleb128 0x5
+ 910 0037 16       		.uleb128 0x16
+ 911 0038 00       		.byte	0
+ 912 0039 03       		.uleb128 0x3
+ 913 003a 0E       		.uleb128 0xe
+ 914 003b 3A       		.uleb128 0x3a
+ 915 003c 0B       		.uleb128 0xb
+ 916 003d 3B       		.uleb128 0x3b
+ 917 003e 05       		.uleb128 0x5
+ 918 003f 49       		.uleb128 0x49
+ 919 0040 13       		.uleb128 0x13
+ 920 0041 00       		.byte	0
+ 921 0042 00       		.byte	0
+ 922 0043 06       		.uleb128 0x6
+ 923 0044 13       		.uleb128 0x13
+ 924 0045 01       		.byte	0x1
+ 925 0046 0B       		.uleb128 0xb
+ 926 0047 05       		.uleb128 0x5
+ARM GAS  C:\Users\linar\AppData\Local\Temp\ccmlCLsa.s 			page 19
+
+
+ 927 0048 3A       		.uleb128 0x3a
+ 928 0049 0B       		.uleb128 0xb
+ 929 004a 3B       		.uleb128 0x3b
+ 930 004b 0B       		.uleb128 0xb
+ 931 004c 01       		.uleb128 0x1
+ 932 004d 13       		.uleb128 0x13
+ 933 004e 00       		.byte	0
+ 934 004f 00       		.byte	0
+ 935 0050 07       		.uleb128 0x7
+ 936 0051 0D       		.uleb128 0xd
+ 937 0052 00       		.byte	0
+ 938 0053 03       		.uleb128 0x3
+ 939 0054 0E       		.uleb128 0xe
+ 940 0055 3A       		.uleb128 0x3a
+ 941 0056 0B       		.uleb128 0xb
+ 942 0057 3B       		.uleb128 0x3b
+ 943 0058 0B       		.uleb128 0xb
+ 944 0059 49       		.uleb128 0x49
+ 945 005a 13       		.uleb128 0x13
+ 946 005b 38       		.uleb128 0x38
+ 947 005c 0B       		.uleb128 0xb
+ 948 005d 00       		.byte	0
+ 949 005e 00       		.byte	0
+ 950 005f 08       		.uleb128 0x8
+ 951 0060 0D       		.uleb128 0xd
+ 952 0061 00       		.byte	0
+ 953 0062 03       		.uleb128 0x3
+ 954 0063 08       		.uleb128 0x8
+ 955 0064 3A       		.uleb128 0x3a
+ 956 0065 0B       		.uleb128 0xb
+ 957 0066 3B       		.uleb128 0x3b
+ 958 0067 0B       		.uleb128 0xb
+ 959 0068 49       		.uleb128 0x49
+ 960 0069 13       		.uleb128 0x13
+ 961 006a 38       		.uleb128 0x38
+ 962 006b 0B       		.uleb128 0xb
+ 963 006c 00       		.byte	0
+ 964 006d 00       		.byte	0
+ 965 006e 09       		.uleb128 0x9
+ 966 006f 01       		.uleb128 0x1
+ 967 0070 01       		.byte	0x1
+ 968 0071 49       		.uleb128 0x49
+ 969 0072 13       		.uleb128 0x13
+ 970 0073 01       		.uleb128 0x1
+ 971 0074 13       		.uleb128 0x13
+ 972 0075 00       		.byte	0
+ 973 0076 00       		.byte	0
+ 974 0077 0A       		.uleb128 0xa
+ 975 0078 21       		.uleb128 0x21
+ 976 0079 00       		.byte	0
+ 977 007a 49       		.uleb128 0x49
+ 978 007b 13       		.uleb128 0x13
+ 979 007c 2F       		.uleb128 0x2f
+ 980 007d 05       		.uleb128 0x5
+ 981 007e 00       		.byte	0
+ 982 007f 00       		.byte	0
+ 983 0080 0B       		.uleb128 0xb
+ARM GAS  C:\Users\linar\AppData\Local\Temp\ccmlCLsa.s 			page 20
+
+
+ 984 0081 0F       		.uleb128 0xf
+ 985 0082 00       		.byte	0
+ 986 0083 0B       		.uleb128 0xb
+ 987 0084 0B       		.uleb128 0xb
+ 988 0085 49       		.uleb128 0x49
+ 989 0086 13       		.uleb128 0x13
+ 990 0087 00       		.byte	0
+ 991 0088 00       		.byte	0
+ 992 0089 0C       		.uleb128 0xc
+ 993 008a 16       		.uleb128 0x16
+ 994 008b 00       		.byte	0
+ 995 008c 03       		.uleb128 0x3
+ 996 008d 08       		.uleb128 0x8
+ 997 008e 3A       		.uleb128 0x3a
+ 998 008f 0B       		.uleb128 0xb
+ 999 0090 3B       		.uleb128 0x3b
+ 1000 0091 0B       		.uleb128 0xb
+ 1001 0092 49       		.uleb128 0x49
+ 1002 0093 13       		.uleb128 0x13
+ 1003 0094 00       		.byte	0
+ 1004 0095 00       		.byte	0
+ 1005 0096 0D       		.uleb128 0xd
+ 1006 0097 2E       		.uleb128 0x2e
+ 1007 0098 01       		.byte	0x1
+ 1008 0099 3F       		.uleb128 0x3f
+ 1009 009a 19       		.uleb128 0x19
+ 1010 009b 03       		.uleb128 0x3
+ 1011 009c 0E       		.uleb128 0xe
+ 1012 009d 3A       		.uleb128 0x3a
+ 1013 009e 0B       		.uleb128 0xb
+ 1014 009f 3B       		.uleb128 0x3b
+ 1015 00a0 0B       		.uleb128 0xb
+ 1016 00a1 27       		.uleb128 0x27
+ 1017 00a2 19       		.uleb128 0x19
+ 1018 00a3 49       		.uleb128 0x49
+ 1019 00a4 13       		.uleb128 0x13
+ 1020 00a5 8701     		.uleb128 0x87
+ 1021 00a7 19       		.uleb128 0x19
+ 1022 00a8 11       		.uleb128 0x11
+ 1023 00a9 01       		.uleb128 0x1
+ 1024 00aa 12       		.uleb128 0x12
+ 1025 00ab 06       		.uleb128 0x6
+ 1026 00ac 40       		.uleb128 0x40
+ 1027 00ad 18       		.uleb128 0x18
+ 1028 00ae 9742     		.uleb128 0x2117
+ 1029 00b0 19       		.uleb128 0x19
+ 1030 00b1 01       		.uleb128 0x1
+ 1031 00b2 13       		.uleb128 0x13
+ 1032 00b3 00       		.byte	0
+ 1033 00b4 00       		.byte	0
+ 1034 00b5 0E       		.uleb128 0xe
+ 1035 00b6 34       		.uleb128 0x34
+ 1036 00b7 00       		.byte	0
+ 1037 00b8 03       		.uleb128 0x3
+ 1038 00b9 0E       		.uleb128 0xe
+ 1039 00ba 3A       		.uleb128 0x3a
+ 1040 00bb 0B       		.uleb128 0xb
+ARM GAS  C:\Users\linar\AppData\Local\Temp\ccmlCLsa.s 			page 21
+
+
+ 1041 00bc 3B       		.uleb128 0x3b
+ 1042 00bd 0B       		.uleb128 0xb
+ 1043 00be 49       		.uleb128 0x49
+ 1044 00bf 13       		.uleb128 0x13
+ 1045 00c0 02       		.uleb128 0x2
+ 1046 00c1 18       		.uleb128 0x18
+ 1047 00c2 00       		.byte	0
+ 1048 00c3 00       		.byte	0
+ 1049 00c4 0F       		.uleb128 0xf
+ 1050 00c5 34       		.uleb128 0x34
+ 1051 00c6 00       		.byte	0
+ 1052 00c7 03       		.uleb128 0x3
+ 1053 00c8 08       		.uleb128 0x8
+ 1054 00c9 3A       		.uleb128 0x3a
+ 1055 00ca 0B       		.uleb128 0xb
+ 1056 00cb 3B       		.uleb128 0x3b
+ 1057 00cc 0B       		.uleb128 0xb
+ 1058 00cd 49       		.uleb128 0x49
+ 1059 00ce 13       		.uleb128 0x13
+ 1060 00cf 02       		.uleb128 0x2
+ 1061 00d0 18       		.uleb128 0x18
+ 1062 00d1 00       		.byte	0
+ 1063 00d2 00       		.byte	0
+ 1064 00d3 10       		.uleb128 0x10
+ 1065 00d4 34       		.uleb128 0x34
+ 1066 00d5 00       		.byte	0
+ 1067 00d6 03       		.uleb128 0x3
+ 1068 00d7 0E       		.uleb128 0xe
+ 1069 00d8 3A       		.uleb128 0x3a
+ 1070 00d9 0B       		.uleb128 0xb
+ 1071 00da 3B       		.uleb128 0x3b
+ 1072 00db 0B       		.uleb128 0xb
+ 1073 00dc 49       		.uleb128 0x49
+ 1074 00dd 13       		.uleb128 0x13
+ 1075 00de 00       		.byte	0
+ 1076 00df 00       		.byte	0
+ 1077 00e0 11       		.uleb128 0x11
+ 1078 00e1 898201   		.uleb128 0x4109
+ 1079 00e4 01       		.byte	0x1
+ 1080 00e5 11       		.uleb128 0x11
+ 1081 00e6 01       		.uleb128 0x1
+ 1082 00e7 31       		.uleb128 0x31
+ 1083 00e8 13       		.uleb128 0x13
+ 1084 00e9 01       		.uleb128 0x1
+ 1085 00ea 13       		.uleb128 0x13
+ 1086 00eb 00       		.byte	0
+ 1087 00ec 00       		.byte	0
+ 1088 00ed 12       		.uleb128 0x12
+ 1089 00ee 8A8201   		.uleb128 0x410a
+ 1090 00f1 00       		.byte	0
+ 1091 00f2 02       		.uleb128 0x2
+ 1092 00f3 18       		.uleb128 0x18
+ 1093 00f4 9142     		.uleb128 0x2111
+ 1094 00f6 18       		.uleb128 0x18
+ 1095 00f7 00       		.byte	0
+ 1096 00f8 00       		.byte	0
+ 1097 00f9 13       		.uleb128 0x13
+ARM GAS  C:\Users\linar\AppData\Local\Temp\ccmlCLsa.s 			page 22
+
+
+ 1098 00fa 898201   		.uleb128 0x4109
+ 1099 00fd 00       		.byte	0
+ 1100 00fe 11       		.uleb128 0x11
+ 1101 00ff 01       		.uleb128 0x1
+ 1102 0100 31       		.uleb128 0x31
+ 1103 0101 13       		.uleb128 0x13
+ 1104 0102 00       		.byte	0
+ 1105 0103 00       		.byte	0
+ 1106 0104 14       		.uleb128 0x14
+ 1107 0105 21       		.uleb128 0x21
+ 1108 0106 00       		.byte	0
+ 1109 0107 49       		.uleb128 0x49
+ 1110 0108 13       		.uleb128 0x13
+ 1111 0109 2F       		.uleb128 0x2f
+ 1112 010a 0B       		.uleb128 0xb
+ 1113 010b 00       		.byte	0
+ 1114 010c 00       		.byte	0
+ 1115 010d 15       		.uleb128 0x15
+ 1116 010e 34       		.uleb128 0x34
+ 1117 010f 00       		.byte	0
+ 1118 0110 03       		.uleb128 0x3
+ 1119 0111 0E       		.uleb128 0xe
+ 1120 0112 3A       		.uleb128 0x3a
+ 1121 0113 0B       		.uleb128 0xb
+ 1122 0114 3B       		.uleb128 0x3b
+ 1123 0115 05       		.uleb128 0x5
+ 1124 0116 49       		.uleb128 0x49
+ 1125 0117 13       		.uleb128 0x13
+ 1126 0118 3F       		.uleb128 0x3f
+ 1127 0119 19       		.uleb128 0x19
+ 1128 011a 3C       		.uleb128 0x3c
+ 1129 011b 19       		.uleb128 0x19
+ 1130 011c 00       		.byte	0
+ 1131 011d 00       		.byte	0
+ 1132 011e 16       		.uleb128 0x16
+ 1133 011f 35       		.uleb128 0x35
+ 1134 0120 00       		.byte	0
+ 1135 0121 49       		.uleb128 0x49
+ 1136 0122 13       		.uleb128 0x13
+ 1137 0123 00       		.byte	0
+ 1138 0124 00       		.byte	0
+ 1139 0125 17       		.uleb128 0x17
+ 1140 0126 34       		.uleb128 0x34
+ 1141 0127 00       		.byte	0
+ 1142 0128 03       		.uleb128 0x3
+ 1143 0129 0E       		.uleb128 0xe
+ 1144 012a 3A       		.uleb128 0x3a
+ 1145 012b 0B       		.uleb128 0xb
+ 1146 012c 3B       		.uleb128 0x3b
+ 1147 012d 0B       		.uleb128 0xb
+ 1148 012e 49       		.uleb128 0x49
+ 1149 012f 13       		.uleb128 0x13
+ 1150 0130 3F       		.uleb128 0x3f
+ 1151 0131 19       		.uleb128 0x19
+ 1152 0132 02       		.uleb128 0x2
+ 1153 0133 18       		.uleb128 0x18
+ 1154 0134 00       		.byte	0
+ARM GAS  C:\Users\linar\AppData\Local\Temp\ccmlCLsa.s 			page 23
+
+
+ 1155 0135 00       		.byte	0
+ 1156 0136 18       		.uleb128 0x18
+ 1157 0137 34       		.uleb128 0x34
+ 1158 0138 00       		.byte	0
+ 1159 0139 03       		.uleb128 0x3
+ 1160 013a 08       		.uleb128 0x8
+ 1161 013b 3A       		.uleb128 0x3a
+ 1162 013c 0B       		.uleb128 0xb
+ 1163 013d 3B       		.uleb128 0x3b
+ 1164 013e 0B       		.uleb128 0xb
+ 1165 013f 49       		.uleb128 0x49
+ 1166 0140 13       		.uleb128 0x13
+ 1167 0141 3F       		.uleb128 0x3f
+ 1168 0142 19       		.uleb128 0x19
+ 1169 0143 02       		.uleb128 0x2
+ 1170 0144 18       		.uleb128 0x18
+ 1171 0145 00       		.byte	0
+ 1172 0146 00       		.byte	0
+ 1173 0147 19       		.uleb128 0x19
+ 1174 0148 2E       		.uleb128 0x2e
+ 1175 0149 00       		.byte	0
+ 1176 014a 3F       		.uleb128 0x3f
+ 1177 014b 19       		.uleb128 0x19
+ 1178 014c 3C       		.uleb128 0x3c
+ 1179 014d 19       		.uleb128 0x19
+ 1180 014e 6E       		.uleb128 0x6e
+ 1181 014f 0E       		.uleb128 0xe
+ 1182 0150 03       		.uleb128 0x3
+ 1183 0151 0E       		.uleb128 0xe
+ 1184 0152 00       		.byte	0
+ 1185 0153 00       		.byte	0
+ 1186 0154 1A       		.uleb128 0x1a
+ 1187 0155 2E       		.uleb128 0x2e
+ 1188 0156 00       		.byte	0
+ 1189 0157 3F       		.uleb128 0x3f
+ 1190 0158 19       		.uleb128 0x19
+ 1191 0159 3C       		.uleb128 0x3c
+ 1192 015a 19       		.uleb128 0x19
+ 1193 015b 6E       		.uleb128 0x6e
+ 1194 015c 0E       		.uleb128 0xe
+ 1195 015d 03       		.uleb128 0x3
+ 1196 015e 0E       		.uleb128 0xe
+ 1197 015f 3A       		.uleb128 0x3a
+ 1198 0160 0B       		.uleb128 0xb
+ 1199 0161 3B       		.uleb128 0x3b
+ 1200 0162 0B       		.uleb128 0xb
+ 1201 0163 00       		.byte	0
+ 1202 0164 00       		.byte	0
+ 1203 0165 1B       		.uleb128 0x1b
+ 1204 0166 2E       		.uleb128 0x2e
+ 1205 0167 00       		.byte	0
+ 1206 0168 3F       		.uleb128 0x3f
+ 1207 0169 19       		.uleb128 0x19
+ 1208 016a 3C       		.uleb128 0x3c
+ 1209 016b 19       		.uleb128 0x19
+ 1210 016c 6E       		.uleb128 0x6e
+ 1211 016d 0E       		.uleb128 0xe
+ARM GAS  C:\Users\linar\AppData\Local\Temp\ccmlCLsa.s 			page 24
+
+
+ 1212 016e 03       		.uleb128 0x3
+ 1213 016f 0E       		.uleb128 0xe
+ 1214 0170 3A       		.uleb128 0x3a
+ 1215 0171 0B       		.uleb128 0xb
+ 1216 0172 3B       		.uleb128 0x3b
+ 1217 0173 05       		.uleb128 0x5
+ 1218 0174 00       		.byte	0
+ 1219 0175 00       		.byte	0
+ 1220 0176 00       		.byte	0
+ 1221              		.section	.debug_aranges,"",%progbits
+ 1222 0000 1C000000 		.4byte	0x1c
+ 1223 0004 0200     		.2byte	0x2
+ 1224 0006 00000000 		.4byte	.Ldebug_info0
+ 1225 000a 04       		.byte	0x4
+ 1226 000b 00       		.byte	0
+ 1227 000c 0000     		.2byte	0
+ 1228 000e 0000     		.2byte	0
+ 1229 0010 00000000 		.4byte	.LFB64
+ 1230 0014 9C000000 		.4byte	.LFE64-.LFB64
+ 1231 0018 00000000 		.4byte	0
+ 1232 001c 00000000 		.4byte	0
+ 1233              		.section	.debug_ranges,"",%progbits
+ 1234              	.Ldebug_ranges0:
+ 1235 0000 00000000 		.4byte	.LFB64
+ 1236 0004 9C000000 		.4byte	.LFE64
+ 1237 0008 00000000 		.4byte	0
+ 1238 000c 00000000 		.4byte	0
+ 1239              		.section	.debug_line,"",%progbits
+ 1240              	.Ldebug_line0:
+ 1241 0000 D3010000 		.section	.debug_str,"MS",%progbits,1
+ 1241      0200A301 
+ 1241      00000201 
+ 1241      FB0E0D00 
+ 1241      01010101 
+ 1242              	.LASF22:
+ 1243 0000 6E5F6661 		.ascii	"n_fats\000"
+ 1243      747300
+ 1244              	.LASF62:
+ 1245 0007 55534246 		.ascii	"USBFS_HandleMassStorageInRequests\000"
+ 1245      535F4861 
+ 1245      6E646C65 
+ 1245      4D617373 
+ 1245      53746F72 
+ 1246              	.LASF29:
+ 1247 0029 6E5F6661 		.ascii	"n_fatent\000"
+ 1247      74656E74 
+ 1247      00
+ 1248              	.LASF20:
+ 1249 0032 66735F74 		.ascii	"fs_type\000"
+ 1249      79706500 
+ 1250              	.LASF53:
+ 1251 003a 55534246 		.ascii	"USBFS_GetConfiguration\000"
+ 1251      535F4765 
+ 1251      74436F6E 
+ 1251      66696775 
+ 1251      72617469 
+ 1252              	.LASF2:
+ARM GAS  C:\Users\linar\AppData\Local\Temp\ccmlCLsa.s 			page 25
+
+
+ 1253 0051 73686F72 		.ascii	"short int\000"
+ 1253      7420696E 
+ 1253      7400
+ 1254              	.LASF41:
+ 1255 005b 64736563 		.ascii	"dsect\000"
+ 1255      7400
+ 1256              	.LASF49:
+ 1257 0061 55534246 		.ascii	"USBFS_MSC_InEPBuffer\000"
+ 1257      535F4D53 
+ 1257      435F496E 
+ 1257      45504275 
+ 1257      66666572 
+ 1258              	.LASF6:
+ 1259 0076 6C6F6E67 		.ascii	"long long int\000"
+ 1259      206C6F6E 
+ 1259      6720696E 
+ 1259      7400
+ 1260              	.LASF34:
+ 1261 0084 64617461 		.ascii	"database\000"
+ 1261      62617365 
+ 1261      00
+ 1262              	.LASF17:
+ 1263 008d 42595445 		.ascii	"BYTE\000"
+ 1263      00
+ 1264              	.LASF63:
+ 1265 0092 55534246 		.ascii	"USBFS_HandleMassStorageOutRequests\000"
+ 1265      535F4861 
+ 1265      6E646C65 
+ 1265      4D617373 
+ 1265      53746F72 
+ 1266              	.LASF25:
+ 1267 00b5 6E5F726F 		.ascii	"n_rootdir\000"
+ 1267      6F746469 
+ 1267      7200
+ 1268              	.LASF50:
+ 1269 00bf 55534246 		.ascii	"USBFS_MSC_OutEPBuffer\000"
+ 1269      535F4D53 
+ 1269      435F4F75 
+ 1269      74455042 
+ 1269      75666665 
+ 1270              	.LASF18:
+ 1271 00d5 574F5244 		.ascii	"WORD\000"
+ 1271      00
+ 1272              	.LASF28:
+ 1273 00da 63646972 		.ascii	"cdir\000"
+ 1273      00
+ 1274              	.LASF14:
+ 1275 00df 75696E74 		.ascii	"uint8\000"
+ 1275      3800
+ 1276              	.LASF38:
+ 1277 00e5 66707472 		.ascii	"fptr\000"
+ 1277      00
+ 1278              	.LASF0:
+ 1279 00ea 7369676E 		.ascii	"signed char\000"
+ 1279      65642063 
+ 1279      68617200 
+ 1280              	.LASF15:
+ARM GAS  C:\Users\linar\AppData\Local\Temp\ccmlCLsa.s 			page 26
+
+
+ 1281 00f6 666C6F61 		.ascii	"float\000"
+ 1281      7400
+ 1282              	.LASF26:
+ 1283 00fc 6C617374 		.ascii	"last_clust\000"
+ 1283      5F636C75 
+ 1283      737400
+ 1284              	.LASF42:
+ 1285 0107 6469725F 		.ascii	"dir_sect\000"
+ 1285      73656374 
+ 1285      00
+ 1286              	.LASF68:
+ 1287 0110 6D656D73 		.ascii	"memset\000"
+ 1287      657400
+ 1288              	.LASF4:
+ 1289 0117 6C6F6E67 		.ascii	"long int\000"
+ 1289      20696E74 
+ 1289      00
+ 1290              	.LASF61:
+ 1291 0120 55534246 		.ascii	"USBFS_GetEPState\000"
+ 1291      535F4765 
+ 1291      74455053 
+ 1291      74617465 
+ 1291      00
+ 1292              	.LASF21:
+ 1293 0131 6373697A 		.ascii	"csize\000"
+ 1293      6500
+ 1294              	.LASF31:
+ 1295 0137 766F6C62 		.ascii	"volbase\000"
+ 1295      61736500 
+ 1296              	.LASF58:
+ 1297 013f 6469736B 		.ascii	"disk_read\000"
+ 1297      5F726561 
+ 1297      6400
+ 1298              	.LASF30:
+ 1299 0149 6673697A 		.ascii	"fsize\000"
+ 1299      6500
+ 1300              	.LASF1:
+ 1301 014f 756E7369 		.ascii	"unsigned char\000"
+ 1301      676E6564 
+ 1301      20636861 
+ 1301      7200
+ 1302              	.LASF19:
+ 1303 015d 44574F52 		.ascii	"DWORD\000"
+ 1303      4400
+ 1304              	.LASF24:
+ 1305 0163 6673695F 		.ascii	"fsi_flag\000"
+ 1305      666C6167 
+ 1305      00
+ 1306              	.LASF9:
+ 1307 016c 6C6F6E67 		.ascii	"long double\000"
+ 1307      20646F75 
+ 1307      626C6500 
+ 1308              	.LASF56:
+ 1309 0178 665F6D6F 		.ascii	"f_mount\000"
+ 1309      756E7400 
+ 1310              	.LASF27:
+ 1311 0180 66726565 		.ascii	"free_clust\000"
+ARM GAS  C:\Users\linar\AppData\Local\Temp\ccmlCLsa.s 			page 27
+
+
+ 1311      5F636C75 
+ 1311      737400
+ 1312              	.LASF48:
+ 1313 018b 49544D5F 		.ascii	"ITM_RxBuffer\000"
+ 1313      52784275 
+ 1313      66666572 
+ 1313      00
+ 1314              	.LASF40:
+ 1315 0198 636C7573 		.ascii	"clust\000"
+ 1315      7400
+ 1316              	.LASF23:
+ 1317 019e 77666C61 		.ascii	"wflag\000"
+ 1317      6700
+ 1318              	.LASF7:
+ 1319 01a4 6C6F6E67 		.ascii	"long long unsigned int\000"
+ 1319      206C6F6E 
+ 1319      6720756E 
+ 1319      7369676E 
+ 1319      65642069 
+ 1320              	.LASF8:
+ 1321 01bb 756E7369 		.ascii	"unsigned int\000"
+ 1321      676E6564 
+ 1321      20696E74 
+ 1321      00
+ 1322              	.LASF47:
+ 1323 01c8 72657375 		.ascii	"resultF\000"
+ 1323      6C744600 
+ 1324              	.LASF44:
+ 1325 01d0 72656376 		.ascii	"recvBuff\000"
+ 1325      42756666 
+ 1325      00
+ 1326              	.LASF66:
+ 1327 01d9 433A5C55 		.ascii	"C:\\Users\\linar\\OneDrive\\Documents\\PSoC Creator"
+ 1327      73657273 
+ 1327      5C6C696E 
+ 1327      61725C4F 
+ 1327      6E654472 
+ 1328 0207 5C70736F 		.ascii	"\\psocRandomWorkspace\\usb-fatfs-flash-usbfs.cydsn\000"
+ 1328      6352616E 
+ 1328      646F6D57 
+ 1328      6F726B73 
+ 1328      70616365 
+ 1329              	.LASF43:
+ 1330 0238 6469725F 		.ascii	"dir_ptr\000"
+ 1330      70747200 
+ 1331              	.LASF3:
+ 1332 0240 73686F72 		.ascii	"short unsigned int\000"
+ 1332      7420756E 
+ 1332      7369676E 
+ 1332      65642069 
+ 1332      6E7400
+ 1333              	.LASF11:
+ 1334 0253 63686172 		.ascii	"char\000"
+ 1334      00
+ 1335              	.LASF32:
+ 1336 0258 66617462 		.ascii	"fatbase\000"
+ 1336      61736500 
+ARM GAS  C:\Users\linar\AppData\Local\Temp\ccmlCLsa.s 			page 28
+
+
+ 1337              	.LASF67:
+ 1338 0260 6D61696E 		.ascii	"main\000"
+ 1338      00
+ 1339              	.LASF13:
+ 1340 0265 696E7433 		.ascii	"int32_t\000"
+ 1340      325F7400 
+ 1341              	.LASF59:
+ 1342 026d 55534246 		.ascii	"USBFS_InitializeMSC\000"
+ 1342      535F496E 
+ 1342      69746961 
+ 1342      6C697A65 
+ 1342      4D534300 
+ 1343              	.LASF36:
+ 1344 0281 46415446 		.ascii	"FATFS\000"
+ 1344      5300
+ 1345              	.LASF65:
+ 1346 0287 6D61696E 		.ascii	"main.c\000"
+ 1346      2E6300
+ 1347              	.LASF5:
+ 1348 028e 6C6F6E67 		.ascii	"long unsigned int\000"
+ 1348      20756E73 
+ 1348      69676E65 
+ 1348      6420696E 
+ 1348      7400
+ 1349              	.LASF16:
+ 1350 02a0 646F7562 		.ascii	"double\000"
+ 1350      6C6500
+ 1351              	.LASF54:
+ 1352 02a7 55534246 		.ascii	"USBFS_EnableOutEP\000"
+ 1352      535F456E 
+ 1352      61626C65 
+ 1352      4F757445 
+ 1352      5000
+ 1353              	.LASF33:
+ 1354 02b9 64697262 		.ascii	"dirbase\000"
+ 1354      61736500 
+ 1355              	.LASF46:
+ 1356 02c1 66696C65 		.ascii	"fileO\000"
+ 1356      4F00
+ 1357              	.LASF45:
+ 1358 02c7 73656E64 		.ascii	"sendbuff\000"
+ 1358      62756666 
+ 1358      00
+ 1359              	.LASF12:
+ 1360 02d0 5F5F696E 		.ascii	"__int32_t\000"
+ 1360      7433325F 
+ 1360      7400
+ 1361              	.LASF39:
+ 1362 02da 73636C75 		.ascii	"sclust\000"
+ 1362      737400
+ 1363              	.LASF60:
+ 1364 02e1 55534246 		.ascii	"USBFS_IsConfigurationChanged\000"
+ 1364      535F4973 
+ 1364      436F6E66 
+ 1364      69677572 
+ 1364      6174696F 
+ 1365              	.LASF10:
+ARM GAS  C:\Users\linar\AppData\Local\Temp\ccmlCLsa.s 			page 29
+
+
+ 1366 02fe 73697A65 		.ascii	"sizetype\000"
+ 1366      74797065 
+ 1366      00
+ 1367              	.LASF37:
+ 1368 0307 666C6167 		.ascii	"flag\000"
+ 1368      00
+ 1369              	.LASF51:
+ 1370 030c 5350494D 		.ascii	"SPIM_1_Start\000"
+ 1370      5F315F53 
+ 1370      74617274 
+ 1370      00
+ 1371              	.LASF52:
+ 1372 0319 55534246 		.ascii	"USBFS_Start\000"
+ 1372      535F5374 
+ 1372      61727400 
+ 1373              	.LASF35:
+ 1374 0325 77696E73 		.ascii	"winsect\000"
+ 1374      65637400 
+ 1375              	.LASF64:
+ 1376 032d 474E5520 		.ascii	"GNU C11 5.4.1 20160609 (release) [ARM/embedded-5-br"
+ 1376      43313120 
+ 1376      352E342E 
+ 1376      31203230 
+ 1376      31363036 
+ 1377 0360 616E6368 		.ascii	"anch revision 237715] -mcpu=cortex-m3 -mthumb -g -O"
+ 1377      20726576 
+ 1377      6973696F 
+ 1377      6E203233 
+ 1377      37373135 
+ 1378 0393 67202D66 		.ascii	"g -ffunction-sections -ffat-lto-objects\000"
+ 1378      66756E63 
+ 1378      74696F6E 
+ 1378      2D736563 
+ 1378      74696F6E 
+ 1379              	.LASF55:
+ 1380 03bb 43794465 		.ascii	"CyDelay\000"
+ 1380      6C617900 
+ 1381              	.LASF57:
+ 1382 03c3 665F6D6B 		.ascii	"f_mkfs\000"
+ 1382      667300
+ 1383              		.ident	"GCC: (GNU Tools for ARM Embedded Processors) 5.4.1 20160609 (release) [ARM/embedded-5-bran

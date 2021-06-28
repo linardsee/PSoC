@@ -1,0 +1,14 @@
+(DELAYFILE
+ (SDFVERSION "IEEE 1497 4.0")
+ (DATE "2021-05-23T11:41:27Z")
+ (DESIGN "memory_test")
+ (VENDOR "Cypress Semiconductor")
+ (PROGRAM "PSoC Creator")
+ (VERSION " 4.4")
+ (DIVIDER .)
+ (TIMESCALE 1 ns)
+ (CELL
+  (CELLTYPE "memory_test")
+  (INSTANCE *)
+ )
+)

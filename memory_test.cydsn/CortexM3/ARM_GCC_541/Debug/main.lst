@@ -1,0 +1,839 @@
+ARM GAS  C:\Users\linar\AppData\Local\Temp\ccyLRshO.s 			page 1
+
+
+   1              		.syntax unified
+   2              		.cpu cortex-m3
+   3              		.fpu softvfp
+   4              		.eabi_attribute 20, 1
+   5              		.eabi_attribute 21, 1
+   6              		.eabi_attribute 23, 3
+   7              		.eabi_attribute 24, 1
+   8              		.eabi_attribute 25, 1
+   9              		.eabi_attribute 26, 1
+  10              		.eabi_attribute 30, 1
+  11              		.eabi_attribute 34, 1
+  12              		.eabi_attribute 18, 4
+  13              		.thumb
+  14              		.syntax unified
+  15              		.file	"main.c"
+  16              		.text
+  17              	.Ltext0:
+  18              		.cfi_sections	.debug_frame
+  19              		.section	.text.copyBuffer,"ax",%progbits
+  20              		.align	2
+  21              		.global	copyBuffer
+  22              		.thumb
+  23              		.thumb_func
+  24              		.type	copyBuffer, %function
+  25              	copyBuffer:
+  26              	.LFB63:
+  27              		.file 1 "main.c"
+   1:main.c        **** /* ========================================
+   2:main.c        ****  *
+   3:main.c        ****  * Copyright YOUR COMPANY, THE YEAR
+   4:main.c        ****  * All Rights Reserved
+   5:main.c        ****  * UNPUBLISHED, LICENSED SOFTWARE.
+   6:main.c        ****  *
+   7:main.c        ****  * CONFIDENTIAL AND PROPRIETARY INFORMATION
+   8:main.c        ****  * WHICH IS THE PROPERTY OF your company.
+   9:main.c        ****  *
+  10:main.c        ****  * ========================================
+  11:main.c        **** */
+  12:main.c        **** #include "project.h"
+  13:main.c        **** 
+  14:main.c        **** uint8 randomBuff[5] = {'a', 'b', 'c', 'd', 'e'};
+  15:main.c        **** 
+  16:main.c        **** void copyBuffer(uint8* buff, uint8 size)
+  17:main.c        **** {
+  28              		.loc 1 17 0
+  29              		.cfi_startproc
+  30              		@ args = 0, pretend = 0, frame = 0
+  31              		@ frame_needed = 0, uses_anonymous_args = 0
+  32              		@ link register save eliminated.
+  33              	.LVL0:
+  34              	.LBB2:
+  18:main.c        ****     for(int i = 0; i < size; i++)
+  35              		.loc 1 18 0
+  36 0000 0023     		movs	r3, #0
+  37 0002 04E0     		b	.L2
+  38              	.LVL1:
+  39              	.L3:
+ARM GAS  C:\Users\linar\AppData\Local\Temp\ccyLRshO.s 			page 2
+
+
+  19:main.c        ****     {
+  20:main.c        ****         *buff = randomBuff[i];
+  40              		.loc 1 20 0 discriminator 3
+  41 0004 034A     		ldr	r2, .L4
+  42 0006 D25C     		ldrb	r2, [r2, r3]	@ zero_extendqisi2
+  43 0008 00F8012B 		strb	r2, [r0], #1
+  44              	.LVL2:
+  18:main.c        ****     for(int i = 0; i < size; i++)
+  45              		.loc 1 18 0 discriminator 3
+  46 000c 0133     		adds	r3, r3, #1
+  47              	.LVL3:
+  48              	.L2:
+  18:main.c        ****     for(int i = 0; i < size; i++)
+  49              		.loc 1 18 0 is_stmt 0 discriminator 1
+  50 000e 8B42     		cmp	r3, r1
+  51 0010 F8DB     		blt	.L3
+  52              	.LBE2:
+  21:main.c        ****         buff++;
+  22:main.c        ****     }
+  23:main.c        **** }
+  53              		.loc 1 23 0 is_stmt 1
+  54 0012 7047     		bx	lr
+  55              	.L5:
+  56              		.align	2
+  57              	.L4:
+  58 0014 00000000 		.word	.LANCHOR0
+  59              		.cfi_endproc
+  60              	.LFE63:
+  61              		.size	copyBuffer, .-copyBuffer
+  62              		.section	.text.main,"ax",%progbits
+  63              		.align	2
+  64              		.global	main
+  65              		.thumb
+  66              		.thumb_func
+  67              		.type	main, %function
+  68              	main:
+  69              	.LFB64:
+  24:main.c        **** 
+  25:main.c        **** 
+  26:main.c        **** int main(void)
+  27:main.c        **** {
+  70              		.loc 1 27 0
+  71              		.cfi_startproc
+  72              		@ args = 0, pretend = 0, frame = 8
+  73              		@ frame_needed = 0, uses_anonymous_args = 0
+  74 0000 00B5     		push	{lr}
+  75              		.cfi_def_cfa_offset 4
+  76              		.cfi_offset 14, -4
+  77 0002 83B0     		sub	sp, sp, #12
+  78              		.cfi_def_cfa_offset 16
+  28:main.c        ****     CyGlobalIntEnable; /* Enable global interrupts. */
+  79              		.loc 1 28 0
+  80              		.syntax unified
+  81              	@ 28 "main.c" 1
+  82 0004 62B6     		CPSIE   i
+  83              	@ 0 "" 2
+  29:main.c        **** 
+ARM GAS  C:\Users\linar\AppData\Local\Temp\ccyLRshO.s 			page 3
+
+
+  30:main.c        ****     /* Place your initialization/startup code here (e.g. MyInst_Start()) */
+  31:main.c        **** 
+  32:main.c        ****     uint8 copyBuff[5] = {0, 0, 0, 0, 0};
+  84              		.loc 1 32 0
+  85              		.thumb
+  86              		.syntax unified
+  87 0006 0023     		movs	r3, #0
+  88 0008 0093     		str	r3, [sp]
+  89 000a 8DF80430 		strb	r3, [sp, #4]
+  33:main.c        ****     
+  34:main.c        ****     copyBuffer(copyBuff, 5);
+  90              		.loc 1 34 0
+  91 000e 0521     		movs	r1, #5
+  92 0010 6846     		mov	r0, sp
+  93 0012 FFF7FEFF 		bl	copyBuffer
+  94              	.LVL4:
+  95              	.L7:
+  96 0016 FEE7     		b	.L7
+  97              		.cfi_endproc
+  98              	.LFE64:
+  99              		.size	main, .-main
+ 100              		.global	randomBuff
+ 101              		.data
+ 102              		.align	2
+ 103              		.set	.LANCHOR0,. + 0
+ 104              		.type	randomBuff, %object
+ 105              		.size	randomBuff, 5
+ 106              	randomBuff:
+ 107 0000 61       		.byte	97
+ 108 0001 62       		.byte	98
+ 109 0002 63       		.byte	99
+ 110 0003 64       		.byte	100
+ 111 0004 65       		.byte	101
+ 112              		.text
+ 113              	.Letext0:
+ 114              		.file 2 "c:\\program files (x86)\\cypress\\psoc creator\\4.4\\psoc creator\\import\\gnu\\arm\\5.4.
+ 115              		.file 3 "c:\\program files (x86)\\cypress\\psoc creator\\4.4\\psoc creator\\import\\gnu\\arm\\5.4.
+ 116              		.file 4 "Generated_Source\\PSoC5/cytypes.h"
+ 117              		.file 5 "Generated_Source\\PSoC5/core_cm3.h"
+ 118              		.section	.debug_info,"",%progbits
+ 119              	.Ldebug_info0:
+ 120 0000 6B010000 		.4byte	0x16b
+ 121 0004 0400     		.2byte	0x4
+ 122 0006 00000000 		.4byte	.Ldebug_abbrev0
+ 123 000a 04       		.byte	0x4
+ 124 000b 01       		.uleb128 0x1
+ 125 000c A5000000 		.4byte	.LASF22
+ 126 0010 0C       		.byte	0xc
+ 127 0011 8E000000 		.4byte	.LASF23
+ 128 0015 2E000000 		.4byte	.LASF24
+ 129 0019 00000000 		.4byte	.Ldebug_ranges0+0
+ 130 001d 00000000 		.4byte	0
+ 131 0021 00000000 		.4byte	.Ldebug_line0
+ 132 0025 02       		.uleb128 0x2
+ 133 0026 01       		.byte	0x1
+ 134 0027 06       		.byte	0x6
+ 135 0028 A7010000 		.4byte	.LASF0
+ARM GAS  C:\Users\linar\AppData\Local\Temp\ccyLRshO.s 			page 4
+
+
+ 136 002c 02       		.uleb128 0x2
+ 137 002d 01       		.byte	0x1
+ 138 002e 08       		.byte	0x8
+ 139 002f 62010000 		.4byte	.LASF1
+ 140 0033 02       		.uleb128 0x2
+ 141 0034 02       		.byte	0x2
+ 142 0035 05       		.byte	0x5
+ 143 0036 C8010000 		.4byte	.LASF2
+ 144 003a 02       		.uleb128 0x2
+ 145 003b 02       		.byte	0x2
+ 146 003c 07       		.byte	0x7
+ 147 003d 0E000000 		.4byte	.LASF3
+ 148 0041 03       		.uleb128 0x3
+ 149 0042 B8010000 		.4byte	.LASF9
+ 150 0046 02       		.byte	0x2
+ 151 0047 3F       		.byte	0x3f
+ 152 0048 4C000000 		.4byte	0x4c
+ 153 004c 02       		.uleb128 0x2
+ 154 004d 04       		.byte	0x4
+ 155 004e 05       		.byte	0x5
+ 156 004f 75010000 		.4byte	.LASF4
+ 157 0053 02       		.uleb128 0x2
+ 158 0054 04       		.byte	0x4
+ 159 0055 07       		.byte	0x7
+ 160 0056 39010000 		.4byte	.LASF5
+ 161 005a 02       		.uleb128 0x2
+ 162 005b 08       		.byte	0x8
+ 163 005c 05       		.byte	0x5
+ 164 005d 00000000 		.4byte	.LASF6
+ 165 0061 02       		.uleb128 0x2
+ 166 0062 08       		.byte	0x8
+ 167 0063 07       		.byte	0x7
+ 168 0064 4B010000 		.4byte	.LASF7
+ 169 0068 04       		.uleb128 0x4
+ 170 0069 04       		.byte	0x4
+ 171 006a 05       		.byte	0x5
+ 172 006b 696E7400 		.ascii	"int\000"
+ 173 006f 02       		.uleb128 0x2
+ 174 0070 04       		.byte	0x4
+ 175 0071 07       		.byte	0x7
+ 176 0072 21000000 		.4byte	.LASF8
+ 177 0076 03       		.uleb128 0x3
+ 178 0077 D2010000 		.4byte	.LASF10
+ 179 007b 03       		.byte	0x3
+ 180 007c 2C       		.byte	0x2c
+ 181 007d 41000000 		.4byte	0x41
+ 182 0081 05       		.uleb128 0x5
+ 183 0082 33010000 		.4byte	.LASF11
+ 184 0086 04       		.byte	0x4
+ 185 0087 E801     		.2byte	0x1e8
+ 186 0089 2C000000 		.4byte	0x2c
+ 187 008d 02       		.uleb128 0x2
+ 188 008e 04       		.byte	0x4
+ 189 008f 04       		.byte	0x4
+ 190 0090 C2010000 		.4byte	.LASF12
+ 191 0094 02       		.uleb128 0x2
+ 192 0095 08       		.byte	0x8
+ARM GAS  C:\Users\linar\AppData\Local\Temp\ccyLRshO.s 			page 5
+
+
+ 193 0096 04       		.byte	0x4
+ 194 0097 87010000 		.4byte	.LASF13
+ 195 009b 02       		.uleb128 0x2
+ 196 009c 01       		.byte	0x1
+ 197 009d 08       		.byte	0x8
+ 198 009e 70010000 		.4byte	.LASF14
+ 199 00a2 02       		.uleb128 0x2
+ 200 00a3 04       		.byte	0x4
+ 201 00a4 07       		.byte	0x7
+ 202 00a5 DF010000 		.4byte	.LASF15
+ 203 00a9 02       		.uleb128 0x2
+ 204 00aa 08       		.byte	0x8
+ 205 00ab 04       		.byte	0x4
+ 206 00ac 8E010000 		.4byte	.LASF16
+ 207 00b0 06       		.uleb128 0x6
+ 208 00b1 9A000000 		.4byte	.LASF25
+ 209 00b5 01       		.byte	0x1
+ 210 00b6 10       		.byte	0x10
+ 211 00b7 00000000 		.4byte	.LFB63
+ 212 00bb 18000000 		.4byte	.LFE63-.LFB63
+ 213 00bf 01       		.uleb128 0x1
+ 214 00c0 9C       		.byte	0x9c
+ 215 00c1 F9000000 		.4byte	0xf9
+ 216 00c5 07       		.uleb128 0x7
+ 217 00c6 DA010000 		.4byte	.LASF17
+ 218 00ca 01       		.byte	0x1
+ 219 00cb 10       		.byte	0x10
+ 220 00cc F9000000 		.4byte	0xf9
+ 221 00d0 00000000 		.4byte	.LLST0
+ 222 00d4 08       		.uleb128 0x8
+ 223 00d5 B3010000 		.4byte	.LASF18
+ 224 00d9 01       		.byte	0x1
+ 225 00da 10       		.byte	0x10
+ 226 00db 81000000 		.4byte	0x81
+ 227 00df 01       		.uleb128 0x1
+ 228 00e0 51       		.byte	0x51
+ 229 00e1 09       		.uleb128 0x9
+ 230 00e2 00000000 		.4byte	.LBB2
+ 231 00e6 12000000 		.4byte	.LBE2-.LBB2
+ 232 00ea 0A       		.uleb128 0xa
+ 233 00eb 6900     		.ascii	"i\000"
+ 234 00ed 01       		.byte	0x1
+ 235 00ee 12       		.byte	0x12
+ 236 00ef 68000000 		.4byte	0x68
+ 237 00f3 1E000000 		.4byte	.LLST1
+ 238 00f7 00       		.byte	0
+ 239 00f8 00       		.byte	0
+ 240 00f9 0B       		.uleb128 0xb
+ 241 00fa 04       		.byte	0x4
+ 242 00fb 81000000 		.4byte	0x81
+ 243 00ff 0C       		.uleb128 0xc
+ 244 0100 95000000 		.4byte	.LASF26
+ 245 0104 01       		.byte	0x1
+ 246 0105 1A       		.byte	0x1a
+ 247 0106 68000000 		.4byte	0x68
+ 248 010a 00000000 		.4byte	.LFB64
+ 249 010e 18000000 		.4byte	.LFE64-.LFB64
+ARM GAS  C:\Users\linar\AppData\Local\Temp\ccyLRshO.s 			page 6
+
+
+ 250 0112 01       		.uleb128 0x1
+ 251 0113 9C       		.byte	0x9c
+ 252 0114 3C010000 		.4byte	0x13c
+ 253 0118 0D       		.uleb128 0xd
+ 254 0119 7E010000 		.4byte	.LASF19
+ 255 011d 01       		.byte	0x1
+ 256 011e 20       		.byte	0x20
+ 257 011f 3C010000 		.4byte	0x13c
+ 258 0123 02       		.uleb128 0x2
+ 259 0124 91       		.byte	0x91
+ 260 0125 70       		.sleb128 -16
+ 261 0126 0E       		.uleb128 0xe
+ 262 0127 16000000 		.4byte	.LVL4
+ 263 012b B0000000 		.4byte	0xb0
+ 264 012f 0F       		.uleb128 0xf
+ 265 0130 01       		.uleb128 0x1
+ 266 0131 50       		.byte	0x50
+ 267 0132 02       		.uleb128 0x2
+ 268 0133 7D       		.byte	0x7d
+ 269 0134 00       		.sleb128 0
+ 270 0135 0F       		.uleb128 0xf
+ 271 0136 01       		.uleb128 0x1
+ 272 0137 51       		.byte	0x51
+ 273 0138 01       		.uleb128 0x1
+ 274 0139 35       		.byte	0x35
+ 275 013a 00       		.byte	0
+ 276 013b 00       		.byte	0
+ 277 013c 10       		.uleb128 0x10
+ 278 013d 81000000 		.4byte	0x81
+ 279 0141 4C010000 		.4byte	0x14c
+ 280 0145 11       		.uleb128 0x11
+ 281 0146 A2000000 		.4byte	0xa2
+ 282 014a 04       		.byte	0x4
+ 283 014b 00       		.byte	0
+ 284 014c 12       		.uleb128 0x12
+ 285 014d 9A010000 		.4byte	.LASF20
+ 286 0151 05       		.byte	0x5
+ 287 0152 1207     		.2byte	0x712
+ 288 0154 58010000 		.4byte	0x158
+ 289 0158 13       		.uleb128 0x13
+ 290 0159 76000000 		.4byte	0x76
+ 291 015d 14       		.uleb128 0x14
+ 292 015e 83000000 		.4byte	.LASF21
+ 293 0162 01       		.byte	0x1
+ 294 0163 0E       		.byte	0xe
+ 295 0164 3C010000 		.4byte	0x13c
+ 296 0168 05       		.uleb128 0x5
+ 297 0169 03       		.byte	0x3
+ 298 016a 00000000 		.4byte	randomBuff
+ 299 016e 00       		.byte	0
+ 300              		.section	.debug_abbrev,"",%progbits
+ 301              	.Ldebug_abbrev0:
+ 302 0000 01       		.uleb128 0x1
+ 303 0001 11       		.uleb128 0x11
+ 304 0002 01       		.byte	0x1
+ 305 0003 25       		.uleb128 0x25
+ 306 0004 0E       		.uleb128 0xe
+ARM GAS  C:\Users\linar\AppData\Local\Temp\ccyLRshO.s 			page 7
+
+
+ 307 0005 13       		.uleb128 0x13
+ 308 0006 0B       		.uleb128 0xb
+ 309 0007 03       		.uleb128 0x3
+ 310 0008 0E       		.uleb128 0xe
+ 311 0009 1B       		.uleb128 0x1b
+ 312 000a 0E       		.uleb128 0xe
+ 313 000b 55       		.uleb128 0x55
+ 314 000c 17       		.uleb128 0x17
+ 315 000d 11       		.uleb128 0x11
+ 316 000e 01       		.uleb128 0x1
+ 317 000f 10       		.uleb128 0x10
+ 318 0010 17       		.uleb128 0x17
+ 319 0011 00       		.byte	0
+ 320 0012 00       		.byte	0
+ 321 0013 02       		.uleb128 0x2
+ 322 0014 24       		.uleb128 0x24
+ 323 0015 00       		.byte	0
+ 324 0016 0B       		.uleb128 0xb
+ 325 0017 0B       		.uleb128 0xb
+ 326 0018 3E       		.uleb128 0x3e
+ 327 0019 0B       		.uleb128 0xb
+ 328 001a 03       		.uleb128 0x3
+ 329 001b 0E       		.uleb128 0xe
+ 330 001c 00       		.byte	0
+ 331 001d 00       		.byte	0
+ 332 001e 03       		.uleb128 0x3
+ 333 001f 16       		.uleb128 0x16
+ 334 0020 00       		.byte	0
+ 335 0021 03       		.uleb128 0x3
+ 336 0022 0E       		.uleb128 0xe
+ 337 0023 3A       		.uleb128 0x3a
+ 338 0024 0B       		.uleb128 0xb
+ 339 0025 3B       		.uleb128 0x3b
+ 340 0026 0B       		.uleb128 0xb
+ 341 0027 49       		.uleb128 0x49
+ 342 0028 13       		.uleb128 0x13
+ 343 0029 00       		.byte	0
+ 344 002a 00       		.byte	0
+ 345 002b 04       		.uleb128 0x4
+ 346 002c 24       		.uleb128 0x24
+ 347 002d 00       		.byte	0
+ 348 002e 0B       		.uleb128 0xb
+ 349 002f 0B       		.uleb128 0xb
+ 350 0030 3E       		.uleb128 0x3e
+ 351 0031 0B       		.uleb128 0xb
+ 352 0032 03       		.uleb128 0x3
+ 353 0033 08       		.uleb128 0x8
+ 354 0034 00       		.byte	0
+ 355 0035 00       		.byte	0
+ 356 0036 05       		.uleb128 0x5
+ 357 0037 16       		.uleb128 0x16
+ 358 0038 00       		.byte	0
+ 359 0039 03       		.uleb128 0x3
+ 360 003a 0E       		.uleb128 0xe
+ 361 003b 3A       		.uleb128 0x3a
+ 362 003c 0B       		.uleb128 0xb
+ 363 003d 3B       		.uleb128 0x3b
+ARM GAS  C:\Users\linar\AppData\Local\Temp\ccyLRshO.s 			page 8
+
+
+ 364 003e 05       		.uleb128 0x5
+ 365 003f 49       		.uleb128 0x49
+ 366 0040 13       		.uleb128 0x13
+ 367 0041 00       		.byte	0
+ 368 0042 00       		.byte	0
+ 369 0043 06       		.uleb128 0x6
+ 370 0044 2E       		.uleb128 0x2e
+ 371 0045 01       		.byte	0x1
+ 372 0046 3F       		.uleb128 0x3f
+ 373 0047 19       		.uleb128 0x19
+ 374 0048 03       		.uleb128 0x3
+ 375 0049 0E       		.uleb128 0xe
+ 376 004a 3A       		.uleb128 0x3a
+ 377 004b 0B       		.uleb128 0xb
+ 378 004c 3B       		.uleb128 0x3b
+ 379 004d 0B       		.uleb128 0xb
+ 380 004e 27       		.uleb128 0x27
+ 381 004f 19       		.uleb128 0x19
+ 382 0050 11       		.uleb128 0x11
+ 383 0051 01       		.uleb128 0x1
+ 384 0052 12       		.uleb128 0x12
+ 385 0053 06       		.uleb128 0x6
+ 386 0054 40       		.uleb128 0x40
+ 387 0055 18       		.uleb128 0x18
+ 388 0056 9742     		.uleb128 0x2117
+ 389 0058 19       		.uleb128 0x19
+ 390 0059 01       		.uleb128 0x1
+ 391 005a 13       		.uleb128 0x13
+ 392 005b 00       		.byte	0
+ 393 005c 00       		.byte	0
+ 394 005d 07       		.uleb128 0x7
+ 395 005e 05       		.uleb128 0x5
+ 396 005f 00       		.byte	0
+ 397 0060 03       		.uleb128 0x3
+ 398 0061 0E       		.uleb128 0xe
+ 399 0062 3A       		.uleb128 0x3a
+ 400 0063 0B       		.uleb128 0xb
+ 401 0064 3B       		.uleb128 0x3b
+ 402 0065 0B       		.uleb128 0xb
+ 403 0066 49       		.uleb128 0x49
+ 404 0067 13       		.uleb128 0x13
+ 405 0068 02       		.uleb128 0x2
+ 406 0069 17       		.uleb128 0x17
+ 407 006a 00       		.byte	0
+ 408 006b 00       		.byte	0
+ 409 006c 08       		.uleb128 0x8
+ 410 006d 05       		.uleb128 0x5
+ 411 006e 00       		.byte	0
+ 412 006f 03       		.uleb128 0x3
+ 413 0070 0E       		.uleb128 0xe
+ 414 0071 3A       		.uleb128 0x3a
+ 415 0072 0B       		.uleb128 0xb
+ 416 0073 3B       		.uleb128 0x3b
+ 417 0074 0B       		.uleb128 0xb
+ 418 0075 49       		.uleb128 0x49
+ 419 0076 13       		.uleb128 0x13
+ 420 0077 02       		.uleb128 0x2
+ARM GAS  C:\Users\linar\AppData\Local\Temp\ccyLRshO.s 			page 9
+
+
+ 421 0078 18       		.uleb128 0x18
+ 422 0079 00       		.byte	0
+ 423 007a 00       		.byte	0
+ 424 007b 09       		.uleb128 0x9
+ 425 007c 0B       		.uleb128 0xb
+ 426 007d 01       		.byte	0x1
+ 427 007e 11       		.uleb128 0x11
+ 428 007f 01       		.uleb128 0x1
+ 429 0080 12       		.uleb128 0x12
+ 430 0081 06       		.uleb128 0x6
+ 431 0082 00       		.byte	0
+ 432 0083 00       		.byte	0
+ 433 0084 0A       		.uleb128 0xa
+ 434 0085 34       		.uleb128 0x34
+ 435 0086 00       		.byte	0
+ 436 0087 03       		.uleb128 0x3
+ 437 0088 08       		.uleb128 0x8
+ 438 0089 3A       		.uleb128 0x3a
+ 439 008a 0B       		.uleb128 0xb
+ 440 008b 3B       		.uleb128 0x3b
+ 441 008c 0B       		.uleb128 0xb
+ 442 008d 49       		.uleb128 0x49
+ 443 008e 13       		.uleb128 0x13
+ 444 008f 02       		.uleb128 0x2
+ 445 0090 17       		.uleb128 0x17
+ 446 0091 00       		.byte	0
+ 447 0092 00       		.byte	0
+ 448 0093 0B       		.uleb128 0xb
+ 449 0094 0F       		.uleb128 0xf
+ 450 0095 00       		.byte	0
+ 451 0096 0B       		.uleb128 0xb
+ 452 0097 0B       		.uleb128 0xb
+ 453 0098 49       		.uleb128 0x49
+ 454 0099 13       		.uleb128 0x13
+ 455 009a 00       		.byte	0
+ 456 009b 00       		.byte	0
+ 457 009c 0C       		.uleb128 0xc
+ 458 009d 2E       		.uleb128 0x2e
+ 459 009e 01       		.byte	0x1
+ 460 009f 3F       		.uleb128 0x3f
+ 461 00a0 19       		.uleb128 0x19
+ 462 00a1 03       		.uleb128 0x3
+ 463 00a2 0E       		.uleb128 0xe
+ 464 00a3 3A       		.uleb128 0x3a
+ 465 00a4 0B       		.uleb128 0xb
+ 466 00a5 3B       		.uleb128 0x3b
+ 467 00a6 0B       		.uleb128 0xb
+ 468 00a7 27       		.uleb128 0x27
+ 469 00a8 19       		.uleb128 0x19
+ 470 00a9 49       		.uleb128 0x49
+ 471 00aa 13       		.uleb128 0x13
+ 472 00ab 8701     		.uleb128 0x87
+ 473 00ad 19       		.uleb128 0x19
+ 474 00ae 11       		.uleb128 0x11
+ 475 00af 01       		.uleb128 0x1
+ 476 00b0 12       		.uleb128 0x12
+ 477 00b1 06       		.uleb128 0x6
+ARM GAS  C:\Users\linar\AppData\Local\Temp\ccyLRshO.s 			page 10
+
+
+ 478 00b2 40       		.uleb128 0x40
+ 479 00b3 18       		.uleb128 0x18
+ 480 00b4 9742     		.uleb128 0x2117
+ 481 00b6 19       		.uleb128 0x19
+ 482 00b7 01       		.uleb128 0x1
+ 483 00b8 13       		.uleb128 0x13
+ 484 00b9 00       		.byte	0
+ 485 00ba 00       		.byte	0
+ 486 00bb 0D       		.uleb128 0xd
+ 487 00bc 34       		.uleb128 0x34
+ 488 00bd 00       		.byte	0
+ 489 00be 03       		.uleb128 0x3
+ 490 00bf 0E       		.uleb128 0xe
+ 491 00c0 3A       		.uleb128 0x3a
+ 492 00c1 0B       		.uleb128 0xb
+ 493 00c2 3B       		.uleb128 0x3b
+ 494 00c3 0B       		.uleb128 0xb
+ 495 00c4 49       		.uleb128 0x49
+ 496 00c5 13       		.uleb128 0x13
+ 497 00c6 02       		.uleb128 0x2
+ 498 00c7 18       		.uleb128 0x18
+ 499 00c8 00       		.byte	0
+ 500 00c9 00       		.byte	0
+ 501 00ca 0E       		.uleb128 0xe
+ 502 00cb 898201   		.uleb128 0x4109
+ 503 00ce 01       		.byte	0x1
+ 504 00cf 11       		.uleb128 0x11
+ 505 00d0 01       		.uleb128 0x1
+ 506 00d1 31       		.uleb128 0x31
+ 507 00d2 13       		.uleb128 0x13
+ 508 00d3 00       		.byte	0
+ 509 00d4 00       		.byte	0
+ 510 00d5 0F       		.uleb128 0xf
+ 511 00d6 8A8201   		.uleb128 0x410a
+ 512 00d9 00       		.byte	0
+ 513 00da 02       		.uleb128 0x2
+ 514 00db 18       		.uleb128 0x18
+ 515 00dc 9142     		.uleb128 0x2111
+ 516 00de 18       		.uleb128 0x18
+ 517 00df 00       		.byte	0
+ 518 00e0 00       		.byte	0
+ 519 00e1 10       		.uleb128 0x10
+ 520 00e2 01       		.uleb128 0x1
+ 521 00e3 01       		.byte	0x1
+ 522 00e4 49       		.uleb128 0x49
+ 523 00e5 13       		.uleb128 0x13
+ 524 00e6 01       		.uleb128 0x1
+ 525 00e7 13       		.uleb128 0x13
+ 526 00e8 00       		.byte	0
+ 527 00e9 00       		.byte	0
+ 528 00ea 11       		.uleb128 0x11
+ 529 00eb 21       		.uleb128 0x21
+ 530 00ec 00       		.byte	0
+ 531 00ed 49       		.uleb128 0x49
+ 532 00ee 13       		.uleb128 0x13
+ 533 00ef 2F       		.uleb128 0x2f
+ 534 00f0 0B       		.uleb128 0xb
+ARM GAS  C:\Users\linar\AppData\Local\Temp\ccyLRshO.s 			page 11
+
+
+ 535 00f1 00       		.byte	0
+ 536 00f2 00       		.byte	0
+ 537 00f3 12       		.uleb128 0x12
+ 538 00f4 34       		.uleb128 0x34
+ 539 00f5 00       		.byte	0
+ 540 00f6 03       		.uleb128 0x3
+ 541 00f7 0E       		.uleb128 0xe
+ 542 00f8 3A       		.uleb128 0x3a
+ 543 00f9 0B       		.uleb128 0xb
+ 544 00fa 3B       		.uleb128 0x3b
+ 545 00fb 05       		.uleb128 0x5
+ 546 00fc 49       		.uleb128 0x49
+ 547 00fd 13       		.uleb128 0x13
+ 548 00fe 3F       		.uleb128 0x3f
+ 549 00ff 19       		.uleb128 0x19
+ 550 0100 3C       		.uleb128 0x3c
+ 551 0101 19       		.uleb128 0x19
+ 552 0102 00       		.byte	0
+ 553 0103 00       		.byte	0
+ 554 0104 13       		.uleb128 0x13
+ 555 0105 35       		.uleb128 0x35
+ 556 0106 00       		.byte	0
+ 557 0107 49       		.uleb128 0x49
+ 558 0108 13       		.uleb128 0x13
+ 559 0109 00       		.byte	0
+ 560 010a 00       		.byte	0
+ 561 010b 14       		.uleb128 0x14
+ 562 010c 34       		.uleb128 0x34
+ 563 010d 00       		.byte	0
+ 564 010e 03       		.uleb128 0x3
+ 565 010f 0E       		.uleb128 0xe
+ 566 0110 3A       		.uleb128 0x3a
+ 567 0111 0B       		.uleb128 0xb
+ 568 0112 3B       		.uleb128 0x3b
+ 569 0113 0B       		.uleb128 0xb
+ 570 0114 49       		.uleb128 0x49
+ 571 0115 13       		.uleb128 0x13
+ 572 0116 3F       		.uleb128 0x3f
+ 573 0117 19       		.uleb128 0x19
+ 574 0118 02       		.uleb128 0x2
+ 575 0119 18       		.uleb128 0x18
+ 576 011a 00       		.byte	0
+ 577 011b 00       		.byte	0
+ 578 011c 00       		.byte	0
+ 579              		.section	.debug_loc,"",%progbits
+ 580              	.Ldebug_loc0:
+ 581              	.LLST0:
+ 582 0000 00000000 		.4byte	.LVL0
+ 583 0004 0C000000 		.4byte	.LVL2
+ 584 0008 0100     		.2byte	0x1
+ 585 000a 50       		.byte	0x50
+ 586 000b 0C000000 		.4byte	.LVL2
+ 587 000f 18000000 		.4byte	.LFE63
+ 588 0013 0100     		.2byte	0x1
+ 589 0015 50       		.byte	0x50
+ 590 0016 00000000 		.4byte	0
+ 591 001a 00000000 		.4byte	0
+ARM GAS  C:\Users\linar\AppData\Local\Temp\ccyLRshO.s 			page 12
+
+
+ 592              	.LLST1:
+ 593 001e 00000000 		.4byte	.LVL0
+ 594 0022 04000000 		.4byte	.LVL1
+ 595 0026 0200     		.2byte	0x2
+ 596 0028 30       		.byte	0x30
+ 597 0029 9F       		.byte	0x9f
+ 598 002a 04000000 		.4byte	.LVL1
+ 599 002e 18000000 		.4byte	.LFE63
+ 600 0032 0100     		.2byte	0x1
+ 601 0034 53       		.byte	0x53
+ 602 0035 00000000 		.4byte	0
+ 603 0039 00000000 		.4byte	0
+ 604              		.section	.debug_aranges,"",%progbits
+ 605 0000 24000000 		.4byte	0x24
+ 606 0004 0200     		.2byte	0x2
+ 607 0006 00000000 		.4byte	.Ldebug_info0
+ 608 000a 04       		.byte	0x4
+ 609 000b 00       		.byte	0
+ 610 000c 0000     		.2byte	0
+ 611 000e 0000     		.2byte	0
+ 612 0010 00000000 		.4byte	.LFB63
+ 613 0014 18000000 		.4byte	.LFE63-.LFB63
+ 614 0018 00000000 		.4byte	.LFB64
+ 615 001c 18000000 		.4byte	.LFE64-.LFB64
+ 616 0020 00000000 		.4byte	0
+ 617 0024 00000000 		.4byte	0
+ 618              		.section	.debug_ranges,"",%progbits
+ 619              	.Ldebug_ranges0:
+ 620 0000 00000000 		.4byte	.LFB63
+ 621 0004 18000000 		.4byte	.LFE63
+ 622 0008 00000000 		.4byte	.LFB64
+ 623 000c 18000000 		.4byte	.LFE64
+ 624 0010 00000000 		.4byte	0
+ 625 0014 00000000 		.4byte	0
+ 626              		.section	.debug_line,"",%progbits
+ 627              	.Ldebug_line0:
+ 628 0000 86010000 		.section	.debug_str,"MS",%progbits,1
+ 628      02004C01 
+ 628      00000201 
+ 628      FB0E0D00 
+ 628      01010101 
+ 629              	.LASF6:
+ 630 0000 6C6F6E67 		.ascii	"long long int\000"
+ 630      206C6F6E 
+ 630      6720696E 
+ 630      7400
+ 631              	.LASF3:
+ 632 000e 73686F72 		.ascii	"short unsigned int\000"
+ 632      7420756E 
+ 632      7369676E 
+ 632      65642069 
+ 632      6E7400
+ 633              	.LASF8:
+ 634 0021 756E7369 		.ascii	"unsigned int\000"
+ 634      676E6564 
+ 634      20696E74 
+ 634      00
+ARM GAS  C:\Users\linar\AppData\Local\Temp\ccyLRshO.s 			page 13
+
+
+ 635              	.LASF24:
+ 636 002e 433A5C55 		.ascii	"C:\\Users\\linar\\OneDrive\\Documents\\PSoC Creator"
+ 636      73657273 
+ 636      5C6C696E 
+ 636      61725C4F 
+ 636      6E654472 
+ 637 005c 5C70736F 		.ascii	"\\psocRandomWorkspace\\memory_test.cydsn\000"
+ 637      6352616E 
+ 637      646F6D57 
+ 637      6F726B73 
+ 637      70616365 
+ 638              	.LASF21:
+ 639 0083 72616E64 		.ascii	"randomBuff\000"
+ 639      6F6D4275 
+ 639      666600
+ 640              	.LASF23:
+ 641 008e 6D61696E 		.ascii	"main.c\000"
+ 641      2E6300
+ 642              	.LASF26:
+ 643 0095 6D61696E 		.ascii	"main\000"
+ 643      00
+ 644              	.LASF25:
+ 645 009a 636F7079 		.ascii	"copyBuffer\000"
+ 645      42756666 
+ 645      657200
+ 646              	.LASF22:
+ 647 00a5 474E5520 		.ascii	"GNU C11 5.4.1 20160609 (release) [ARM/embedded-5-br"
+ 647      43313120 
+ 647      352E342E 
+ 647      31203230 
+ 647      31363036 
+ 648 00d8 616E6368 		.ascii	"anch revision 237715] -mcpu=cortex-m3 -mthumb -g -O"
+ 648      20726576 
+ 648      6973696F 
+ 648      6E203233 
+ 648      37373135 
+ 649 010b 67202D66 		.ascii	"g -ffunction-sections -ffat-lto-objects\000"
+ 649      66756E63 
+ 649      74696F6E 
+ 649      2D736563 
+ 649      74696F6E 
+ 650              	.LASF11:
+ 651 0133 75696E74 		.ascii	"uint8\000"
+ 651      3800
+ 652              	.LASF5:
+ 653 0139 6C6F6E67 		.ascii	"long unsigned int\000"
+ 653      20756E73 
+ 653      69676E65 
+ 653      6420696E 
+ 653      7400
+ 654              	.LASF7:
+ 655 014b 6C6F6E67 		.ascii	"long long unsigned int\000"
+ 655      206C6F6E 
+ 655      6720756E 
+ 655      7369676E 
+ 655      65642069 
+ 656              	.LASF1:
+ARM GAS  C:\Users\linar\AppData\Local\Temp\ccyLRshO.s 			page 14
+
+
+ 657 0162 756E7369 		.ascii	"unsigned char\000"
+ 657      676E6564 
+ 657      20636861 
+ 657      7200
+ 658              	.LASF14:
+ 659 0170 63686172 		.ascii	"char\000"
+ 659      00
+ 660              	.LASF4:
+ 661 0175 6C6F6E67 		.ascii	"long int\000"
+ 661      20696E74 
+ 661      00
+ 662              	.LASF19:
+ 663 017e 636F7079 		.ascii	"copyBuff\000"
+ 663      42756666 
+ 663      00
+ 664              	.LASF13:
+ 665 0187 646F7562 		.ascii	"double\000"
+ 665      6C6500
+ 666              	.LASF16:
+ 667 018e 6C6F6E67 		.ascii	"long double\000"
+ 667      20646F75 
+ 667      626C6500 
+ 668              	.LASF20:
+ 669 019a 49544D5F 		.ascii	"ITM_RxBuffer\000"
+ 669      52784275 
+ 669      66666572 
+ 669      00
+ 670              	.LASF0:
+ 671 01a7 7369676E 		.ascii	"signed char\000"
+ 671      65642063 
+ 671      68617200 
+ 672              	.LASF18:
+ 673 01b3 73697A65 		.ascii	"size\000"
+ 673      00
+ 674              	.LASF9:
+ 675 01b8 5F5F696E 		.ascii	"__int32_t\000"
+ 675      7433325F 
+ 675      7400
+ 676              	.LASF12:
+ 677 01c2 666C6F61 		.ascii	"float\000"
+ 677      7400
+ 678              	.LASF2:
+ 679 01c8 73686F72 		.ascii	"short int\000"
+ 679      7420696E 
+ 679      7400
+ 680              	.LASF10:
+ 681 01d2 696E7433 		.ascii	"int32_t\000"
+ 681      325F7400 
+ 682              	.LASF17:
+ 683 01da 62756666 		.ascii	"buff\000"
+ 683      00
+ 684              	.LASF15:
+ 685 01df 73697A65 		.ascii	"sizetype\000"
+ 685      74797065 
+ 685      00
+ 686              		.ident	"GCC: (GNU Tools for ARM Embedded Processors) 5.4.1 20160609 (release) [ARM/embedded-5-bran

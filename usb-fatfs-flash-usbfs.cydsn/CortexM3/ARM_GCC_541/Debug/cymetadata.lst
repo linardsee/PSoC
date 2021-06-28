@@ -1,0 +1,1190 @@
+ARM GAS  C:\Users\linar\AppData\Local\Temp\cc1u91pO.s 			page 1
+
+
+   1              		.syntax unified
+   2              		.cpu cortex-m3
+   3              		.fpu softvfp
+   4              		.eabi_attribute 20, 1
+   5              		.eabi_attribute 21, 1
+   6              		.eabi_attribute 23, 3
+   7              		.eabi_attribute 24, 1
+   8              		.eabi_attribute 25, 1
+   9              		.eabi_attribute 26, 1
+  10              		.eabi_attribute 30, 1
+  11              		.eabi_attribute 34, 1
+  12              		.eabi_attribute 18, 4
+  13              		.thumb
+  14              		.syntax unified
+  15              		.file	"cymetadata.c"
+  16              		.text
+  17              	.Ltext0:
+  18              		.cfi_sections	.debug_frame
+  19              		.global	cy_metadata
+  20              		.global	cy_meta_flashprotect
+  21              		.global	cy_meta_wonvl
+  22              		.global	cy_meta_custnvl
+  23              		.global	cy_meta_configecc
+  24              		.section	.cyconfigecc,"a",%progbits
+  25              		.align	2
+  26              		.type	cy_meta_configecc, %object
+  27              		.size	cy_meta_configecc, 668
+  28              	cy_meta_configecc:
+  29 0000 01       		.byte	1
+  30 0001 45       		.byte	69
+  31 0002 00       		.byte	0
+  32 0003 40       		.byte	64
+  33 0004 02       		.byte	2
+  34 0005 52       		.byte	82
+  35 0006 00       		.byte	0
+  36 0007 40       		.byte	64
+  37 0008 01       		.byte	1
+  38 0009 65       		.byte	101
+  39 000a 00       		.byte	0
+  40 000b 40       		.byte	64
+  41 000c 01       		.byte	1
+  42 000d 05       		.byte	5
+  43 000e 01       		.byte	1
+  44 000f 40       		.byte	64
+  45 0010 01       		.byte	1
+  46 0011 09       		.byte	9
+  47 0012 01       		.byte	1
+  48 0013 40       		.byte	64
+  49 0014 01       		.byte	1
+  50 0015 0B       		.byte	11
+  51 0016 01       		.byte	1
+  52 0017 40       		.byte	64
+  53 0018 02       		.byte	2
+  54 0019 15       		.byte	21
+  55 001a 01       		.byte	1
+  56 001b 40       		.byte	64
+  57 001c 02       		.byte	2
+ARM GAS  C:\Users\linar\AppData\Local\Temp\cc1u91pO.s 			page 2
+
+
+  58 001d 17       		.byte	23
+  59 001e 01       		.byte	1
+  60 001f 40       		.byte	64
+  61 0020 28       		.byte	40
+  62 0021 19       		.byte	25
+  63 0022 01       		.byte	1
+  64 0023 40       		.byte	64
+  65 0024 35       		.byte	53
+  66 0025 1A       		.byte	26
+  67 0026 01       		.byte	1
+  68 0027 40       		.byte	64
+  69 0028 3A       		.byte	58
+  70 0029 1B       		.byte	27
+  71 002a 01       		.byte	1
+  72 002b 40       		.byte	64
+  73 002c 05       		.byte	5
+  74 002d 40       		.byte	64
+  75 002e 01       		.byte	1
+  76 002f 40       		.byte	64
+  77 0030 03       		.byte	3
+  78 0031 41       		.byte	65
+  79 0032 01       		.byte	1
+  80 0033 40       		.byte	64
+  81 0034 05       		.byte	5
+  82 0035 42       		.byte	66
+  83 0036 01       		.byte	1
+  84 0037 40       		.byte	64
+  85 0038 02       		.byte	2
+  86 0039 43       		.byte	67
+  87 003a 01       		.byte	1
+  88 003b 40       		.byte	64
+  89 003c 03       		.byte	3
+  90 003d 47       		.byte	71
+  91 003e 01       		.byte	1
+  92 003f 40       		.byte	64
+  93 0040 04       		.byte	4
+  94 0041 48       		.byte	72
+  95 0042 01       		.byte	1
+  96 0043 40       		.byte	64
+  97 0044 06       		.byte	6
+  98 0045 49       		.byte	73
+  99 0046 01       		.byte	1
+ 100 0047 40       		.byte	64
+ 101 0048 04       		.byte	4
+ 102 0049 4C       		.byte	76
+ 103 004a 01       		.byte	1
+ 104 004b 40       		.byte	64
+ 105 004c 05       		.byte	5
+ 106 004d 4D       		.byte	77
+ 107 004e 01       		.byte	1
+ 108 004f 40       		.byte	64
+ 109 0050 02       		.byte	2
+ 110 0051 50       		.byte	80
+ 111 0052 01       		.byte	1
+ 112 0053 40       		.byte	64
+ 113 0054 01       		.byte	1
+ 114 0055 51       		.byte	81
+ARM GAS  C:\Users\linar\AppData\Local\Temp\cc1u91pO.s 			page 3
+
+
+ 115 0056 01       		.byte	1
+ 116 0057 40       		.byte	64
+ 117 0058 7E       		.byte	126
+ 118 0059 02       		.byte	2
+ 119 005a 19       		.byte	25
+ 120 005b 40       		.byte	64
+ 121 005c 7C       		.byte	124
+ 122 005d 40       		.byte	64
+ 123 005e 88       		.byte	-120
+ 124 005f 0F       		.byte	15
+ 125 0060 E6       		.byte	-26
+ 126 0061 02       		.byte	2
+ 127 0062 9C       		.byte	-100
+ 128 0063 80       		.byte	-128
+ 129 0064 84       		.byte	-124
+ 130 0065 80       		.byte	-128
+ 131 0066 E2       		.byte	-30
+ 132 0067 01       		.byte	1
+ 133 0068 E6       		.byte	-26
+ 134 0069 01       		.byte	1
+ 135 006a EA       		.byte	-22
+ 136 006b 02       		.byte	2
+ 137 006c EE       		.byte	-18
+ 138 006d 02       		.byte	2
+ 139 006e 04       		.byte	4
+ 140 006f 22       		.byte	34
+ 141 0070 05       		.byte	5
+ 142 0071 04       		.byte	4
+ 143 0072 06       		.byte	6
+ 144 0073 02       		.byte	2
+ 145 0074 0E       		.byte	14
+ 146 0075 29       		.byte	41
+ 147 0076 0F       		.byte	15
+ 148 0077 80       		.byte	-128
+ 149 0078 17       		.byte	23
+ 150 0079 15       		.byte	21
+ 151 007a 1D       		.byte	29
+ 152 007b 94       		.byte	-108
+ 153 007c 1E       		.byte	30
+ 154 007d 42       		.byte	66
+ 155 007e 24       		.byte	36
+ 156 007f 22       		.byte	34
+ 157 0080 25       		.byte	37
+ 158 0081 44       		.byte	68
+ 159 0082 26       		.byte	38
+ 160 0083 18       		.byte	24
+ 161 0084 27       		.byte	39
+ 162 0085 28       		.byte	40
+ 163 0086 2E       		.byte	46
+ 164 0087 21       		.byte	33
+ 165 0088 2F       		.byte	47
+ 166 0089 20       		.byte	32
+ 167 008a 37       		.byte	55
+ 168 008b 29       		.byte	41
+ 169 008c 3D       		.byte	61
+ 170 008d 80       		.byte	-128
+ 171 008e 3E       		.byte	62
+ARM GAS  C:\Users\linar\AppData\Local\Temp\cc1u91pO.s 			page 4
+
+
+ 172 008f 16       		.byte	22
+ 173 0090 45       		.byte	69
+ 174 0091 A0       		.byte	-96
+ 175 0092 47       		.byte	71
+ 176 0093 08       		.byte	8
+ 177 0094 4D       		.byte	77
+ 178 0095 02       		.byte	2
+ 179 0096 4E       		.byte	78
+ 180 0097 09       		.byte	9
+ 181 0098 4F       		.byte	79
+ 182 0099 04       		.byte	4
+ 183 009a 56       		.byte	86
+ 184 009b 20       		.byte	32
+ 185 009c 57       		.byte	87
+ 186 009d 44       		.byte	68
+ 187 009e 65       		.byte	101
+ 188 009f 01       		.byte	1
+ 189 00a0 6E       		.byte	110
+ 190 00a1 15       		.byte	21
+ 191 00a2 6F       		.byte	111
+ 192 00a3 15       		.byte	21
+ 193 00a4 76       		.byte	118
+ 194 00a5 02       		.byte	2
+ 195 00a6 9C       		.byte	-100
+ 196 00a7 80       		.byte	-128
+ 197 00a8 C0       		.byte	-64
+ 198 00a9 F0       		.byte	-16
+ 199 00aa C2       		.byte	-62
+ 200 00ab F0       		.byte	-16
+ 201 00ac C4       		.byte	-60
+ 202 00ad 70       		.byte	112
+ 203 00ae CA       		.byte	-54
+ 204 00af E0       		.byte	-32
+ 205 00b0 CC       		.byte	-52
+ 206 00b1 E0       		.byte	-32
+ 207 00b2 CE       		.byte	-50
+ 208 00b3 F0       		.byte	-16
+ 209 00b4 D0       		.byte	-48
+ 210 00b5 70       		.byte	112
+ 211 00b6 D2       		.byte	-46
+ 212 00b7 30       		.byte	48
+ 213 00b8 D8       		.byte	-40
+ 214 00b9 80       		.byte	-128
+ 215 00ba EA       		.byte	-22
+ 216 00bb 02       		.byte	2
+ 217 00bc EE       		.byte	-18
+ 218 00bd 02       		.byte	2
+ 219 00be 0C       		.byte	12
+ 220 00bf 02       		.byte	2
+ 221 00c0 0E       		.byte	14
+ 222 00c1 0D       		.byte	13
+ 223 00c2 18       		.byte	24
+ 224 00c3 09       		.byte	9
+ 225 00c4 1A       		.byte	26
+ 226 00c5 06       		.byte	6
+ 227 00c6 24       		.byte	36
+ 228 00c7 05       		.byte	5
+ARM GAS  C:\Users\linar\AppData\Local\Temp\cc1u91pO.s 			page 5
+
+
+ 229 00c8 26       		.byte	38
+ 230 00c9 0A       		.byte	10
+ 231 00ca 28       		.byte	40
+ 232 00cb 03       		.byte	3
+ 233 00cc 2A       		.byte	42
+ 234 00cd 0C       		.byte	12
+ 235 00ce 30       		.byte	48
+ 236 00cf 0F       		.byte	15
+ 237 00d0 3A       		.byte	58
+ 238 00d1 02       		.byte	2
+ 239 00d2 54       		.byte	84
+ 240 00d3 40       		.byte	64
+ 241 00d4 56       		.byte	86
+ 242 00d5 04       		.byte	4
+ 243 00d6 58       		.byte	88
+ 244 00d7 04       		.byte	4
+ 245 00d8 5B       		.byte	91
+ 246 00d9 04       		.byte	4
+ 247 00da 5F       		.byte	95
+ 248 00db 01       		.byte	1
+ 249 00dc 82       		.byte	-126
+ 250 00dd 80       		.byte	-128
+ 251 00de 84       		.byte	-124
+ 252 00df 40       		.byte	64
+ 253 00e0 85       		.byte	-123
+ 254 00e1 13       		.byte	19
+ 255 00e2 87       		.byte	-121
+ 256 00e3 04       		.byte	4
+ 257 00e4 88       		.byte	-120
+ 258 00e5 11       		.byte	17
+ 259 00e6 8A       		.byte	-118
+ 260 00e7 22       		.byte	34
+ 261 00e8 8C       		.byte	-116
+ 262 00e9 8D       		.byte	-115
+ 263 00ea 8D       		.byte	-115
+ 264 00eb 0E       		.byte	14
+ 265 00ec 90       		.byte	-112
+ 266 00ed 02       		.byte	2
+ 267 00ee 92       		.byte	-110
+ 268 00ef 0D       		.byte	13
+ 269 00f0 94       		.byte	-108
+ 270 00f1 8D       		.byte	-115
+ 271 00f2 95       		.byte	-107
+ 272 00f3 05       		.byte	5
+ 273 00f4 97       		.byte	-105
+ 274 00f5 3A       		.byte	58
+ 275 00f6 98       		.byte	-104
+ 276 00f7 42       		.byte	66
+ 277 00f8 9A       		.byte	-102
+ 278 00f9 08       		.byte	8
+ 279 00fa 9B       		.byte	-101
+ 280 00fb 20       		.byte	32
+ 281 00fc 9C       		.byte	-100
+ 282 00fd 8D       		.byte	-115
+ 283 00fe A0       		.byte	-96
+ 284 00ff 0D       		.byte	13
+ 285 0100 A2       		.byte	-94
+ARM GAS  C:\Users\linar\AppData\Local\Temp\cc1u91pO.s 			page 6
+
+
+ 286 0101 80       		.byte	-128
+ 287 0102 A4       		.byte	-92
+ 288 0103 62       		.byte	98
+ 289 0104 A5       		.byte	-91
+ 290 0105 04       		.byte	4
+ 291 0106 A6       		.byte	-90
+ 292 0107 14       		.byte	20
+ 293 0108 A7       		.byte	-89
+ 294 0109 39       		.byte	57
+ 295 010a A8       		.byte	-88
+ 296 010b 8D       		.byte	-115
+ 297 010c B0       		.byte	-80
+ 298 010d 0F       		.byte	15
+ 299 010e B2       		.byte	-78
+ 300 010f 80       		.byte	-128
+ 301 0110 B4       		.byte	-76
+ 302 0111 70       		.byte	112
+ 303 0112 B5       		.byte	-75
+ 304 0113 30       		.byte	48
+ 305 0114 B7       		.byte	-73
+ 306 0115 0F       		.byte	15
+ 307 0116 B9       		.byte	-71
+ 308 0117 80       		.byte	-128
+ 309 0118 BA       		.byte	-70
+ 310 0119 22       		.byte	34
+ 311 011a BE       		.byte	-66
+ 312 011b 04       		.byte	4
+ 313 011c D4       		.byte	-44
+ 314 011d 09       		.byte	9
+ 315 011e D6       		.byte	-42
+ 316 011f 04       		.byte	4
+ 317 0120 D8       		.byte	-40
+ 318 0121 04       		.byte	4
+ 319 0122 D9       		.byte	-39
+ 320 0123 04       		.byte	4
+ 321 0124 DB       		.byte	-37
+ 322 0125 04       		.byte	4
+ 323 0126 DF       		.byte	-33
+ 324 0127 01       		.byte	1
+ 325 0128 00       		.byte	0
+ 326 0129 40       		.byte	64
+ 327 012a 04       		.byte	4
+ 328 012b 21       		.byte	33
+ 329 012c 05       		.byte	5
+ 330 012d 02       		.byte	2
+ 331 012e 06       		.byte	6
+ 332 012f 22       		.byte	34
+ 333 0130 07       		.byte	7
+ 334 0131 20       		.byte	32
+ 335 0132 09       		.byte	9
+ 336 0133 20       		.byte	32
+ 337 0134 0D       		.byte	13
+ 338 0135 02       		.byte	2
+ 339 0136 0E       		.byte	14
+ 340 0137 19       		.byte	25
+ 341 0138 12       		.byte	18
+ 342 0139 08       		.byte	8
+ARM GAS  C:\Users\linar\AppData\Local\Temp\cc1u91pO.s 			page 7
+
+
+ 343 013a 13       		.byte	19
+ 344 013b 08       		.byte	8
+ 345 013c 17       		.byte	23
+ 346 013d 19       		.byte	25
+ 347 013e 18       		.byte	24
+ 348 013f 40       		.byte	64
+ 349 0140 19       		.byte	25
+ 350 0141 01       		.byte	1
+ 351 0142 1D       		.byte	29
+ 352 0143 26       		.byte	38
+ 353 0144 1E       		.byte	30
+ 354 0145 08       		.byte	8
+ 355 0146 1F       		.byte	31
+ 356 0147 20       		.byte	32
+ 357 0148 25       		.byte	37
+ 358 0149 40       		.byte	64
+ 359 014a 26       		.byte	38
+ 360 014b 20       		.byte	32
+ 361 014c 2F       		.byte	47
+ 362 014d 20       		.byte	32
+ 363 014e 36       		.byte	54
+ 364 014f 20       		.byte	32
+ 365 0150 37       		.byte	55
+ 366 0151 08       		.byte	8
+ 367 0152 3D       		.byte	61
+ 368 0153 88       		.byte	-120
+ 369 0154 5E       		.byte	94
+ 370 0155 42       		.byte	66
+ 371 0156 5F       		.byte	95
+ 372 0157 24       		.byte	36
+ 373 0158 60       		.byte	96
+ 374 0159 01       		.byte	1
+ 375 015a 61       		.byte	97
+ 376 015b 04       		.byte	4
+ 377 015c 62       		.byte	98
+ 378 015d 02       		.byte	2
+ 379 015e 63       		.byte	99
+ 380 015f 08       		.byte	8
+ 381 0160 64       		.byte	100
+ 382 0161 80       		.byte	-128
+ 383 0162 67       		.byte	103
+ 384 0163 02       		.byte	2
+ 385 0164 82       		.byte	-126
+ 386 0165 22       		.byte	34
+ 387 0166 90       		.byte	-112
+ 388 0167 20       		.byte	32
+ 389 0168 92       		.byte	-110
+ 390 0169 51       		.byte	81
+ 391 016a 93       		.byte	-109
+ 392 016b 06       		.byte	6
+ 393 016c 99       		.byte	-103
+ 394 016d 02       		.byte	2
+ 395 016e 9A       		.byte	-102
+ 396 016f 22       		.byte	34
+ 397 0170 9B       		.byte	-101
+ 398 0171 19       		.byte	25
+ 399 0172 9C       		.byte	-100
+ARM GAS  C:\Users\linar\AppData\Local\Temp\cc1u91pO.s 			page 8
+
+
+ 400 0173 80       		.byte	-128
+ 401 0174 9D       		.byte	-99
+ 402 0175 01       		.byte	1
+ 403 0176 A1       		.byte	-95
+ 404 0177 04       		.byte	4
+ 405 0178 A2       		.byte	-94
+ 406 0179 09       		.byte	9
+ 407 017a A3       		.byte	-93
+ 408 017b 04       		.byte	4
+ 409 017c A5       		.byte	-91
+ 410 017d 20       		.byte	32
+ 411 017e A6       		.byte	-90
+ 412 017f 04       		.byte	4
+ 413 0180 A7       		.byte	-89
+ 414 0181 20       		.byte	32
+ 415 0182 A9       		.byte	-87
+ 416 0183 14       		.byte	20
+ 417 0184 AB       		.byte	-85
+ 418 0185 01       		.byte	1
+ 419 0186 AE       		.byte	-82
+ 420 0187 01       		.byte	1
+ 421 0188 C0       		.byte	-64
+ 422 0189 F1       		.byte	-15
+ 423 018a C2       		.byte	-62
+ 424 018b F2       		.byte	-14
+ 425 018c C4       		.byte	-60
+ 426 018d 76       		.byte	118
+ 427 018e CA       		.byte	-54
+ 428 018f 40       		.byte	64
+ 429 0190 CC       		.byte	-52
+ 430 0191 60       		.byte	96
+ 431 0192 CE       		.byte	-50
+ 432 0193 50       		.byte	80
+ 433 0194 D6       		.byte	-42
+ 434 0195 F0       		.byte	-16
+ 435 0196 D8       		.byte	-40
+ 436 0197 9F       		.byte	-97
+ 437 0198 EC       		.byte	-20
+ 438 0199 01       		.byte	1
+ 439 019a EE       		.byte	-18
+ 440 019b 02       		.byte	2
+ 441 019c 30       		.byte	48
+ 442 019d 20       		.byte	32
+ 443 019e 33       		.byte	51
+ 444 019f 01       		.byte	1
+ 445 01a0 36       		.byte	54
+ 446 01a1 40       		.byte	64
+ 447 01a2 37       		.byte	55
+ 448 01a3 02       		.byte	2
+ 449 01a4 CC       		.byte	-52
+ 450 01a5 F0       		.byte	-16
+ 451 01a6 9F       		.byte	-97
+ 452 01a7 03       		.byte	3
+ 453 01a8 A4       		.byte	-92
+ 454 01a9 20       		.byte	32
+ 455 01aa A6       		.byte	-90
+ 456 01ab 40       		.byte	64
+ARM GAS  C:\Users\linar\AppData\Local\Temp\cc1u91pO.s 			page 9
+
+
+ 457 01ac 86       		.byte	-122
+ 458 01ad 40       		.byte	64
+ 459 01ae 9F       		.byte	-97
+ 460 01af 03       		.byte	3
+ 461 01b0 A4       		.byte	-92
+ 462 01b1 20       		.byte	32
+ 463 01b2 A6       		.byte	-90
+ 464 01b3 40       		.byte	64
+ 465 01b4 E6       		.byte	-26
+ 466 01b5 40       		.byte	64
+ 467 01b6 9F       		.byte	-97
+ 468 01b7 03       		.byte	3
+ 469 01b8 A4       		.byte	-92
+ 470 01b9 20       		.byte	32
+ 471 01ba 09       		.byte	9
+ 472 01bb 08       		.byte	8
+ 473 01bc 0F       		.byte	15
+ 474 01bd 40       		.byte	64
+ 475 01be C2       		.byte	-62
+ 476 01bf 0C       		.byte	12
+ 477 01c0 A4       		.byte	-92
+ 478 01c1 20       		.byte	32
+ 479 01c2 AF       		.byte	-81
+ 480 01c3 03       		.byte	3
+ 481 01c4 EA       		.byte	-22
+ 482 01c5 40       		.byte	64
+ 483 01c6 EE       		.byte	-18
+ 484 01c7 40       		.byte	64
+ 485 01c8 60       		.byte	96
+ 486 01c9 10       		.byte	16
+ 487 01ca 80       		.byte	-128
+ 488 01cb 30       		.byte	48
+ 489 01cc A4       		.byte	-92
+ 490 01cd 20       		.byte	32
+ 491 01ce D8       		.byte	-40
+ 492 01cf 40       		.byte	64
+ 493 01d0 E2       		.byte	-30
+ 494 01d1 80       		.byte	-128
+ 495 01d2 E6       		.byte	-26
+ 496 01d3 80       		.byte	-128
+ 497 01d4 0B       		.byte	11
+ 498 01d5 20       		.byte	32
+ 499 01d6 AD       		.byte	-83
+ 500 01d7 08       		.byte	8
+ 501 01d8 AF       		.byte	-81
+ 502 01d9 40       		.byte	64
+ 503 01da C2       		.byte	-62
+ 504 01db 08       		.byte	8
+ 505 01dc 50       		.byte	80
+ 506 01dd 04       		.byte	4
+ 507 01de 90       		.byte	-112
+ 508 01df 08       		.byte	8
+ 509 01e0 A8       		.byte	-88
+ 510 01e1 04       		.byte	4
+ 511 01e2 AF       		.byte	-81
+ 512 01e3 10       		.byte	16
+ 513 01e4 D4       		.byte	-44
+ARM GAS  C:\Users\linar\AppData\Local\Temp\cc1u91pO.s 			page 10
+
+
+ 514 01e5 04       		.byte	4
+ 515 01e6 10       		.byte	16
+ 516 01e7 01       		.byte	1
+ 517 01e8 1C       		.byte	28
+ 518 01e9 01       		.byte	1
+ 519 01ea 00       		.byte	0
+ 520 01eb AF       		.byte	-81
+ 521 01ec 04       		.byte	4
+ 522 01ed 9A       		.byte	-102
+ 523 01ee 00       		.byte	0
+ 524 01ef 00       		.byte	0
+ 525 01f0 01       		.byte	1
+ 526 01f1 98       		.byte	-104
+ 527 01f2 00       		.byte	0
+ 528 01f3 02       		.byte	2
+ 529 01f4 07       		.byte	7
+ 530 01f5 02       		.byte	2
+ 531 01f6 38       		.byte	56
+ 532 01f7 98       		.byte	-104
+ 533 01f8 84       		.byte	-124
+ 534 01f9 38       		.byte	56
+ 535 01fa 00       		.byte	0
+ 536 01fb C0       		.byte	-64
+ 537 01fc 60       		.byte	96
+ 538 01fd 98       		.byte	-104
+ 539 01fe 00       		.byte	0
+ 540 01ff 02       		.byte	2
+ 541 0200 0A       		.byte	10
+ 542 0201 21       		.byte	33
+ 543 0202 10       		.byte	16
+ 544 0203 D8       		.byte	-40
+ 545 0204 56       		.byte	86
+ 546 0205 13       		.byte	19
+ 547 0206 09       		.byte	9
+ 548 0207 64       		.byte	100
+ 549 0208 84       		.byte	-124
+ 550 0209 00       		.byte	0
+ 551 020a 00       		.byte	0
+ 552 020b 00       		.byte	0
+ 553 020c 04       		.byte	4
+ 554 020d 9A       		.byte	-102
+ 555 020e 80       		.byte	-128
+ 556 020f 00       		.byte	0
+ 557 0210 80       		.byte	-128
+ 558 0211 FC       		.byte	-4
+ 559 0212 04       		.byte	4
+ 560 0213 03       		.byte	3
+ 561 0214 84       		.byte	-124
+ 562 0215 02       		.byte	2
+ 563 0216 00       		.byte	0
+ 564 0217 00       		.byte	0
+ 565 0218 00       		.byte	0
+ 566 0219 00       		.byte	0
+ 567 021a 00       		.byte	0
+ 568 021b 00       		.byte	0
+ 569 021c 08       		.byte	8
+ 570 021d 00       		.byte	0
+ARM GAS  C:\Users\linar\AppData\Local\Temp\cc1u91pO.s 			page 11
+
+
+ 571 021e 7F       		.byte	127
+ 572 021f 13       		.byte	19
+ 573 0220 02       		.byte	2
+ 574 0221 0F       		.byte	15
+ 575 0222 80       		.byte	-128
+ 576 0223 E0       		.byte	-32
+ 577 0224 08       		.byte	8
+ 578 0225 00       		.byte	0
+ 579 0226 00       		.byte	0
+ 580 0227 A0       		.byte	-96
+ 581 0228 00       		.byte	0
+ 582 0229 00       		.byte	0
+ 583 022a 51       		.byte	81
+ 584 022b 00       		.byte	0
+ 585 022c 32       		.byte	50
+ 586 022d 06       		.byte	6
+ 587 022e 10       		.byte	16
+ 588 022f 00       		.byte	0
+ 589 0230 05       		.byte	5
+ 590 0231 DE       		.byte	-34
+ 591 0232 CB       		.byte	-53
+ 592 0233 0F       		.byte	15
+ 593 0234 1F       		.byte	31
+ 594 0235 FF       		.byte	-1
+ 595 0236 FF       		.byte	-1
+ 596 0237 FF       		.byte	-1
+ 597 0238 22       		.byte	34
+ 598 0239 00       		.byte	0
+ 599 023a F0       		.byte	-16
+ 600 023b 08       		.byte	8
+ 601 023c 04       		.byte	4
+ 602 023d 00       		.byte	0
+ 603 023e 00       		.byte	0
+ 604 023f 00       		.byte	0
+ 605 0240 00       		.byte	0
+ 606 0241 00       		.byte	0
+ 607 0242 02       		.byte	2
+ 608 0243 2C       		.byte	44
+ 609 0244 04       		.byte	4
+ 610 0245 04       		.byte	4
+ 611 0246 04       		.byte	4
+ 612 0247 04       		.byte	4
+ 613 0248 00       		.byte	0
+ 614 0249 00       		.byte	0
+ 615 024a 00       		.byte	0
+ 616 024b 01       		.byte	1
+ 617 024c 00       		.byte	0
+ 618 024d 00       		.byte	0
+ 619 024e C0       		.byte	-64
+ 620 024f 00       		.byte	0
+ 621 0250 40       		.byte	64
+ 622 0251 01       		.byte	1
+ 623 0252 10       		.byte	16
+ 624 0253 11       		.byte	17
+ 625 0254 C0       		.byte	-64
+ 626 0255 01       		.byte	1
+ 627 0256 00       		.byte	0
+ARM GAS  C:\Users\linar\AppData\Local\Temp\cc1u91pO.s 			page 12
+
+
+ 628 0257 11       		.byte	17
+ 629 0258 40       		.byte	64
+ 630 0259 01       		.byte	1
+ 631 025a 40       		.byte	64
+ 632 025b 01       		.byte	1
+ 633 025c 00       		.byte	0
+ 634 025d 00       		.byte	0
+ 635 025e 00       		.byte	0
+ 636 025f 00       		.byte	0
+ 637 0260 00       		.byte	0
+ 638 0261 00       		.byte	0
+ 639 0262 00       		.byte	0
+ 640 0263 00       		.byte	0
+ 641 0264 00       		.byte	0
+ 642 0265 00       		.byte	0
+ 643 0266 00       		.byte	0
+ 644 0267 00       		.byte	0
+ 645 0268 00       		.byte	0
+ 646 0269 00       		.byte	0
+ 647 026a 00       		.byte	0
+ 648 026b 00       		.byte	0
+ 649 026c 40       		.byte	64
+ 650 026d 00       		.byte	0
+ 651 026e 00       		.byte	0
+ 652 026f 00       		.byte	0
+ 653 0270 00       		.byte	0
+ 654 0271 00       		.byte	0
+ 655 0272 00       		.byte	0
+ 656 0273 00       		.byte	0
+ 657 0274 C0       		.byte	-64
+ 658 0275 00       		.byte	0
+ 659 0276 00       		.byte	0
+ 660 0277 00       		.byte	0
+ 661 0278 24       		.byte	36
+ 662 0279 00       		.byte	0
+ 663 027a 10       		.byte	16
+ 664 027b 2F       		.byte	47
+ 665 027c 0F       		.byte	15
+ 666 027d 00       		.byte	0
+ 667 027e 00       		.byte	0
+ 668 027f 00       		.byte	0
+ 669 0280 00       		.byte	0
+ 670 0281 00       		.byte	0
+ 671 0282 00       		.byte	0
+ 672 0283 00       		.byte	0
+ 673 0284 C0       		.byte	-64
+ 674 0285 00       		.byte	0
+ 675 0286 00       		.byte	0
+ 676 0287 C0       		.byte	-64
+ 677 0288 40       		.byte	64
+ 678 0289 00       		.byte	0
+ 679 028a 40       		.byte	64
+ 680 028b 00       		.byte	0
+ 681 028c 00       		.byte	0
+ 682 028d 00       		.byte	0
+ 683 028e 00       		.byte	0
+ 684 028f 00       		.byte	0
+ARM GAS  C:\Users\linar\AppData\Local\Temp\cc1u91pO.s 			page 13
+
+
+ 685 0290 08       		.byte	8
+ 686 0291 00       		.byte	0
+ 687 0292 00       		.byte	0
+ 688 0293 08       		.byte	8
+ 689 0294 08       		.byte	8
+ 690 0295 00       		.byte	0
+ 691 0296 08       		.byte	8
+ 692 0297 00       		.byte	0
+ 693 0298 00       		.byte	0
+ 694 0299 00       		.byte	0
+ 695 029a 00       		.byte	0
+ 696 029b 00       		.byte	0
+ 697              		.section	.cywolatch,"a",%progbits
+ 698              		.align	2
+ 699              		.type	cy_meta_wonvl, %object
+ 700              		.size	cy_meta_wonvl, 4
+ 701              	cy_meta_wonvl:
+ 702 0000 BC       		.byte	-68
+ 703 0001 90       		.byte	-112
+ 704 0002 AC       		.byte	-84
+ 705 0003 AF       		.byte	-81
+ 706              		.section	.cycustnvl,"a",%progbits
+ 707              		.align	2
+ 708              		.type	cy_meta_custnvl, %object
+ 709              		.size	cy_meta_custnvl, 4
+ 710              	cy_meta_custnvl:
+ 711 0000 00       		.byte	0
+ 712 0001 00       		.byte	0
+ 713 0002 40       		.byte	64
+ 714 0003 05       		.byte	5
+ 715              		.section	.cymeta,"a",%progbits
+ 716              		.align	2
+ 717              		.type	cy_metadata, %object
+ 718              		.size	cy_metadata, 12
+ 719              	cy_metadata:
+ 720 0000 00       		.byte	0
+ 721 0001 01       		.byte	1
+ 722 0002 2E       		.byte	46
+ 723 0003 16       		.byte	22
+ 724 0004 C0       		.byte	-64
+ 725 0005 69       		.byte	105
+ 726 0006 00       		.byte	0
+ 727 0007 01       		.byte	1
+ 728 0008 00       		.byte	0
+ 729 0009 00       		.byte	0
+ 730 000a 00       		.byte	0
+ 731 000b 00       		.byte	0
+ 732              		.section	.cyflashprotect,"a",%progbits
+ 733              		.align	2
+ 734              		.type	cy_meta_flashprotect, %object
+ 735              		.size	cy_meta_flashprotect, 128
+ 736              	cy_meta_flashprotect:
+ 737 0000 00000000 		.space	128
+ 737      00000000 
+ 737      00000000 
+ 737      00000000 
+ 737      00000000 
+ARM GAS  C:\Users\linar\AppData\Local\Temp\cc1u91pO.s 			page 14
+
+
+ 738              		.text
+ 739              	.Letext0:
+ 740              		.file 1 "c:\\program files (x86)\\cypress\\psoc creator\\4.4\\psoc creator\\import\\gnu\\arm\\5.4.
+ 741              		.file 2 "c:\\program files (x86)\\cypress\\psoc creator\\4.4\\psoc creator\\import\\gnu\\arm\\5.4.
+ 742              		.file 3 "Generated_Source\\PSoC5\\cymetadata.c"
+ 743              		.section	.debug_info,"",%progbits
+ 744              	.Ldebug_info0:
+ 745 0000 31010000 		.4byte	0x131
+ 746 0004 0400     		.2byte	0x4
+ 747 0006 00000000 		.4byte	.Ldebug_abbrev0
+ 748 000a 04       		.byte	0x4
+ 749 000b 01       		.uleb128 0x1
+ 750 000c 24000000 		.4byte	.LASF17
+ 751 0010 0C       		.byte	0xc
+ 752 0011 DD010000 		.4byte	.LASF18
+ 753 0015 5F010000 		.4byte	.LASF19
+ 754 0019 00000000 		.4byte	.Ldebug_line0
+ 755 001d 02       		.uleb128 0x2
+ 756 001e 01       		.byte	0x1
+ 757 001f 06       		.byte	0x6
+ 758 0020 D1010000 		.4byte	.LASF0
+ 759 0024 03       		.uleb128 0x3
+ 760 0025 00000000 		.4byte	.LASF9
+ 761 0029 01       		.byte	0x1
+ 762 002a 1D       		.byte	0x1d
+ 763 002b 2F000000 		.4byte	0x2f
+ 764 002f 02       		.uleb128 0x2
+ 765 0030 01       		.byte	0x1
+ 766 0031 08       		.byte	0x8
+ 767 0032 16000000 		.4byte	.LASF1
+ 768 0036 02       		.uleb128 0x2
+ 769 0037 02       		.byte	0x2
+ 770 0038 05       		.byte	0x5
+ 771 0039 BE010000 		.4byte	.LASF2
+ 772 003d 02       		.uleb128 0x2
+ 773 003e 02       		.byte	0x2
+ 774 003f 07       		.byte	0x7
+ 775 0040 C4000000 		.4byte	.LASF3
+ 776 0044 02       		.uleb128 0x2
+ 777 0045 04       		.byte	0x4
+ 778 0046 05       		.byte	0x5
+ 779 0047 C8010000 		.4byte	.LASF4
+ 780 004b 02       		.uleb128 0x2
+ 781 004c 04       		.byte	0x4
+ 782 004d 07       		.byte	0x7
+ 783 004e B2000000 		.4byte	.LASF5
+ 784 0052 02       		.uleb128 0x2
+ 785 0053 08       		.byte	0x8
+ 786 0054 05       		.byte	0x5
+ 787 0055 51010000 		.4byte	.LASF6
+ 788 0059 02       		.uleb128 0x2
+ 789 005a 08       		.byte	0x8
+ 790 005b 07       		.byte	0x7
+ 791 005c 06010000 		.4byte	.LASF7
+ 792 0060 04       		.uleb128 0x4
+ 793 0061 04       		.byte	0x4
+ 794 0062 05       		.byte	0x5
+ARM GAS  C:\Users\linar\AppData\Local\Temp\cc1u91pO.s 			page 15
+
+
+ 795 0063 696E7400 		.ascii	"int\000"
+ 796 0067 02       		.uleb128 0x2
+ 797 0068 04       		.byte	0x4
+ 798 0069 07       		.byte	0x7
+ 799 006a F9000000 		.4byte	.LASF8
+ 800 006e 03       		.uleb128 0x3
+ 801 006f 1D010000 		.4byte	.LASF10
+ 802 0073 02       		.byte	0x2
+ 803 0074 18       		.byte	0x18
+ 804 0075 24000000 		.4byte	0x24
+ 805 0079 05       		.uleb128 0x5
+ 806 007a 91000000 		.4byte	0x91
+ 807 007e 8A000000 		.4byte	0x8a
+ 808 0082 06       		.uleb128 0x6
+ 809 0083 8A000000 		.4byte	0x8a
+ 810 0087 9B02     		.2byte	0x29b
+ 811 0089 00       		.byte	0
+ 812 008a 02       		.uleb128 0x2
+ 813 008b 04       		.byte	0x4
+ 814 008c 07       		.byte	0x7
+ 815 008d 48010000 		.4byte	.LASF11
+ 816 0091 07       		.uleb128 0x7
+ 817 0092 6E000000 		.4byte	0x6e
+ 818 0096 08       		.uleb128 0x8
+ 819 0097 E7000000 		.4byte	.LASF12
+ 820 009b 03       		.byte	0x3
+ 821 009c 1F       		.byte	0x1f
+ 822 009d A7000000 		.4byte	0xa7
+ 823 00a1 05       		.uleb128 0x5
+ 824 00a2 03       		.byte	0x3
+ 825 00a3 00000000 		.4byte	cy_meta_configecc
+ 826 00a7 07       		.uleb128 0x7
+ 827 00a8 79000000 		.4byte	0x79
+ 828 00ac 05       		.uleb128 0x5
+ 829 00ad 91000000 		.4byte	0x91
+ 830 00b1 BC000000 		.4byte	0xbc
+ 831 00b5 09       		.uleb128 0x9
+ 832 00b6 8A000000 		.4byte	0x8a
+ 833 00ba 03       		.byte	0x3
+ 834 00bb 00       		.byte	0
+ 835 00bc 08       		.uleb128 0x8
+ 836 00bd D7000000 		.4byte	.LASF13
+ 837 00c1 03       		.byte	0x3
+ 838 00c2 80       		.byte	0x80
+ 839 00c3 CD000000 		.4byte	0xcd
+ 840 00c7 05       		.uleb128 0x5
+ 841 00c8 03       		.byte	0x3
+ 842 00c9 00000000 		.4byte	cy_meta_custnvl
+ 843 00cd 07       		.uleb128 0x7
+ 844 00ce AC000000 		.4byte	0xac
+ 845 00d2 08       		.uleb128 0x8
+ 846 00d3 3A010000 		.4byte	.LASF14
+ 847 00d7 03       		.byte	0x3
+ 848 00d8 8E       		.byte	0x8e
+ 849 00d9 E3000000 		.4byte	0xe3
+ 850 00dd 05       		.uleb128 0x5
+ 851 00de 03       		.byte	0x3
+ARM GAS  C:\Users\linar\AppData\Local\Temp\cc1u91pO.s 			page 16
+
+
+ 852 00df 00000000 		.4byte	cy_meta_wonvl
+ 853 00e3 07       		.uleb128 0x7
+ 854 00e4 AC000000 		.4byte	0xac
+ 855 00e8 05       		.uleb128 0x5
+ 856 00e9 91000000 		.4byte	0x91
+ 857 00ed F8000000 		.4byte	0xf8
+ 858 00f1 09       		.uleb128 0x9
+ 859 00f2 8A000000 		.4byte	0x8a
+ 860 00f6 7F       		.byte	0x7f
+ 861 00f7 00       		.byte	0
+ 862 00f8 08       		.uleb128 0x8
+ 863 00f9 25010000 		.4byte	.LASF15
+ 864 00fd 03       		.byte	0x3
+ 865 00fe 9C       		.byte	0x9c
+ 866 00ff 09010000 		.4byte	0x109
+ 867 0103 05       		.uleb128 0x5
+ 868 0104 03       		.byte	0x3
+ 869 0105 00000000 		.4byte	cy_meta_flashprotect
+ 870 0109 07       		.uleb128 0x7
+ 871 010a E8000000 		.4byte	0xe8
+ 872 010e 05       		.uleb128 0x5
+ 873 010f 91000000 		.4byte	0x91
+ 874 0113 1E010000 		.4byte	0x11e
+ 875 0117 09       		.uleb128 0x9
+ 876 0118 8A000000 		.4byte	0x8a
+ 877 011c 0B       		.byte	0xb
+ 878 011d 00       		.byte	0
+ 879 011e 08       		.uleb128 0x8
+ 880 011f 0A000000 		.4byte	.LASF16
+ 881 0123 03       		.byte	0x3
+ 882 0124 B9       		.byte	0xb9
+ 883 0125 2F010000 		.4byte	0x12f
+ 884 0129 05       		.uleb128 0x5
+ 885 012a 03       		.byte	0x3
+ 886 012b 00000000 		.4byte	cy_metadata
+ 887 012f 07       		.uleb128 0x7
+ 888 0130 0E010000 		.4byte	0x10e
+ 889 0134 00       		.byte	0
+ 890              		.section	.debug_abbrev,"",%progbits
+ 891              	.Ldebug_abbrev0:
+ 892 0000 01       		.uleb128 0x1
+ 893 0001 11       		.uleb128 0x11
+ 894 0002 01       		.byte	0x1
+ 895 0003 25       		.uleb128 0x25
+ 896 0004 0E       		.uleb128 0xe
+ 897 0005 13       		.uleb128 0x13
+ 898 0006 0B       		.uleb128 0xb
+ 899 0007 03       		.uleb128 0x3
+ 900 0008 0E       		.uleb128 0xe
+ 901 0009 1B       		.uleb128 0x1b
+ 902 000a 0E       		.uleb128 0xe
+ 903 000b 10       		.uleb128 0x10
+ 904 000c 17       		.uleb128 0x17
+ 905 000d 00       		.byte	0
+ 906 000e 00       		.byte	0
+ 907 000f 02       		.uleb128 0x2
+ 908 0010 24       		.uleb128 0x24
+ARM GAS  C:\Users\linar\AppData\Local\Temp\cc1u91pO.s 			page 17
+
+
+ 909 0011 00       		.byte	0
+ 910 0012 0B       		.uleb128 0xb
+ 911 0013 0B       		.uleb128 0xb
+ 912 0014 3E       		.uleb128 0x3e
+ 913 0015 0B       		.uleb128 0xb
+ 914 0016 03       		.uleb128 0x3
+ 915 0017 0E       		.uleb128 0xe
+ 916 0018 00       		.byte	0
+ 917 0019 00       		.byte	0
+ 918 001a 03       		.uleb128 0x3
+ 919 001b 16       		.uleb128 0x16
+ 920 001c 00       		.byte	0
+ 921 001d 03       		.uleb128 0x3
+ 922 001e 0E       		.uleb128 0xe
+ 923 001f 3A       		.uleb128 0x3a
+ 924 0020 0B       		.uleb128 0xb
+ 925 0021 3B       		.uleb128 0x3b
+ 926 0022 0B       		.uleb128 0xb
+ 927 0023 49       		.uleb128 0x49
+ 928 0024 13       		.uleb128 0x13
+ 929 0025 00       		.byte	0
+ 930 0026 00       		.byte	0
+ 931 0027 04       		.uleb128 0x4
+ 932 0028 24       		.uleb128 0x24
+ 933 0029 00       		.byte	0
+ 934 002a 0B       		.uleb128 0xb
+ 935 002b 0B       		.uleb128 0xb
+ 936 002c 3E       		.uleb128 0x3e
+ 937 002d 0B       		.uleb128 0xb
+ 938 002e 03       		.uleb128 0x3
+ 939 002f 08       		.uleb128 0x8
+ 940 0030 00       		.byte	0
+ 941 0031 00       		.byte	0
+ 942 0032 05       		.uleb128 0x5
+ 943 0033 01       		.uleb128 0x1
+ 944 0034 01       		.byte	0x1
+ 945 0035 49       		.uleb128 0x49
+ 946 0036 13       		.uleb128 0x13
+ 947 0037 01       		.uleb128 0x1
+ 948 0038 13       		.uleb128 0x13
+ 949 0039 00       		.byte	0
+ 950 003a 00       		.byte	0
+ 951 003b 06       		.uleb128 0x6
+ 952 003c 21       		.uleb128 0x21
+ 953 003d 00       		.byte	0
+ 954 003e 49       		.uleb128 0x49
+ 955 003f 13       		.uleb128 0x13
+ 956 0040 2F       		.uleb128 0x2f
+ 957 0041 05       		.uleb128 0x5
+ 958 0042 00       		.byte	0
+ 959 0043 00       		.byte	0
+ 960 0044 07       		.uleb128 0x7
+ 961 0045 26       		.uleb128 0x26
+ 962 0046 00       		.byte	0
+ 963 0047 49       		.uleb128 0x49
+ 964 0048 13       		.uleb128 0x13
+ 965 0049 00       		.byte	0
+ARM GAS  C:\Users\linar\AppData\Local\Temp\cc1u91pO.s 			page 18
+
+
+ 966 004a 00       		.byte	0
+ 967 004b 08       		.uleb128 0x8
+ 968 004c 34       		.uleb128 0x34
+ 969 004d 00       		.byte	0
+ 970 004e 03       		.uleb128 0x3
+ 971 004f 0E       		.uleb128 0xe
+ 972 0050 3A       		.uleb128 0x3a
+ 973 0051 0B       		.uleb128 0xb
+ 974 0052 3B       		.uleb128 0x3b
+ 975 0053 0B       		.uleb128 0xb
+ 976 0054 49       		.uleb128 0x49
+ 977 0055 13       		.uleb128 0x13
+ 978 0056 3F       		.uleb128 0x3f
+ 979 0057 19       		.uleb128 0x19
+ 980 0058 02       		.uleb128 0x2
+ 981 0059 18       		.uleb128 0x18
+ 982 005a 00       		.byte	0
+ 983 005b 00       		.byte	0
+ 984 005c 09       		.uleb128 0x9
+ 985 005d 21       		.uleb128 0x21
+ 986 005e 00       		.byte	0
+ 987 005f 49       		.uleb128 0x49
+ 988 0060 13       		.uleb128 0x13
+ 989 0061 2F       		.uleb128 0x2f
+ 990 0062 0B       		.uleb128 0xb
+ 991 0063 00       		.byte	0
+ 992 0064 00       		.byte	0
+ 993 0065 00       		.byte	0
+ 994              		.section	.debug_aranges,"",%progbits
+ 995 0000 14000000 		.4byte	0x14
+ 996 0004 0200     		.2byte	0x2
+ 997 0006 00000000 		.4byte	.Ldebug_info0
+ 998 000a 04       		.byte	0x4
+ 999 000b 00       		.byte	0
+ 1000 000c 0000     		.2byte	0
+ 1001 000e 0000     		.2byte	0
+ 1002 0010 00000000 		.4byte	0
+ 1003 0014 00000000 		.4byte	0
+ 1004              		.section	.debug_line,"",%progbits
+ 1005              	.Ldebug_line0:
+ 1006 0000 3D010000 		.section	.debug_str,"MS",%progbits,1
+ 1006      02003701 
+ 1006      00000201 
+ 1006      FB0E0D00 
+ 1006      01010101 
+ 1007              	.LASF9:
+ 1008 0000 5F5F7569 		.ascii	"__uint8_t\000"
+ 1008      6E74385F 
+ 1008      7400
+ 1009              	.LASF16:
+ 1010 000a 63795F6D 		.ascii	"cy_metadata\000"
+ 1010      65746164 
+ 1010      61746100 
+ 1011              	.LASF1:
+ 1012 0016 756E7369 		.ascii	"unsigned char\000"
+ 1012      676E6564 
+ 1012      20636861 
+ARM GAS  C:\Users\linar\AppData\Local\Temp\cc1u91pO.s 			page 19
+
+
+ 1012      7200
+ 1013              	.LASF17:
+ 1014 0024 474E5520 		.ascii	"GNU C11 5.4.1 20160609 (release) [ARM/embedded-5-br"
+ 1014      43313120 
+ 1014      352E342E 
+ 1014      31203230 
+ 1014      31363036 
+ 1015 0057 616E6368 		.ascii	"anch revision 237715] -mcpu=cortex-m3 -mthumb -g -O"
+ 1015      20726576 
+ 1015      6973696F 
+ 1015      6E203233 
+ 1015      37373135 
+ 1016 008a 67202D66 		.ascii	"g -ffunction-sections -ffat-lto-objects\000"
+ 1016      66756E63 
+ 1016      74696F6E 
+ 1016      2D736563 
+ 1016      74696F6E 
+ 1017              	.LASF5:
+ 1018 00b2 6C6F6E67 		.ascii	"long unsigned int\000"
+ 1018      20756E73 
+ 1018      69676E65 
+ 1018      6420696E 
+ 1018      7400
+ 1019              	.LASF3:
+ 1020 00c4 73686F72 		.ascii	"short unsigned int\000"
+ 1020      7420756E 
+ 1020      7369676E 
+ 1020      65642069 
+ 1020      6E7400
+ 1021              	.LASF13:
+ 1022 00d7 63795F6D 		.ascii	"cy_meta_custnvl\000"
+ 1022      6574615F 
+ 1022      63757374 
+ 1022      6E766C00 
+ 1023              	.LASF12:
+ 1024 00e7 63795F6D 		.ascii	"cy_meta_configecc\000"
+ 1024      6574615F 
+ 1024      636F6E66 
+ 1024      69676563 
+ 1024      6300
+ 1025              	.LASF8:
+ 1026 00f9 756E7369 		.ascii	"unsigned int\000"
+ 1026      676E6564 
+ 1026      20696E74 
+ 1026      00
+ 1027              	.LASF7:
+ 1028 0106 6C6F6E67 		.ascii	"long long unsigned int\000"
+ 1028      206C6F6E 
+ 1028      6720756E 
+ 1028      7369676E 
+ 1028      65642069 
+ 1029              	.LASF10:
+ 1030 011d 75696E74 		.ascii	"uint8_t\000"
+ 1030      385F7400 
+ 1031              	.LASF15:
+ 1032 0125 63795F6D 		.ascii	"cy_meta_flashprotect\000"
+ 1032      6574615F 
+ARM GAS  C:\Users\linar\AppData\Local\Temp\cc1u91pO.s 			page 20
+
+
+ 1032      666C6173 
+ 1032      6870726F 
+ 1032      74656374 
+ 1033              	.LASF14:
+ 1034 013a 63795F6D 		.ascii	"cy_meta_wonvl\000"
+ 1034      6574615F 
+ 1034      776F6E76 
+ 1034      6C00
+ 1035              	.LASF11:
+ 1036 0148 73697A65 		.ascii	"sizetype\000"
+ 1036      74797065 
+ 1036      00
+ 1037              	.LASF6:
+ 1038 0151 6C6F6E67 		.ascii	"long long int\000"
+ 1038      206C6F6E 
+ 1038      6720696E 
+ 1038      7400
+ 1039              	.LASF19:
+ 1040 015f 433A5C55 		.ascii	"C:\\Users\\linar\\OneDrive\\Documents\\PSoC Creator"
+ 1040      73657273 
+ 1040      5C6C696E 
+ 1040      61725C4F 
+ 1040      6E654472 
+ 1041 018d 5C70736F 		.ascii	"\\psocRandomWorkspace\\usb-fatfs-flash-usbfs.cydsn\000"
+ 1041      6352616E 
+ 1041      646F6D57 
+ 1041      6F726B73 
+ 1041      70616365 
+ 1042              	.LASF2:
+ 1043 01be 73686F72 		.ascii	"short int\000"
+ 1043      7420696E 
+ 1043      7400
+ 1044              	.LASF4:
+ 1045 01c8 6C6F6E67 		.ascii	"long int\000"
+ 1045      20696E74 
+ 1045      00
+ 1046              	.LASF0:
+ 1047 01d1 7369676E 		.ascii	"signed char\000"
+ 1047      65642063 
+ 1047      68617200 
+ 1048              	.LASF18:
+ 1049 01dd 47656E65 		.ascii	"Generated_Source\\PSoC5\\cymetadata.c\000"
+ 1049      72617465 
+ 1049      645F536F 
+ 1049      75726365 
+ 1049      5C50536F 
+ 1050              		.ident	"GCC: (GNU Tools for ARM Embedded Processors) 5.4.1 20160609 (release) [ARM/embedded-5-bran

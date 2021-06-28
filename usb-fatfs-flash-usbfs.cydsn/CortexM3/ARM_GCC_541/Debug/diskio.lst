@@ -1,0 +1,2090 @@
+ARM GAS  C:\Users\linar\AppData\Local\Temp\ccRnbEs9.s 			page 1
+
+
+   1              		.syntax unified
+   2              		.cpu cortex-m3
+   3              		.fpu softvfp
+   4              		.eabi_attribute 20, 1
+   5              		.eabi_attribute 21, 1
+   6              		.eabi_attribute 23, 3
+   7              		.eabi_attribute 24, 1
+   8              		.eabi_attribute 25, 1
+   9              		.eabi_attribute 26, 1
+  10              		.eabi_attribute 30, 1
+  11              		.eabi_attribute 34, 1
+  12              		.eabi_attribute 18, 4
+  13              		.thumb
+  14              		.syntax unified
+  15              		.file	"diskio.c"
+  16              		.text
+  17              	.Ltext0:
+  18              		.cfi_sections	.debug_frame
+  19              		.section	.text.disk_status,"ax",%progbits
+  20              		.align	2
+  21              		.global	disk_status
+  22              		.thumb
+  23              		.thumb_func
+  24              		.type	disk_status, %function
+  25              	disk_status:
+  26              	.LFB63:
+  27              		.file 1 "diskio.c"
+   1:diskio.c      **** /* ========================================
+   2:diskio.c      ****  *
+   3:diskio.c      ****  * Copyright YOUR COMPANY, THE YEAR
+   4:diskio.c      ****  * All Rights Reserved
+   5:diskio.c      ****  * UNPUBLISHED, LICENSED SOFTWARE.
+   6:diskio.c      ****  *
+   7:diskio.c      ****  * CONFIDENTIAL AND PROPRIETARY INFORMATION
+   8:diskio.c      ****  * WHICH IS THE PROPERTY OF your company.
+   9:diskio.c      ****  *
+  10:diskio.c      ****  * ========================================
+  11:diskio.c      **** */
+  12:diskio.c      **** #include "diskio.h"
+  13:diskio.c      **** #include "flash.h"
+  14:diskio.c      **** 
+  15:diskio.c      **** #include <project.h>
+  16:diskio.c      **** #include <cytypes.h>
+  17:diskio.c      **** 
+  18:diskio.c      **** static DSTATUS Stat = STA_NOINIT;
+  19:diskio.c      **** 
+  20:diskio.c      **** 
+  21:diskio.c      **** DSTATUS disk_status(BYTE drv)
+  22:diskio.c      **** {
+  28              		.loc 1 22 0
+  29              		.cfi_startproc
+  30              		@ args = 0, pretend = 0, frame = 0
+  31              		@ frame_needed = 0, uses_anonymous_args = 0
+  32              		@ link register save eliminated.
+  33              	.LVL0:
+  23:diskio.c      ****     if (drv) return STA_NOINIT;
+  34              		.loc 1 23 0
+ARM GAS  C:\Users\linar\AppData\Local\Temp\ccRnbEs9.s 			page 2
+
+
+  35 0000 10B9     		cbnz	r0, .L3
+  24:diskio.c      **** 
+  25:diskio.c      **** 	return Stat;
+  36              		.loc 1 25 0
+  37 0002 024B     		ldr	r3, .L4
+  38 0004 1878     		ldrb	r0, [r3]	@ zero_extendqisi2
+  39              	.LVL1:
+  40 0006 7047     		bx	lr
+  41              	.LVL2:
+  42              	.L3:
+  23:diskio.c      ****     if (drv) return STA_NOINIT;
+  43              		.loc 1 23 0
+  44 0008 0120     		movs	r0, #1
+  45              	.LVL3:
+  26:diskio.c      **** }
+  46              		.loc 1 26 0
+  47 000a 7047     		bx	lr
+  48              	.L5:
+  49              		.align	2
+  50              	.L4:
+  51 000c 00000000 		.word	.LANCHOR0
+  52              		.cfi_endproc
+  53              	.LFE63:
+  54              		.size	disk_status, .-disk_status
+  55              		.section	.text.disk_initialize,"ax",%progbits
+  56              		.align	2
+  57              		.global	disk_initialize
+  58              		.thumb
+  59              		.thumb_func
+  60              		.type	disk_initialize, %function
+  61              	disk_initialize:
+  62              	.LFB64:
+  27:diskio.c      **** 
+  28:diskio.c      **** DSTATUS disk_initialize(BYTE drv)
+  29:diskio.c      **** {
+  63              		.loc 1 29 0
+  64              		.cfi_startproc
+  65              		@ args = 0, pretend = 0, frame = 0
+  66              		@ frame_needed = 0, uses_anonymous_args = 0
+  67              		@ link register save eliminated.
+  68              	.LVL4:
+  30:diskio.c      ****     DSTATUS s;
+  31:diskio.c      ****     
+  32:diskio.c      ****     if (drv) return RES_NOTRDY;
+  69              		.loc 1 32 0
+  70 0000 10B9     		cbnz	r0, .L8
+  71              	.LVL5:
+  33:diskio.c      ****     s = 0;
+  34:diskio.c      ****     Stat = s;
+  72              		.loc 1 34 0
+  73 0002 024B     		ldr	r3, .L9
+  74 0004 1870     		strb	r0, [r3]
+  35:diskio.c      ****     
+  36:diskio.c      ****     return s;
+  75              		.loc 1 36 0
+  76 0006 7047     		bx	lr
+  77              	.LVL6:
+ARM GAS  C:\Users\linar\AppData\Local\Temp\ccRnbEs9.s 			page 3
+
+
+  78              	.L8:
+  32:diskio.c      ****     s = 0;
+  79              		.loc 1 32 0
+  80 0008 0320     		movs	r0, #3
+  81              	.LVL7:
+  37:diskio.c      **** }
+  82              		.loc 1 37 0
+  83 000a 7047     		bx	lr
+  84              	.L10:
+  85              		.align	2
+  86              	.L9:
+  87 000c 00000000 		.word	.LANCHOR0
+  88              		.cfi_endproc
+  89              	.LFE64:
+  90              		.size	disk_initialize, .-disk_initialize
+  91              		.section	.text.disk_read,"ax",%progbits
+  92              		.align	2
+  93              		.global	disk_read
+  94              		.thumb
+  95              		.thumb_func
+  96              		.type	disk_read, %function
+  97              	disk_read:
+  98              	.LFB65:
+  38:diskio.c      **** 
+  39:diskio.c      **** DRESULT disk_read(BYTE drv, BYTE* buff, DWORD sector, UINT count)
+  40:diskio.c      **** {
+  99              		.loc 1 40 0
+ 100              		.cfi_startproc
+ 101              		@ args = 0, pretend = 0, frame = 0
+ 102              		@ frame_needed = 0, uses_anonymous_args = 0
+ 103              	.LVL8:
+ 104 0000 70B5     		push	{r4, r5, r6, lr}
+ 105              		.cfi_def_cfa_offset 16
+ 106              		.cfi_offset 4, -16
+ 107              		.cfi_offset 5, -12
+ 108              		.cfi_offset 6, -8
+ 109              		.cfi_offset 14, -4
+ 110 0002 0D46     		mov	r5, r1
+ 111 0004 1446     		mov	r4, r2
+ 112 0006 1E46     		mov	r6, r3
+  41:diskio.c      ****     if (disk_status(drv) & STA_NOINIT) return RES_NOTRDY;
+ 113              		.loc 1 41 0
+ 114 0008 FFF7FEFF 		bl	disk_status
+ 115              	.LVL9:
+ 116 000c 10F0010F 		tst	r0, #1
+ 117 0010 0BD1     		bne	.L14
+  42:diskio.c      ****     uint32 address = sector * 512;
+ 118              		.loc 1 42 0
+ 119 0012 6402     		lsls	r4, r4, #9
+ 120              	.LVL10:
+ 121              	.L13:
+  43:diskio.c      ****     uint8 disk_status = ERROR;
+  44:diskio.c      ****    
+  45:diskio.c      ****     do
+  46:diskio.c      ****     {
+  47:diskio.c      ****         disk_status = readData(address, buff, 512 * count);
+ 122              		.loc 1 47 0 discriminator 1
+ARM GAS  C:\Users\linar\AppData\Local\Temp\ccRnbEs9.s 			page 4
+
+
+ 123 0014 7202     		lsls	r2, r6, #9
+ 124 0016 2946     		mov	r1, r5
+ 125 0018 2046     		mov	r0, r4
+ 126 001a FFF7FEFF 		bl	readData
+ 127              	.LVL11:
+  48:diskio.c      ****     }while(disk_status == BUSY);
+ 128              		.loc 1 48 0 discriminator 1
+ 129 001e 0328     		cmp	r0, #3
+ 130 0020 F8D0     		beq	.L13
+  49:diskio.c      ****     
+  50:diskio.c      ****     return disk_status ? RES_ERROR : RES_OK;
+ 131              		.loc 1 50 0
+ 132 0022 0030     		adds	r0, r0, #0
+ 133              	.LVL12:
+ 134 0024 18BF     		it	ne
+ 135 0026 0120     		movne	r0, #1
+ 136 0028 70BD     		pop	{r4, r5, r6, pc}
+ 137              	.LVL13:
+ 138              	.L14:
+  41:diskio.c      ****     uint32 address = sector * 512;
+ 139              		.loc 1 41 0
+ 140 002a 0320     		movs	r0, #3
+  51:diskio.c      **** }
+ 141              		.loc 1 51 0
+ 142 002c 70BD     		pop	{r4, r5, r6, pc}
+ 143              		.cfi_endproc
+ 144              	.LFE65:
+ 145              		.size	disk_read, .-disk_read
+ 146 002e 00BF     		.section	.text.disk_write,"ax",%progbits
+ 147              		.align	2
+ 148              		.global	disk_write
+ 149              		.thumb
+ 150              		.thumb_func
+ 151              		.type	disk_write, %function
+ 152              	disk_write:
+ 153              	.LFB66:
+  52:diskio.c      **** 
+  53:diskio.c      **** DRESULT disk_write(BYTE drv, const BYTE* buff, DWORD sector, UINT count)
+  54:diskio.c      **** {
+ 154              		.loc 1 54 0
+ 155              		.cfi_startproc
+ 156              		@ args = 0, pretend = 0, frame = 520
+ 157              		@ frame_needed = 0, uses_anonymous_args = 0
+ 158              	.LVL14:
+ 159 0000 70B5     		push	{r4, r5, r6, lr}
+ 160              		.cfi_def_cfa_offset 16
+ 161              		.cfi_offset 4, -16
+ 162              		.cfi_offset 5, -12
+ 163              		.cfi_offset 6, -8
+ 164              		.cfi_offset 14, -4
+ 165 0002 ADF5027D 		sub	sp, sp, #520
+ 166              		.cfi_def_cfa_offset 536
+ 167 0006 0E46     		mov	r6, r1
+ 168 0008 1546     		mov	r5, r2
+ 169 000a 1C46     		mov	r4, r3
+  55:diskio.c      ****     if (disk_status(drv) & STA_NOINIT) return RES_NOTRDY;
+ 170              		.loc 1 55 0
+ARM GAS  C:\Users\linar\AppData\Local\Temp\ccRnbEs9.s 			page 5
+
+
+ 171 000c FFF7FEFF 		bl	disk_status
+ 172              	.LVL15:
+ 173 0010 10F0010F 		tst	r0, #1
+ 174 0014 28D1     		bne	.L21
+  56:diskio.c      **** 
+  57:diskio.c      ****     uint32 address = sector * 512;
+ 175              		.loc 1 57 0
+ 176 0016 6D02     		lsls	r5, r5, #9
+ 177              	.LVL16:
+  58:diskio.c      ****     uint8 writeCnt = 2 * count;
+ 178              		.loc 1 58 0
+ 179 0018 6400     		lsls	r4, r4, #1
+ 180              	.LVL17:
+ 181 001a E4B2     		uxtb	r4, r4
+ 182              	.LVL18:
+  59:diskio.c      ****     uint8 disk_status = ERROR;
+  60:diskio.c      ****     
+  61:diskio.c      ****     uint8 recvBuff[512];
+  62:diskio.c      ****     memset(recvBuff, 0, 512);
+ 183              		.loc 1 62 0
+ 184 001c 4FF40072 		mov	r2, #512
+ 185 0020 0021     		movs	r1, #0
+ 186 0022 02A8     		add	r0, sp, #8
+ 187 0024 FFF7FEFF 		bl	memset
+ 188              	.LVL19:
+  63:diskio.c      ****     uint8 sendbuff[6];
+  64:diskio.c      ****     memset(sendbuff, 0, 6);
+ 189              		.loc 1 64 0
+ 190 0028 0023     		movs	r3, #0
+ 191 002a 0093     		str	r3, [sp]
+ 192 002c ADF80430 		strh	r3, [sp, #4]	@ movhi
+ 193              	.LVL20:
+ 194              	.L18:
+  65:diskio.c      ****     uint8 cr = 13;
+  66:diskio.c      ****     uint8 nl = 10;
+  67:diskio.c      ****     
+  68:diskio.c      ****     do
+  69:diskio.c      ****     {
+  70:diskio.c      ****         do
+  71:diskio.c      ****         {
+  72:diskio.c      ****             disk_status = pageProgram(address, buff, 256);
+ 195              		.loc 1 72 0 discriminator 1
+ 196 0030 4FF48072 		mov	r2, #256
+ 197 0034 3146     		mov	r1, r6
+ 198 0036 2846     		mov	r0, r5
+ 199 0038 FFF7FEFF 		bl	pageProgram
+ 200              	.LVL21:
+  73:diskio.c      ****         }while(disk_status == BUSY);
+ 201              		.loc 1 73 0 discriminator 1
+ 202 003c 0328     		cmp	r0, #3
+ 203 003e F7D0     		beq	.L18
+  74:diskio.c      ****         address += 256;
+ 204              		.loc 1 74 0
+ 205 0040 05F58075 		add	r5, r5, #256
+ 206              	.LVL22:
+  75:diskio.c      ****         buff += 256;
+ 207              		.loc 1 75 0
+ARM GAS  C:\Users\linar\AppData\Local\Temp\ccRnbEs9.s 			page 6
+
+
+ 208 0044 06F58076 		add	r6, r6, #256
+ 209              	.LVL23:
+  76:diskio.c      ****     }while(--writeCnt);
+ 210              		.loc 1 76 0
+ 211 0048 601E     		subs	r0, r4, #1
+ 212              	.LVL24:
+ 213 004a 10F0FF04 		ands	r4, r0, #255
+ 214 004e EFD1     		bne	.L18
+ 215              	.LVL25:
+ 216              	.L20:
+  77:diskio.c      ****     
+  78:diskio.c      ****     while(disk_read(0, recvBuff, 0, 1) == 3){}
+ 217              		.loc 1 78 0 discriminator 1
+ 218 0050 0123     		movs	r3, #1
+ 219 0052 0022     		movs	r2, #0
+ 220 0054 02A9     		add	r1, sp, #8
+ 221 0056 1046     		mov	r0, r2
+ 222 0058 FFF7FEFF 		bl	disk_read
+ 223              	.LVL26:
+ 224 005c 0328     		cmp	r0, #3
+ 225 005e F7D0     		beq	.L20
+  79:diskio.c      **** /*
+  80:diskio.c      ****     for(int i = 0; i < 512; i++)
+  81:diskio.c      ****     {
+  82:diskio.c      ****         if( !(i % 15) ) 
+  83:diskio.c      ****         {
+  84:diskio.c      ****             USBUART_1_PutData(&nl, 1);
+  85:diskio.c      ****             CyDelay(10);
+  86:diskio.c      ****             USBUART_1_PutData(&cr, 1);
+  87:diskio.c      ****             CyDelay(10);
+  88:diskio.c      ****         }  
+  89:diskio.c      ****         sprintf((char*)sendbuff, "%x ", recvBuff[i]);
+  90:diskio.c      ****         //sprintf((char*)sendbuff, "%d ", rand);
+  91:diskio.c      ****         USBUART_1_PutData(sendbuff, 6);
+  92:diskio.c      ****         memset(sendbuff, 0, 6);
+  93:diskio.c      ****         CyDelay(10); 
+  94:diskio.c      ****     }
+  95:diskio.c      ****  */   
+  96:diskio.c      ****     return writeCnt ? RES_ERROR : RES_OK;
+ 226              		.loc 1 96 0
+ 227 0060 201C     		adds	r0, r4, #0
+ 228 0062 18BF     		it	ne
+ 229 0064 0120     		movne	r0, #1
+ 230 0066 00E0     		b	.L17
+ 231              	.LVL27:
+ 232              	.L21:
+  55:diskio.c      **** 
+ 233              		.loc 1 55 0
+ 234 0068 0320     		movs	r0, #3
+ 235              	.LVL28:
+ 236              	.L17:
+  97:diskio.c      **** }
+ 237              		.loc 1 97 0
+ 238 006a 0DF5027D 		add	sp, sp, #520
+ 239              		.cfi_def_cfa_offset 16
+ 240              		@ sp needed
+ 241 006e 70BD     		pop	{r4, r5, r6, pc}
+ARM GAS  C:\Users\linar\AppData\Local\Temp\ccRnbEs9.s 			page 7
+
+
+ 242              		.cfi_endproc
+ 243              	.LFE66:
+ 244              		.size	disk_write, .-disk_write
+ 245              		.section	.text.disk_ioctl,"ax",%progbits
+ 246              		.align	2
+ 247              		.global	disk_ioctl
+ 248              		.thumb
+ 249              		.thumb_func
+ 250              		.type	disk_ioctl, %function
+ 251              	disk_ioctl:
+ 252              	.LFB67:
+  98:diskio.c      **** 
+  99:diskio.c      **** DRESULT disk_ioctl(BYTE pdrv, BYTE cmd, void* buff)
+ 100:diskio.c      **** { 
+ 253              		.loc 1 100 0
+ 254              		.cfi_startproc
+ 255              		@ args = 0, pretend = 0, frame = 0
+ 256              		@ frame_needed = 0, uses_anonymous_args = 0
+ 257              		@ link register save eliminated.
+ 258              	.LVL29:
+ 101:diskio.c      ****     DRESULT res;
+ 102:diskio.c      ****     DWORD blockCnt = NUM_OF_PAGES / 2;
+ 103:diskio.c      ****     
+ 104:diskio.c      ****     switch(cmd)
+ 259              		.loc 1 104 0
+ 260 0000 0129     		cmp	r1, #1
+ 261 0002 03D0     		beq	.L25
+ 262 0004 41B1     		cbz	r1, .L24
+ 263 0006 0329     		cmp	r1, #3
+ 264 0008 05D1     		bne	.L28
+ 265 000a 7047     		bx	lr
+ 266              	.L25:
+ 105:diskio.c      ****     {
+ 106:diskio.c      ****         case CTRL_SYNC:
+ 107:diskio.c      ****         break;
+ 108:diskio.c      ****         
+ 109:diskio.c      ****         case GET_SECTOR_COUNT:
+ 110:diskio.c      ****             *(DWORD*)buff = blockCnt;
+ 267              		.loc 1 110 0
+ 268 000c 4FF48053 		mov	r3, #4096
+ 269 0010 1360     		str	r3, [r2]
+ 270              	.LVL30:
+ 111:diskio.c      ****             res = RES_OK;
+ 271              		.loc 1 111 0
+ 272 0012 0020     		movs	r0, #0
+ 273              	.LVL31:
+ 112:diskio.c      ****         break;
+ 274              		.loc 1 112 0
+ 275 0014 7047     		bx	lr
+ 276              	.LVL32:
+ 277              	.L28:
+ 113:diskio.c      ****         
+ 114:diskio.c      ****         case GET_BLOCK_SIZE:
+ 115:diskio.c      ****         break;
+ 116:diskio.c      ****         
+ 117:diskio.c      ****         default:
+ 118:diskio.c      ****             res = RES_PARERR;
+ARM GAS  C:\Users\linar\AppData\Local\Temp\ccRnbEs9.s 			page 8
+
+
+ 278              		.loc 1 118 0
+ 279 0016 0420     		movs	r0, #4
+ 280              	.LVL33:
+ 281              	.L24:
+ 119:diskio.c      ****     }
+ 120:diskio.c      ****     
+ 121:diskio.c      ****     return res;
+ 122:diskio.c      **** }
+ 282              		.loc 1 122 0
+ 283 0018 7047     		bx	lr
+ 284              		.cfi_endproc
+ 285              	.LFE67:
+ 286              		.size	disk_ioctl, .-disk_ioctl
+ 287 001a 00BF     		.section	.text.disk_timerproc,"ax",%progbits
+ 288              		.align	2
+ 289              		.global	disk_timerproc
+ 290              		.thumb
+ 291              		.thumb_func
+ 292              		.type	disk_timerproc, %function
+ 293              	disk_timerproc:
+ 294              	.LFB68:
+ 123:diskio.c      **** 
+ 124:diskio.c      **** void disk_timerproc(void)
+ 125:diskio.c      **** {
+ 295              		.loc 1 125 0
+ 296              		.cfi_startproc
+ 297              		@ args = 0, pretend = 0, frame = 0
+ 298              		@ frame_needed = 0, uses_anonymous_args = 0
+ 299              		@ link register save eliminated.
+ 300 0000 7047     		bx	lr
+ 301              		.cfi_endproc
+ 302              	.LFE68:
+ 303              		.size	disk_timerproc, .-disk_timerproc
+ 304 0002 00BF     		.data
+ 305              		.set	.LANCHOR0,. + 0
+ 306              		.type	Stat, %object
+ 307              		.size	Stat, 1
+ 308              	Stat:
+ 309 0000 01       		.byte	1
+ 310              		.text
+ 311              	.Letext0:
+ 312              		.file 2 "integer.h"
+ 313              		.file 3 "diskio.h"
+ 314              		.file 4 "c:\\program files (x86)\\cypress\\psoc creator\\4.4\\psoc creator\\import\\gnu\\arm\\5.4.
+ 315              		.file 5 "c:\\program files (x86)\\cypress\\psoc creator\\4.4\\psoc creator\\import\\gnu\\arm\\5.4.
+ 316              		.file 6 "Generated_Source\\PSoC5/cytypes.h"
+ 317              		.file 7 "flash.h"
+ 318              		.file 8 "Generated_Source\\PSoC5/core_cm3.h"
+ 319              		.section	.debug_info,"",%progbits
+ 320              	.Ldebug_info0:
+ 321 0000 50040000 		.4byte	0x450
+ 322 0004 0400     		.2byte	0x4
+ 323 0006 00000000 		.4byte	.Ldebug_abbrev0
+ 324 000a 04       		.byte	0x4
+ 325 000b 01       		.uleb128 0x1
+ 326 000c 68020000 		.4byte	.LASF49
+ 327 0010 0C       		.byte	0xc
+ARM GAS  C:\Users\linar\AppData\Local\Temp\ccRnbEs9.s 			page 9
+
+
+ 328 0011 60000000 		.4byte	.LASF50
+ 329 0015 56010000 		.4byte	.LASF51
+ 330 0019 00000000 		.4byte	.Ldebug_ranges0+0
+ 331 001d 00000000 		.4byte	0
+ 332 0021 00000000 		.4byte	.Ldebug_line0
+ 333 0025 02       		.uleb128 0x2
+ 334 0026 3C000000 		.4byte	.LASF3
+ 335 002a 02       		.byte	0x2
+ 336 002b 10       		.byte	0x10
+ 337 002c 30000000 		.4byte	0x30
+ 338 0030 03       		.uleb128 0x3
+ 339 0031 01       		.byte	0x1
+ 340 0032 08       		.byte	0x8
+ 341 0033 EE000000 		.4byte	.LASF0
+ 342 0037 03       		.uleb128 0x3
+ 343 0038 02       		.byte	0x2
+ 344 0039 05       		.byte	0x5
+ 345 003a 16000000 		.4byte	.LASF1
+ 346 003e 03       		.uleb128 0x3
+ 347 003f 02       		.byte	0x2
+ 348 0040 07       		.byte	0x7
+ 349 0041 B5010000 		.4byte	.LASF2
+ 350 0045 04       		.uleb128 0x4
+ 351 0046 04       		.byte	0x4
+ 352 0047 05       		.byte	0x5
+ 353 0048 696E7400 		.ascii	"int\000"
+ 354 004c 02       		.uleb128 0x2
+ 355 004d B8000000 		.4byte	.LASF4
+ 356 0051 02       		.byte	0x2
+ 357 0052 19       		.byte	0x19
+ 358 0053 57000000 		.4byte	0x57
+ 359 0057 03       		.uleb128 0x3
+ 360 0058 04       		.byte	0x4
+ 361 0059 07       		.byte	0x7
+ 362 005a 29010000 		.4byte	.LASF5
+ 363 005e 03       		.uleb128 0x3
+ 364 005f 04       		.byte	0x4
+ 365 0060 05       		.byte	0x5
+ 366 0061 8D000000 		.4byte	.LASF6
+ 367 0065 02       		.uleb128 0x2
+ 368 0066 DC000000 		.4byte	.LASF7
+ 369 006a 02       		.byte	0x2
+ 370 006b 1D       		.byte	0x1d
+ 371 006c 70000000 		.4byte	0x70
+ 372 0070 03       		.uleb128 0x3
+ 373 0071 04       		.byte	0x4
+ 374 0072 07       		.byte	0x7
+ 375 0073 41000000 		.4byte	.LASF8
+ 376 0077 02       		.uleb128 0x2
+ 377 0078 CF000000 		.4byte	.LASF9
+ 378 007c 03       		.byte	0x3
+ 379 007d 13       		.byte	0x13
+ 380 007e 25000000 		.4byte	0x25
+ 381 0082 05       		.uleb128 0x5
+ 382 0083 01       		.byte	0x1
+ 383 0084 30000000 		.4byte	0x30
+ 384 0088 03       		.byte	0x3
+ARM GAS  C:\Users\linar\AppData\Local\Temp\ccRnbEs9.s 			page 10
+
+
+ 385 0089 16       		.byte	0x16
+ 386 008a AD000000 		.4byte	0xad
+ 387 008e 06       		.uleb128 0x6
+ 388 008f 0F000000 		.4byte	.LASF10
+ 389 0093 00       		.byte	0
+ 390 0094 06       		.uleb128 0x6
+ 391 0095 05000000 		.4byte	.LASF11
+ 392 0099 01       		.byte	0x1
+ 393 009a 06       		.uleb128 0x6
+ 394 009b 9E000000 		.4byte	.LASF12
+ 395 009f 02       		.byte	0x2
+ 396 00a0 06       		.uleb128 0x6
+ 397 00a1 E0010000 		.4byte	.LASF13
+ 398 00a5 03       		.byte	0x3
+ 399 00a6 06       		.uleb128 0x6
+ 400 00a7 F6020000 		.4byte	.LASF14
+ 401 00ab 04       		.byte	0x4
+ 402 00ac 00       		.byte	0
+ 403 00ad 02       		.uleb128 0x2
+ 404 00ae 53020000 		.4byte	.LASF15
+ 405 00b2 03       		.byte	0x3
+ 406 00b3 1C       		.byte	0x1c
+ 407 00b4 82000000 		.4byte	0x82
+ 408 00b8 03       		.uleb128 0x3
+ 409 00b9 01       		.byte	0x1
+ 410 00ba 06       		.byte	0x6
+ 411 00bb 06010000 		.4byte	.LASF16
+ 412 00bf 02       		.uleb128 0x2
+ 413 00c0 3A020000 		.4byte	.LASF17
+ 414 00c4 04       		.byte	0x4
+ 415 00c5 3F       		.byte	0x3f
+ 416 00c6 5E000000 		.4byte	0x5e
+ 417 00ca 03       		.uleb128 0x3
+ 418 00cb 08       		.byte	0x8
+ 419 00cc 05       		.byte	0x5
+ 420 00cd 78000000 		.4byte	.LASF18
+ 421 00d1 03       		.uleb128 0x3
+ 422 00d2 08       		.byte	0x8
+ 423 00d3 07       		.byte	0x7
+ 424 00d4 12010000 		.4byte	.LASF19
+ 425 00d8 02       		.uleb128 0x2
+ 426 00d9 D8010000 		.4byte	.LASF20
+ 427 00dd 05       		.byte	0x5
+ 428 00de 2C       		.byte	0x2c
+ 429 00df BF000000 		.4byte	0xbf
+ 430 00e3 07       		.uleb128 0x7
+ 431 00e4 53000000 		.4byte	.LASF21
+ 432 00e8 06       		.byte	0x6
+ 433 00e9 E801     		.2byte	0x1e8
+ 434 00eb 30000000 		.4byte	0x30
+ 435 00ef 07       		.uleb128 0x7
+ 436 00f0 F4010000 		.4byte	.LASF22
+ 437 00f4 06       		.byte	0x6
+ 438 00f5 EA01     		.2byte	0x1ea
+ 439 00f7 70000000 		.4byte	0x70
+ 440 00fb 03       		.uleb128 0x3
+ 441 00fc 04       		.byte	0x4
+ARM GAS  C:\Users\linar\AppData\Local\Temp\ccRnbEs9.s 			page 11
+
+
+ 442 00fd 04       		.byte	0x4
+ 443 00fe 69000000 		.4byte	.LASF23
+ 444 0102 03       		.uleb128 0x3
+ 445 0103 08       		.byte	0x8
+ 446 0104 04       		.byte	0x4
+ 447 0105 09020000 		.4byte	.LASF24
+ 448 0109 03       		.uleb128 0x3
+ 449 010a 01       		.byte	0x1
+ 450 010b 08       		.byte	0x8
+ 451 010c D3010000 		.4byte	.LASF25
+ 452 0110 03       		.uleb128 0x3
+ 453 0111 08       		.byte	0x8
+ 454 0112 04       		.byte	0x4
+ 455 0113 E2000000 		.4byte	.LASF26
+ 456 0117 03       		.uleb128 0x3
+ 457 0118 04       		.byte	0x4
+ 458 0119 07       		.byte	0x7
+ 459 011a 20000000 		.4byte	.LASF27
+ 460 011e 08       		.uleb128 0x8
+ 461 011f 04       		.byte	0x4
+ 462 0120 09       		.uleb128 0x9
+ 463 0121 1A020000 		.4byte	.LASF52
+ 464 0125 01       		.byte	0x1
+ 465 0126 30000000 		.4byte	0x30
+ 466 012a 07       		.byte	0x7
+ 467 012b 33       		.byte	0x33
+ 468 012c 4E010000 		.4byte	0x14e
+ 469 0130 0A       		.uleb128 0xa
+ 470 0131 4F4B00   		.ascii	"OK\000"
+ 471 0134 00       		.byte	0
+ 472 0135 06       		.uleb128 0x6
+ 473 0136 C9000000 		.4byte	.LASF28
+ 474 013a 01       		.byte	0x1
+ 475 013b 06       		.uleb128 0x6
+ 476 013c FB010000 		.4byte	.LASF29
+ 477 0140 02       		.byte	0x2
+ 478 0141 06       		.uleb128 0x6
+ 479 0142 D7000000 		.4byte	.LASF30
+ 480 0146 03       		.byte	0x3
+ 481 0147 06       		.uleb128 0x6
+ 482 0148 FC000000 		.4byte	.LASF31
+ 483 014c 04       		.byte	0x4
+ 484 014d 00       		.byte	0
+ 485 014e 0B       		.uleb128 0xb
+ 486 014f BD000000 		.4byte	.LASF32
+ 487 0153 01       		.byte	0x1
+ 488 0154 15       		.byte	0x15
+ 489 0155 77000000 		.4byte	0x77
+ 490 0159 00000000 		.4byte	.LFB63
+ 491 015d 10000000 		.4byte	.LFE63-.LFB63
+ 492 0161 01       		.uleb128 0x1
+ 493 0162 9C       		.byte	0x9c
+ 494 0163 77010000 		.4byte	0x177
+ 495 0167 0C       		.uleb128 0xc
+ 496 0168 64727600 		.ascii	"drv\000"
+ 497 016c 01       		.byte	0x1
+ 498 016d 15       		.byte	0x15
+ARM GAS  C:\Users\linar\AppData\Local\Temp\ccRnbEs9.s 			page 12
+
+
+ 499 016e 25000000 		.4byte	0x25
+ 500 0172 00000000 		.4byte	.LLST0
+ 501 0176 00       		.byte	0
+ 502 0177 0B       		.uleb128 0xb
+ 503 0178 A8000000 		.4byte	.LASF33
+ 504 017c 01       		.byte	0x1
+ 505 017d 1C       		.byte	0x1c
+ 506 017e 77000000 		.4byte	0x77
+ 507 0182 00000000 		.4byte	.LFB64
+ 508 0186 10000000 		.4byte	.LFE64-.LFB64
+ 509 018a 01       		.uleb128 0x1
+ 510 018b 9C       		.byte	0x9c
+ 511 018c AD010000 		.4byte	0x1ad
+ 512 0190 0C       		.uleb128 0xc
+ 513 0191 64727600 		.ascii	"drv\000"
+ 514 0195 01       		.byte	0x1
+ 515 0196 1C       		.byte	0x1c
+ 516 0197 25000000 		.4byte	0x25
+ 517 019b 3A000000 		.4byte	.LLST1
+ 518 019f 0D       		.uleb128 0xd
+ 519 01a0 7300     		.ascii	"s\000"
+ 520 01a2 01       		.byte	0x1
+ 521 01a3 1E       		.byte	0x1e
+ 522 01a4 77000000 		.4byte	0x77
+ 523 01a8 5B000000 		.4byte	.LLST2
+ 524 01ac 00       		.byte	0
+ 525 01ad 0B       		.uleb128 0xb
+ 526 01ae 10020000 		.4byte	.LASF34
+ 527 01b2 01       		.byte	0x1
+ 528 01b3 27       		.byte	0x27
+ 529 01b4 AD000000 		.4byte	0xad
+ 530 01b8 00000000 		.4byte	.LFB65
+ 531 01bc 2E000000 		.4byte	.LFE65-.LFB65
+ 532 01c0 01       		.uleb128 0x1
+ 533 01c1 9C       		.byte	0x9c
+ 534 01c2 48020000 		.4byte	0x248
+ 535 01c6 0C       		.uleb128 0xc
+ 536 01c7 64727600 		.ascii	"drv\000"
+ 537 01cb 01       		.byte	0x1
+ 538 01cc 27       		.byte	0x27
+ 539 01cd 25000000 		.4byte	0x25
+ 540 01d1 6F000000 		.4byte	.LLST3
+ 541 01d5 0E       		.uleb128 0xe
+ 542 01d6 37000000 		.4byte	.LASF35
+ 543 01da 01       		.byte	0x1
+ 544 01db 27       		.byte	0x27
+ 545 01dc 48020000 		.4byte	0x248
+ 546 01e0 90000000 		.4byte	.LLST4
+ 547 01e4 0E       		.uleb128 0xe
+ 548 01e5 59000000 		.4byte	.LASF36
+ 549 01e9 01       		.byte	0x1
+ 550 01ea 27       		.byte	0x27
+ 551 01eb 65000000 		.4byte	0x65
+ 552 01ef AE000000 		.4byte	.LLST5
+ 553 01f3 0E       		.uleb128 0xe
+ 554 01f4 34020000 		.4byte	.LASF37
+ 555 01f8 01       		.byte	0x1
+ARM GAS  C:\Users\linar\AppData\Local\Temp\ccRnbEs9.s 			page 13
+
+
+ 556 01f9 27       		.byte	0x27
+ 557 01fa 4C000000 		.4byte	0x4c
+ 558 01fe E5000000 		.4byte	.LLST6
+ 559 0202 0F       		.uleb128 0xf
+ 560 0203 96000000 		.4byte	.LASF38
+ 561 0207 01       		.byte	0x1
+ 562 0208 2A       		.byte	0x2a
+ 563 0209 EF000000 		.4byte	0xef
+ 564 020d 03010000 		.4byte	.LLST7
+ 565 0211 0F       		.uleb128 0xf
+ 566 0212 BD000000 		.4byte	.LASF32
+ 567 0216 01       		.byte	0x1
+ 568 0217 2B       		.byte	0x2b
+ 569 0218 E3000000 		.4byte	0xe3
+ 570 021c 16010000 		.4byte	.LLST8
+ 571 0220 10       		.uleb128 0x10
+ 572 0221 0C000000 		.4byte	.LVL9
+ 573 0225 4E010000 		.4byte	0x14e
+ 574 0229 11       		.uleb128 0x11
+ 575 022a 1E000000 		.4byte	.LVL11
+ 576 022e 34040000 		.4byte	0x434
+ 577 0232 12       		.uleb128 0x12
+ 578 0233 01       		.uleb128 0x1
+ 579 0234 50       		.byte	0x50
+ 580 0235 02       		.uleb128 0x2
+ 581 0236 74       		.byte	0x74
+ 582 0237 00       		.sleb128 0
+ 583 0238 12       		.uleb128 0x12
+ 584 0239 01       		.uleb128 0x1
+ 585 023a 51       		.byte	0x51
+ 586 023b 02       		.uleb128 0x2
+ 587 023c 75       		.byte	0x75
+ 588 023d 00       		.sleb128 0
+ 589 023e 12       		.uleb128 0x12
+ 590 023f 01       		.uleb128 0x1
+ 591 0240 52       		.byte	0x52
+ 592 0241 04       		.uleb128 0x4
+ 593 0242 76       		.byte	0x76
+ 594 0243 00       		.sleb128 0
+ 595 0244 39       		.byte	0x39
+ 596 0245 24       		.byte	0x24
+ 597 0246 00       		.byte	0
+ 598 0247 00       		.byte	0
+ 599 0248 13       		.uleb128 0x13
+ 600 0249 04       		.byte	0x4
+ 601 024a 25000000 		.4byte	0x25
+ 602 024e 0B       		.uleb128 0xb
+ 603 024f 4B010000 		.4byte	.LASF39
+ 604 0253 01       		.byte	0x1
+ 605 0254 35       		.byte	0x35
+ 606 0255 AD000000 		.4byte	0xad
+ 607 0259 00000000 		.4byte	.LFB66
+ 608 025d 70000000 		.4byte	.LFE66-.LFB66
+ 609 0261 01       		.uleb128 0x1
+ 610 0262 9C       		.byte	0x9c
+ 611 0263 76030000 		.4byte	0x376
+ 612 0267 0C       		.uleb128 0xc
+ARM GAS  C:\Users\linar\AppData\Local\Temp\ccRnbEs9.s 			page 14
+
+
+ 613 0268 64727600 		.ascii	"drv\000"
+ 614 026c 01       		.byte	0x1
+ 615 026d 35       		.byte	0x35
+ 616 026e 25000000 		.4byte	0x25
+ 617 0272 29010000 		.4byte	.LLST9
+ 618 0276 0E       		.uleb128 0xe
+ 619 0277 37000000 		.4byte	.LASF35
+ 620 027b 01       		.byte	0x1
+ 621 027c 35       		.byte	0x35
+ 622 027d 76030000 		.4byte	0x376
+ 623 0281 4A010000 		.4byte	.LLST10
+ 624 0285 0E       		.uleb128 0xe
+ 625 0286 59000000 		.4byte	.LASF36
+ 626 028a 01       		.byte	0x1
+ 627 028b 35       		.byte	0x35
+ 628 028c 65000000 		.4byte	0x65
+ 629 0290 68010000 		.4byte	.LLST11
+ 630 0294 0E       		.uleb128 0xe
+ 631 0295 34020000 		.4byte	.LASF37
+ 632 0299 01       		.byte	0x1
+ 633 029a 35       		.byte	0x35
+ 634 029b 4C000000 		.4byte	0x4c
+ 635 029f AD010000 		.4byte	.LLST12
+ 636 02a3 0F       		.uleb128 0xf
+ 637 02a4 96000000 		.4byte	.LASF38
+ 638 02a8 01       		.byte	0x1
+ 639 02a9 39       		.byte	0x39
+ 640 02aa EF000000 		.4byte	0xef
+ 641 02ae F2010000 		.4byte	.LLST13
+ 642 02b2 0F       		.uleb128 0xf
+ 643 02b3 2E000000 		.4byte	.LASF40
+ 644 02b7 01       		.byte	0x1
+ 645 02b8 3A       		.byte	0x3a
+ 646 02b9 E3000000 		.4byte	0xe3
+ 647 02bd 05020000 		.4byte	.LLST14
+ 648 02c1 0F       		.uleb128 0xf
+ 649 02c2 BD000000 		.4byte	.LASF32
+ 650 02c6 01       		.byte	0x1
+ 651 02c7 3B       		.byte	0x3b
+ 652 02c8 E3000000 		.4byte	0xe3
+ 653 02cc 23020000 		.4byte	.LLST15
+ 654 02d0 14       		.uleb128 0x14
+ 655 02d1 36010000 		.4byte	.LASF41
+ 656 02d5 01       		.byte	0x1
+ 657 02d6 3D       		.byte	0x3d
+ 658 02d7 81030000 		.4byte	0x381
+ 659 02db 03       		.uleb128 0x3
+ 660 02dc 91       		.byte	0x91
+ 661 02dd F07B     		.sleb128 -528
+ 662 02df 14       		.uleb128 0x14
+ 663 02e0 2B020000 		.4byte	.LASF42
+ 664 02e4 01       		.byte	0x1
+ 665 02e5 3F       		.byte	0x3f
+ 666 02e6 92030000 		.4byte	0x392
+ 667 02ea 03       		.uleb128 0x3
+ 668 02eb 91       		.byte	0x91
+ 669 02ec E87B     		.sleb128 -536
+ARM GAS  C:\Users\linar\AppData\Local\Temp\ccRnbEs9.s 			page 15
+
+
+ 670 02ee 0D       		.uleb128 0xd
+ 671 02ef 637200   		.ascii	"cr\000"
+ 672 02f2 01       		.byte	0x1
+ 673 02f3 41       		.byte	0x41
+ 674 02f4 E3000000 		.4byte	0xe3
+ 675 02f8 42020000 		.4byte	.LLST16
+ 676 02fc 0D       		.uleb128 0xd
+ 677 02fd 6E6C00   		.ascii	"nl\000"
+ 678 0300 01       		.byte	0x1
+ 679 0301 42       		.byte	0x42
+ 680 0302 E3000000 		.4byte	0xe3
+ 681 0306 56020000 		.4byte	.LLST17
+ 682 030a 10       		.uleb128 0x10
+ 683 030b 10000000 		.4byte	.LVL15
+ 684 030f 4E010000 		.4byte	0x14e
+ 685 0313 15       		.uleb128 0x15
+ 686 0314 28000000 		.4byte	.LVL19
+ 687 0318 3F040000 		.4byte	0x43f
+ 688 031c 34030000 		.4byte	0x334
+ 689 0320 12       		.uleb128 0x12
+ 690 0321 01       		.uleb128 0x1
+ 691 0322 50       		.byte	0x50
+ 692 0323 03       		.uleb128 0x3
+ 693 0324 91       		.byte	0x91
+ 694 0325 F07B     		.sleb128 -528
+ 695 0327 12       		.uleb128 0x12
+ 696 0328 01       		.uleb128 0x1
+ 697 0329 51       		.byte	0x51
+ 698 032a 01       		.uleb128 0x1
+ 699 032b 30       		.byte	0x30
+ 700 032c 12       		.uleb128 0x12
+ 701 032d 01       		.uleb128 0x1
+ 702 032e 52       		.byte	0x52
+ 703 032f 03       		.uleb128 0x3
+ 704 0330 0A       		.byte	0xa
+ 705 0331 0002     		.2byte	0x200
+ 706 0333 00       		.byte	0
+ 707 0334 15       		.uleb128 0x15
+ 708 0335 3C000000 		.4byte	.LVL21
+ 709 0339 48040000 		.4byte	0x448
+ 710 033d 55030000 		.4byte	0x355
+ 711 0341 12       		.uleb128 0x12
+ 712 0342 01       		.uleb128 0x1
+ 713 0343 50       		.byte	0x50
+ 714 0344 02       		.uleb128 0x2
+ 715 0345 75       		.byte	0x75
+ 716 0346 00       		.sleb128 0
+ 717 0347 12       		.uleb128 0x12
+ 718 0348 01       		.uleb128 0x1
+ 719 0349 51       		.byte	0x51
+ 720 034a 02       		.uleb128 0x2
+ 721 034b 76       		.byte	0x76
+ 722 034c 00       		.sleb128 0
+ 723 034d 12       		.uleb128 0x12
+ 724 034e 01       		.uleb128 0x1
+ 725 034f 52       		.byte	0x52
+ 726 0350 03       		.uleb128 0x3
+ARM GAS  C:\Users\linar\AppData\Local\Temp\ccRnbEs9.s 			page 16
+
+
+ 727 0351 0A       		.byte	0xa
+ 728 0352 0001     		.2byte	0x100
+ 729 0354 00       		.byte	0
+ 730 0355 11       		.uleb128 0x11
+ 731 0356 5C000000 		.4byte	.LVL26
+ 732 035a AD010000 		.4byte	0x1ad
+ 733 035e 12       		.uleb128 0x12
+ 734 035f 01       		.uleb128 0x1
+ 735 0360 50       		.byte	0x50
+ 736 0361 01       		.uleb128 0x1
+ 737 0362 30       		.byte	0x30
+ 738 0363 12       		.uleb128 0x12
+ 739 0364 01       		.uleb128 0x1
+ 740 0365 51       		.byte	0x51
+ 741 0366 03       		.uleb128 0x3
+ 742 0367 91       		.byte	0x91
+ 743 0368 F07B     		.sleb128 -528
+ 744 036a 12       		.uleb128 0x12
+ 745 036b 01       		.uleb128 0x1
+ 746 036c 52       		.byte	0x52
+ 747 036d 01       		.uleb128 0x1
+ 748 036e 30       		.byte	0x30
+ 749 036f 12       		.uleb128 0x12
+ 750 0370 01       		.uleb128 0x1
+ 751 0371 53       		.byte	0x53
+ 752 0372 01       		.uleb128 0x1
+ 753 0373 31       		.byte	0x31
+ 754 0374 00       		.byte	0
+ 755 0375 00       		.byte	0
+ 756 0376 13       		.uleb128 0x13
+ 757 0377 04       		.byte	0x4
+ 758 0378 7C030000 		.4byte	0x37c
+ 759 037c 16       		.uleb128 0x16
+ 760 037d 25000000 		.4byte	0x25
+ 761 0381 17       		.uleb128 0x17
+ 762 0382 E3000000 		.4byte	0xe3
+ 763 0386 92030000 		.4byte	0x392
+ 764 038a 18       		.uleb128 0x18
+ 765 038b 17010000 		.4byte	0x117
+ 766 038f FF01     		.2byte	0x1ff
+ 767 0391 00       		.byte	0
+ 768 0392 17       		.uleb128 0x17
+ 769 0393 E3000000 		.4byte	0xe3
+ 770 0397 A2030000 		.4byte	0x3a2
+ 771 039b 19       		.uleb128 0x19
+ 772 039c 17010000 		.4byte	0x117
+ 773 03a0 05       		.byte	0x5
+ 774 03a1 00       		.byte	0
+ 775 03a2 0B       		.uleb128 0xb
+ 776 03a3 C8010000 		.4byte	.LASF43
+ 777 03a7 01       		.byte	0x1
+ 778 03a8 63       		.byte	0x63
+ 779 03a9 AD000000 		.4byte	0xad
+ 780 03ad 00000000 		.4byte	.LFB67
+ 781 03b1 1A000000 		.4byte	.LFE67-.LFB67
+ 782 03b5 01       		.uleb128 0x1
+ 783 03b6 9C       		.byte	0x9c
+ARM GAS  C:\Users\linar\AppData\Local\Temp\ccRnbEs9.s 			page 17
+
+
+ 784 03b7 01040000 		.4byte	0x401
+ 785 03bb 0E       		.uleb128 0xe
+ 786 03bc 00000000 		.4byte	.LASF44
+ 787 03c0 01       		.byte	0x1
+ 788 03c1 63       		.byte	0x63
+ 789 03c2 25000000 		.4byte	0x25
+ 790 03c6 6A020000 		.4byte	.LLST18
+ 791 03ca 1A       		.uleb128 0x1a
+ 792 03cb 636D6400 		.ascii	"cmd\000"
+ 793 03cf 01       		.byte	0x1
+ 794 03d0 63       		.byte	0x63
+ 795 03d1 25000000 		.4byte	0x25
+ 796 03d5 01       		.uleb128 0x1
+ 797 03d6 51       		.byte	0x51
+ 798 03d7 1B       		.uleb128 0x1b
+ 799 03d8 37000000 		.4byte	.LASF35
+ 800 03dc 01       		.byte	0x1
+ 801 03dd 63       		.byte	0x63
+ 802 03de 1E010000 		.4byte	0x11e
+ 803 03e2 01       		.uleb128 0x1
+ 804 03e3 52       		.byte	0x52
+ 805 03e4 0D       		.uleb128 0xd
+ 806 03e5 72657300 		.ascii	"res\000"
+ 807 03e9 01       		.byte	0x1
+ 808 03ea 65       		.byte	0x65
+ 809 03eb AD000000 		.4byte	0xad
+ 810 03ef A4020000 		.4byte	.LLST19
+ 811 03f3 1C       		.uleb128 0x1c
+ 812 03f4 EB010000 		.4byte	.LASF45
+ 813 03f8 01       		.byte	0x1
+ 814 03f9 66       		.byte	0x66
+ 815 03fa 65000000 		.4byte	0x65
+ 816 03fe 0010     		.2byte	0x1000
+ 817 0400 00       		.byte	0
+ 818 0401 1D       		.uleb128 0x1d
+ 819 0402 44020000 		.4byte	.LASF53
+ 820 0406 01       		.byte	0x1
+ 821 0407 7C       		.byte	0x7c
+ 822 0408 00000000 		.4byte	.LFB68
+ 823 040c 02000000 		.4byte	.LFE68-.LFB68
+ 824 0410 01       		.uleb128 0x1
+ 825 0411 9C       		.byte	0x9c
+ 826 0412 14       		.uleb128 0x14
+ 827 0413 29000000 		.4byte	.LASF46
+ 828 0417 01       		.byte	0x1
+ 829 0418 12       		.byte	0x12
+ 830 0419 77000000 		.4byte	0x77
+ 831 041d 05       		.uleb128 0x5
+ 832 041e 03       		.byte	0x3
+ 833 041f 00000000 		.4byte	Stat
+ 834 0423 1E       		.uleb128 0x1e
+ 835 0424 5B020000 		.4byte	.LASF54
+ 836 0428 08       		.byte	0x8
+ 837 0429 1207     		.2byte	0x712
+ 838 042b 2F040000 		.4byte	0x42f
+ 839 042f 1F       		.uleb128 0x1f
+ 840 0430 D8000000 		.4byte	0xd8
+ARM GAS  C:\Users\linar\AppData\Local\Temp\ccRnbEs9.s 			page 18
+
+
+ 841 0434 20       		.uleb128 0x20
+ 842 0435 6F000000 		.4byte	.LASF47
+ 843 0439 6F000000 		.4byte	.LASF47
+ 844 043d 07       		.byte	0x7
+ 845 043e 3E       		.byte	0x3e
+ 846 043f 21       		.uleb128 0x21
+ 847 0440 86000000 		.4byte	.LASF55
+ 848 0444 86000000 		.4byte	.LASF55
+ 849 0448 20       		.uleb128 0x20
+ 850 0449 3F010000 		.4byte	.LASF48
+ 851 044d 3F010000 		.4byte	.LASF48
+ 852 0451 07       		.byte	0x7
+ 853 0452 3F       		.byte	0x3f
+ 854 0453 00       		.byte	0
+ 855              		.section	.debug_abbrev,"",%progbits
+ 856              	.Ldebug_abbrev0:
+ 857 0000 01       		.uleb128 0x1
+ 858 0001 11       		.uleb128 0x11
+ 859 0002 01       		.byte	0x1
+ 860 0003 25       		.uleb128 0x25
+ 861 0004 0E       		.uleb128 0xe
+ 862 0005 13       		.uleb128 0x13
+ 863 0006 0B       		.uleb128 0xb
+ 864 0007 03       		.uleb128 0x3
+ 865 0008 0E       		.uleb128 0xe
+ 866 0009 1B       		.uleb128 0x1b
+ 867 000a 0E       		.uleb128 0xe
+ 868 000b 55       		.uleb128 0x55
+ 869 000c 17       		.uleb128 0x17
+ 870 000d 11       		.uleb128 0x11
+ 871 000e 01       		.uleb128 0x1
+ 872 000f 10       		.uleb128 0x10
+ 873 0010 17       		.uleb128 0x17
+ 874 0011 00       		.byte	0
+ 875 0012 00       		.byte	0
+ 876 0013 02       		.uleb128 0x2
+ 877 0014 16       		.uleb128 0x16
+ 878 0015 00       		.byte	0
+ 879 0016 03       		.uleb128 0x3
+ 880 0017 0E       		.uleb128 0xe
+ 881 0018 3A       		.uleb128 0x3a
+ 882 0019 0B       		.uleb128 0xb
+ 883 001a 3B       		.uleb128 0x3b
+ 884 001b 0B       		.uleb128 0xb
+ 885 001c 49       		.uleb128 0x49
+ 886 001d 13       		.uleb128 0x13
+ 887 001e 00       		.byte	0
+ 888 001f 00       		.byte	0
+ 889 0020 03       		.uleb128 0x3
+ 890 0021 24       		.uleb128 0x24
+ 891 0022 00       		.byte	0
+ 892 0023 0B       		.uleb128 0xb
+ 893 0024 0B       		.uleb128 0xb
+ 894 0025 3E       		.uleb128 0x3e
+ 895 0026 0B       		.uleb128 0xb
+ 896 0027 03       		.uleb128 0x3
+ 897 0028 0E       		.uleb128 0xe
+ARM GAS  C:\Users\linar\AppData\Local\Temp\ccRnbEs9.s 			page 19
+
+
+ 898 0029 00       		.byte	0
+ 899 002a 00       		.byte	0
+ 900 002b 04       		.uleb128 0x4
+ 901 002c 24       		.uleb128 0x24
+ 902 002d 00       		.byte	0
+ 903 002e 0B       		.uleb128 0xb
+ 904 002f 0B       		.uleb128 0xb
+ 905 0030 3E       		.uleb128 0x3e
+ 906 0031 0B       		.uleb128 0xb
+ 907 0032 03       		.uleb128 0x3
+ 908 0033 08       		.uleb128 0x8
+ 909 0034 00       		.byte	0
+ 910 0035 00       		.byte	0
+ 911 0036 05       		.uleb128 0x5
+ 912 0037 04       		.uleb128 0x4
+ 913 0038 01       		.byte	0x1
+ 914 0039 0B       		.uleb128 0xb
+ 915 003a 0B       		.uleb128 0xb
+ 916 003b 49       		.uleb128 0x49
+ 917 003c 13       		.uleb128 0x13
+ 918 003d 3A       		.uleb128 0x3a
+ 919 003e 0B       		.uleb128 0xb
+ 920 003f 3B       		.uleb128 0x3b
+ 921 0040 0B       		.uleb128 0xb
+ 922 0041 01       		.uleb128 0x1
+ 923 0042 13       		.uleb128 0x13
+ 924 0043 00       		.byte	0
+ 925 0044 00       		.byte	0
+ 926 0045 06       		.uleb128 0x6
+ 927 0046 28       		.uleb128 0x28
+ 928 0047 00       		.byte	0
+ 929 0048 03       		.uleb128 0x3
+ 930 0049 0E       		.uleb128 0xe
+ 931 004a 1C       		.uleb128 0x1c
+ 932 004b 0B       		.uleb128 0xb
+ 933 004c 00       		.byte	0
+ 934 004d 00       		.byte	0
+ 935 004e 07       		.uleb128 0x7
+ 936 004f 16       		.uleb128 0x16
+ 937 0050 00       		.byte	0
+ 938 0051 03       		.uleb128 0x3
+ 939 0052 0E       		.uleb128 0xe
+ 940 0053 3A       		.uleb128 0x3a
+ 941 0054 0B       		.uleb128 0xb
+ 942 0055 3B       		.uleb128 0x3b
+ 943 0056 05       		.uleb128 0x5
+ 944 0057 49       		.uleb128 0x49
+ 945 0058 13       		.uleb128 0x13
+ 946 0059 00       		.byte	0
+ 947 005a 00       		.byte	0
+ 948 005b 08       		.uleb128 0x8
+ 949 005c 0F       		.uleb128 0xf
+ 950 005d 00       		.byte	0
+ 951 005e 0B       		.uleb128 0xb
+ 952 005f 0B       		.uleb128 0xb
+ 953 0060 00       		.byte	0
+ 954 0061 00       		.byte	0
+ARM GAS  C:\Users\linar\AppData\Local\Temp\ccRnbEs9.s 			page 20
+
+
+ 955 0062 09       		.uleb128 0x9
+ 956 0063 04       		.uleb128 0x4
+ 957 0064 01       		.byte	0x1
+ 958 0065 03       		.uleb128 0x3
+ 959 0066 0E       		.uleb128 0xe
+ 960 0067 0B       		.uleb128 0xb
+ 961 0068 0B       		.uleb128 0xb
+ 962 0069 49       		.uleb128 0x49
+ 963 006a 13       		.uleb128 0x13
+ 964 006b 3A       		.uleb128 0x3a
+ 965 006c 0B       		.uleb128 0xb
+ 966 006d 3B       		.uleb128 0x3b
+ 967 006e 0B       		.uleb128 0xb
+ 968 006f 01       		.uleb128 0x1
+ 969 0070 13       		.uleb128 0x13
+ 970 0071 00       		.byte	0
+ 971 0072 00       		.byte	0
+ 972 0073 0A       		.uleb128 0xa
+ 973 0074 28       		.uleb128 0x28
+ 974 0075 00       		.byte	0
+ 975 0076 03       		.uleb128 0x3
+ 976 0077 08       		.uleb128 0x8
+ 977 0078 1C       		.uleb128 0x1c
+ 978 0079 0B       		.uleb128 0xb
+ 979 007a 00       		.byte	0
+ 980 007b 00       		.byte	0
+ 981 007c 0B       		.uleb128 0xb
+ 982 007d 2E       		.uleb128 0x2e
+ 983 007e 01       		.byte	0x1
+ 984 007f 3F       		.uleb128 0x3f
+ 985 0080 19       		.uleb128 0x19
+ 986 0081 03       		.uleb128 0x3
+ 987 0082 0E       		.uleb128 0xe
+ 988 0083 3A       		.uleb128 0x3a
+ 989 0084 0B       		.uleb128 0xb
+ 990 0085 3B       		.uleb128 0x3b
+ 991 0086 0B       		.uleb128 0xb
+ 992 0087 27       		.uleb128 0x27
+ 993 0088 19       		.uleb128 0x19
+ 994 0089 49       		.uleb128 0x49
+ 995 008a 13       		.uleb128 0x13
+ 996 008b 11       		.uleb128 0x11
+ 997 008c 01       		.uleb128 0x1
+ 998 008d 12       		.uleb128 0x12
+ 999 008e 06       		.uleb128 0x6
+ 1000 008f 40       		.uleb128 0x40
+ 1001 0090 18       		.uleb128 0x18
+ 1002 0091 9742     		.uleb128 0x2117
+ 1003 0093 19       		.uleb128 0x19
+ 1004 0094 01       		.uleb128 0x1
+ 1005 0095 13       		.uleb128 0x13
+ 1006 0096 00       		.byte	0
+ 1007 0097 00       		.byte	0
+ 1008 0098 0C       		.uleb128 0xc
+ 1009 0099 05       		.uleb128 0x5
+ 1010 009a 00       		.byte	0
+ 1011 009b 03       		.uleb128 0x3
+ARM GAS  C:\Users\linar\AppData\Local\Temp\ccRnbEs9.s 			page 21
+
+
+ 1012 009c 08       		.uleb128 0x8
+ 1013 009d 3A       		.uleb128 0x3a
+ 1014 009e 0B       		.uleb128 0xb
+ 1015 009f 3B       		.uleb128 0x3b
+ 1016 00a0 0B       		.uleb128 0xb
+ 1017 00a1 49       		.uleb128 0x49
+ 1018 00a2 13       		.uleb128 0x13
+ 1019 00a3 02       		.uleb128 0x2
+ 1020 00a4 17       		.uleb128 0x17
+ 1021 00a5 00       		.byte	0
+ 1022 00a6 00       		.byte	0
+ 1023 00a7 0D       		.uleb128 0xd
+ 1024 00a8 34       		.uleb128 0x34
+ 1025 00a9 00       		.byte	0
+ 1026 00aa 03       		.uleb128 0x3
+ 1027 00ab 08       		.uleb128 0x8
+ 1028 00ac 3A       		.uleb128 0x3a
+ 1029 00ad 0B       		.uleb128 0xb
+ 1030 00ae 3B       		.uleb128 0x3b
+ 1031 00af 0B       		.uleb128 0xb
+ 1032 00b0 49       		.uleb128 0x49
+ 1033 00b1 13       		.uleb128 0x13
+ 1034 00b2 02       		.uleb128 0x2
+ 1035 00b3 17       		.uleb128 0x17
+ 1036 00b4 00       		.byte	0
+ 1037 00b5 00       		.byte	0
+ 1038 00b6 0E       		.uleb128 0xe
+ 1039 00b7 05       		.uleb128 0x5
+ 1040 00b8 00       		.byte	0
+ 1041 00b9 03       		.uleb128 0x3
+ 1042 00ba 0E       		.uleb128 0xe
+ 1043 00bb 3A       		.uleb128 0x3a
+ 1044 00bc 0B       		.uleb128 0xb
+ 1045 00bd 3B       		.uleb128 0x3b
+ 1046 00be 0B       		.uleb128 0xb
+ 1047 00bf 49       		.uleb128 0x49
+ 1048 00c0 13       		.uleb128 0x13
+ 1049 00c1 02       		.uleb128 0x2
+ 1050 00c2 17       		.uleb128 0x17
+ 1051 00c3 00       		.byte	0
+ 1052 00c4 00       		.byte	0
+ 1053 00c5 0F       		.uleb128 0xf
+ 1054 00c6 34       		.uleb128 0x34
+ 1055 00c7 00       		.byte	0
+ 1056 00c8 03       		.uleb128 0x3
+ 1057 00c9 0E       		.uleb128 0xe
+ 1058 00ca 3A       		.uleb128 0x3a
+ 1059 00cb 0B       		.uleb128 0xb
+ 1060 00cc 3B       		.uleb128 0x3b
+ 1061 00cd 0B       		.uleb128 0xb
+ 1062 00ce 49       		.uleb128 0x49
+ 1063 00cf 13       		.uleb128 0x13
+ 1064 00d0 02       		.uleb128 0x2
+ 1065 00d1 17       		.uleb128 0x17
+ 1066 00d2 00       		.byte	0
+ 1067 00d3 00       		.byte	0
+ 1068 00d4 10       		.uleb128 0x10
+ARM GAS  C:\Users\linar\AppData\Local\Temp\ccRnbEs9.s 			page 22
+
+
+ 1069 00d5 898201   		.uleb128 0x4109
+ 1070 00d8 00       		.byte	0
+ 1071 00d9 11       		.uleb128 0x11
+ 1072 00da 01       		.uleb128 0x1
+ 1073 00db 31       		.uleb128 0x31
+ 1074 00dc 13       		.uleb128 0x13
+ 1075 00dd 00       		.byte	0
+ 1076 00de 00       		.byte	0
+ 1077 00df 11       		.uleb128 0x11
+ 1078 00e0 898201   		.uleb128 0x4109
+ 1079 00e3 01       		.byte	0x1
+ 1080 00e4 11       		.uleb128 0x11
+ 1081 00e5 01       		.uleb128 0x1
+ 1082 00e6 31       		.uleb128 0x31
+ 1083 00e7 13       		.uleb128 0x13
+ 1084 00e8 00       		.byte	0
+ 1085 00e9 00       		.byte	0
+ 1086 00ea 12       		.uleb128 0x12
+ 1087 00eb 8A8201   		.uleb128 0x410a
+ 1088 00ee 00       		.byte	0
+ 1089 00ef 02       		.uleb128 0x2
+ 1090 00f0 18       		.uleb128 0x18
+ 1091 00f1 9142     		.uleb128 0x2111
+ 1092 00f3 18       		.uleb128 0x18
+ 1093 00f4 00       		.byte	0
+ 1094 00f5 00       		.byte	0
+ 1095 00f6 13       		.uleb128 0x13
+ 1096 00f7 0F       		.uleb128 0xf
+ 1097 00f8 00       		.byte	0
+ 1098 00f9 0B       		.uleb128 0xb
+ 1099 00fa 0B       		.uleb128 0xb
+ 1100 00fb 49       		.uleb128 0x49
+ 1101 00fc 13       		.uleb128 0x13
+ 1102 00fd 00       		.byte	0
+ 1103 00fe 00       		.byte	0
+ 1104 00ff 14       		.uleb128 0x14
+ 1105 0100 34       		.uleb128 0x34
+ 1106 0101 00       		.byte	0
+ 1107 0102 03       		.uleb128 0x3
+ 1108 0103 0E       		.uleb128 0xe
+ 1109 0104 3A       		.uleb128 0x3a
+ 1110 0105 0B       		.uleb128 0xb
+ 1111 0106 3B       		.uleb128 0x3b
+ 1112 0107 0B       		.uleb128 0xb
+ 1113 0108 49       		.uleb128 0x49
+ 1114 0109 13       		.uleb128 0x13
+ 1115 010a 02       		.uleb128 0x2
+ 1116 010b 18       		.uleb128 0x18
+ 1117 010c 00       		.byte	0
+ 1118 010d 00       		.byte	0
+ 1119 010e 15       		.uleb128 0x15
+ 1120 010f 898201   		.uleb128 0x4109
+ 1121 0112 01       		.byte	0x1
+ 1122 0113 11       		.uleb128 0x11
+ 1123 0114 01       		.uleb128 0x1
+ 1124 0115 31       		.uleb128 0x31
+ 1125 0116 13       		.uleb128 0x13
+ARM GAS  C:\Users\linar\AppData\Local\Temp\ccRnbEs9.s 			page 23
+
+
+ 1126 0117 01       		.uleb128 0x1
+ 1127 0118 13       		.uleb128 0x13
+ 1128 0119 00       		.byte	0
+ 1129 011a 00       		.byte	0
+ 1130 011b 16       		.uleb128 0x16
+ 1131 011c 26       		.uleb128 0x26
+ 1132 011d 00       		.byte	0
+ 1133 011e 49       		.uleb128 0x49
+ 1134 011f 13       		.uleb128 0x13
+ 1135 0120 00       		.byte	0
+ 1136 0121 00       		.byte	0
+ 1137 0122 17       		.uleb128 0x17
+ 1138 0123 01       		.uleb128 0x1
+ 1139 0124 01       		.byte	0x1
+ 1140 0125 49       		.uleb128 0x49
+ 1141 0126 13       		.uleb128 0x13
+ 1142 0127 01       		.uleb128 0x1
+ 1143 0128 13       		.uleb128 0x13
+ 1144 0129 00       		.byte	0
+ 1145 012a 00       		.byte	0
+ 1146 012b 18       		.uleb128 0x18
+ 1147 012c 21       		.uleb128 0x21
+ 1148 012d 00       		.byte	0
+ 1149 012e 49       		.uleb128 0x49
+ 1150 012f 13       		.uleb128 0x13
+ 1151 0130 2F       		.uleb128 0x2f
+ 1152 0131 05       		.uleb128 0x5
+ 1153 0132 00       		.byte	0
+ 1154 0133 00       		.byte	0
+ 1155 0134 19       		.uleb128 0x19
+ 1156 0135 21       		.uleb128 0x21
+ 1157 0136 00       		.byte	0
+ 1158 0137 49       		.uleb128 0x49
+ 1159 0138 13       		.uleb128 0x13
+ 1160 0139 2F       		.uleb128 0x2f
+ 1161 013a 0B       		.uleb128 0xb
+ 1162 013b 00       		.byte	0
+ 1163 013c 00       		.byte	0
+ 1164 013d 1A       		.uleb128 0x1a
+ 1165 013e 05       		.uleb128 0x5
+ 1166 013f 00       		.byte	0
+ 1167 0140 03       		.uleb128 0x3
+ 1168 0141 08       		.uleb128 0x8
+ 1169 0142 3A       		.uleb128 0x3a
+ 1170 0143 0B       		.uleb128 0xb
+ 1171 0144 3B       		.uleb128 0x3b
+ 1172 0145 0B       		.uleb128 0xb
+ 1173 0146 49       		.uleb128 0x49
+ 1174 0147 13       		.uleb128 0x13
+ 1175 0148 02       		.uleb128 0x2
+ 1176 0149 18       		.uleb128 0x18
+ 1177 014a 00       		.byte	0
+ 1178 014b 00       		.byte	0
+ 1179 014c 1B       		.uleb128 0x1b
+ 1180 014d 05       		.uleb128 0x5
+ 1181 014e 00       		.byte	0
+ 1182 014f 03       		.uleb128 0x3
+ARM GAS  C:\Users\linar\AppData\Local\Temp\ccRnbEs9.s 			page 24
+
+
+ 1183 0150 0E       		.uleb128 0xe
+ 1184 0151 3A       		.uleb128 0x3a
+ 1185 0152 0B       		.uleb128 0xb
+ 1186 0153 3B       		.uleb128 0x3b
+ 1187 0154 0B       		.uleb128 0xb
+ 1188 0155 49       		.uleb128 0x49
+ 1189 0156 13       		.uleb128 0x13
+ 1190 0157 02       		.uleb128 0x2
+ 1191 0158 18       		.uleb128 0x18
+ 1192 0159 00       		.byte	0
+ 1193 015a 00       		.byte	0
+ 1194 015b 1C       		.uleb128 0x1c
+ 1195 015c 34       		.uleb128 0x34
+ 1196 015d 00       		.byte	0
+ 1197 015e 03       		.uleb128 0x3
+ 1198 015f 0E       		.uleb128 0xe
+ 1199 0160 3A       		.uleb128 0x3a
+ 1200 0161 0B       		.uleb128 0xb
+ 1201 0162 3B       		.uleb128 0x3b
+ 1202 0163 0B       		.uleb128 0xb
+ 1203 0164 49       		.uleb128 0x49
+ 1204 0165 13       		.uleb128 0x13
+ 1205 0166 1C       		.uleb128 0x1c
+ 1206 0167 05       		.uleb128 0x5
+ 1207 0168 00       		.byte	0
+ 1208 0169 00       		.byte	0
+ 1209 016a 1D       		.uleb128 0x1d
+ 1210 016b 2E       		.uleb128 0x2e
+ 1211 016c 00       		.byte	0
+ 1212 016d 3F       		.uleb128 0x3f
+ 1213 016e 19       		.uleb128 0x19
+ 1214 016f 03       		.uleb128 0x3
+ 1215 0170 0E       		.uleb128 0xe
+ 1216 0171 3A       		.uleb128 0x3a
+ 1217 0172 0B       		.uleb128 0xb
+ 1218 0173 3B       		.uleb128 0x3b
+ 1219 0174 0B       		.uleb128 0xb
+ 1220 0175 27       		.uleb128 0x27
+ 1221 0176 19       		.uleb128 0x19
+ 1222 0177 11       		.uleb128 0x11
+ 1223 0178 01       		.uleb128 0x1
+ 1224 0179 12       		.uleb128 0x12
+ 1225 017a 06       		.uleb128 0x6
+ 1226 017b 40       		.uleb128 0x40
+ 1227 017c 18       		.uleb128 0x18
+ 1228 017d 9742     		.uleb128 0x2117
+ 1229 017f 19       		.uleb128 0x19
+ 1230 0180 00       		.byte	0
+ 1231 0181 00       		.byte	0
+ 1232 0182 1E       		.uleb128 0x1e
+ 1233 0183 34       		.uleb128 0x34
+ 1234 0184 00       		.byte	0
+ 1235 0185 03       		.uleb128 0x3
+ 1236 0186 0E       		.uleb128 0xe
+ 1237 0187 3A       		.uleb128 0x3a
+ 1238 0188 0B       		.uleb128 0xb
+ 1239 0189 3B       		.uleb128 0x3b
+ARM GAS  C:\Users\linar\AppData\Local\Temp\ccRnbEs9.s 			page 25
+
+
+ 1240 018a 05       		.uleb128 0x5
+ 1241 018b 49       		.uleb128 0x49
+ 1242 018c 13       		.uleb128 0x13
+ 1243 018d 3F       		.uleb128 0x3f
+ 1244 018e 19       		.uleb128 0x19
+ 1245 018f 3C       		.uleb128 0x3c
+ 1246 0190 19       		.uleb128 0x19
+ 1247 0191 00       		.byte	0
+ 1248 0192 00       		.byte	0
+ 1249 0193 1F       		.uleb128 0x1f
+ 1250 0194 35       		.uleb128 0x35
+ 1251 0195 00       		.byte	0
+ 1252 0196 49       		.uleb128 0x49
+ 1253 0197 13       		.uleb128 0x13
+ 1254 0198 00       		.byte	0
+ 1255 0199 00       		.byte	0
+ 1256 019a 20       		.uleb128 0x20
+ 1257 019b 2E       		.uleb128 0x2e
+ 1258 019c 00       		.byte	0
+ 1259 019d 3F       		.uleb128 0x3f
+ 1260 019e 19       		.uleb128 0x19
+ 1261 019f 3C       		.uleb128 0x3c
+ 1262 01a0 19       		.uleb128 0x19
+ 1263 01a1 6E       		.uleb128 0x6e
+ 1264 01a2 0E       		.uleb128 0xe
+ 1265 01a3 03       		.uleb128 0x3
+ 1266 01a4 0E       		.uleb128 0xe
+ 1267 01a5 3A       		.uleb128 0x3a
+ 1268 01a6 0B       		.uleb128 0xb
+ 1269 01a7 3B       		.uleb128 0x3b
+ 1270 01a8 0B       		.uleb128 0xb
+ 1271 01a9 00       		.byte	0
+ 1272 01aa 00       		.byte	0
+ 1273 01ab 21       		.uleb128 0x21
+ 1274 01ac 2E       		.uleb128 0x2e
+ 1275 01ad 00       		.byte	0
+ 1276 01ae 3F       		.uleb128 0x3f
+ 1277 01af 19       		.uleb128 0x19
+ 1278 01b0 3C       		.uleb128 0x3c
+ 1279 01b1 19       		.uleb128 0x19
+ 1280 01b2 6E       		.uleb128 0x6e
+ 1281 01b3 0E       		.uleb128 0xe
+ 1282 01b4 03       		.uleb128 0x3
+ 1283 01b5 0E       		.uleb128 0xe
+ 1284 01b6 00       		.byte	0
+ 1285 01b7 00       		.byte	0
+ 1286 01b8 00       		.byte	0
+ 1287              		.section	.debug_loc,"",%progbits
+ 1288              	.Ldebug_loc0:
+ 1289              	.LLST0:
+ 1290 0000 00000000 		.4byte	.LVL0
+ 1291 0004 06000000 		.4byte	.LVL1
+ 1292 0008 0100     		.2byte	0x1
+ 1293 000a 50       		.byte	0x50
+ 1294 000b 06000000 		.4byte	.LVL1
+ 1295 000f 08000000 		.4byte	.LVL2
+ 1296 0013 0400     		.2byte	0x4
+ARM GAS  C:\Users\linar\AppData\Local\Temp\ccRnbEs9.s 			page 26
+
+
+ 1297 0015 F3       		.byte	0xf3
+ 1298 0016 01       		.uleb128 0x1
+ 1299 0017 50       		.byte	0x50
+ 1300 0018 9F       		.byte	0x9f
+ 1301 0019 08000000 		.4byte	.LVL2
+ 1302 001d 0A000000 		.4byte	.LVL3
+ 1303 0021 0100     		.2byte	0x1
+ 1304 0023 50       		.byte	0x50
+ 1305 0024 0A000000 		.4byte	.LVL3
+ 1306 0028 10000000 		.4byte	.LFE63
+ 1307 002c 0400     		.2byte	0x4
+ 1308 002e F3       		.byte	0xf3
+ 1309 002f 01       		.uleb128 0x1
+ 1310 0030 50       		.byte	0x50
+ 1311 0031 9F       		.byte	0x9f
+ 1312 0032 00000000 		.4byte	0
+ 1313 0036 00000000 		.4byte	0
+ 1314              	.LLST1:
+ 1315 003a 00000000 		.4byte	.LVL4
+ 1316 003e 0A000000 		.4byte	.LVL7
+ 1317 0042 0100     		.2byte	0x1
+ 1318 0044 50       		.byte	0x50
+ 1319 0045 0A000000 		.4byte	.LVL7
+ 1320 0049 10000000 		.4byte	.LFE64
+ 1321 004d 0400     		.2byte	0x4
+ 1322 004f F3       		.byte	0xf3
+ 1323 0050 01       		.uleb128 0x1
+ 1324 0051 50       		.byte	0x50
+ 1325 0052 9F       		.byte	0x9f
+ 1326 0053 00000000 		.4byte	0
+ 1327 0057 00000000 		.4byte	0
+ 1328              	.LLST2:
+ 1329 005b 02000000 		.4byte	.LVL5
+ 1330 005f 08000000 		.4byte	.LVL6
+ 1331 0063 0200     		.2byte	0x2
+ 1332 0065 30       		.byte	0x30
+ 1333 0066 9F       		.byte	0x9f
+ 1334 0067 00000000 		.4byte	0
+ 1335 006b 00000000 		.4byte	0
+ 1336              	.LLST3:
+ 1337 006f 00000000 		.4byte	.LVL8
+ 1338 0073 0B000000 		.4byte	.LVL9-1
+ 1339 0077 0100     		.2byte	0x1
+ 1340 0079 50       		.byte	0x50
+ 1341 007a 0B000000 		.4byte	.LVL9-1
+ 1342 007e 2E000000 		.4byte	.LFE65
+ 1343 0082 0400     		.2byte	0x4
+ 1344 0084 F3       		.byte	0xf3
+ 1345 0085 01       		.uleb128 0x1
+ 1346 0086 50       		.byte	0x50
+ 1347 0087 9F       		.byte	0x9f
+ 1348 0088 00000000 		.4byte	0
+ 1349 008c 00000000 		.4byte	0
+ 1350              	.LLST4:
+ 1351 0090 00000000 		.4byte	.LVL8
+ 1352 0094 0B000000 		.4byte	.LVL9-1
+ 1353 0098 0100     		.2byte	0x1
+ARM GAS  C:\Users\linar\AppData\Local\Temp\ccRnbEs9.s 			page 27
+
+
+ 1354 009a 51       		.byte	0x51
+ 1355 009b 0B000000 		.4byte	.LVL9-1
+ 1356 009f 2E000000 		.4byte	.LFE65
+ 1357 00a3 0100     		.2byte	0x1
+ 1358 00a5 55       		.byte	0x55
+ 1359 00a6 00000000 		.4byte	0
+ 1360 00aa 00000000 		.4byte	0
+ 1361              	.LLST5:
+ 1362 00ae 00000000 		.4byte	.LVL8
+ 1363 00b2 0B000000 		.4byte	.LVL9-1
+ 1364 00b6 0100     		.2byte	0x1
+ 1365 00b8 52       		.byte	0x52
+ 1366 00b9 0B000000 		.4byte	.LVL9-1
+ 1367 00bd 14000000 		.4byte	.LVL10
+ 1368 00c1 0100     		.2byte	0x1
+ 1369 00c3 54       		.byte	0x54
+ 1370 00c4 14000000 		.4byte	.LVL10
+ 1371 00c8 2A000000 		.4byte	.LVL13
+ 1372 00cc 0400     		.2byte	0x4
+ 1373 00ce F3       		.byte	0xf3
+ 1374 00cf 01       		.uleb128 0x1
+ 1375 00d0 52       		.byte	0x52
+ 1376 00d1 9F       		.byte	0x9f
+ 1377 00d2 2A000000 		.4byte	.LVL13
+ 1378 00d6 2E000000 		.4byte	.LFE65
+ 1379 00da 0100     		.2byte	0x1
+ 1380 00dc 54       		.byte	0x54
+ 1381 00dd 00000000 		.4byte	0
+ 1382 00e1 00000000 		.4byte	0
+ 1383              	.LLST6:
+ 1384 00e5 00000000 		.4byte	.LVL8
+ 1385 00e9 0B000000 		.4byte	.LVL9-1
+ 1386 00ed 0100     		.2byte	0x1
+ 1387 00ef 53       		.byte	0x53
+ 1388 00f0 0B000000 		.4byte	.LVL9-1
+ 1389 00f4 2E000000 		.4byte	.LFE65
+ 1390 00f8 0100     		.2byte	0x1
+ 1391 00fa 56       		.byte	0x56
+ 1392 00fb 00000000 		.4byte	0
+ 1393 00ff 00000000 		.4byte	0
+ 1394              	.LLST7:
+ 1395 0103 14000000 		.4byte	.LVL10
+ 1396 0107 2A000000 		.4byte	.LVL13
+ 1397 010b 0100     		.2byte	0x1
+ 1398 010d 54       		.byte	0x54
+ 1399 010e 00000000 		.4byte	0
+ 1400 0112 00000000 		.4byte	0
+ 1401              	.LLST8:
+ 1402 0116 1E000000 		.4byte	.LVL11
+ 1403 011a 24000000 		.4byte	.LVL12
+ 1404 011e 0100     		.2byte	0x1
+ 1405 0120 50       		.byte	0x50
+ 1406 0121 00000000 		.4byte	0
+ 1407 0125 00000000 		.4byte	0
+ 1408              	.LLST9:
+ 1409 0129 00000000 		.4byte	.LVL14
+ 1410 012d 0F000000 		.4byte	.LVL15-1
+ARM GAS  C:\Users\linar\AppData\Local\Temp\ccRnbEs9.s 			page 28
+
+
+ 1411 0131 0100     		.2byte	0x1
+ 1412 0133 50       		.byte	0x50
+ 1413 0134 0F000000 		.4byte	.LVL15-1
+ 1414 0138 70000000 		.4byte	.LFE66
+ 1415 013c 0400     		.2byte	0x4
+ 1416 013e F3       		.byte	0xf3
+ 1417 013f 01       		.uleb128 0x1
+ 1418 0140 50       		.byte	0x50
+ 1419 0141 9F       		.byte	0x9f
+ 1420 0142 00000000 		.4byte	0
+ 1421 0146 00000000 		.4byte	0
+ 1422              	.LLST10:
+ 1423 014a 00000000 		.4byte	.LVL14
+ 1424 014e 0F000000 		.4byte	.LVL15-1
+ 1425 0152 0100     		.2byte	0x1
+ 1426 0154 51       		.byte	0x51
+ 1427 0155 0F000000 		.4byte	.LVL15-1
+ 1428 0159 70000000 		.4byte	.LFE66
+ 1429 015d 0100     		.2byte	0x1
+ 1430 015f 56       		.byte	0x56
+ 1431 0160 00000000 		.4byte	0
+ 1432 0164 00000000 		.4byte	0
+ 1433              	.LLST11:
+ 1434 0168 00000000 		.4byte	.LVL14
+ 1435 016c 0F000000 		.4byte	.LVL15-1
+ 1436 0170 0100     		.2byte	0x1
+ 1437 0172 52       		.byte	0x52
+ 1438 0173 0F000000 		.4byte	.LVL15-1
+ 1439 0177 18000000 		.4byte	.LVL16
+ 1440 017b 0100     		.2byte	0x1
+ 1441 017d 55       		.byte	0x55
+ 1442 017e 18000000 		.4byte	.LVL16
+ 1443 0182 68000000 		.4byte	.LVL27
+ 1444 0186 0400     		.2byte	0x4
+ 1445 0188 F3       		.byte	0xf3
+ 1446 0189 01       		.uleb128 0x1
+ 1447 018a 52       		.byte	0x52
+ 1448 018b 9F       		.byte	0x9f
+ 1449 018c 68000000 		.4byte	.LVL27
+ 1450 0190 6A000000 		.4byte	.LVL28
+ 1451 0194 0100     		.2byte	0x1
+ 1452 0196 55       		.byte	0x55
+ 1453 0197 6A000000 		.4byte	.LVL28
+ 1454 019b 70000000 		.4byte	.LFE66
+ 1455 019f 0400     		.2byte	0x4
+ 1456 01a1 F3       		.byte	0xf3
+ 1457 01a2 01       		.uleb128 0x1
+ 1458 01a3 52       		.byte	0x52
+ 1459 01a4 9F       		.byte	0x9f
+ 1460 01a5 00000000 		.4byte	0
+ 1461 01a9 00000000 		.4byte	0
+ 1462              	.LLST12:
+ 1463 01ad 00000000 		.4byte	.LVL14
+ 1464 01b1 0F000000 		.4byte	.LVL15-1
+ 1465 01b5 0100     		.2byte	0x1
+ 1466 01b7 53       		.byte	0x53
+ 1467 01b8 0F000000 		.4byte	.LVL15-1
+ARM GAS  C:\Users\linar\AppData\Local\Temp\ccRnbEs9.s 			page 29
+
+
+ 1468 01bc 1A000000 		.4byte	.LVL17
+ 1469 01c0 0100     		.2byte	0x1
+ 1470 01c2 54       		.byte	0x54
+ 1471 01c3 1A000000 		.4byte	.LVL17
+ 1472 01c7 68000000 		.4byte	.LVL27
+ 1473 01cb 0400     		.2byte	0x4
+ 1474 01cd F3       		.byte	0xf3
+ 1475 01ce 01       		.uleb128 0x1
+ 1476 01cf 53       		.byte	0x53
+ 1477 01d0 9F       		.byte	0x9f
+ 1478 01d1 68000000 		.4byte	.LVL27
+ 1479 01d5 6A000000 		.4byte	.LVL28
+ 1480 01d9 0100     		.2byte	0x1
+ 1481 01db 54       		.byte	0x54
+ 1482 01dc 6A000000 		.4byte	.LVL28
+ 1483 01e0 70000000 		.4byte	.LFE66
+ 1484 01e4 0400     		.2byte	0x4
+ 1485 01e6 F3       		.byte	0xf3
+ 1486 01e7 01       		.uleb128 0x1
+ 1487 01e8 53       		.byte	0x53
+ 1488 01e9 9F       		.byte	0x9f
+ 1489 01ea 00000000 		.4byte	0
+ 1490 01ee 00000000 		.4byte	0
+ 1491              	.LLST13:
+ 1492 01f2 18000000 		.4byte	.LVL16
+ 1493 01f6 68000000 		.4byte	.LVL27
+ 1494 01fa 0100     		.2byte	0x1
+ 1495 01fc 55       		.byte	0x55
+ 1496 01fd 00000000 		.4byte	0
+ 1497 0201 00000000 		.4byte	0
+ 1498              	.LLST14:
+ 1499 0205 1C000000 		.4byte	.LVL18
+ 1500 0209 4A000000 		.4byte	.LVL24
+ 1501 020d 0100     		.2byte	0x1
+ 1502 020f 54       		.byte	0x54
+ 1503 0210 4A000000 		.4byte	.LVL24
+ 1504 0214 50000000 		.4byte	.LVL25
+ 1505 0218 0100     		.2byte	0x1
+ 1506 021a 50       		.byte	0x50
+ 1507 021b 00000000 		.4byte	0
+ 1508 021f 00000000 		.4byte	0
+ 1509              	.LLST15:
+ 1510 0223 1C000000 		.4byte	.LVL18
+ 1511 0227 30000000 		.4byte	.LVL20
+ 1512 022b 0200     		.2byte	0x2
+ 1513 022d 31       		.byte	0x31
+ 1514 022e 9F       		.byte	0x9f
+ 1515 022f 3C000000 		.4byte	.LVL21
+ 1516 0233 4A000000 		.4byte	.LVL24
+ 1517 0237 0100     		.2byte	0x1
+ 1518 0239 50       		.byte	0x50
+ 1519 023a 00000000 		.4byte	0
+ 1520 023e 00000000 		.4byte	0
+ 1521              	.LLST16:
+ 1522 0242 30000000 		.4byte	.LVL20
+ 1523 0246 68000000 		.4byte	.LVL27
+ 1524 024a 0200     		.2byte	0x2
+ARM GAS  C:\Users\linar\AppData\Local\Temp\ccRnbEs9.s 			page 30
+
+
+ 1525 024c 3D       		.byte	0x3d
+ 1526 024d 9F       		.byte	0x9f
+ 1527 024e 00000000 		.4byte	0
+ 1528 0252 00000000 		.4byte	0
+ 1529              	.LLST17:
+ 1530 0256 30000000 		.4byte	.LVL20
+ 1531 025a 68000000 		.4byte	.LVL27
+ 1532 025e 0200     		.2byte	0x2
+ 1533 0260 3A       		.byte	0x3a
+ 1534 0261 9F       		.byte	0x9f
+ 1535 0262 00000000 		.4byte	0
+ 1536 0266 00000000 		.4byte	0
+ 1537              	.LLST18:
+ 1538 026a 00000000 		.4byte	.LVL29
+ 1539 026e 14000000 		.4byte	.LVL31
+ 1540 0272 0100     		.2byte	0x1
+ 1541 0274 50       		.byte	0x50
+ 1542 0275 14000000 		.4byte	.LVL31
+ 1543 0279 16000000 		.4byte	.LVL32
+ 1544 027d 0400     		.2byte	0x4
+ 1545 027f F3       		.byte	0xf3
+ 1546 0280 01       		.uleb128 0x1
+ 1547 0281 50       		.byte	0x50
+ 1548 0282 9F       		.byte	0x9f
+ 1549 0283 16000000 		.4byte	.LVL32
+ 1550 0287 18000000 		.4byte	.LVL33
+ 1551 028b 0100     		.2byte	0x1
+ 1552 028d 50       		.byte	0x50
+ 1553 028e 18000000 		.4byte	.LVL33
+ 1554 0292 1A000000 		.4byte	.LFE67
+ 1555 0296 0400     		.2byte	0x4
+ 1556 0298 F3       		.byte	0xf3
+ 1557 0299 01       		.uleb128 0x1
+ 1558 029a 50       		.byte	0x50
+ 1559 029b 9F       		.byte	0x9f
+ 1560 029c 00000000 		.4byte	0
+ 1561 02a0 00000000 		.4byte	0
+ 1562              	.LLST19:
+ 1563 02a4 12000000 		.4byte	.LVL30
+ 1564 02a8 16000000 		.4byte	.LVL32
+ 1565 02ac 0200     		.2byte	0x2
+ 1566 02ae 30       		.byte	0x30
+ 1567 02af 9F       		.byte	0x9f
+ 1568 02b0 18000000 		.4byte	.LVL33
+ 1569 02b4 1A000000 		.4byte	.LFE67
+ 1570 02b8 0100     		.2byte	0x1
+ 1571 02ba 50       		.byte	0x50
+ 1572 02bb 00000000 		.4byte	0
+ 1573 02bf 00000000 		.4byte	0
+ 1574              		.section	.debug_aranges,"",%progbits
+ 1575 0000 44000000 		.4byte	0x44
+ 1576 0004 0200     		.2byte	0x2
+ 1577 0006 00000000 		.4byte	.Ldebug_info0
+ 1578 000a 04       		.byte	0x4
+ 1579 000b 00       		.byte	0
+ 1580 000c 0000     		.2byte	0
+ 1581 000e 0000     		.2byte	0
+ARM GAS  C:\Users\linar\AppData\Local\Temp\ccRnbEs9.s 			page 31
+
+
+ 1582 0010 00000000 		.4byte	.LFB63
+ 1583 0014 10000000 		.4byte	.LFE63-.LFB63
+ 1584 0018 00000000 		.4byte	.LFB64
+ 1585 001c 10000000 		.4byte	.LFE64-.LFB64
+ 1586 0020 00000000 		.4byte	.LFB65
+ 1587 0024 2E000000 		.4byte	.LFE65-.LFB65
+ 1588 0028 00000000 		.4byte	.LFB66
+ 1589 002c 70000000 		.4byte	.LFE66-.LFB66
+ 1590 0030 00000000 		.4byte	.LFB67
+ 1591 0034 1A000000 		.4byte	.LFE67-.LFB67
+ 1592 0038 00000000 		.4byte	.LFB68
+ 1593 003c 02000000 		.4byte	.LFE68-.LFB68
+ 1594 0040 00000000 		.4byte	0
+ 1595 0044 00000000 		.4byte	0
+ 1596              		.section	.debug_ranges,"",%progbits
+ 1597              	.Ldebug_ranges0:
+ 1598 0000 00000000 		.4byte	.LFB63
+ 1599 0004 10000000 		.4byte	.LFE63
+ 1600 0008 00000000 		.4byte	.LFB64
+ 1601 000c 10000000 		.4byte	.LFE64
+ 1602 0010 00000000 		.4byte	.LFB65
+ 1603 0014 2E000000 		.4byte	.LFE65
+ 1604 0018 00000000 		.4byte	.LFB66
+ 1605 001c 70000000 		.4byte	.LFE66
+ 1606 0020 00000000 		.4byte	.LFB67
+ 1607 0024 1A000000 		.4byte	.LFE67
+ 1608 0028 00000000 		.4byte	.LFB68
+ 1609 002c 02000000 		.4byte	.LFE68
+ 1610 0030 00000000 		.4byte	0
+ 1611 0034 00000000 		.4byte	0
+ 1612              		.section	.debug_line,"",%progbits
+ 1613              	.Ldebug_line0:
+ 1614 0000 16020000 		.section	.debug_str,"MS",%progbits,1
+ 1614      02007201 
+ 1614      00000201 
+ 1614      FB0E0D00 
+ 1614      01010101 
+ 1615              	.LASF44:
+ 1616 0000 70647276 		.ascii	"pdrv\000"
+ 1616      00
+ 1617              	.LASF11:
+ 1618 0005 5245535F 		.ascii	"RES_ERROR\000"
+ 1618      4552524F 
+ 1618      5200
+ 1619              	.LASF10:
+ 1620 000f 5245535F 		.ascii	"RES_OK\000"
+ 1620      4F4B00
+ 1621              	.LASF1:
+ 1622 0016 73686F72 		.ascii	"short int\000"
+ 1622      7420696E 
+ 1622      7400
+ 1623              	.LASF27:
+ 1624 0020 73697A65 		.ascii	"sizetype\000"
+ 1624      74797065 
+ 1624      00
+ 1625              	.LASF46:
+ 1626 0029 53746174 		.ascii	"Stat\000"
+ARM GAS  C:\Users\linar\AppData\Local\Temp\ccRnbEs9.s 			page 32
+
+
+ 1626      00
+ 1627              	.LASF40:
+ 1628 002e 77726974 		.ascii	"writeCnt\000"
+ 1628      65436E74 
+ 1628      00
+ 1629              	.LASF35:
+ 1630 0037 62756666 		.ascii	"buff\000"
+ 1630      00
+ 1631              	.LASF3:
+ 1632 003c 42595445 		.ascii	"BYTE\000"
+ 1632      00
+ 1633              	.LASF8:
+ 1634 0041 6C6F6E67 		.ascii	"long unsigned int\000"
+ 1634      20756E73 
+ 1634      69676E65 
+ 1634      6420696E 
+ 1634      7400
+ 1635              	.LASF21:
+ 1636 0053 75696E74 		.ascii	"uint8\000"
+ 1636      3800
+ 1637              	.LASF36:
+ 1638 0059 73656374 		.ascii	"sector\000"
+ 1638      6F7200
+ 1639              	.LASF50:
+ 1640 0060 6469736B 		.ascii	"diskio.c\000"
+ 1640      696F2E63 
+ 1640      00
+ 1641              	.LASF23:
+ 1642 0069 666C6F61 		.ascii	"float\000"
+ 1642      7400
+ 1643              	.LASF47:
+ 1644 006f 72656164 		.ascii	"readData\000"
+ 1644      44617461 
+ 1644      00
+ 1645              	.LASF18:
+ 1646 0078 6C6F6E67 		.ascii	"long long int\000"
+ 1646      206C6F6E 
+ 1646      6720696E 
+ 1646      7400
+ 1647              	.LASF55:
+ 1648 0086 6D656D73 		.ascii	"memset\000"
+ 1648      657400
+ 1649              	.LASF6:
+ 1650 008d 6C6F6E67 		.ascii	"long int\000"
+ 1650      20696E74 
+ 1650      00
+ 1651              	.LASF38:
+ 1652 0096 61646472 		.ascii	"address\000"
+ 1652      65737300 
+ 1653              	.LASF12:
+ 1654 009e 5245535F 		.ascii	"RES_WRPRT\000"
+ 1654      57525052 
+ 1654      5400
+ 1655              	.LASF33:
+ 1656 00a8 6469736B 		.ascii	"disk_initialize\000"
+ 1656      5F696E69 
+ 1656      7469616C 
+ARM GAS  C:\Users\linar\AppData\Local\Temp\ccRnbEs9.s 			page 33
+
+
+ 1656      697A6500 
+ 1657              	.LASF4:
+ 1658 00b8 55494E54 		.ascii	"UINT\000"
+ 1658      00
+ 1659              	.LASF32:
+ 1660 00bd 6469736B 		.ascii	"disk_status\000"
+ 1660      5F737461 
+ 1660      74757300 
+ 1661              	.LASF28:
+ 1662 00c9 4552524F 		.ascii	"ERROR\000"
+ 1662      5200
+ 1663              	.LASF9:
+ 1664 00cf 44535441 		.ascii	"DSTATUS\000"
+ 1664      54555300 
+ 1665              	.LASF30:
+ 1666 00d7 42555359 		.ascii	"BUSY\000"
+ 1666      00
+ 1667              	.LASF7:
+ 1668 00dc 44574F52 		.ascii	"DWORD\000"
+ 1668      4400
+ 1669              	.LASF26:
+ 1670 00e2 6C6F6E67 		.ascii	"long double\000"
+ 1670      20646F75 
+ 1670      626C6500 
+ 1671              	.LASF0:
+ 1672 00ee 756E7369 		.ascii	"unsigned char\000"
+ 1672      676E6564 
+ 1672      20636861 
+ 1672      7200
+ 1673              	.LASF31:
+ 1674 00fc 50524F54 		.ascii	"PROTECTED\000"
+ 1674      45435445 
+ 1674      4400
+ 1675              	.LASF16:
+ 1676 0106 7369676E 		.ascii	"signed char\000"
+ 1676      65642063 
+ 1676      68617200 
+ 1677              	.LASF19:
+ 1678 0112 6C6F6E67 		.ascii	"long long unsigned int\000"
+ 1678      206C6F6E 
+ 1678      6720756E 
+ 1678      7369676E 
+ 1678      65642069 
+ 1679              	.LASF5:
+ 1680 0129 756E7369 		.ascii	"unsigned int\000"
+ 1680      676E6564 
+ 1680      20696E74 
+ 1680      00
+ 1681              	.LASF41:
+ 1682 0136 72656376 		.ascii	"recvBuff\000"
+ 1682      42756666 
+ 1682      00
+ 1683              	.LASF48:
+ 1684 013f 70616765 		.ascii	"pageProgram\000"
+ 1684      50726F67 
+ 1684      72616D00 
+ 1685              	.LASF39:
+ARM GAS  C:\Users\linar\AppData\Local\Temp\ccRnbEs9.s 			page 34
+
+
+ 1686 014b 6469736B 		.ascii	"disk_write\000"
+ 1686      5F777269 
+ 1686      746500
+ 1687              	.LASF51:
+ 1688 0156 433A5C55 		.ascii	"C:\\Users\\linar\\OneDrive\\Documents\\PSoC Creator"
+ 1688      73657273 
+ 1688      5C6C696E 
+ 1688      61725C4F 
+ 1688      6E654472 
+ 1689 0184 5C70736F 		.ascii	"\\psocRandomWorkspace\\usb-fatfs-flash-usbfs.cydsn\000"
+ 1689      6352616E 
+ 1689      646F6D57 
+ 1689      6F726B73 
+ 1689      70616365 
+ 1690              	.LASF2:
+ 1691 01b5 73686F72 		.ascii	"short unsigned int\000"
+ 1691      7420756E 
+ 1691      7369676E 
+ 1691      65642069 
+ 1691      6E7400
+ 1692              	.LASF43:
+ 1693 01c8 6469736B 		.ascii	"disk_ioctl\000"
+ 1693      5F696F63 
+ 1693      746C00
+ 1694              	.LASF25:
+ 1695 01d3 63686172 		.ascii	"char\000"
+ 1695      00
+ 1696              	.LASF20:
+ 1697 01d8 696E7433 		.ascii	"int32_t\000"
+ 1697      325F7400 
+ 1698              	.LASF13:
+ 1699 01e0 5245535F 		.ascii	"RES_NOTRDY\000"
+ 1699      4E4F5452 
+ 1699      445900
+ 1700              	.LASF45:
+ 1701 01eb 626C6F63 		.ascii	"blockCnt\000"
+ 1701      6B436E74 
+ 1701      00
+ 1702              	.LASF22:
+ 1703 01f4 75696E74 		.ascii	"uint32\000"
+ 1703      333200
+ 1704              	.LASF29:
+ 1705 01fb 494E5641 		.ascii	"INVALID_INPUT\000"
+ 1705      4C49445F 
+ 1705      494E5055 
+ 1705      5400
+ 1706              	.LASF24:
+ 1707 0209 646F7562 		.ascii	"double\000"
+ 1707      6C6500
+ 1708              	.LASF34:
+ 1709 0210 6469736B 		.ascii	"disk_read\000"
+ 1709      5F726561 
+ 1709      6400
+ 1710              	.LASF52:
+ 1711 021a 636D6453 		.ascii	"cmdStatusTypedef\000"
+ 1711      74617475 
+ 1711      73547970 
+ARM GAS  C:\Users\linar\AppData\Local\Temp\ccRnbEs9.s 			page 35
+
+
+ 1711      65646566 
+ 1711      00
+ 1712              	.LASF42:
+ 1713 022b 73656E64 		.ascii	"sendbuff\000"
+ 1713      62756666 
+ 1713      00
+ 1714              	.LASF37:
+ 1715 0234 636F756E 		.ascii	"count\000"
+ 1715      7400
+ 1716              	.LASF17:
+ 1717 023a 5F5F696E 		.ascii	"__int32_t\000"
+ 1717      7433325F 
+ 1717      7400
+ 1718              	.LASF53:
+ 1719 0244 6469736B 		.ascii	"disk_timerproc\000"
+ 1719      5F74696D 
+ 1719      65727072 
+ 1719      6F6300
+ 1720              	.LASF15:
+ 1721 0253 44524553 		.ascii	"DRESULT\000"
+ 1721      554C5400 
+ 1722              	.LASF54:
+ 1723 025b 49544D5F 		.ascii	"ITM_RxBuffer\000"
+ 1723      52784275 
+ 1723      66666572 
+ 1723      00
+ 1724              	.LASF49:
+ 1725 0268 474E5520 		.ascii	"GNU C11 5.4.1 20160609 (release) [ARM/embedded-5-br"
+ 1725      43313120 
+ 1725      352E342E 
+ 1725      31203230 
+ 1725      31363036 
+ 1726 029b 616E6368 		.ascii	"anch revision 237715] -mcpu=cortex-m3 -mthumb -g -O"
+ 1726      20726576 
+ 1726      6973696F 
+ 1726      6E203233 
+ 1726      37373135 
+ 1727 02ce 67202D66 		.ascii	"g -ffunction-sections -ffat-lto-objects\000"
+ 1727      66756E63 
+ 1727      74696F6E 
+ 1727      2D736563 
+ 1727      74696F6E 
+ 1728              	.LASF14:
+ 1729 02f6 5245535F 		.ascii	"RES_PARERR\000"
+ 1729      50415245 
+ 1729      525200
+ 1730              		.ident	"GCC: (GNU Tools for ARM Embedded Processors) 5.4.1 20160609 (release) [ARM/embedded-5-bran

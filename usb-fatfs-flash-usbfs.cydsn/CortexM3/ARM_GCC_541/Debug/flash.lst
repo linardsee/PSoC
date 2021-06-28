@@ -1,0 +1,5172 @@
+ARM GAS  C:\Users\linar\AppData\Local\Temp\ccpLyYLJ.s 			page 1
+
+
+   1              		.syntax unified
+   2              		.cpu cortex-m3
+   3              		.fpu softvfp
+   4              		.eabi_attribute 20, 1
+   5              		.eabi_attribute 21, 1
+   6              		.eabi_attribute 23, 3
+   7              		.eabi_attribute 24, 1
+   8              		.eabi_attribute 25, 1
+   9              		.eabi_attribute 26, 1
+  10              		.eabi_attribute 30, 1
+  11              		.eabi_attribute 34, 1
+  12              		.eabi_attribute 18, 4
+  13              		.thumb
+  14              		.syntax unified
+  15              		.file	"flash.c"
+  16              		.text
+  17              	.Ltext0:
+  18              		.cfi_sections	.debug_frame
+  19              		.section	.text._sendCmd,"ax",%progbits
+  20              		.align	2
+  21              		.global	_sendCmd
+  22              		.thumb
+  23              		.thumb_func
+  24              		.type	_sendCmd, %function
+  25              	_sendCmd:
+  26              	.LFB64:
+  27              		.file 1 "flash.c"
+   1:flash.c       **** #include "flash.h"
+   2:flash.c       **** #include "project.h"
+   3:flash.c       **** #include <stdio.h>
+   4:flash.c       **** 
+   5:flash.c       **** void _sendCmd(uint8 cmd)
+   6:flash.c       **** {
+  28              		.loc 1 6 0
+  29              		.cfi_startproc
+  30              		@ args = 0, pretend = 0, frame = 0
+  31              		@ frame_needed = 0, uses_anonymous_args = 0
+  32              	.LVL0:
+  33 0000 08B5     		push	{r3, lr}
+  34              		.cfi_def_cfa_offset 8
+  35              		.cfi_offset 3, -8
+  36              		.cfi_offset 14, -4
+   7:flash.c       ****   SPIM_1_WriteTxData(cmd);
+  37              		.loc 1 7 0
+  38 0002 FFF7FEFF 		bl	SPIM_1_WriteTxData
+  39              	.LVL1:
+  40              	.L2:
+   8:flash.c       ****   while( (SPIM_1_ReadTxStatus() & SPIM_1_STS_SPI_DONE) == 0){}
+  41              		.loc 1 8 0 discriminator 1
+  42 0006 FFF7FEFF 		bl	SPIM_1_ReadTxStatus
+  43              	.LVL2:
+  44 000a 10F0010F 		tst	r0, #1
+  45 000e FAD0     		beq	.L2
+   9:flash.c       **** }
+  46              		.loc 1 9 0
+  47 0010 08BD     		pop	{r3, pc}
+  48              		.cfi_endproc
+ARM GAS  C:\Users\linar\AppData\Local\Temp\ccpLyYLJ.s 			page 2
+
+
+  49              	.LFE64:
+  50              		.size	_sendCmd, .-_sendCmd
+  51 0012 00BF     		.section	.text._writeEnable,"ax",%progbits
+  52              		.align	2
+  53              		.global	_writeEnable
+  54              		.thumb
+  55              		.thumb_func
+  56              		.type	_writeEnable, %function
+  57              	_writeEnable:
+  58              	.LFB65:
+  10:flash.c       **** 
+  11:flash.c       **** void _writeEnable()
+  12:flash.c       **** {
+  59              		.loc 1 12 0
+  60              		.cfi_startproc
+  61              		@ args = 0, pretend = 0, frame = 0
+  62              		@ frame_needed = 0, uses_anonymous_args = 0
+  63 0000 08B5     		push	{r3, lr}
+  64              		.cfi_def_cfa_offset 8
+  65              		.cfi_offset 3, -8
+  66              		.cfi_offset 14, -4
+  13:flash.c       ****   cs_Write(0);
+  67              		.loc 1 13 0
+  68 0002 0020     		movs	r0, #0
+  69 0004 FFF7FEFF 		bl	cs_Write
+  70              	.LVL3:
+  14:flash.c       ****   _sendCmd(WRITE_EN);
+  71              		.loc 1 14 0
+  72 0008 0620     		movs	r0, #6
+  73 000a FFF7FEFF 		bl	_sendCmd
+  74              	.LVL4:
+  15:flash.c       ****   cs_Write(1);
+  75              		.loc 1 15 0
+  76 000e 0120     		movs	r0, #1
+  77 0010 FFF7FEFF 		bl	cs_Write
+  78              	.LVL5:
+  79 0014 08BD     		pop	{r3, pc}
+  80              		.cfi_endproc
+  81              	.LFE65:
+  82              		.size	_writeEnable, .-_writeEnable
+  83 0016 00BF     		.section	.text._writeDisable,"ax",%progbits
+  84              		.align	2
+  85              		.global	_writeDisable
+  86              		.thumb
+  87              		.thumb_func
+  88              		.type	_writeDisable, %function
+  89              	_writeDisable:
+  90              	.LFB66:
+  16:flash.c       **** }
+  17:flash.c       **** 
+  18:flash.c       **** void _writeDisable()
+  19:flash.c       **** {
+  91              		.loc 1 19 0
+  92              		.cfi_startproc
+  93              		@ args = 0, pretend = 0, frame = 0
+  94              		@ frame_needed = 0, uses_anonymous_args = 0
+  95 0000 08B5     		push	{r3, lr}
+ARM GAS  C:\Users\linar\AppData\Local\Temp\ccpLyYLJ.s 			page 3
+
+
+  96              		.cfi_def_cfa_offset 8
+  97              		.cfi_offset 3, -8
+  98              		.cfi_offset 14, -4
+  20:flash.c       ****   cs_Write(0);
+  99              		.loc 1 20 0
+ 100 0002 0020     		movs	r0, #0
+ 101 0004 FFF7FEFF 		bl	cs_Write
+ 102              	.LVL6:
+  21:flash.c       ****   _sendCmd(WRITE_DIS);
+ 103              		.loc 1 21 0
+ 104 0008 0420     		movs	r0, #4
+ 105 000a FFF7FEFF 		bl	_sendCmd
+ 106              	.LVL7:
+  22:flash.c       ****   cs_Write(1);
+ 107              		.loc 1 22 0
+ 108 000e 0120     		movs	r0, #1
+ 109 0010 FFF7FEFF 		bl	cs_Write
+ 110              	.LVL8:
+ 111 0014 08BD     		pop	{r3, pc}
+ 112              		.cfi_endproc
+ 113              	.LFE66:
+ 114              		.size	_writeDisable, .-_writeDisable
+ 115 0016 00BF     		.section	.text._readStatusReg,"ax",%progbits
+ 116              		.align	2
+ 117              		.global	_readStatusReg
+ 118              		.thumb
+ 119              		.thumb_func
+ 120              		.type	_readStatusReg, %function
+ 121              	_readStatusReg:
+ 122              	.LFB67:
+  23:flash.c       **** }
+  24:flash.c       **** 
+  25:flash.c       **** uint8 _readStatusReg()
+  26:flash.c       **** {
+ 123              		.loc 1 26 0
+ 124              		.cfi_startproc
+ 125              		@ args = 0, pretend = 0, frame = 0
+ 126              		@ frame_needed = 0, uses_anonymous_args = 0
+ 127 0000 08B5     		push	{r3, lr}
+ 128              		.cfi_def_cfa_offset 8
+ 129              		.cfi_offset 3, -8
+ 130              		.cfi_offset 14, -4
+ 131              	.LVL9:
+  27:flash.c       ****   uint8 reg = 0;
+  28:flash.c       ****   
+  29:flash.c       ****   SPIM_1_ClearRxBuffer();
+ 132              		.loc 1 29 0
+ 133 0002 FFF7FEFF 		bl	SPIM_1_ClearRxBuffer
+ 134              	.LVL10:
+  30:flash.c       ****   
+  31:flash.c       ****   cs_Write(0);
+ 135              		.loc 1 31 0
+ 136 0006 0020     		movs	r0, #0
+ 137 0008 FFF7FEFF 		bl	cs_Write
+ 138              	.LVL11:
+  32:flash.c       ****   _sendCmd(READ_STATUS_REG);
+ 139              		.loc 1 32 0
+ARM GAS  C:\Users\linar\AppData\Local\Temp\ccpLyYLJ.s 			page 4
+
+
+ 140 000c 0520     		movs	r0, #5
+ 141 000e FFF7FEFF 		bl	_sendCmd
+ 142              	.LVL12:
+  33:flash.c       ****   _sendCmd(SHIFT_OUT);
+ 143              		.loc 1 33 0
+ 144 0012 0020     		movs	r0, #0
+ 145 0014 FFF7FEFF 		bl	_sendCmd
+ 146              	.LVL13:
+  34:flash.c       ****   cs_Write(1);
+ 147              		.loc 1 34 0
+ 148 0018 0120     		movs	r0, #1
+ 149 001a FFF7FEFF 		bl	cs_Write
+ 150              	.LVL14:
+  35:flash.c       ****     
+  36:flash.c       ****   SPIM_1_ReadRxData();
+ 151              		.loc 1 36 0
+ 152 001e FFF7FEFF 		bl	SPIM_1_ReadRxData
+ 153              	.LVL15:
+  37:flash.c       ****   reg = SPIM_1_ReadRxData();
+ 154              		.loc 1 37 0
+ 155 0022 FFF7FEFF 		bl	SPIM_1_ReadRxData
+ 156              	.LVL16:
+  38:flash.c       **** 
+  39:flash.c       ****   return reg;
+  40:flash.c       **** }
+ 157              		.loc 1 40 0
+ 158 0026 08BD     		pop	{r3, pc}
+ 159              		.cfi_endproc
+ 160              	.LFE67:
+ 161              		.size	_readStatusReg, .-_readStatusReg
+ 162              		.section	.text._checkWIP,"ax",%progbits
+ 163              		.align	2
+ 164              		.global	_checkWIP
+ 165              		.thumb
+ 166              		.thumb_func
+ 167              		.type	_checkWIP, %function
+ 168              	_checkWIP:
+ 169              	.LFB68:
+  41:flash.c       **** 
+  42:flash.c       **** BOOL _checkWIP()
+  43:flash.c       **** {
+ 170              		.loc 1 43 0
+ 171              		.cfi_startproc
+ 172              		@ args = 0, pretend = 0, frame = 0
+ 173              		@ frame_needed = 0, uses_anonymous_args = 0
+ 174 0000 08B5     		push	{r3, lr}
+ 175              		.cfi_def_cfa_offset 8
+ 176              		.cfi_offset 3, -8
+ 177              		.cfi_offset 14, -4
+  44:flash.c       ****   if((_readStatusReg() & WIP_BIT)) 
+ 178              		.loc 1 44 0
+ 179 0002 FFF7FEFF 		bl	_readStatusReg
+ 180              	.LVL17:
+ 181 0006 10F00100 		ands	r0, r0, #1
+ 182 000a 00D0     		beq	.L11
+  45:flash.c       ****   {
+  46:flash.c       ****     return 1;
+ARM GAS  C:\Users\linar\AppData\Local\Temp\ccpLyYLJ.s 			page 5
+
+
+ 183              		.loc 1 46 0
+ 184 000c 0120     		movs	r0, #1
+ 185              	.L11:
+  47:flash.c       ****   }
+  48:flash.c       ****   else return 0;
+  49:flash.c       **** }
+ 186              		.loc 1 49 0
+ 187 000e 08BD     		pop	{r3, pc}
+ 188              		.cfi_endproc
+ 189              	.LFE68:
+ 190              		.size	_checkWIP, .-_checkWIP
+ 191              		.section	.text._checkIfProtectedBitsSet,"ax",%progbits
+ 192              		.align	2
+ 193              		.global	_checkIfProtectedBitsSet
+ 194              		.thumb
+ 195              		.thumb_func
+ 196              		.type	_checkIfProtectedBitsSet, %function
+ 197              	_checkIfProtectedBitsSet:
+ 198              	.LFB69:
+  50:flash.c       **** 
+  51:flash.c       **** BOOL _checkIfProtectedBitsSet()
+  52:flash.c       **** {
+ 199              		.loc 1 52 0
+ 200              		.cfi_startproc
+ 201              		@ args = 0, pretend = 0, frame = 0
+ 202              		@ frame_needed = 0, uses_anonymous_args = 0
+ 203 0000 08B5     		push	{r3, lr}
+ 204              		.cfi_def_cfa_offset 8
+ 205              		.cfi_offset 3, -8
+ 206              		.cfi_offset 14, -4
+ 207              	.LVL18:
+  53:flash.c       ****   BOOL protected = 1;
+  54:flash.c       **** 
+  55:flash.c       ****   if(_readStatusReg() & 0x3C) protected = 1;
+ 208              		.loc 1 55 0
+ 209 0002 FFF7FEFF 		bl	_readStatusReg
+ 210              	.LVL19:
+ 211 0006 10F03C0F 		tst	r0, #60
+ 212 000a 01D0     		beq	.L15
+ 213 000c 0120     		movs	r0, #1
+ 214 000e 08BD     		pop	{r3, pc}
+ 215              	.L15:
+  56:flash.c       ****   else protected = 0;
+ 216              		.loc 1 56 0
+ 217 0010 0020     		movs	r0, #0
+ 218              	.LVL20:
+  57:flash.c       **** 
+  58:flash.c       ****   return protected;
+  59:flash.c       **** }
+ 219              		.loc 1 59 0
+ 220 0012 08BD     		pop	{r3, pc}
+ 221              		.cfi_endproc
+ 222              	.LFE69:
+ 223              		.size	_checkIfProtectedBitsSet, .-_checkIfProtectedBitsSet
+ 224              		.section	.text._checkIfProtected,"ax",%progbits
+ 225              		.align	2
+ 226              		.global	_checkIfProtected
+ARM GAS  C:\Users\linar\AppData\Local\Temp\ccpLyYLJ.s 			page 6
+
+
+ 227              		.thumb
+ 228              		.thumb_func
+ 229              		.type	_checkIfProtected, %function
+ 230              	_checkIfProtected:
+ 231              	.LFB70:
+  60:flash.c       **** 
+  61:flash.c       **** BOOL _checkIfProtected(uint32 address)
+  62:flash.c       **** {
+ 232              		.loc 1 62 0
+ 233              		.cfi_startproc
+ 234              		@ args = 0, pretend = 0, frame = 0
+ 235              		@ frame_needed = 0, uses_anonymous_args = 0
+ 236              	.LVL21:
+ 237 0000 10B5     		push	{r4, lr}
+ 238              		.cfi_def_cfa_offset 8
+ 239              		.cfi_offset 4, -8
+ 240              		.cfi_offset 14, -4
+ 241 0002 0446     		mov	r4, r0
+ 242              	.LVL22:
+  63:flash.c       ****   BOOL protected = 1;
+  64:flash.c       **** 
+  65:flash.c       ****   uint8 bpb = (_readStatusReg() & 0x3C) >> 2;
+ 243              		.loc 1 65 0
+ 244 0004 FFF7FEFF 		bl	_readStatusReg
+ 245              	.LVL23:
+  66:flash.c       **** 
+  67:flash.c       ****   switch(bpb)
+ 246              		.loc 1 67 0
+ 247 0008 C0F38300 		ubfx	r0, r0, #2, #4
+ 248              	.LVL24:
+ 249 000c 0E28     		cmp	r0, #14
+ 250 000e 09D8     		bhi	.L18
+ 251 0010 DFE800F0 		tbb	[pc, r0]
+ 252              	.L20:
+ 253 0014 46       		.byte	(.L31-.L20)/2
+ 254 0015 0A       		.byte	(.L21-.L20)/2
+ 255 0016 11       		.byte	(.L22-.L20)/2
+ 256 0017 18       		.byte	(.L23-.L20)/2
+ 257 0018 1F       		.byte	(.L24-.L20)/2
+ 258 0019 26       		.byte	(.L25-.L20)/2
+ 259 001a 08       		.byte	(.L18-.L20)/2
+ 260 001b 08       		.byte	(.L18-.L20)/2
+ 261 001c 08       		.byte	(.L18-.L20)/2
+ 262 001d 08       		.byte	(.L18-.L20)/2
+ 263 001e 2D       		.byte	(.L26-.L20)/2
+ 264 001f 32       		.byte	(.L27-.L20)/2
+ 265 0020 37       		.byte	(.L28-.L20)/2
+ 266 0021 3C       		.byte	(.L29-.L20)/2
+ 267 0022 41       		.byte	(.L30-.L20)/2
+ 268 0023 00       		.p2align 1
+ 269              	.L18:
+  68:flash.c       ****   {
+  69:flash.c       ****     case 0:
+  70:flash.c       ****       protected = 0;
+  71:flash.c       ****     break;
+  72:flash.c       ****     case 1:
+  73:flash.c       ****       if( (address >= 0x1F0000) && (address <= 0x1FFFFF) ) protected = 1;
+ARM GAS  C:\Users\linar\AppData\Local\Temp\ccpLyYLJ.s 			page 7
+
+
+  74:flash.c       ****       else protected = 0;
+  75:flash.c       ****     break;
+  76:flash.c       ****     case 2:
+  77:flash.c       ****       if( (address >= 0x1E0000) && (address <= 0x1FFFFF) ) protected = 1;
+  78:flash.c       ****       else protected = 0;
+  79:flash.c       ****     break;
+  80:flash.c       ****     case 3:
+  81:flash.c       ****       if( (address >= 0x1C0000) && (address <= 0x1FFFFF) ) protected = 1;
+  82:flash.c       ****       else protected = 0;
+  83:flash.c       ****     break;
+  84:flash.c       ****     case 4:
+  85:flash.c       ****       if( (address >= 0x180000) && (address <= 0x1FFFFF) ) protected = 1;
+  86:flash.c       ****       else protected = 0;
+  87:flash.c       ****     break;
+  88:flash.c       ****     case 5:
+  89:flash.c       ****       if( (address >= 0x100000) && (address <= 0x1FFFFF) ) protected = 1;
+  90:flash.c       ****       else protected = 0;
+  91:flash.c       ****     break;
+  92:flash.c       ****     case 6:
+  93:flash.c       ****     case 9:
+  94:flash.c       ****       protected = 1;
+  95:flash.c       ****     break;
+  96:flash.c       ****     case 10:
+  97:flash.c       ****       if( (address >= 0x000000) && (address <= 0x0F0000) ) protected = 1;
+  98:flash.c       ****       else protected = 0;
+  99:flash.c       ****     break;
+ 100:flash.c       ****     case 11:
+ 101:flash.c       ****       if( (address >= 0x000000) && (address <= 0x170000) ) protected = 1;
+ 102:flash.c       ****       else protected = 0;
+ 103:flash.c       ****     break;
+ 104:flash.c       ****     case 12:
+ 105:flash.c       ****       if( (address >= 0x000000) && (address <= 0x1B0000) ) protected = 1;
+ 106:flash.c       ****       else protected = 0;
+ 107:flash.c       ****     break;
+ 108:flash.c       ****     case 13:
+ 109:flash.c       ****       if( (address >= 0x000000) && (address <= 0x1D0000) ) protected = 1;
+ 110:flash.c       ****       else protected = 0;
+ 111:flash.c       ****     break;
+ 112:flash.c       ****     case 14:
+ 113:flash.c       ****       if( (address >= 0x000000) && (address <= 0x1E0000) ) protected = 1;
+ 114:flash.c       ****       else protected = 0;
+ 115:flash.c       ****     break;
+ 116:flash.c       ****     case 15:
+ 117:flash.c       ****       protected = 1;
+ 118:flash.c       ****     break;
+ 119:flash.c       **** 
+ 120:flash.c       ****     default:
+ 121:flash.c       ****       return protected = 1;
+ 270              		.loc 1 121 0
+ 271 0024 0120     		movs	r0, #1
+ 272 0026 10BD     		pop	{r4, pc}
+ 273              	.LVL25:
+ 274              	.L21:
+  73:flash.c       ****       else protected = 0;
+ 275              		.loc 1 73 0
+ 276 0028 A4F5F814 		sub	r4, r4, #2031616
+ 277              	.LVL26:
+ARM GAS  C:\Users\linar\AppData\Local\Temp\ccpLyYLJ.s 			page 8
+
+
+ 278 002c B4F5803F 		cmp	r4, #65536
+ 279 0030 38D2     		bcs	.L32
+ 280 0032 0120     		movs	r0, #1
+ 281 0034 10BD     		pop	{r4, pc}
+ 282              	.LVL27:
+ 283              	.L22:
+  77:flash.c       ****       else protected = 0;
+ 284              		.loc 1 77 0
+ 285 0036 A4F5F014 		sub	r4, r4, #1966080
+ 286              	.LVL28:
+ 287 003a B4F5003F 		cmp	r4, #131072
+ 288 003e 33D2     		bcs	.L33
+ 289 0040 0120     		movs	r0, #1
+ 290 0042 10BD     		pop	{r4, pc}
+ 291              	.LVL29:
+ 292              	.L23:
+  81:flash.c       ****       else protected = 0;
+ 293              		.loc 1 81 0
+ 294 0044 A4F5E014 		sub	r4, r4, #1835008
+ 295              	.LVL30:
+ 296 0048 B4F5802F 		cmp	r4, #262144
+ 297 004c 2ED2     		bcs	.L34
+ 298 004e 0120     		movs	r0, #1
+ 299 0050 10BD     		pop	{r4, pc}
+ 300              	.LVL31:
+ 301              	.L24:
+  85:flash.c       ****       else protected = 0;
+ 302              		.loc 1 85 0
+ 303 0052 A4F5C014 		sub	r4, r4, #1572864
+ 304              	.LVL32:
+ 305 0056 B4F5002F 		cmp	r4, #524288
+ 306 005a 29D2     		bcs	.L35
+ 307 005c 0120     		movs	r0, #1
+ 308 005e 10BD     		pop	{r4, pc}
+ 309              	.LVL33:
+ 310              	.L25:
+  89:flash.c       ****       else protected = 0;
+ 311              		.loc 1 89 0
+ 312 0060 A4F58014 		sub	r4, r4, #1048576
+ 313              	.LVL34:
+ 314 0064 B4F5801F 		cmp	r4, #1048576
+ 315 0068 24D2     		bcs	.L36
+ 316 006a 0120     		movs	r0, #1
+ 317 006c 10BD     		pop	{r4, pc}
+ 318              	.LVL35:
+ 319              	.L26:
+  97:flash.c       ****       else protected = 0;
+ 320              		.loc 1 97 0
+ 321 006e B4F5702F 		cmp	r4, #983040
+ 322 0072 21D8     		bhi	.L37
+ 323 0074 0120     		movs	r0, #1
+ 324 0076 10BD     		pop	{r4, pc}
+ 325              	.LVL36:
+ 326              	.L27:
+ 101:flash.c       ****       else protected = 0;
+ 327              		.loc 1 101 0
+ 328 0078 B4F5B81F 		cmp	r4, #1507328
+ARM GAS  C:\Users\linar\AppData\Local\Temp\ccpLyYLJ.s 			page 9
+
+
+ 329 007c 1ED8     		bhi	.L38
+ 330 007e 0120     		movs	r0, #1
+ 331 0080 10BD     		pop	{r4, pc}
+ 332              	.LVL37:
+ 333              	.L28:
+ 105:flash.c       ****       else protected = 0;
+ 334              		.loc 1 105 0
+ 335 0082 B4F5D81F 		cmp	r4, #1769472
+ 336 0086 1BD8     		bhi	.L39
+ 337 0088 0120     		movs	r0, #1
+ 338 008a 10BD     		pop	{r4, pc}
+ 339              	.LVL38:
+ 340              	.L29:
+ 109:flash.c       ****       else protected = 0;
+ 341              		.loc 1 109 0
+ 342 008c B4F5E81F 		cmp	r4, #1900544
+ 343 0090 18D8     		bhi	.L40
+ 344 0092 0120     		movs	r0, #1
+ 345 0094 10BD     		pop	{r4, pc}
+ 346              	.LVL39:
+ 347              	.L30:
+ 113:flash.c       ****       else protected = 0;
+ 348              		.loc 1 113 0
+ 349 0096 B4F5F01F 		cmp	r4, #1966080
+ 350 009a 15D8     		bhi	.L41
+ 351 009c 0120     		movs	r0, #1
+ 352 009e 10BD     		pop	{r4, pc}
+ 353              	.LVL40:
+ 354              	.L31:
+  70:flash.c       ****     break;
+ 355              		.loc 1 70 0
+ 356 00a0 0020     		movs	r0, #0
+ 357 00a2 10BD     		pop	{r4, pc}
+ 358              	.LVL41:
+ 359              	.L32:
+  74:flash.c       ****     break;
+ 360              		.loc 1 74 0
+ 361 00a4 0020     		movs	r0, #0
+ 362 00a6 10BD     		pop	{r4, pc}
+ 363              	.LVL42:
+ 364              	.L33:
+  78:flash.c       ****     break;
+ 365              		.loc 1 78 0
+ 366 00a8 0020     		movs	r0, #0
+ 367 00aa 10BD     		pop	{r4, pc}
+ 368              	.LVL43:
+ 369              	.L34:
+  82:flash.c       ****     break;
+ 370              		.loc 1 82 0
+ 371 00ac 0020     		movs	r0, #0
+ 372 00ae 10BD     		pop	{r4, pc}
+ 373              	.LVL44:
+ 374              	.L35:
+  86:flash.c       ****     break;
+ 375              		.loc 1 86 0
+ 376 00b0 0020     		movs	r0, #0
+ 377 00b2 10BD     		pop	{r4, pc}
+ARM GAS  C:\Users\linar\AppData\Local\Temp\ccpLyYLJ.s 			page 10
+
+
+ 378              	.LVL45:
+ 379              	.L36:
+  90:flash.c       ****     break;
+ 380              		.loc 1 90 0
+ 381 00b4 0020     		movs	r0, #0
+ 382 00b6 10BD     		pop	{r4, pc}
+ 383              	.LVL46:
+ 384              	.L37:
+  98:flash.c       ****     break;
+ 385              		.loc 1 98 0
+ 386 00b8 0020     		movs	r0, #0
+ 387 00ba 10BD     		pop	{r4, pc}
+ 388              	.LVL47:
+ 389              	.L38:
+ 102:flash.c       ****     break;
+ 390              		.loc 1 102 0
+ 391 00bc 0020     		movs	r0, #0
+ 392 00be 10BD     		pop	{r4, pc}
+ 393              	.LVL48:
+ 394              	.L39:
+ 106:flash.c       ****     break;
+ 395              		.loc 1 106 0
+ 396 00c0 0020     		movs	r0, #0
+ 397 00c2 10BD     		pop	{r4, pc}
+ 398              	.LVL49:
+ 399              	.L40:
+ 110:flash.c       ****     break;
+ 400              		.loc 1 110 0
+ 401 00c4 0020     		movs	r0, #0
+ 402 00c6 10BD     		pop	{r4, pc}
+ 403              	.LVL50:
+ 404              	.L41:
+ 114:flash.c       ****     break;
+ 405              		.loc 1 114 0
+ 406 00c8 0020     		movs	r0, #0
+ 122:flash.c       ****     break;
+ 123:flash.c       ****   }
+ 124:flash.c       **** 
+ 125:flash.c       ****   return protected;
+ 126:flash.c       **** }
+ 407              		.loc 1 126 0
+ 408 00ca 10BD     		pop	{r4, pc}
+ 409              		.cfi_endproc
+ 410              	.LFE70:
+ 411              		.size	_checkIfProtected, .-_checkIfProtected
+ 412              		.section	.text.writeStatusReg,"ax",%progbits
+ 413              		.align	2
+ 414              		.global	writeStatusReg
+ 415              		.thumb
+ 416              		.thumb_func
+ 417              		.type	writeStatusReg, %function
+ 418              	writeStatusReg:
+ 419              	.LFB71:
+ 127:flash.c       **** 
+ 128:flash.c       **** cmdStatusTypedef writeStatusReg(uint8 code)
+ 129:flash.c       **** {
+ 420              		.loc 1 129 0
+ARM GAS  C:\Users\linar\AppData\Local\Temp\ccpLyYLJ.s 			page 11
+
+
+ 421              		.cfi_startproc
+ 422              		@ args = 0, pretend = 0, frame = 0
+ 423              		@ frame_needed = 0, uses_anonymous_args = 0
+ 424              	.LVL51:
+ 130:flash.c       ****   cmdStatusTypedef status = ERROR;
+ 131:flash.c       **** 
+ 132:flash.c       ****   if(code & READ_ONLY_BITS) return INVALID_INPUT;
+ 425              		.loc 1 132 0
+ 426 0000 10F0430F 		tst	r0, #67
+ 427 0004 1AD1     		bne	.L45
+ 129:flash.c       ****   cmdStatusTypedef status = ERROR;
+ 428              		.loc 1 129 0
+ 429 0006 10B5     		push	{r4, lr}
+ 430              		.cfi_def_cfa_offset 8
+ 431              		.cfi_offset 4, -8
+ 432              		.cfi_offset 14, -4
+ 433 0008 0446     		mov	r4, r0
+ 133:flash.c       ****   if(_checkWIP()) return BUSY;
+ 434              		.loc 1 133 0
+ 435 000a FFF7FEFF 		bl	_checkWIP
+ 436              	.LVL52:
+ 437 000e B8B9     		cbnz	r0, .L46
+ 134:flash.c       **** 
+ 135:flash.c       ****   SPIM_1_ClearRxBuffer();
+ 438              		.loc 1 135 0
+ 439 0010 FFF7FEFF 		bl	SPIM_1_ClearRxBuffer
+ 440              	.LVL53:
+ 136:flash.c       **** 
+ 137:flash.c       ****   cs_Write(0);
+ 441              		.loc 1 137 0
+ 442 0014 0020     		movs	r0, #0
+ 443 0016 FFF7FEFF 		bl	cs_Write
+ 444              	.LVL54:
+ 138:flash.c       ****   _sendCmd(WRITE_STATUS_REG);
+ 445              		.loc 1 138 0
+ 446 001a 0120     		movs	r0, #1
+ 447 001c FFF7FEFF 		bl	_sendCmd
+ 448              	.LVL55:
+ 139:flash.c       ****   _sendCmd(code);
+ 449              		.loc 1 139 0
+ 450 0020 2046     		mov	r0, r4
+ 451 0022 FFF7FEFF 		bl	_sendCmd
+ 452              	.LVL56:
+ 140:flash.c       ****   cs_Write(1);
+ 453              		.loc 1 140 0
+ 454 0026 0120     		movs	r0, #1
+ 455 0028 FFF7FEFF 		bl	cs_Write
+ 456              	.LVL57:
+ 141:flash.c       **** 
+ 142:flash.c       ****   if( (_readStatusReg() & RW_BITS) == code)
+ 457              		.loc 1 142 0
+ 458 002c FFF7FEFF 		bl	_readStatusReg
+ 459              	.LVL58:
+ 460 0030 00F0BC00 		and	r0, r0, #188
+ 461 0034 A042     		cmp	r0, r4
+ 462 0036 05D1     		bne	.L47
+ 143:flash.c       ****   {
+ARM GAS  C:\Users\linar\AppData\Local\Temp\ccpLyYLJ.s 			page 12
+
+
+ 144:flash.c       ****     status = OK;
+ 463              		.loc 1 144 0
+ 464 0038 0020     		movs	r0, #0
+ 465 003a 10BD     		pop	{r4, pc}
+ 466              	.LVL59:
+ 467              	.L45:
+ 468              		.cfi_def_cfa_offset 0
+ 469              		.cfi_restore 4
+ 470              		.cfi_restore 14
+ 132:flash.c       ****   if(_checkWIP()) return BUSY;
+ 471              		.loc 1 132 0
+ 472 003c 0220     		movs	r0, #2
+ 473              	.LVL60:
+ 145:flash.c       ****   }
+ 146:flash.c       ****   else
+ 147:flash.c       ****   {
+ 148:flash.c       ****     status = ERROR;
+ 149:flash.c       ****   }
+ 150:flash.c       **** 
+ 151:flash.c       ****   return status;
+ 152:flash.c       **** }
+ 474              		.loc 1 152 0
+ 475 003e 7047     		bx	lr
+ 476              	.L46:
+ 477              		.cfi_def_cfa_offset 8
+ 478              		.cfi_offset 4, -8
+ 479              		.cfi_offset 14, -4
+ 133:flash.c       **** 
+ 480              		.loc 1 133 0
+ 481 0040 0320     		movs	r0, #3
+ 482 0042 10BD     		pop	{r4, pc}
+ 483              	.L47:
+ 148:flash.c       ****   }
+ 484              		.loc 1 148 0
+ 485 0044 0120     		movs	r0, #1
+ 486              		.loc 1 152 0
+ 487 0046 10BD     		pop	{r4, pc}
+ 488              		.cfi_endproc
+ 489              	.LFE71:
+ 490              		.size	writeStatusReg, .-writeStatusReg
+ 491              		.section	.text.readData,"ax",%progbits
+ 492              		.align	2
+ 493              		.global	readData
+ 494              		.thumb
+ 495              		.thumb_func
+ 496              		.type	readData, %function
+ 497              	readData:
+ 498              	.LFB72:
+ 153:flash.c       **** 
+ 154:flash.c       **** cmdStatusTypedef readData(uint32 address, uint8* buff, uint32 size)
+ 155:flash.c       **** {
+ 499              		.loc 1 155 0
+ 500              		.cfi_startproc
+ 501              		@ args = 0, pretend = 0, frame = 24
+ 502              		@ frame_needed = 0, uses_anonymous_args = 0
+ 503              	.LVL61:
+ 504 0000 2DE9F041 		push	{r4, r5, r6, r7, r8, lr}
+ARM GAS  C:\Users\linar\AppData\Local\Temp\ccpLyYLJ.s 			page 13
+
+
+ 505              		.cfi_def_cfa_offset 24
+ 506              		.cfi_offset 4, -24
+ 507              		.cfi_offset 5, -20
+ 508              		.cfi_offset 6, -16
+ 509              		.cfi_offset 7, -12
+ 510              		.cfi_offset 8, -8
+ 511              		.cfi_offset 14, -4
+ 512 0004 86B0     		sub	sp, sp, #24
+ 513              		.cfi_def_cfa_offset 48
+ 514 0006 0E46     		mov	r6, r1
+ 515 0008 1546     		mov	r5, r2
+ 516              	.LVL62:
+ 156:flash.c       ****   cmdStatusTypedef status = ERROR;
+ 157:flash.c       ****   uint8 addr1 = (address & 0xFF0000) >> 16;
+ 517              		.loc 1 157 0
+ 518 000a C0F30748 		ubfx	r8, r0, #16, #8
+ 519              	.LVL63:
+ 158:flash.c       ****   uint8 addr2 = (address & 0xFF00) >> 8;
+ 520              		.loc 1 158 0
+ 521 000e C0F30727 		ubfx	r7, r0, #8, #8
+ 522              	.LVL64:
+ 159:flash.c       ****   uint8 addr3 = address & 0xFF;
+ 523              		.loc 1 159 0
+ 524 0012 C4B2     		uxtb	r4, r0
+ 525              	.LVL65:
+ 160:flash.c       **** 
+ 161:flash.c       ****   uint8 sendbuff[20];
+ 162:flash.c       ****   memset(sendbuff, 0, 20);
+ 526              		.loc 1 162 0
+ 527 0014 0023     		movs	r3, #0
+ 528 0016 0193     		str	r3, [sp, #4]
+ 529 0018 0293     		str	r3, [sp, #8]
+ 530 001a 0393     		str	r3, [sp, #12]
+ 531 001c 0493     		str	r3, [sp, #16]
+ 532 001e 0593     		str	r3, [sp, #20]
+ 163:flash.c       **** 
+ 164:flash.c       ****   if(_checkWIP()) return BUSY;
+ 533              		.loc 1 164 0
+ 534 0020 FFF7FEFF 		bl	_checkWIP
+ 535              	.LVL66:
+ 536 0024 40BB     		cbnz	r0, .L53
+ 165:flash.c       **** 
+ 166:flash.c       ****   SPIM_1_ClearRxBuffer();
+ 537              		.loc 1 166 0
+ 538 0026 FFF7FEFF 		bl	SPIM_1_ClearRxBuffer
+ 539              	.LVL67:
+ 167:flash.c       **** 
+ 168:flash.c       ****   cs_Write(0);
+ 540              		.loc 1 168 0
+ 541 002a 0020     		movs	r0, #0
+ 542 002c FFF7FEFF 		bl	cs_Write
+ 543              	.LVL68:
+ 169:flash.c       ****   _sendCmd(READ_DATA);
+ 544              		.loc 1 169 0
+ 545 0030 0320     		movs	r0, #3
+ 546 0032 FFF7FEFF 		bl	_sendCmd
+ 547              	.LVL69:
+ARM GAS  C:\Users\linar\AppData\Local\Temp\ccpLyYLJ.s 			page 14
+
+
+ 170:flash.c       ****   SPIM_1_ReadRxData();
+ 548              		.loc 1 170 0
+ 549 0036 FFF7FEFF 		bl	SPIM_1_ReadRxData
+ 550              	.LVL70:
+ 171:flash.c       ****   _sendCmd(addr1);
+ 551              		.loc 1 171 0
+ 552 003a 4046     		mov	r0, r8
+ 553 003c FFF7FEFF 		bl	_sendCmd
+ 554              	.LVL71:
+ 172:flash.c       ****   SPIM_1_ReadRxData();
+ 555              		.loc 1 172 0
+ 556 0040 FFF7FEFF 		bl	SPIM_1_ReadRxData
+ 557              	.LVL72:
+ 173:flash.c       ****   _sendCmd(addr2);
+ 558              		.loc 1 173 0
+ 559 0044 3846     		mov	r0, r7
+ 560 0046 FFF7FEFF 		bl	_sendCmd
+ 561              	.LVL73:
+ 174:flash.c       ****   SPIM_1_ReadRxData();
+ 562              		.loc 1 174 0
+ 563 004a FFF7FEFF 		bl	SPIM_1_ReadRxData
+ 564              	.LVL74:
+ 175:flash.c       ****   _sendCmd(addr3);
+ 565              		.loc 1 175 0
+ 566 004e 2046     		mov	r0, r4
+ 567 0050 FFF7FEFF 		bl	_sendCmd
+ 568              	.LVL75:
+ 176:flash.c       ****   SPIM_1_ReadRxData();
+ 569              		.loc 1 176 0
+ 570 0054 FFF7FEFF 		bl	SPIM_1_ReadRxData
+ 571              	.LVL76:
+ 572              	.LBB2:
+ 177:flash.c       **** 
+ 178:flash.c       ****   for(uint32 i = 0; i < size; i++)
+ 573              		.loc 1 178 0
+ 574 0058 0024     		movs	r4, #0
+ 575              	.LVL77:
+ 576 005a 06E0     		b	.L51
+ 577              	.LVL78:
+ 578              	.L52:
+ 179:flash.c       ****   {
+ 180:flash.c       ****     _sendCmd(SHIFT_OUT);
+ 579              		.loc 1 180 0 discriminator 3
+ 580 005c 0020     		movs	r0, #0
+ 581 005e FFF7FEFF 		bl	_sendCmd
+ 582              	.LVL79:
+ 181:flash.c       ****     buff[i] = SPIM_1_ReadRxData();
+ 583              		.loc 1 181 0 discriminator 3
+ 584 0062 FFF7FEFF 		bl	SPIM_1_ReadRxData
+ 585              	.LVL80:
+ 586 0066 3055     		strb	r0, [r6, r4]
+ 178:flash.c       ****   {
+ 587              		.loc 1 178 0 discriminator 3
+ 588 0068 0134     		adds	r4, r4, #1
+ 589              	.LVL81:
+ 590              	.L51:
+ 178:flash.c       ****   {
+ARM GAS  C:\Users\linar\AppData\Local\Temp\ccpLyYLJ.s 			page 15
+
+
+ 591              		.loc 1 178 0 is_stmt 0 discriminator 1
+ 592 006a AC42     		cmp	r4, r5
+ 593 006c F6D3     		bcc	.L52
+ 594              	.LBE2:
+ 182:flash.c       ****   }
+ 183:flash.c       ****   cs_Write(1);
+ 595              		.loc 1 183 0 is_stmt 1
+ 596 006e 0120     		movs	r0, #1
+ 597 0070 FFF7FEFF 		bl	cs_Write
+ 598              	.LVL82:
+ 184:flash.c       ****   status = OK;
+ 185:flash.c       **** /*    
+ 186:flash.c       ****   buffSize = SPIM_1_GetRxBufferSize() - 4;
+ 187:flash.c       **** 
+ 188:flash.c       ****         sprintf((char*)sendbuff, "Buffsize: %d \r\n", buffSize);
+ 189:flash.c       ****         //sprintf((char*)sendbuff, "%d ", rand);
+ 190:flash.c       ****         USBUART_1_PutData(sendbuff, 20);
+ 191:flash.c       ****         memset(sendbuff, 0, 20);
+ 192:flash.c       ****         
+ 193:flash.c       ****         sprintf((char*)sendbuff, "size: %d \r\n", size);
+ 194:flash.c       ****         //sprintf((char*)sendbuff, "%d ", rand);
+ 195:flash.c       ****         USBUART_1_PutData(sendbuff, 20);
+ 196:flash.c       ****         memset(sendbuff, 0, 20);
+ 197:flash.c       ****         
+ 198:flash.c       ****   if( buffSize != size) return ERROR;
+ 199:flash.c       ****   else status = OK;
+ 200:flash.c       ****    
+ 201:flash.c       ****   // Dummy read
+ 202:flash.c       ****   for(uint8 i = 0; i < 4; i++)
+ 203:flash.c       ****   {
+ 204:flash.c       ****     SPIM_1_ReadRxData();
+ 205:flash.c       ****   }
+ 206:flash.c       **** 
+ 207:flash.c       ****   for(uint32 i = 0; i < buffSize; i++)
+ 208:flash.c       ****   {
+ 209:flash.c       ****     buff[i] = SPIM_1_ReadRxData();
+ 210:flash.c       ****   }
+ 211:flash.c       **** */
+ 212:flash.c       ****   return status;
+ 599              		.loc 1 212 0
+ 600 0074 0020     		movs	r0, #0
+ 601 0076 00E0     		b	.L50
+ 602              	.LVL83:
+ 603              	.L53:
+ 164:flash.c       **** 
+ 604              		.loc 1 164 0
+ 605 0078 0320     		movs	r0, #3
+ 606              	.LVL84:
+ 607              	.L50:
+ 213:flash.c       **** }
+ 608              		.loc 1 213 0
+ 609 007a 06B0     		add	sp, sp, #24
+ 610              		.cfi_def_cfa_offset 24
+ 611              		@ sp needed
+ 612 007c BDE8F081 		pop	{r4, r5, r6, r7, r8, pc}
+ 613              		.cfi_endproc
+ 614              	.LFE72:
+ARM GAS  C:\Users\linar\AppData\Local\Temp\ccpLyYLJ.s 			page 16
+
+
+ 615              		.size	readData, .-readData
+ 616              		.section	.text.pageProgram,"ax",%progbits
+ 617              		.align	2
+ 618              		.global	pageProgram
+ 619              		.thumb
+ 620              		.thumb_func
+ 621              		.type	pageProgram, %function
+ 622              	pageProgram:
+ 623              	.LFB73:
+ 214:flash.c       **** /* FAST READ */
+ 215:flash.c       **** //
+ 216:flash.c       **** //
+ 217:flash.c       **** //
+ 218:flash.c       **** //
+ 219:flash.c       **** 
+ 220:flash.c       **** /* FAST READ DUAL OUTPUT */
+ 221:flash.c       **** //
+ 222:flash.c       **** //
+ 223:flash.c       **** //
+ 224:flash.c       **** //
+ 225:flash.c       **** 
+ 226:flash.c       **** cmdStatusTypedef pageProgram(uint32 address, uint8* buff, uint32 size)
+ 227:flash.c       **** {
+ 624              		.loc 1 227 0
+ 625              		.cfi_startproc
+ 626              		@ args = 0, pretend = 0, frame = 0
+ 627              		@ frame_needed = 0, uses_anonymous_args = 0
+ 628              	.LVL85:
+ 228:flash.c       ****   cmdStatusTypedef status = ERROR;
+ 229:flash.c       **** 
+ 230:flash.c       ****   if((size - 1) > 255) return INVALID_INPUT;
+ 629              		.loc 1 230 0
+ 630 0000 531E     		subs	r3, r2, #1
+ 631 0002 FF2B     		cmp	r3, #255
+ 632 0004 30D8     		bhi	.L59
+ 227:flash.c       ****   cmdStatusTypedef status = ERROR;
+ 633              		.loc 1 227 0
+ 634 0006 2DE9F041 		push	{r4, r5, r6, r7, r8, lr}
+ 635              		.cfi_def_cfa_offset 24
+ 636              		.cfi_offset 4, -24
+ 637              		.cfi_offset 5, -20
+ 638              		.cfi_offset 6, -16
+ 639              		.cfi_offset 7, -12
+ 640              		.cfi_offset 8, -8
+ 641              		.cfi_offset 14, -4
+ 642 000a 0646     		mov	r6, r0
+ 643 000c 0D46     		mov	r5, r1
+ 644 000e 1446     		mov	r4, r2
+ 231:flash.c       ****   if(_checkWIP()) return BUSY;
+ 645              		.loc 1 231 0
+ 646 0010 FFF7FEFF 		bl	_checkWIP
+ 647              	.LVL86:
+ 648 0014 50BB     		cbnz	r0, .L60
+ 232:flash.c       ****   if(_checkIfProtected(address)) return PROTECTED;
+ 649              		.loc 1 232 0
+ 650 0016 3046     		mov	r0, r6
+ 651 0018 FFF7FEFF 		bl	_checkIfProtected
+ARM GAS  C:\Users\linar\AppData\Local\Temp\ccpLyYLJ.s 			page 17
+
+
+ 652              	.LVL87:
+ 653 001c 48BB     		cbnz	r0, .L61
+ 233:flash.c       **** 
+ 234:flash.c       ****   uint8 addr1 = (address & 0xFF0000) >> 16;
+ 654              		.loc 1 234 0
+ 655 001e C6F30748 		ubfx	r8, r6, #16, #8
+ 656              	.LVL88:
+ 235:flash.c       ****   uint8 addr2 = (address & 0xFF00) >> 8;
+ 657              		.loc 1 235 0
+ 658 0022 C6F30727 		ubfx	r7, r6, #8, #8
+ 659              	.LVL89:
+ 236:flash.c       ****   uint8 addr3 = address & 0xFF;
+ 660              		.loc 1 236 0
+ 661 0026 F6B2     		uxtb	r6, r6
+ 662              	.LVL90:
+ 237:flash.c       **** 
+ 238:flash.c       ****   _writeEnable();
+ 663              		.loc 1 238 0
+ 664 0028 FFF7FEFF 		bl	_writeEnable
+ 665              	.LVL91:
+ 239:flash.c       ****   cs_Write(0);
+ 666              		.loc 1 239 0
+ 667 002c 0020     		movs	r0, #0
+ 668 002e FFF7FEFF 		bl	cs_Write
+ 669              	.LVL92:
+ 240:flash.c       ****   _sendCmd(PAGE_PROG);
+ 670              		.loc 1 240 0
+ 671 0032 0220     		movs	r0, #2
+ 672 0034 FFF7FEFF 		bl	_sendCmd
+ 673              	.LVL93:
+ 241:flash.c       ****   _sendCmd(addr1);
+ 674              		.loc 1 241 0
+ 675 0038 4046     		mov	r0, r8
+ 676 003a FFF7FEFF 		bl	_sendCmd
+ 677              	.LVL94:
+ 242:flash.c       ****   _sendCmd(addr2);
+ 678              		.loc 1 242 0
+ 679 003e 3846     		mov	r0, r7
+ 680 0040 FFF7FEFF 		bl	_sendCmd
+ 681              	.LVL95:
+ 243:flash.c       ****   _sendCmd(addr3);
+ 682              		.loc 1 243 0
+ 683 0044 3046     		mov	r0, r6
+ 684 0046 FFF7FEFF 		bl	_sendCmd
+ 685              	.LVL96:
+ 686              	.LBB3:
+ 244:flash.c       ****   for(uint32 i = 0; i < size; i++)
+ 687              		.loc 1 244 0
+ 688 004a 0026     		movs	r6, #0
+ 689              	.LVL97:
+ 690 004c 04E0     		b	.L57
+ 691              	.LVL98:
+ 692              	.L58:
+ 245:flash.c       ****   {
+ 246:flash.c       ****     _sendCmd(*buff);
+ 693              		.loc 1 246 0 discriminator 3
+ 694 004e 15F8010B 		ldrb	r0, [r5], #1	@ zero_extendqisi2
+ARM GAS  C:\Users\linar\AppData\Local\Temp\ccpLyYLJ.s 			page 18
+
+
+ 695              	.LVL99:
+ 696 0052 FFF7FEFF 		bl	_sendCmd
+ 697              	.LVL100:
+ 244:flash.c       ****   for(uint32 i = 0; i < size; i++)
+ 698              		.loc 1 244 0 discriminator 3
+ 699 0056 0136     		adds	r6, r6, #1
+ 700              	.LVL101:
+ 701              	.L57:
+ 244:flash.c       ****   for(uint32 i = 0; i < size; i++)
+ 702              		.loc 1 244 0 is_stmt 0 discriminator 1
+ 703 0058 A642     		cmp	r6, r4
+ 704 005a F8D3     		bcc	.L58
+ 705              	.LBE3:
+ 247:flash.c       ****     buff++;
+ 248:flash.c       ****   }
+ 249:flash.c       ****   cs_Write(1);
+ 706              		.loc 1 249 0 is_stmt 1
+ 707 005c 0120     		movs	r0, #1
+ 708 005e FFF7FEFF 		bl	cs_Write
+ 709              	.LVL102:
+ 250:flash.c       **** 
+ 251:flash.c       ****   status = OK;
+ 252:flash.c       **** 
+ 253:flash.c       ****   return status;
+ 710              		.loc 1 253 0
+ 711 0062 0020     		movs	r0, #0
+ 712 0064 BDE8F081 		pop	{r4, r5, r6, r7, r8, pc}
+ 713              	.LVL103:
+ 714              	.L59:
+ 715              		.cfi_def_cfa_offset 0
+ 716              		.cfi_restore 4
+ 717              		.cfi_restore 5
+ 718              		.cfi_restore 6
+ 719              		.cfi_restore 7
+ 720              		.cfi_restore 8
+ 721              		.cfi_restore 14
+ 230:flash.c       ****   if(_checkWIP()) return BUSY;
+ 722              		.loc 1 230 0
+ 723 0068 0220     		movs	r0, #2
+ 724              	.LVL104:
+ 254:flash.c       **** }
+ 725              		.loc 1 254 0
+ 726 006a 7047     		bx	lr
+ 727              	.LVL105:
+ 728              	.L60:
+ 729              		.cfi_def_cfa_offset 24
+ 730              		.cfi_offset 4, -24
+ 731              		.cfi_offset 5, -20
+ 732              		.cfi_offset 6, -16
+ 733              		.cfi_offset 7, -12
+ 734              		.cfi_offset 8, -8
+ 735              		.cfi_offset 14, -4
+ 231:flash.c       ****   if(_checkIfProtected(address)) return PROTECTED;
+ 736              		.loc 1 231 0
+ 737 006c 0320     		movs	r0, #3
+ 738 006e BDE8F081 		pop	{r4, r5, r6, r7, r8, pc}
+ 739              	.LVL106:
+ARM GAS  C:\Users\linar\AppData\Local\Temp\ccpLyYLJ.s 			page 19
+
+
+ 740              	.L61:
+ 232:flash.c       **** 
+ 741              		.loc 1 232 0
+ 742 0072 0420     		movs	r0, #4
+ 743              		.loc 1 254 0
+ 744 0074 BDE8F081 		pop	{r4, r5, r6, r7, r8, pc}
+ 745              		.cfi_endproc
+ 746              	.LFE73:
+ 747              		.size	pageProgram, .-pageProgram
+ 748              		.section	.text.sectorErase,"ax",%progbits
+ 749              		.align	2
+ 750              		.global	sectorErase
+ 751              		.thumb
+ 752              		.thumb_func
+ 753              		.type	sectorErase, %function
+ 754              	sectorErase:
+ 755              	.LFB74:
+ 255:flash.c       **** 
+ 256:flash.c       **** cmdStatusTypedef sectorErase(uint32 address)
+ 257:flash.c       **** {
+ 756              		.loc 1 257 0
+ 757              		.cfi_startproc
+ 758              		@ args = 0, pretend = 0, frame = 0
+ 759              		@ frame_needed = 0, uses_anonymous_args = 0
+ 760              	.LVL107:
+ 761 0000 70B5     		push	{r4, r5, r6, lr}
+ 762              		.cfi_def_cfa_offset 16
+ 763              		.cfi_offset 4, -16
+ 764              		.cfi_offset 5, -12
+ 765              		.cfi_offset 6, -8
+ 766              		.cfi_offset 14, -4
+ 767 0002 0446     		mov	r4, r0
+ 768              	.LVL108:
+ 258:flash.c       ****   cmdStatusTypedef status = ERROR;
+ 259:flash.c       **** 
+ 260:flash.c       ****   if(_checkWIP()) return BUSY;
+ 769              		.loc 1 260 0
+ 770 0004 FFF7FEFF 		bl	_checkWIP
+ 771              	.LVL109:
+ 772 0008 F0B9     		cbnz	r0, .L65
+ 261:flash.c       ****   if(_checkIfProtected(address)) return PROTECTED;
+ 773              		.loc 1 261 0
+ 774 000a 2046     		mov	r0, r4
+ 775 000c FFF7FEFF 		bl	_checkIfProtected
+ 776              	.LVL110:
+ 777 0010 E0B9     		cbnz	r0, .L66
+ 262:flash.c       **** 
+ 263:flash.c       ****   uint8 addr1 = (address & 0xFF0000) >> 16;
+ 778              		.loc 1 263 0
+ 779 0012 C4F30746 		ubfx	r6, r4, #16, #8
+ 780              	.LVL111:
+ 264:flash.c       ****   uint8 addr2 = (address & 0xFF00) >> 8;
+ 781              		.loc 1 264 0
+ 782 0016 C4F30725 		ubfx	r5, r4, #8, #8
+ 783              	.LVL112:
+ 265:flash.c       ****   uint8 addr3 = address & 0xFF;
+ 784              		.loc 1 265 0
+ARM GAS  C:\Users\linar\AppData\Local\Temp\ccpLyYLJ.s 			page 20
+
+
+ 785 001a E4B2     		uxtb	r4, r4
+ 786              	.LVL113:
+ 266:flash.c       **** 
+ 267:flash.c       ****   _writeEnable();
+ 787              		.loc 1 267 0
+ 788 001c FFF7FEFF 		bl	_writeEnable
+ 789              	.LVL114:
+ 268:flash.c       ****   cs_Write(0);
+ 790              		.loc 1 268 0
+ 791 0020 0020     		movs	r0, #0
+ 792 0022 FFF7FEFF 		bl	cs_Write
+ 793              	.LVL115:
+ 269:flash.c       ****   _sendCmd(SECTOR_ERASE);
+ 794              		.loc 1 269 0
+ 795 0026 2020     		movs	r0, #32
+ 796 0028 FFF7FEFF 		bl	_sendCmd
+ 797              	.LVL116:
+ 270:flash.c       ****   _sendCmd(addr1);
+ 798              		.loc 1 270 0
+ 799 002c 3046     		mov	r0, r6
+ 800 002e FFF7FEFF 		bl	_sendCmd
+ 801              	.LVL117:
+ 271:flash.c       ****   _sendCmd(addr2);
+ 802              		.loc 1 271 0
+ 803 0032 2846     		mov	r0, r5
+ 804 0034 FFF7FEFF 		bl	_sendCmd
+ 805              	.LVL118:
+ 272:flash.c       ****   _sendCmd(addr3);
+ 806              		.loc 1 272 0
+ 807 0038 2046     		mov	r0, r4
+ 808 003a FFF7FEFF 		bl	_sendCmd
+ 809              	.LVL119:
+ 273:flash.c       ****   cs_Write(1);
+ 810              		.loc 1 273 0
+ 811 003e 0120     		movs	r0, #1
+ 812 0040 FFF7FEFF 		bl	cs_Write
+ 813              	.LVL120:
+ 274:flash.c       **** 
+ 275:flash.c       ****   status = OK;
+ 276:flash.c       **** 
+ 277:flash.c       ****   return status;
+ 814              		.loc 1 277 0
+ 815 0044 0020     		movs	r0, #0
+ 816 0046 70BD     		pop	{r4, r5, r6, pc}
+ 817              	.LVL121:
+ 818              	.L65:
+ 260:flash.c       ****   if(_checkIfProtected(address)) return PROTECTED;
+ 819              		.loc 1 260 0
+ 820 0048 0320     		movs	r0, #3
+ 821 004a 70BD     		pop	{r4, r5, r6, pc}
+ 822              	.LVL122:
+ 823              	.L66:
+ 261:flash.c       **** 
+ 824              		.loc 1 261 0
+ 825 004c 0420     		movs	r0, #4
+ 278:flash.c       **** }
+ 826              		.loc 1 278 0
+ARM GAS  C:\Users\linar\AppData\Local\Temp\ccpLyYLJ.s 			page 21
+
+
+ 827 004e 70BD     		pop	{r4, r5, r6, pc}
+ 828              		.cfi_endproc
+ 829              	.LFE74:
+ 830              		.size	sectorErase, .-sectorErase
+ 831              		.section	.text.blockErase,"ax",%progbits
+ 832              		.align	2
+ 833              		.global	blockErase
+ 834              		.thumb
+ 835              		.thumb_func
+ 836              		.type	blockErase, %function
+ 837              	blockErase:
+ 838              	.LFB75:
+ 279:flash.c       **** 
+ 280:flash.c       **** cmdStatusTypedef blockErase(uint32 address)
+ 281:flash.c       **** {
+ 839              		.loc 1 281 0
+ 840              		.cfi_startproc
+ 841              		@ args = 0, pretend = 0, frame = 0
+ 842              		@ frame_needed = 0, uses_anonymous_args = 0
+ 843              	.LVL123:
+ 844 0000 70B5     		push	{r4, r5, r6, lr}
+ 845              		.cfi_def_cfa_offset 16
+ 846              		.cfi_offset 4, -16
+ 847              		.cfi_offset 5, -12
+ 848              		.cfi_offset 6, -8
+ 849              		.cfi_offset 14, -4
+ 850 0002 0446     		mov	r4, r0
+ 851              	.LVL124:
+ 282:flash.c       ****   cmdStatusTypedef status = ERROR;
+ 283:flash.c       **** 
+ 284:flash.c       ****   if(_checkWIP()) return BUSY;
+ 852              		.loc 1 284 0
+ 853 0004 FFF7FEFF 		bl	_checkWIP
+ 854              	.LVL125:
+ 855 0008 F0B9     		cbnz	r0, .L70
+ 285:flash.c       ****   if(_checkIfProtected(address)) return PROTECTED;
+ 856              		.loc 1 285 0
+ 857 000a 2046     		mov	r0, r4
+ 858 000c FFF7FEFF 		bl	_checkIfProtected
+ 859              	.LVL126:
+ 860 0010 E0B9     		cbnz	r0, .L71
+ 286:flash.c       **** 
+ 287:flash.c       ****   uint8 addr1 = (address & 0xFF0000) >> 16;
+ 861              		.loc 1 287 0
+ 862 0012 C4F30746 		ubfx	r6, r4, #16, #8
+ 863              	.LVL127:
+ 288:flash.c       ****   uint8 addr2 = (address & 0xFF00) >> 8;
+ 864              		.loc 1 288 0
+ 865 0016 C4F30725 		ubfx	r5, r4, #8, #8
+ 866              	.LVL128:
+ 289:flash.c       ****   uint8 addr3 = address & 0xFF;
+ 867              		.loc 1 289 0
+ 868 001a E4B2     		uxtb	r4, r4
+ 869              	.LVL129:
+ 290:flash.c       **** 
+ 291:flash.c       ****   _writeEnable();
+ 870              		.loc 1 291 0
+ARM GAS  C:\Users\linar\AppData\Local\Temp\ccpLyYLJ.s 			page 22
+
+
+ 871 001c FFF7FEFF 		bl	_writeEnable
+ 872              	.LVL130:
+ 292:flash.c       ****   cs_Write(0);
+ 873              		.loc 1 292 0
+ 874 0020 0020     		movs	r0, #0
+ 875 0022 FFF7FEFF 		bl	cs_Write
+ 876              	.LVL131:
+ 293:flash.c       ****   _sendCmd(BLK_ERASE);
+ 877              		.loc 1 293 0
+ 878 0026 D820     		movs	r0, #216
+ 879 0028 FFF7FEFF 		bl	_sendCmd
+ 880              	.LVL132:
+ 294:flash.c       ****   _sendCmd(addr1);
+ 881              		.loc 1 294 0
+ 882 002c 3046     		mov	r0, r6
+ 883 002e FFF7FEFF 		bl	_sendCmd
+ 884              	.LVL133:
+ 295:flash.c       ****   _sendCmd(addr2);
+ 885              		.loc 1 295 0
+ 886 0032 2846     		mov	r0, r5
+ 887 0034 FFF7FEFF 		bl	_sendCmd
+ 888              	.LVL134:
+ 296:flash.c       ****   _sendCmd(addr3);
+ 889              		.loc 1 296 0
+ 890 0038 2046     		mov	r0, r4
+ 891 003a FFF7FEFF 		bl	_sendCmd
+ 892              	.LVL135:
+ 297:flash.c       ****   cs_Write(1);
+ 893              		.loc 1 297 0
+ 894 003e 0120     		movs	r0, #1
+ 895 0040 FFF7FEFF 		bl	cs_Write
+ 896              	.LVL136:
+ 298:flash.c       **** 
+ 299:flash.c       ****   status = OK;
+ 300:flash.c       **** 
+ 301:flash.c       ****   return status;
+ 897              		.loc 1 301 0
+ 898 0044 0020     		movs	r0, #0
+ 899 0046 70BD     		pop	{r4, r5, r6, pc}
+ 900              	.LVL137:
+ 901              	.L70:
+ 284:flash.c       ****   if(_checkIfProtected(address)) return PROTECTED;
+ 902              		.loc 1 284 0
+ 903 0048 0320     		movs	r0, #3
+ 904 004a 70BD     		pop	{r4, r5, r6, pc}
+ 905              	.LVL138:
+ 906              	.L71:
+ 285:flash.c       **** 
+ 907              		.loc 1 285 0
+ 908 004c 0420     		movs	r0, #4
+ 302:flash.c       **** }
+ 909              		.loc 1 302 0
+ 910 004e 70BD     		pop	{r4, r5, r6, pc}
+ 911              		.cfi_endproc
+ 912              	.LFE75:
+ 913              		.size	blockErase, .-blockErase
+ 914              		.section	.text.chipErase,"ax",%progbits
+ARM GAS  C:\Users\linar\AppData\Local\Temp\ccpLyYLJ.s 			page 23
+
+
+ 915              		.align	2
+ 916              		.global	chipErase
+ 917              		.thumb
+ 918              		.thumb_func
+ 919              		.type	chipErase, %function
+ 920              	chipErase:
+ 921              	.LFB76:
+ 303:flash.c       **** 
+ 304:flash.c       **** cmdStatusTypedef chipErase()
+ 305:flash.c       **** {
+ 922              		.loc 1 305 0
+ 923              		.cfi_startproc
+ 924              		@ args = 0, pretend = 0, frame = 0
+ 925              		@ frame_needed = 0, uses_anonymous_args = 0
+ 926 0000 08B5     		push	{r3, lr}
+ 927              		.cfi_def_cfa_offset 8
+ 928              		.cfi_offset 3, -8
+ 929              		.cfi_offset 14, -4
+ 930              	.LVL139:
+ 306:flash.c       ****   cmdStatusTypedef status = ERROR;
+ 307:flash.c       **** 
+ 308:flash.c       ****   if(_checkWIP()) return BUSY;
+ 931              		.loc 1 308 0
+ 932 0002 FFF7FEFF 		bl	_checkWIP
+ 933              	.LVL140:
+ 934 0006 88B9     		cbnz	r0, .L75
+ 309:flash.c       ****   if(_checkIfProtectedBitsSet()) return PROTECTED;
+ 935              		.loc 1 309 0
+ 936 0008 FFF7FEFF 		bl	_checkIfProtectedBitsSet
+ 937              	.LVL141:
+ 938 000c 80B9     		cbnz	r0, .L76
+ 310:flash.c       **** 
+ 311:flash.c       ****   SPIM_1_ClearRxBuffer();
+ 939              		.loc 1 311 0
+ 940 000e FFF7FEFF 		bl	SPIM_1_ClearRxBuffer
+ 941              	.LVL142:
+ 312:flash.c       **** 
+ 313:flash.c       ****   _writeEnable();
+ 942              		.loc 1 313 0
+ 943 0012 FFF7FEFF 		bl	_writeEnable
+ 944              	.LVL143:
+ 314:flash.c       ****   cs_Write(0);
+ 945              		.loc 1 314 0
+ 946 0016 0020     		movs	r0, #0
+ 947 0018 FFF7FEFF 		bl	cs_Write
+ 948              	.LVL144:
+ 315:flash.c       ****   _sendCmd(CHIP_ERASE_1);
+ 949              		.loc 1 315 0
+ 950 001c C720     		movs	r0, #199
+ 951 001e FFF7FEFF 		bl	_sendCmd
+ 952              	.LVL145:
+ 316:flash.c       ****   cs_Write(1);
+ 953              		.loc 1 316 0
+ 954 0022 0120     		movs	r0, #1
+ 955 0024 FFF7FEFF 		bl	cs_Write
+ 956              	.LVL146:
+ 317:flash.c       **** 
+ARM GAS  C:\Users\linar\AppData\Local\Temp\ccpLyYLJ.s 			page 24
+
+
+ 318:flash.c       ****   status = OK;
+ 319:flash.c       **** 
+ 320:flash.c       ****   return status;
+ 957              		.loc 1 320 0
+ 958 0028 0020     		movs	r0, #0
+ 959 002a 08BD     		pop	{r3, pc}
+ 960              	.LVL147:
+ 961              	.L75:
+ 308:flash.c       ****   if(_checkIfProtectedBitsSet()) return PROTECTED;
+ 962              		.loc 1 308 0
+ 963 002c 0320     		movs	r0, #3
+ 964 002e 08BD     		pop	{r3, pc}
+ 965              	.L76:
+ 309:flash.c       **** 
+ 966              		.loc 1 309 0
+ 967 0030 0420     		movs	r0, #4
+ 321:flash.c       **** }
+ 968              		.loc 1 321 0
+ 969 0032 08BD     		pop	{r3, pc}
+ 970              		.cfi_endproc
+ 971              	.LFE76:
+ 972              		.size	chipErase, .-chipErase
+ 973              		.section	.text.deepPowerDown,"ax",%progbits
+ 974              		.align	2
+ 975              		.global	deepPowerDown
+ 976              		.thumb
+ 977              		.thumb_func
+ 978              		.type	deepPowerDown, %function
+ 979              	deepPowerDown:
+ 980              	.LFB77:
+ 322:flash.c       **** 
+ 323:flash.c       **** cmdStatusTypedef deepPowerDown()
+ 324:flash.c       **** {
+ 981              		.loc 1 324 0
+ 982              		.cfi_startproc
+ 983              		@ args = 0, pretend = 0, frame = 0
+ 984              		@ frame_needed = 0, uses_anonymous_args = 0
+ 985 0000 08B5     		push	{r3, lr}
+ 986              		.cfi_def_cfa_offset 8
+ 987              		.cfi_offset 3, -8
+ 988              		.cfi_offset 14, -4
+ 989              	.LVL148:
+ 325:flash.c       ****   cmdStatusTypedef status = ERROR;
+ 326:flash.c       **** 
+ 327:flash.c       ****   if(_checkWIP()) return BUSY;
+ 990              		.loc 1 327 0
+ 991 0002 FFF7FEFF 		bl	_checkWIP
+ 992              	.LVL149:
+ 993 0006 70B9     		cbnz	r0, .L80
+ 328:flash.c       **** 
+ 329:flash.c       ****   SPIM_1_ClearRxBuffer();
+ 994              		.loc 1 329 0
+ 995 0008 FFF7FEFF 		bl	SPIM_1_ClearRxBuffer
+ 996              	.LVL150:
+ 330:flash.c       **** 
+ 331:flash.c       ****   _writeEnable();
+ 997              		.loc 1 331 0
+ARM GAS  C:\Users\linar\AppData\Local\Temp\ccpLyYLJ.s 			page 25
+
+
+ 998 000c FFF7FEFF 		bl	_writeEnable
+ 999              	.LVL151:
+ 332:flash.c       ****   cs_Write(0);
+ 1000              		.loc 1 332 0
+ 1001 0010 0020     		movs	r0, #0
+ 1002 0012 FFF7FEFF 		bl	cs_Write
+ 1003              	.LVL152:
+ 333:flash.c       ****   _sendCmd(PWR_DOWN);
+ 1004              		.loc 1 333 0
+ 1005 0016 B920     		movs	r0, #185
+ 1006 0018 FFF7FEFF 		bl	_sendCmd
+ 1007              	.LVL153:
+ 334:flash.c       ****   cs_Write(1);
+ 1008              		.loc 1 334 0
+ 1009 001c 0120     		movs	r0, #1
+ 1010 001e FFF7FEFF 		bl	cs_Write
+ 1011              	.LVL154:
+ 335:flash.c       **** 
+ 336:flash.c       ****   status = OK;
+ 337:flash.c       **** 
+ 338:flash.c       ****   return status;
+ 1012              		.loc 1 338 0
+ 1013 0022 0020     		movs	r0, #0
+ 1014 0024 08BD     		pop	{r3, pc}
+ 1015              	.LVL155:
+ 1016              	.L80:
+ 327:flash.c       **** 
+ 1017              		.loc 1 327 0
+ 1018 0026 0320     		movs	r0, #3
+ 339:flash.c       **** }
+ 1019              		.loc 1 339 0
+ 1020 0028 08BD     		pop	{r3, pc}
+ 1021              		.cfi_endproc
+ 1022              	.LFE77:
+ 1023              		.size	deepPowerDown, .-deepPowerDown
+ 1024 002a 00BF     		.section	.text.releaseDeepPowerDown,"ax",%progbits
+ 1025              		.align	2
+ 1026              		.global	releaseDeepPowerDown
+ 1027              		.thumb
+ 1028              		.thumb_func
+ 1029              		.type	releaseDeepPowerDown, %function
+ 1030              	releaseDeepPowerDown:
+ 1031              	.LFB78:
+ 340:flash.c       **** 
+ 341:flash.c       **** cmdStatusTypedef releaseDeepPowerDown()
+ 342:flash.c       **** {
+ 1032              		.loc 1 342 0
+ 1033              		.cfi_startproc
+ 1034              		@ args = 0, pretend = 0, frame = 0
+ 1035              		@ frame_needed = 0, uses_anonymous_args = 0
+ 1036 0000 08B5     		push	{r3, lr}
+ 1037              		.cfi_def_cfa_offset 8
+ 1038              		.cfi_offset 3, -8
+ 1039              		.cfi_offset 14, -4
+ 1040              	.LVL156:
+ 343:flash.c       ****   cmdStatusTypedef status = ERROR;
+ 344:flash.c       ****     
+ARM GAS  C:\Users\linar\AppData\Local\Temp\ccpLyYLJ.s 			page 26
+
+
+ 345:flash.c       ****   SPIM_1_ClearRxBuffer();
+ 1041              		.loc 1 345 0
+ 1042 0002 FFF7FEFF 		bl	SPIM_1_ClearRxBuffer
+ 1043              	.LVL157:
+ 346:flash.c       **** 
+ 347:flash.c       ****   cs_Write(0);
+ 1044              		.loc 1 347 0
+ 1045 0006 0020     		movs	r0, #0
+ 1046 0008 FFF7FEFF 		bl	cs_Write
+ 1047              	.LVL158:
+ 348:flash.c       ****   _sendCmd(REL_PWR_DOWN_DEV_ID);
+ 1048              		.loc 1 348 0
+ 1049 000c AB20     		movs	r0, #171
+ 1050 000e FFF7FEFF 		bl	_sendCmd
+ 1051              	.LVL159:
+ 349:flash.c       ****   cs_Write(1);
+ 1052              		.loc 1 349 0
+ 1053 0012 0120     		movs	r0, #1
+ 1054 0014 FFF7FEFF 		bl	cs_Write
+ 1055              	.LVL160:
+ 350:flash.c       **** 
+ 351:flash.c       ****   status = OK;
+ 352:flash.c       **** 
+ 353:flash.c       ****   return status;
+ 354:flash.c       **** }
+ 1056              		.loc 1 354 0
+ 1057 0018 0020     		movs	r0, #0
+ 1058 001a 08BD     		pop	{r3, pc}
+ 1059              		.cfi_endproc
+ 1060              	.LFE78:
+ 1061              		.size	releaseDeepPowerDown, .-releaseDeepPowerDown
+ 1062              		.section	.text.releaseDeepPowerDownDevID,"ax",%progbits
+ 1063              		.align	2
+ 1064              		.global	releaseDeepPowerDownDevID
+ 1065              		.thumb
+ 1066              		.thumb_func
+ 1067              		.type	releaseDeepPowerDownDevID, %function
+ 1068              	releaseDeepPowerDownDevID:
+ 1069              	.LFB79:
+ 355:flash.c       **** 
+ 356:flash.c       **** uint8 releaseDeepPowerDownDevID()
+ 357:flash.c       **** {
+ 1070              		.loc 1 357 0
+ 1071              		.cfi_startproc
+ 1072              		@ args = 0, pretend = 0, frame = 0
+ 1073              		@ frame_needed = 0, uses_anonymous_args = 0
+ 1074 0000 08B5     		push	{r3, lr}
+ 1075              		.cfi_def_cfa_offset 8
+ 1076              		.cfi_offset 3, -8
+ 1077              		.cfi_offset 14, -4
+ 1078              	.LVL161:
+ 358:flash.c       ****   uint8 devId = 0;
+ 359:flash.c       ****     
+ 360:flash.c       ****   SPIM_1_ClearRxBuffer();
+ 1079              		.loc 1 360 0
+ 1080 0002 FFF7FEFF 		bl	SPIM_1_ClearRxBuffer
+ 1081              	.LVL162:
+ARM GAS  C:\Users\linar\AppData\Local\Temp\ccpLyYLJ.s 			page 27
+
+
+ 361:flash.c       **** 
+ 362:flash.c       ****   cs_Write(0);
+ 1082              		.loc 1 362 0
+ 1083 0006 0020     		movs	r0, #0
+ 1084 0008 FFF7FEFF 		bl	cs_Write
+ 1085              	.LVL163:
+ 363:flash.c       ****   _sendCmd(REL_PWR_DOWN_DEV_ID);
+ 1086              		.loc 1 363 0
+ 1087 000c AB20     		movs	r0, #171
+ 1088 000e FFF7FEFF 		bl	_sendCmd
+ 1089              	.LVL164:
+ 364:flash.c       ****   _sendCmd(SHIFT_OUT);
+ 1090              		.loc 1 364 0
+ 1091 0012 0020     		movs	r0, #0
+ 1092 0014 FFF7FEFF 		bl	_sendCmd
+ 1093              	.LVL165:
+ 365:flash.c       ****   _sendCmd(SHIFT_OUT);
+ 1094              		.loc 1 365 0
+ 1095 0018 0020     		movs	r0, #0
+ 1096 001a FFF7FEFF 		bl	_sendCmd
+ 1097              	.LVL166:
+ 366:flash.c       ****   _sendCmd(SHIFT_OUT);
+ 1098              		.loc 1 366 0
+ 1099 001e 0020     		movs	r0, #0
+ 1100 0020 FFF7FEFF 		bl	_sendCmd
+ 1101              	.LVL167:
+ 367:flash.c       ****   _sendCmd(SHIFT_OUT);
+ 1102              		.loc 1 367 0
+ 1103 0024 0020     		movs	r0, #0
+ 1104 0026 FFF7FEFF 		bl	_sendCmd
+ 1105              	.LVL168:
+ 368:flash.c       ****   cs_Write(1);
+ 1106              		.loc 1 368 0
+ 1107 002a 0120     		movs	r0, #1
+ 1108 002c FFF7FEFF 		bl	cs_Write
+ 1109              	.LVL169:
+ 369:flash.c       **** 
+ 370:flash.c       ****   devId = SPIM_1_ReadRxData();
+ 1110              		.loc 1 370 0
+ 1111 0030 FFF7FEFF 		bl	SPIM_1_ReadRxData
+ 1112              	.LVL170:
+ 371:flash.c       **** 
+ 372:flash.c       ****   return devId;
+ 373:flash.c       **** }
+ 1113              		.loc 1 373 0
+ 1114 0034 08BD     		pop	{r3, pc}
+ 1115              		.cfi_endproc
+ 1116              	.LFE79:
+ 1117              		.size	releaseDeepPowerDownDevID, .-releaseDeepPowerDownDevID
+ 1118 0036 00BF     		.section	.text.readMnfctDevId,"ax",%progbits
+ 1119              		.align	2
+ 1120              		.global	readMnfctDevId
+ 1121              		.thumb
+ 1122              		.thumb_func
+ 1123              		.type	readMnfctDevId, %function
+ 1124              	readMnfctDevId:
+ 1125              	.LFB80:
+ARM GAS  C:\Users\linar\AppData\Local\Temp\ccpLyYLJ.s 			page 28
+
+
+ 374:flash.c       **** 
+ 375:flash.c       **** cmdStatusTypedef readMnfctDevId(uint8* mnfct, uint8* devId)
+ 376:flash.c       **** {
+ 1126              		.loc 1 376 0
+ 1127              		.cfi_startproc
+ 1128              		@ args = 0, pretend = 0, frame = 0
+ 1129              		@ frame_needed = 0, uses_anonymous_args = 0
+ 1130              	.LVL171:
+ 1131 0000 38B5     		push	{r3, r4, r5, lr}
+ 1132              		.cfi_def_cfa_offset 16
+ 1133              		.cfi_offset 3, -16
+ 1134              		.cfi_offset 4, -12
+ 1135              		.cfi_offset 5, -8
+ 1136              		.cfi_offset 14, -4
+ 1137 0002 0446     		mov	r4, r0
+ 1138 0004 0D46     		mov	r5, r1
+ 1139              	.LVL172:
+ 377:flash.c       ****   cmdStatusTypedef status = ERROR;
+ 378:flash.c       ****     
+ 379:flash.c       ****   if(_checkWIP()) return BUSY;
+ 1140              		.loc 1 379 0
+ 1141 0006 FFF7FEFF 		bl	_checkWIP
+ 1142              	.LVL173:
+ 1143 000a 88BB     		cbnz	r0, .L93
+ 380:flash.c       ****     
+ 381:flash.c       ****   SPIM_1_ClearRxBuffer();
+ 1144              		.loc 1 381 0
+ 1145 000c FFF7FEFF 		bl	SPIM_1_ClearRxBuffer
+ 1146              	.LVL174:
+ 382:flash.c       **** 
+ 383:flash.c       ****   cs_Write(0);
+ 1147              		.loc 1 383 0
+ 1148 0010 0020     		movs	r0, #0
+ 1149 0012 FFF7FEFF 		bl	cs_Write
+ 1150              	.LVL175:
+ 384:flash.c       ****   _sendCmd(MANF_DEV_ID);
+ 1151              		.loc 1 384 0
+ 1152 0016 9020     		movs	r0, #144
+ 1153 0018 FFF7FEFF 		bl	_sendCmd
+ 1154              	.LVL176:
+ 385:flash.c       ****   _sendCmd(SHIFT_OUT);
+ 1155              		.loc 1 385 0
+ 1156 001c 0020     		movs	r0, #0
+ 1157 001e FFF7FEFF 		bl	_sendCmd
+ 1158              	.LVL177:
+ 386:flash.c       ****   _sendCmd(SHIFT_OUT);
+ 1159              		.loc 1 386 0
+ 1160 0022 0020     		movs	r0, #0
+ 1161 0024 FFF7FEFF 		bl	_sendCmd
+ 1162              	.LVL178:
+ 387:flash.c       ****   _sendCmd(SHIFT_OUT);
+ 1163              		.loc 1 387 0
+ 1164 0028 0020     		movs	r0, #0
+ 1165 002a FFF7FEFF 		bl	_sendCmd
+ 1166              	.LVL179:
+ 388:flash.c       ****   _sendCmd(SHIFT_OUT);
+ 1167              		.loc 1 388 0
+ARM GAS  C:\Users\linar\AppData\Local\Temp\ccpLyYLJ.s 			page 29
+
+
+ 1168 002e 0020     		movs	r0, #0
+ 1169 0030 FFF7FEFF 		bl	_sendCmd
+ 1170              	.LVL180:
+ 389:flash.c       ****   _sendCmd(SHIFT_OUT);
+ 1171              		.loc 1 389 0
+ 1172 0034 0020     		movs	r0, #0
+ 1173 0036 FFF7FEFF 		bl	_sendCmd
+ 1174              	.LVL181:
+ 390:flash.c       ****   cs_Write(1);
+ 1175              		.loc 1 390 0
+ 1176 003a 0120     		movs	r0, #1
+ 1177 003c FFF7FEFF 		bl	cs_Write
+ 1178              	.LVL182:
+ 391:flash.c       ****     
+ 392:flash.c       ****   while(SPIM_1_GetRxBufferSize() > 0)
+ 1179              		.loc 1 392 0
+ 1180 0040 11E0     		b	.L88
+ 1181              	.L92:
+ 393:flash.c       ****   {
+ 394:flash.c       ****     if(SPIM_1_GetRxBufferSize() == 2) *mnfct = SPIM_1_ReadRxData();
+ 1182              		.loc 1 394 0
+ 1183 0042 FFF7FEFF 		bl	SPIM_1_GetRxBufferSize
+ 1184              	.LVL183:
+ 1185 0046 0228     		cmp	r0, #2
+ 1186 0048 03D1     		bne	.L89
+ 1187              		.loc 1 394 0 is_stmt 0 discriminator 1
+ 1188 004a FFF7FEFF 		bl	SPIM_1_ReadRxData
+ 1189              	.LVL184:
+ 1190 004e 2070     		strb	r0, [r4]
+ 1191 0050 09E0     		b	.L88
+ 1192              	.L89:
+ 395:flash.c       ****     else if(SPIM_1_GetRxBufferSize() == 1) *devId = SPIM_1_ReadRxData();
+ 1193              		.loc 1 395 0 is_stmt 1
+ 1194 0052 FFF7FEFF 		bl	SPIM_1_GetRxBufferSize
+ 1195              	.LVL185:
+ 1196 0056 0128     		cmp	r0, #1
+ 1197 0058 03D1     		bne	.L91
+ 1198              		.loc 1 395 0 is_stmt 0 discriminator 1
+ 1199 005a FFF7FEFF 		bl	SPIM_1_ReadRxData
+ 1200              	.LVL186:
+ 1201 005e 2870     		strb	r0, [r5]
+ 1202 0060 01E0     		b	.L88
+ 1203              	.L91:
+ 396:flash.c       ****     else SPIM_1_ReadRxData();
+ 1204              		.loc 1 396 0 is_stmt 1
+ 1205 0062 FFF7FEFF 		bl	SPIM_1_ReadRxData
+ 1206              	.LVL187:
+ 1207              	.L88:
+ 392:flash.c       ****   {
+ 1208              		.loc 1 392 0
+ 1209 0066 FFF7FEFF 		bl	SPIM_1_GetRxBufferSize
+ 1210              	.LVL188:
+ 1211 006a 0028     		cmp	r0, #0
+ 1212 006c E9D1     		bne	.L92
+ 1213 006e 38BD     		pop	{r3, r4, r5, pc}
+ 1214              	.LVL189:
+ 1215              	.L93:
+ARM GAS  C:\Users\linar\AppData\Local\Temp\ccpLyYLJ.s 			page 30
+
+
+ 379:flash.c       ****     
+ 1216              		.loc 1 379 0
+ 1217 0070 0320     		movs	r0, #3
+ 397:flash.c       ****   }
+ 398:flash.c       **** 
+ 399:flash.c       ****   status = OK;
+ 400:flash.c       **** 
+ 401:flash.c       ****   return status;
+ 402:flash.c       **** }
+ 1218              		.loc 1 402 0
+ 1219 0072 38BD     		pop	{r3, r4, r5, pc}
+ 1220              		.cfi_endproc
+ 1221              	.LFE80:
+ 1222              		.size	readMnfctDevId, .-readMnfctDevId
+ 1223              		.section	.text.readJEDECId,"ax",%progbits
+ 1224              		.align	2
+ 1225              		.global	readJEDECId
+ 1226              		.thumb
+ 1227              		.thumb_func
+ 1228              		.type	readJEDECId, %function
+ 1229              	readJEDECId:
+ 1230              	.LFB81:
+ 403:flash.c       **** 
+ 404:flash.c       **** cmdStatusTypedef readJEDECId(uint8* mnfct, uint8* type, uint8* capacity)
+ 405:flash.c       **** {
+ 1231              		.loc 1 405 0
+ 1232              		.cfi_startproc
+ 1233              		@ args = 0, pretend = 0, frame = 0
+ 1234              		@ frame_needed = 0, uses_anonymous_args = 0
+ 1235              	.LVL190:
+ 1236 0000 70B5     		push	{r4, r5, r6, lr}
+ 1237              		.cfi_def_cfa_offset 16
+ 1238              		.cfi_offset 4, -16
+ 1239              		.cfi_offset 5, -12
+ 1240              		.cfi_offset 6, -8
+ 1241              		.cfi_offset 14, -4
+ 1242 0002 0446     		mov	r4, r0
+ 1243 0004 0D46     		mov	r5, r1
+ 1244 0006 1646     		mov	r6, r2
+ 1245              	.LVL191:
+ 406:flash.c       ****   cmdStatusTypedef status = ERROR;
+ 407:flash.c       **** 
+ 408:flash.c       ****   if(_checkWIP()) return BUSY;
+ 1246              		.loc 1 408 0
+ 1247 0008 FFF7FEFF 		bl	_checkWIP
+ 1248              	.LVL192:
+ 1249 000c 98BB     		cbnz	r0, .L103
+ 409:flash.c       **** 
+ 410:flash.c       ****   SPIM_1_ClearRxBuffer();
+ 1250              		.loc 1 410 0
+ 1251 000e FFF7FEFF 		bl	SPIM_1_ClearRxBuffer
+ 1252              	.LVL193:
+ 411:flash.c       **** 
+ 412:flash.c       ****   cs_Write(0);
+ 1253              		.loc 1 412 0
+ 1254 0012 0020     		movs	r0, #0
+ 1255 0014 FFF7FEFF 		bl	cs_Write
+ARM GAS  C:\Users\linar\AppData\Local\Temp\ccpLyYLJ.s 			page 31
+
+
+ 1256              	.LVL194:
+ 413:flash.c       ****   _sendCmd(JEDEC_ID);
+ 1257              		.loc 1 413 0
+ 1258 0018 9F20     		movs	r0, #159
+ 1259 001a FFF7FEFF 		bl	_sendCmd
+ 1260              	.LVL195:
+ 414:flash.c       ****   _sendCmd(SHIFT_OUT);
+ 1261              		.loc 1 414 0
+ 1262 001e 0020     		movs	r0, #0
+ 1263 0020 FFF7FEFF 		bl	_sendCmd
+ 1264              	.LVL196:
+ 415:flash.c       ****   _sendCmd(SHIFT_OUT);
+ 1265              		.loc 1 415 0
+ 1266 0024 0020     		movs	r0, #0
+ 1267 0026 FFF7FEFF 		bl	_sendCmd
+ 1268              	.LVL197:
+ 416:flash.c       ****   _sendCmd(SHIFT_OUT);
+ 1269              		.loc 1 416 0
+ 1270 002a 0020     		movs	r0, #0
+ 1271 002c FFF7FEFF 		bl	_sendCmd
+ 1272              	.LVL198:
+ 417:flash.c       ****   cs_Write(1);
+ 1273              		.loc 1 417 0
+ 1274 0030 0120     		movs	r0, #1
+ 1275 0032 FFF7FEFF 		bl	cs_Write
+ 1276              	.LVL199:
+ 418:flash.c       **** 
+ 419:flash.c       ****   while(SPIM_1_GetRxBufferSize() > 0)
+ 1277              		.loc 1 419 0
+ 1278 0036 19E0     		b	.L97
+ 1279              	.L102:
+ 420:flash.c       ****   {
+ 421:flash.c       ****     if(SPIM_1_GetRxBufferSize() == 3) *mnfct = SPIM_1_ReadRxData();
+ 1280              		.loc 1 421 0
+ 1281 0038 FFF7FEFF 		bl	SPIM_1_GetRxBufferSize
+ 1282              	.LVL200:
+ 1283 003c 0328     		cmp	r0, #3
+ 1284 003e 03D1     		bne	.L98
+ 1285              		.loc 1 421 0 is_stmt 0 discriminator 1
+ 1286 0040 FFF7FEFF 		bl	SPIM_1_ReadRxData
+ 1287              	.LVL201:
+ 1288 0044 2070     		strb	r0, [r4]
+ 1289 0046 11E0     		b	.L97
+ 1290              	.L98:
+ 422:flash.c       ****     else if(SPIM_1_GetRxBufferSize() == 2) *type = SPIM_1_ReadRxData();
+ 1291              		.loc 1 422 0 is_stmt 1
+ 1292 0048 FFF7FEFF 		bl	SPIM_1_GetRxBufferSize
+ 1293              	.LVL202:
+ 1294 004c 0228     		cmp	r0, #2
+ 1295 004e 03D1     		bne	.L100
+ 1296              		.loc 1 422 0 is_stmt 0 discriminator 1
+ 1297 0050 FFF7FEFF 		bl	SPIM_1_ReadRxData
+ 1298              	.LVL203:
+ 1299 0054 2870     		strb	r0, [r5]
+ 1300 0056 09E0     		b	.L97
+ 1301              	.L100:
+ 423:flash.c       ****     else if(SPIM_1_GetRxBufferSize() == 1) *capacity = SPIM_1_ReadRxData();
+ARM GAS  C:\Users\linar\AppData\Local\Temp\ccpLyYLJ.s 			page 32
+
+
+ 1302              		.loc 1 423 0 is_stmt 1
+ 1303 0058 FFF7FEFF 		bl	SPIM_1_GetRxBufferSize
+ 1304              	.LVL204:
+ 1305 005c 0128     		cmp	r0, #1
+ 1306 005e 03D1     		bne	.L101
+ 1307              		.loc 1 423 0 is_stmt 0 discriminator 1
+ 1308 0060 FFF7FEFF 		bl	SPIM_1_ReadRxData
+ 1309              	.LVL205:
+ 1310 0064 3070     		strb	r0, [r6]
+ 1311 0066 01E0     		b	.L97
+ 1312              	.L101:
+ 424:flash.c       ****     else SPIM_1_ReadRxData();
+ 1313              		.loc 1 424 0 is_stmt 1
+ 1314 0068 FFF7FEFF 		bl	SPIM_1_ReadRxData
+ 1315              	.LVL206:
+ 1316              	.L97:
+ 419:flash.c       ****   {
+ 1317              		.loc 1 419 0
+ 1318 006c FFF7FEFF 		bl	SPIM_1_GetRxBufferSize
+ 1319              	.LVL207:
+ 1320 0070 0028     		cmp	r0, #0
+ 1321 0072 E1D1     		bne	.L102
+ 1322 0074 70BD     		pop	{r4, r5, r6, pc}
+ 1323              	.LVL208:
+ 1324              	.L103:
+ 408:flash.c       **** 
+ 1325              		.loc 1 408 0
+ 1326 0076 0320     		movs	r0, #3
+ 425:flash.c       ****   }
+ 426:flash.c       **** 
+ 427:flash.c       ****   status = OK;
+ 428:flash.c       **** 
+ 429:flash.c       ****   return status;
+ 430:flash.c       **** }
+ 1327              		.loc 1 430 0
+ 1328 0078 70BD     		pop	{r4, r5, r6, pc}
+ 1329              		.cfi_endproc
+ 1330              	.LFE81:
+ 1331              		.size	readJEDECId, .-readJEDECId
+ 1332 007a 00BF     		.text
+ 1333              	.Letext0:
+ 1334              		.file 2 "c:\\program files (x86)\\cypress\\psoc creator\\4.4\\psoc creator\\import\\gnu\\arm\\5.4.
+ 1335              		.file 3 "c:\\program files (x86)\\cypress\\psoc creator\\4.4\\psoc creator\\import\\gnu\\arm\\5.4.
+ 1336              		.file 4 "Generated_Source\\PSoC5/cytypes.h"
+ 1337              		.file 5 "flash.h"
+ 1338              		.file 6 "Generated_Source\\PSoC5/SPIM_1.h"
+ 1339              		.file 7 "Generated_Source\\PSoC5/cs.h"
+ 1340              		.file 8 "Generated_Source\\PSoC5/core_cm3.h"
+ 1341              		.section	.debug_info,"",%progbits
+ 1342              	.Ldebug_info0:
+ 1343 0000 2D0D0000 		.4byte	0xd2d
+ 1344 0004 0400     		.2byte	0x4
+ 1345 0006 00000000 		.4byte	.Ldebug_abbrev0
+ 1346 000a 04       		.byte	0x4
+ 1347 000b 01       		.uleb128 0x1
+ 1348 000c 31030000 		.4byte	.LASF62
+ 1349 0010 0C       		.byte	0xc
+ARM GAS  C:\Users\linar\AppData\Local\Temp\ccpLyYLJ.s 			page 33
+
+
+ 1350 0011 29000000 		.4byte	.LASF63
+ 1351 0015 DE010000 		.4byte	.LASF64
+ 1352 0019 00000000 		.4byte	.Ldebug_ranges0+0
+ 1353 001d 00000000 		.4byte	0
+ 1354 0021 00000000 		.4byte	.Ldebug_line0
+ 1355 0025 02       		.uleb128 0x2
+ 1356 0026 01       		.byte	0x1
+ 1357 0027 06       		.byte	0x6
+ 1358 0028 7A010000 		.4byte	.LASF0
+ 1359 002c 02       		.uleb128 0x2
+ 1360 002d 01       		.byte	0x1
+ 1361 002e 08       		.byte	0x8
+ 1362 002f 5C010000 		.4byte	.LASF1
+ 1363 0033 02       		.uleb128 0x2
+ 1364 0034 02       		.byte	0x2
+ 1365 0035 05       		.byte	0x5
+ 1366 0036 3D000000 		.4byte	.LASF2
+ 1367 003a 02       		.uleb128 0x2
+ 1368 003b 02       		.byte	0x2
+ 1369 003c 07       		.byte	0x7
+ 1370 003d 8C020000 		.4byte	.LASF3
+ 1371 0041 03       		.uleb128 0x3
+ 1372 0042 06030000 		.4byte	.LASF9
+ 1373 0046 02       		.byte	0x2
+ 1374 0047 3F       		.byte	0x3f
+ 1375 0048 4C000000 		.4byte	0x4c
+ 1376 004c 02       		.uleb128 0x2
+ 1377 004d 04       		.byte	0x4
+ 1378 004e 05       		.byte	0x5
+ 1379 004f E1000000 		.4byte	.LASF4
+ 1380 0053 02       		.uleb128 0x2
+ 1381 0054 04       		.byte	0x4
+ 1382 0055 07       		.byte	0x7
+ 1383 0056 B8010000 		.4byte	.LASF5
+ 1384 005a 02       		.uleb128 0x2
+ 1385 005b 08       		.byte	0x8
+ 1386 005c 05       		.byte	0x5
+ 1387 005d D3000000 		.4byte	.LASF6
+ 1388 0061 02       		.uleb128 0x2
+ 1389 0062 08       		.byte	0x8
+ 1390 0063 07       		.byte	0x7
+ 1391 0064 8F010000 		.4byte	.LASF7
+ 1392 0068 04       		.uleb128 0x4
+ 1393 0069 04       		.byte	0x4
+ 1394 006a 05       		.byte	0x5
+ 1395 006b 696E7400 		.ascii	"int\000"
+ 1396 006f 02       		.uleb128 0x2
+ 1397 0070 04       		.byte	0x4
+ 1398 0071 07       		.byte	0x7
+ 1399 0072 AB010000 		.4byte	.LASF8
+ 1400 0076 03       		.uleb128 0x3
+ 1401 0077 84020000 		.4byte	.LASF10
+ 1402 007b 03       		.byte	0x3
+ 1403 007c 2C       		.byte	0x2c
+ 1404 007d 41000000 		.4byte	0x41
+ 1405 0081 05       		.uleb128 0x5
+ 1406 0082 9D000000 		.4byte	.LASF11
+ARM GAS  C:\Users\linar\AppData\Local\Temp\ccpLyYLJ.s 			page 34
+
+
+ 1407 0086 04       		.byte	0x4
+ 1408 0087 E801     		.2byte	0x1e8
+ 1409 0089 2C000000 		.4byte	0x2c
+ 1410 008d 05       		.uleb128 0x5
+ 1411 008e CB020000 		.4byte	.LASF12
+ 1412 0092 04       		.byte	0x4
+ 1413 0093 EA01     		.2byte	0x1ea
+ 1414 0095 53000000 		.4byte	0x53
+ 1415 0099 02       		.uleb128 0x2
+ 1416 009a 04       		.byte	0x4
+ 1417 009b 04       		.byte	0x4
+ 1418 009c C4000000 		.4byte	.LASF13
+ 1419 00a0 02       		.uleb128 0x2
+ 1420 00a1 08       		.byte	0x8
+ 1421 00a2 04       		.byte	0x4
+ 1422 00a3 E0020000 		.4byte	.LASF14
+ 1423 00a7 02       		.uleb128 0x2
+ 1424 00a8 01       		.byte	0x1
+ 1425 00a9 08       		.byte	0x8
+ 1426 00aa 7F020000 		.4byte	.LASF15
+ 1427 00ae 02       		.uleb128 0x2
+ 1428 00af 08       		.byte	0x8
+ 1429 00b0 04       		.byte	0x4
+ 1430 00b1 3B010000 		.4byte	.LASF16
+ 1431 00b5 02       		.uleb128 0x2
+ 1432 00b6 04       		.byte	0x4
+ 1433 00b7 07       		.byte	0x7
+ 1434 00b8 47000000 		.4byte	.LASF17
+ 1435 00bc 03       		.uleb128 0x3
+ 1436 00bd 12000000 		.4byte	.LASF18
+ 1437 00c1 05       		.byte	0x5
+ 1438 00c2 31       		.byte	0x31
+ 1439 00c3 81000000 		.4byte	0x81
+ 1440 00c7 06       		.uleb128 0x6
+ 1441 00c8 EC020000 		.4byte	.LASF23
+ 1442 00cc 01       		.byte	0x1
+ 1443 00cd 2C000000 		.4byte	0x2c
+ 1444 00d1 05       		.byte	0x5
+ 1445 00d2 33       		.byte	0x33
+ 1446 00d3 F5000000 		.4byte	0xf5
+ 1447 00d7 07       		.uleb128 0x7
+ 1448 00d8 4F4B00   		.ascii	"OK\000"
+ 1449 00db 00       		.byte	0
+ 1450 00dc 08       		.uleb128 0x8
+ 1451 00dd 22010000 		.4byte	.LASF19
+ 1452 00e1 01       		.byte	0x1
+ 1453 00e2 08       		.uleb128 0x8
+ 1454 00e3 D2020000 		.4byte	.LASF20
+ 1455 00e7 02       		.byte	0x2
+ 1456 00e8 08       		.uleb128 0x8
+ 1457 00e9 56020000 		.4byte	.LASF21
+ 1458 00ed 03       		.byte	0x3
+ 1459 00ee 08       		.uleb128 0x8
+ 1460 00ef 6A010000 		.4byte	.LASF22
+ 1461 00f3 04       		.byte	0x4
+ 1462 00f4 00       		.byte	0
+ 1463 00f5 03       		.uleb128 0x3
+ARM GAS  C:\Users\linar\AppData\Local\Temp\ccpLyYLJ.s 			page 35
+
+
+ 1464 00f6 EC020000 		.4byte	.LASF23
+ 1465 00fa 05       		.byte	0x5
+ 1466 00fb 3A       		.byte	0x3a
+ 1467 00fc C7000000 		.4byte	0xc7
+ 1468 0100 09       		.uleb128 0x9
+ 1469 0101 0C010000 		.4byte	.LASF26
+ 1470 0105 01       		.byte	0x1
+ 1471 0106 05       		.byte	0x5
+ 1472 0107 00000000 		.4byte	.LFB64
+ 1473 010b 12000000 		.4byte	.LFE64-.LFB64
+ 1474 010f 01       		.uleb128 0x1
+ 1475 0110 9C       		.byte	0x9c
+ 1476 0111 37010000 		.4byte	0x137
+ 1477 0115 0A       		.uleb128 0xa
+ 1478 0116 636D6400 		.ascii	"cmd\000"
+ 1479 011a 01       		.byte	0x1
+ 1480 011b 05       		.byte	0x5
+ 1481 011c 81000000 		.4byte	0x81
+ 1482 0120 00000000 		.4byte	.LLST0
+ 1483 0124 0B       		.uleb128 0xb
+ 1484 0125 06000000 		.4byte	.LVL1
+ 1485 0129 EE0C0000 		.4byte	0xcee
+ 1486 012d 0B       		.uleb128 0xb
+ 1487 012e 0A000000 		.4byte	.LVL2
+ 1488 0132 F90C0000 		.4byte	0xcf9
+ 1489 0136 00       		.byte	0
+ 1490 0137 0C       		.uleb128 0xc
+ 1491 0138 15010000 		.4byte	.LASF24
+ 1492 013c 01       		.byte	0x1
+ 1493 013d 0B       		.byte	0xb
+ 1494 013e 00000000 		.4byte	.LFB65
+ 1495 0142 16000000 		.4byte	.LFE65-.LFB65
+ 1496 0146 01       		.uleb128 0x1
+ 1497 0147 9C       		.byte	0x9c
+ 1498 0148 82010000 		.4byte	0x182
+ 1499 014c 0D       		.uleb128 0xd
+ 1500 014d 08000000 		.4byte	.LVL3
+ 1501 0151 040D0000 		.4byte	0xd04
+ 1502 0155 5F010000 		.4byte	0x15f
+ 1503 0159 0E       		.uleb128 0xe
+ 1504 015a 01       		.uleb128 0x1
+ 1505 015b 50       		.byte	0x50
+ 1506 015c 01       		.uleb128 0x1
+ 1507 015d 30       		.byte	0x30
+ 1508 015e 00       		.byte	0
+ 1509 015f 0D       		.uleb128 0xd
+ 1510 0160 0E000000 		.4byte	.LVL4
+ 1511 0164 00010000 		.4byte	0x100
+ 1512 0168 72010000 		.4byte	0x172
+ 1513 016c 0E       		.uleb128 0xe
+ 1514 016d 01       		.uleb128 0x1
+ 1515 016e 50       		.byte	0x50
+ 1516 016f 01       		.uleb128 0x1
+ 1517 0170 36       		.byte	0x36
+ 1518 0171 00       		.byte	0
+ 1519 0172 0F       		.uleb128 0xf
+ 1520 0173 14000000 		.4byte	.LVL5
+ARM GAS  C:\Users\linar\AppData\Local\Temp\ccpLyYLJ.s 			page 36
+
+
+ 1521 0177 040D0000 		.4byte	0xd04
+ 1522 017b 0E       		.uleb128 0xe
+ 1523 017c 01       		.uleb128 0x1
+ 1524 017d 50       		.byte	0x50
+ 1525 017e 01       		.uleb128 0x1
+ 1526 017f 31       		.byte	0x31
+ 1527 0180 00       		.byte	0
+ 1528 0181 00       		.byte	0
+ 1529 0182 0C       		.uleb128 0xc
+ 1530 0183 62020000 		.4byte	.LASF25
+ 1531 0187 01       		.byte	0x1
+ 1532 0188 12       		.byte	0x12
+ 1533 0189 00000000 		.4byte	.LFB66
+ 1534 018d 16000000 		.4byte	.LFE66-.LFB66
+ 1535 0191 01       		.uleb128 0x1
+ 1536 0192 9C       		.byte	0x9c
+ 1537 0193 CD010000 		.4byte	0x1cd
+ 1538 0197 0D       		.uleb128 0xd
+ 1539 0198 08000000 		.4byte	.LVL6
+ 1540 019c 040D0000 		.4byte	0xd04
+ 1541 01a0 AA010000 		.4byte	0x1aa
+ 1542 01a4 0E       		.uleb128 0xe
+ 1543 01a5 01       		.uleb128 0x1
+ 1544 01a6 50       		.byte	0x50
+ 1545 01a7 01       		.uleb128 0x1
+ 1546 01a8 30       		.byte	0x30
+ 1547 01a9 00       		.byte	0
+ 1548 01aa 0D       		.uleb128 0xd
+ 1549 01ab 0E000000 		.4byte	.LVL7
+ 1550 01af 00010000 		.4byte	0x100
+ 1551 01b3 BD010000 		.4byte	0x1bd
+ 1552 01b7 0E       		.uleb128 0xe
+ 1553 01b8 01       		.uleb128 0x1
+ 1554 01b9 50       		.byte	0x50
+ 1555 01ba 01       		.uleb128 0x1
+ 1556 01bb 34       		.byte	0x34
+ 1557 01bc 00       		.byte	0
+ 1558 01bd 0F       		.uleb128 0xf
+ 1559 01be 14000000 		.4byte	.LVL8
+ 1560 01c2 040D0000 		.4byte	0xd04
+ 1561 01c6 0E       		.uleb128 0xe
+ 1562 01c7 01       		.uleb128 0x1
+ 1563 01c8 50       		.byte	0x50
+ 1564 01c9 01       		.uleb128 0x1
+ 1565 01ca 31       		.byte	0x31
+ 1566 01cb 00       		.byte	0
+ 1567 01cc 00       		.byte	0
+ 1568 01cd 10       		.uleb128 0x10
+ 1569 01ce CA010000 		.4byte	.LASF27
+ 1570 01d2 01       		.byte	0x1
+ 1571 01d3 19       		.byte	0x19
+ 1572 01d4 81000000 		.4byte	0x81
+ 1573 01d8 00000000 		.4byte	.LFB67
+ 1574 01dc 28000000 		.4byte	.LFE67-.LFB67
+ 1575 01e0 01       		.uleb128 0x1
+ 1576 01e1 9C       		.byte	0x9c
+ 1577 01e2 5D020000 		.4byte	0x25d
+ARM GAS  C:\Users\linar\AppData\Local\Temp\ccpLyYLJ.s 			page 37
+
+
+ 1578 01e6 11       		.uleb128 0x11
+ 1579 01e7 72656700 		.ascii	"reg\000"
+ 1580 01eb 01       		.byte	0x1
+ 1581 01ec 1B       		.byte	0x1b
+ 1582 01ed 81000000 		.4byte	0x81
+ 1583 01f1 21000000 		.4byte	.LLST1
+ 1584 01f5 0B       		.uleb128 0xb
+ 1585 01f6 06000000 		.4byte	.LVL10
+ 1586 01fa 0F0D0000 		.4byte	0xd0f
+ 1587 01fe 0D       		.uleb128 0xd
+ 1588 01ff 0C000000 		.4byte	.LVL11
+ 1589 0203 040D0000 		.4byte	0xd04
+ 1590 0207 11020000 		.4byte	0x211
+ 1591 020b 0E       		.uleb128 0xe
+ 1592 020c 01       		.uleb128 0x1
+ 1593 020d 50       		.byte	0x50
+ 1594 020e 01       		.uleb128 0x1
+ 1595 020f 30       		.byte	0x30
+ 1596 0210 00       		.byte	0
+ 1597 0211 0D       		.uleb128 0xd
+ 1598 0212 12000000 		.4byte	.LVL12
+ 1599 0216 00010000 		.4byte	0x100
+ 1600 021a 24020000 		.4byte	0x224
+ 1601 021e 0E       		.uleb128 0xe
+ 1602 021f 01       		.uleb128 0x1
+ 1603 0220 50       		.byte	0x50
+ 1604 0221 01       		.uleb128 0x1
+ 1605 0222 35       		.byte	0x35
+ 1606 0223 00       		.byte	0
+ 1607 0224 0D       		.uleb128 0xd
+ 1608 0225 18000000 		.4byte	.LVL13
+ 1609 0229 00010000 		.4byte	0x100
+ 1610 022d 37020000 		.4byte	0x237
+ 1611 0231 0E       		.uleb128 0xe
+ 1612 0232 01       		.uleb128 0x1
+ 1613 0233 50       		.byte	0x50
+ 1614 0234 01       		.uleb128 0x1
+ 1615 0235 30       		.byte	0x30
+ 1616 0236 00       		.byte	0
+ 1617 0237 0D       		.uleb128 0xd
+ 1618 0238 1E000000 		.4byte	.LVL14
+ 1619 023c 040D0000 		.4byte	0xd04
+ 1620 0240 4A020000 		.4byte	0x24a
+ 1621 0244 0E       		.uleb128 0xe
+ 1622 0245 01       		.uleb128 0x1
+ 1623 0246 50       		.byte	0x50
+ 1624 0247 01       		.uleb128 0x1
+ 1625 0248 31       		.byte	0x31
+ 1626 0249 00       		.byte	0
+ 1627 024a 0B       		.uleb128 0xb
+ 1628 024b 22000000 		.4byte	.LVL15
+ 1629 024f 1A0D0000 		.4byte	0xd1a
+ 1630 0253 0B       		.uleb128 0xb
+ 1631 0254 26000000 		.4byte	.LVL16
+ 1632 0258 1A0D0000 		.4byte	0xd1a
+ 1633 025c 00       		.byte	0
+ 1634 025d 10       		.uleb128 0x10
+ARM GAS  C:\Users\linar\AppData\Local\Temp\ccpLyYLJ.s 			page 38
+
+
+ 1635 025e CB030000 		.4byte	.LASF28
+ 1636 0262 01       		.byte	0x1
+ 1637 0263 2A       		.byte	0x2a
+ 1638 0264 BC000000 		.4byte	0xbc
+ 1639 0268 00000000 		.4byte	.LFB68
+ 1640 026c 10000000 		.4byte	.LFE68-.LFB68
+ 1641 0270 01       		.uleb128 0x1
+ 1642 0271 9C       		.byte	0x9c
+ 1643 0272 80020000 		.4byte	0x280
+ 1644 0276 0B       		.uleb128 0xb
+ 1645 0277 06000000 		.4byte	.LVL17
+ 1646 027b CD010000 		.4byte	0x1cd
+ 1647 027f 00       		.byte	0
+ 1648 0280 10       		.uleb128 0x10
+ 1649 0281 3D020000 		.4byte	.LASF29
+ 1650 0285 01       		.byte	0x1
+ 1651 0286 33       		.byte	0x33
+ 1652 0287 BC000000 		.4byte	0xbc
+ 1653 028b 00000000 		.4byte	.LFB69
+ 1654 028f 14000000 		.4byte	.LFE69-.LFB69
+ 1655 0293 01       		.uleb128 0x1
+ 1656 0294 9C       		.byte	0x9c
+ 1657 0295 B2020000 		.4byte	0x2b2
+ 1658 0299 12       		.uleb128 0x12
+ 1659 029a A3000000 		.4byte	.LASF30
+ 1660 029e 01       		.byte	0x1
+ 1661 029f 35       		.byte	0x35
+ 1662 02a0 BC000000 		.4byte	0xbc
+ 1663 02a4 40000000 		.4byte	.LLST2
+ 1664 02a8 0B       		.uleb128 0xb
+ 1665 02a9 06000000 		.4byte	.LVL19
+ 1666 02ad CD010000 		.4byte	0x1cd
+ 1667 02b1 00       		.byte	0
+ 1668 02b2 13       		.uleb128 0x13
+ 1669 02b3 00000000 		.4byte	.LASF32
+ 1670 02b7 01       		.byte	0x1
+ 1671 02b8 3D       		.byte	0x3d
+ 1672 02b9 BC000000 		.4byte	0xbc
+ 1673 02bd 00000000 		.4byte	.LFB70
+ 1674 02c1 CC000000 		.4byte	.LFE70-.LFB70
+ 1675 02c5 01       		.uleb128 0x1
+ 1676 02c6 9C       		.byte	0x9c
+ 1677 02c7 FF020000 		.4byte	0x2ff
+ 1678 02cb 14       		.uleb128 0x14
+ 1679 02cc 04010000 		.4byte	.LASF31
+ 1680 02d0 01       		.byte	0x1
+ 1681 02d1 3D       		.byte	0x3d
+ 1682 02d2 8D000000 		.4byte	0x8d
+ 1683 02d6 5F000000 		.4byte	.LLST3
+ 1684 02da 15       		.uleb128 0x15
+ 1685 02db A3000000 		.4byte	.LASF30
+ 1686 02df 01       		.byte	0x1
+ 1687 02e0 3F       		.byte	0x3f
+ 1688 02e1 BC000000 		.4byte	0xbc
+ 1689 02e5 01       		.byte	0x1
+ 1690 02e6 11       		.uleb128 0x11
+ 1691 02e7 62706200 		.ascii	"bpb\000"
+ARM GAS  C:\Users\linar\AppData\Local\Temp\ccpLyYLJ.s 			page 39
+
+
+ 1692 02eb 01       		.byte	0x1
+ 1693 02ec 41       		.byte	0x41
+ 1694 02ed 81000000 		.4byte	0x81
+ 1695 02f1 5F010000 		.4byte	.LLST4
+ 1696 02f5 0B       		.uleb128 0xb
+ 1697 02f6 08000000 		.4byte	.LVL23
+ 1698 02fa CD010000 		.4byte	0x1cd
+ 1699 02fe 00       		.byte	0
+ 1700 02ff 13       		.uleb128 0x13
+ 1701 0300 70020000 		.4byte	.LASF33
+ 1702 0304 01       		.byte	0x1
+ 1703 0305 80       		.byte	0x80
+ 1704 0306 F5000000 		.4byte	0xf5
+ 1705 030a 00000000 		.4byte	.LFB71
+ 1706 030e 48000000 		.4byte	.LFE71-.LFB71
+ 1707 0312 01       		.uleb128 0x1
+ 1708 0313 9C       		.byte	0x9c
+ 1709 0314 9C030000 		.4byte	0x39c
+ 1710 0318 14       		.uleb128 0x14
+ 1711 0319 D9010000 		.4byte	.LASF34
+ 1712 031d 01       		.byte	0x1
+ 1713 031e 80       		.byte	0x80
+ 1714 031f 81000000 		.4byte	0x81
+ 1715 0323 77010000 		.4byte	.LLST5
+ 1716 0327 15       		.uleb128 0x15
+ 1717 0328 5B020000 		.4byte	.LASF35
+ 1718 032c 01       		.byte	0x1
+ 1719 032d 82       		.byte	0x82
+ 1720 032e F5000000 		.4byte	0xf5
+ 1721 0332 01       		.byte	0x1
+ 1722 0333 0B       		.uleb128 0xb
+ 1723 0334 0E000000 		.4byte	.LVL52
+ 1724 0338 5D020000 		.4byte	0x25d
+ 1725 033c 0B       		.uleb128 0xb
+ 1726 033d 14000000 		.4byte	.LVL53
+ 1727 0341 0F0D0000 		.4byte	0xd0f
+ 1728 0345 0D       		.uleb128 0xd
+ 1729 0346 1A000000 		.4byte	.LVL54
+ 1730 034a 040D0000 		.4byte	0xd04
+ 1731 034e 58030000 		.4byte	0x358
+ 1732 0352 0E       		.uleb128 0xe
+ 1733 0353 01       		.uleb128 0x1
+ 1734 0354 50       		.byte	0x50
+ 1735 0355 01       		.uleb128 0x1
+ 1736 0356 30       		.byte	0x30
+ 1737 0357 00       		.byte	0
+ 1738 0358 0D       		.uleb128 0xd
+ 1739 0359 20000000 		.4byte	.LVL55
+ 1740 035d 00010000 		.4byte	0x100
+ 1741 0361 6B030000 		.4byte	0x36b
+ 1742 0365 0E       		.uleb128 0xe
+ 1743 0366 01       		.uleb128 0x1
+ 1744 0367 50       		.byte	0x50
+ 1745 0368 01       		.uleb128 0x1
+ 1746 0369 31       		.byte	0x31
+ 1747 036a 00       		.byte	0
+ 1748 036b 0D       		.uleb128 0xd
+ARM GAS  C:\Users\linar\AppData\Local\Temp\ccpLyYLJ.s 			page 40
+
+
+ 1749 036c 26000000 		.4byte	.LVL56
+ 1750 0370 00010000 		.4byte	0x100
+ 1751 0374 7F030000 		.4byte	0x37f
+ 1752 0378 0E       		.uleb128 0xe
+ 1753 0379 01       		.uleb128 0x1
+ 1754 037a 50       		.byte	0x50
+ 1755 037b 02       		.uleb128 0x2
+ 1756 037c 74       		.byte	0x74
+ 1757 037d 00       		.sleb128 0
+ 1758 037e 00       		.byte	0
+ 1759 037f 0D       		.uleb128 0xd
+ 1760 0380 2C000000 		.4byte	.LVL57
+ 1761 0384 040D0000 		.4byte	0xd04
+ 1762 0388 92030000 		.4byte	0x392
+ 1763 038c 0E       		.uleb128 0xe
+ 1764 038d 01       		.uleb128 0x1
+ 1765 038e 50       		.byte	0x50
+ 1766 038f 01       		.uleb128 0x1
+ 1767 0390 31       		.byte	0x31
+ 1768 0391 00       		.byte	0
+ 1769 0392 0B       		.uleb128 0xb
+ 1770 0393 30000000 		.4byte	.LVL58
+ 1771 0397 CD010000 		.4byte	0x1cd
+ 1772 039b 00       		.byte	0
+ 1773 039c 13       		.uleb128 0x13
+ 1774 039d CA000000 		.4byte	.LASF36
+ 1775 03a1 01       		.byte	0x1
+ 1776 03a2 9A       		.byte	0x9a
+ 1777 03a3 F5000000 		.4byte	0xf5
+ 1778 03a7 00000000 		.4byte	.LFB72
+ 1779 03ab 80000000 		.4byte	.LFE72-.LFB72
+ 1780 03af 01       		.uleb128 0x1
+ 1781 03b0 9C       		.byte	0x9c
+ 1782 03b1 07050000 		.4byte	0x507
+ 1783 03b5 14       		.uleb128 0x14
+ 1784 03b6 04010000 		.4byte	.LASF31
+ 1785 03ba 01       		.byte	0x1
+ 1786 03bb 9A       		.byte	0x9a
+ 1787 03bc 8D000000 		.4byte	0x8d
+ 1788 03c0 B1010000 		.4byte	.LLST6
+ 1789 03c4 14       		.uleb128 0x14
+ 1790 03c5 79000000 		.4byte	.LASF37
+ 1791 03c9 01       		.byte	0x1
+ 1792 03ca 9A       		.byte	0x9a
+ 1793 03cb 07050000 		.4byte	0x507
+ 1794 03cf D2010000 		.4byte	.LLST7
+ 1795 03d3 14       		.uleb128 0x14
+ 1796 03d4 E7020000 		.4byte	.LASF38
+ 1797 03d8 01       		.byte	0x1
+ 1798 03d9 9A       		.byte	0x9a
+ 1799 03da 8D000000 		.4byte	0x8d
+ 1800 03de F0010000 		.4byte	.LLST8
+ 1801 03e2 12       		.uleb128 0x12
+ 1802 03e3 5B020000 		.4byte	.LASF35
+ 1803 03e7 01       		.byte	0x1
+ 1804 03e8 9C       		.byte	0x9c
+ 1805 03e9 F5000000 		.4byte	0xf5
+ARM GAS  C:\Users\linar\AppData\Local\Temp\ccpLyYLJ.s 			page 41
+
+
+ 1806 03ed 0E020000 		.4byte	.LLST9
+ 1807 03f1 16       		.uleb128 0x16
+ 1808 03f2 17000000 		.4byte	.LASF39
+ 1809 03f6 01       		.byte	0x1
+ 1810 03f7 9D       		.byte	0x9d
+ 1811 03f8 81000000 		.4byte	0x81
+ 1812 03fc 01       		.uleb128 0x1
+ 1813 03fd 58       		.byte	0x58
+ 1814 03fe 16       		.uleb128 0x16
+ 1815 03ff 1D000000 		.4byte	.LASF40
+ 1816 0403 01       		.byte	0x1
+ 1817 0404 9E       		.byte	0x9e
+ 1818 0405 81000000 		.4byte	0x81
+ 1819 0409 01       		.uleb128 0x1
+ 1820 040a 57       		.byte	0x57
+ 1821 040b 12       		.uleb128 0x12
+ 1822 040c 23000000 		.4byte	.LASF41
+ 1823 0410 01       		.byte	0x1
+ 1824 0411 9F       		.byte	0x9f
+ 1825 0412 81000000 		.4byte	0x81
+ 1826 0416 3A020000 		.4byte	.LLST10
+ 1827 041a 16       		.uleb128 0x16
+ 1828 041b FD020000 		.4byte	.LASF42
+ 1829 041f 01       		.byte	0x1
+ 1830 0420 A1       		.byte	0xa1
+ 1831 0421 0D050000 		.4byte	0x50d
+ 1832 0425 02       		.uleb128 0x2
+ 1833 0426 91       		.byte	0x91
+ 1834 0427 54       		.sleb128 -44
+ 1835 0428 17       		.uleb128 0x17
+ 1836 0429 58000000 		.4byte	.LBB2
+ 1837 042d 16000000 		.4byte	.LBE2-.LBB2
+ 1838 0431 5F040000 		.4byte	0x45f
+ 1839 0435 11       		.uleb128 0x11
+ 1840 0436 6900     		.ascii	"i\000"
+ 1841 0438 01       		.byte	0x1
+ 1842 0439 B2       		.byte	0xb2
+ 1843 043a 8D000000 		.4byte	0x8d
+ 1844 043e 74020000 		.4byte	.LLST11
+ 1845 0442 0D       		.uleb128 0xd
+ 1846 0443 62000000 		.4byte	.LVL79
+ 1847 0447 00010000 		.4byte	0x100
+ 1848 044b 55040000 		.4byte	0x455
+ 1849 044f 0E       		.uleb128 0xe
+ 1850 0450 01       		.uleb128 0x1
+ 1851 0451 50       		.byte	0x50
+ 1852 0452 01       		.uleb128 0x1
+ 1853 0453 30       		.byte	0x30
+ 1854 0454 00       		.byte	0
+ 1855 0455 0B       		.uleb128 0xb
+ 1856 0456 66000000 		.4byte	.LVL80
+ 1857 045a 1A0D0000 		.4byte	0xd1a
+ 1858 045e 00       		.byte	0
+ 1859 045f 0B       		.uleb128 0xb
+ 1860 0460 24000000 		.4byte	.LVL66
+ 1861 0464 5D020000 		.4byte	0x25d
+ 1862 0468 0B       		.uleb128 0xb
+ARM GAS  C:\Users\linar\AppData\Local\Temp\ccpLyYLJ.s 			page 42
+
+
+ 1863 0469 2A000000 		.4byte	.LVL67
+ 1864 046d 0F0D0000 		.4byte	0xd0f
+ 1865 0471 0D       		.uleb128 0xd
+ 1866 0472 30000000 		.4byte	.LVL68
+ 1867 0476 040D0000 		.4byte	0xd04
+ 1868 047a 84040000 		.4byte	0x484
+ 1869 047e 0E       		.uleb128 0xe
+ 1870 047f 01       		.uleb128 0x1
+ 1871 0480 50       		.byte	0x50
+ 1872 0481 01       		.uleb128 0x1
+ 1873 0482 30       		.byte	0x30
+ 1874 0483 00       		.byte	0
+ 1875 0484 0D       		.uleb128 0xd
+ 1876 0485 36000000 		.4byte	.LVL69
+ 1877 0489 00010000 		.4byte	0x100
+ 1878 048d 97040000 		.4byte	0x497
+ 1879 0491 0E       		.uleb128 0xe
+ 1880 0492 01       		.uleb128 0x1
+ 1881 0493 50       		.byte	0x50
+ 1882 0494 01       		.uleb128 0x1
+ 1883 0495 33       		.byte	0x33
+ 1884 0496 00       		.byte	0
+ 1885 0497 0B       		.uleb128 0xb
+ 1886 0498 3A000000 		.4byte	.LVL70
+ 1887 049c 1A0D0000 		.4byte	0xd1a
+ 1888 04a0 0D       		.uleb128 0xd
+ 1889 04a1 40000000 		.4byte	.LVL71
+ 1890 04a5 00010000 		.4byte	0x100
+ 1891 04a9 B4040000 		.4byte	0x4b4
+ 1892 04ad 0E       		.uleb128 0xe
+ 1893 04ae 01       		.uleb128 0x1
+ 1894 04af 50       		.byte	0x50
+ 1895 04b0 02       		.uleb128 0x2
+ 1896 04b1 78       		.byte	0x78
+ 1897 04b2 00       		.sleb128 0
+ 1898 04b3 00       		.byte	0
+ 1899 04b4 0B       		.uleb128 0xb
+ 1900 04b5 44000000 		.4byte	.LVL72
+ 1901 04b9 1A0D0000 		.4byte	0xd1a
+ 1902 04bd 0D       		.uleb128 0xd
+ 1903 04be 4A000000 		.4byte	.LVL73
+ 1904 04c2 00010000 		.4byte	0x100
+ 1905 04c6 D1040000 		.4byte	0x4d1
+ 1906 04ca 0E       		.uleb128 0xe
+ 1907 04cb 01       		.uleb128 0x1
+ 1908 04cc 50       		.byte	0x50
+ 1909 04cd 02       		.uleb128 0x2
+ 1910 04ce 77       		.byte	0x77
+ 1911 04cf 00       		.sleb128 0
+ 1912 04d0 00       		.byte	0
+ 1913 04d1 0B       		.uleb128 0xb
+ 1914 04d2 4E000000 		.4byte	.LVL74
+ 1915 04d6 1A0D0000 		.4byte	0xd1a
+ 1916 04da 0D       		.uleb128 0xd
+ 1917 04db 54000000 		.4byte	.LVL75
+ 1918 04df 00010000 		.4byte	0x100
+ 1919 04e3 EE040000 		.4byte	0x4ee
+ARM GAS  C:\Users\linar\AppData\Local\Temp\ccpLyYLJ.s 			page 43
+
+
+ 1920 04e7 0E       		.uleb128 0xe
+ 1921 04e8 01       		.uleb128 0x1
+ 1922 04e9 50       		.byte	0x50
+ 1923 04ea 02       		.uleb128 0x2
+ 1924 04eb 74       		.byte	0x74
+ 1925 04ec 00       		.sleb128 0
+ 1926 04ed 00       		.byte	0
+ 1927 04ee 0B       		.uleb128 0xb
+ 1928 04ef 58000000 		.4byte	.LVL76
+ 1929 04f3 1A0D0000 		.4byte	0xd1a
+ 1930 04f7 0F       		.uleb128 0xf
+ 1931 04f8 74000000 		.4byte	.LVL82
+ 1932 04fc 040D0000 		.4byte	0xd04
+ 1933 0500 0E       		.uleb128 0xe
+ 1934 0501 01       		.uleb128 0x1
+ 1935 0502 50       		.byte	0x50
+ 1936 0503 01       		.uleb128 0x1
+ 1937 0504 31       		.byte	0x31
+ 1938 0505 00       		.byte	0
+ 1939 0506 00       		.byte	0
+ 1940 0507 18       		.uleb128 0x18
+ 1941 0508 04       		.byte	0x4
+ 1942 0509 81000000 		.4byte	0x81
+ 1943 050d 19       		.uleb128 0x19
+ 1944 050e 81000000 		.4byte	0x81
+ 1945 0512 1D050000 		.4byte	0x51d
+ 1946 0516 1A       		.uleb128 0x1a
+ 1947 0517 B5000000 		.4byte	0xb5
+ 1948 051b 13       		.byte	0x13
+ 1949 051c 00       		.byte	0
+ 1950 051d 13       		.uleb128 0x13
+ 1951 051e BF030000 		.4byte	.LASF43
+ 1952 0522 01       		.byte	0x1
+ 1953 0523 E2       		.byte	0xe2
+ 1954 0524 F5000000 		.4byte	0xf5
+ 1955 0528 00000000 		.4byte	.LFB73
+ 1956 052c 78000000 		.4byte	.LFE73-.LFB73
+ 1957 0530 01       		.uleb128 0x1
+ 1958 0531 9C       		.byte	0x9c
+ 1959 0532 5B060000 		.4byte	0x65b
+ 1960 0536 14       		.uleb128 0x14
+ 1961 0537 04010000 		.4byte	.LASF31
+ 1962 053b 01       		.byte	0x1
+ 1963 053c E2       		.byte	0xe2
+ 1964 053d 8D000000 		.4byte	0x8d
+ 1965 0541 93020000 		.4byte	.LLST12
+ 1966 0545 14       		.uleb128 0x14
+ 1967 0546 79000000 		.4byte	.LASF37
+ 1968 054a 01       		.byte	0x1
+ 1969 054b E2       		.byte	0xe2
+ 1970 054c 07050000 		.4byte	0x507
+ 1971 0550 E3020000 		.4byte	.LLST13
+ 1972 0554 14       		.uleb128 0x14
+ 1973 0555 E7020000 		.4byte	.LASF38
+ 1974 0559 01       		.byte	0x1
+ 1975 055a E2       		.byte	0xe2
+ 1976 055b 8D000000 		.4byte	0x8d
+ARM GAS  C:\Users\linar\AppData\Local\Temp\ccpLyYLJ.s 			page 44
+
+
+ 1977 055f 2F030000 		.4byte	.LLST14
+ 1978 0563 12       		.uleb128 0x12
+ 1979 0564 5B020000 		.4byte	.LASF35
+ 1980 0568 01       		.byte	0x1
+ 1981 0569 E4       		.byte	0xe4
+ 1982 056a F5000000 		.4byte	0xf5
+ 1983 056e 63030000 		.4byte	.LLST15
+ 1984 0572 12       		.uleb128 0x12
+ 1985 0573 17000000 		.4byte	.LASF39
+ 1986 0577 01       		.byte	0x1
+ 1987 0578 EA       		.byte	0xea
+ 1988 0579 81000000 		.4byte	0x81
+ 1989 057d 8F030000 		.4byte	.LLST16
+ 1990 0581 12       		.uleb128 0x12
+ 1991 0582 1D000000 		.4byte	.LASF40
+ 1992 0586 01       		.byte	0x1
+ 1993 0587 EB       		.byte	0xeb
+ 1994 0588 81000000 		.4byte	0x81
+ 1995 058c A2030000 		.4byte	.LLST17
+ 1996 0590 12       		.uleb128 0x12
+ 1997 0591 23000000 		.4byte	.LASF41
+ 1998 0595 01       		.byte	0x1
+ 1999 0596 EC       		.byte	0xec
+ 2000 0597 81000000 		.4byte	0x81
+ 2001 059b B5030000 		.4byte	.LLST18
+ 2002 059f 17       		.uleb128 0x17
+ 2003 05a0 4A000000 		.4byte	.LBB3
+ 2004 05a4 12000000 		.4byte	.LBE3-.LBB3
+ 2005 05a8 C3050000 		.4byte	0x5c3
+ 2006 05ac 11       		.uleb128 0x11
+ 2007 05ad 6900     		.ascii	"i\000"
+ 2008 05af 01       		.byte	0x1
+ 2009 05b0 F4       		.byte	0xf4
+ 2010 05b1 8D000000 		.4byte	0x8d
+ 2011 05b5 D6030000 		.4byte	.LLST19
+ 2012 05b9 0B       		.uleb128 0xb
+ 2013 05ba 56000000 		.4byte	.LVL100
+ 2014 05be 00010000 		.4byte	0x100
+ 2015 05c2 00       		.byte	0
+ 2016 05c3 0B       		.uleb128 0xb
+ 2017 05c4 14000000 		.4byte	.LVL86
+ 2018 05c8 5D020000 		.4byte	0x25d
+ 2019 05cc 0D       		.uleb128 0xd
+ 2020 05cd 1C000000 		.4byte	.LVL87
+ 2021 05d1 B2020000 		.4byte	0x2b2
+ 2022 05d5 E0050000 		.4byte	0x5e0
+ 2023 05d9 0E       		.uleb128 0xe
+ 2024 05da 01       		.uleb128 0x1
+ 2025 05db 50       		.byte	0x50
+ 2026 05dc 02       		.uleb128 0x2
+ 2027 05dd 76       		.byte	0x76
+ 2028 05de 00       		.sleb128 0
+ 2029 05df 00       		.byte	0
+ 2030 05e0 0B       		.uleb128 0xb
+ 2031 05e1 2C000000 		.4byte	.LVL91
+ 2032 05e5 37010000 		.4byte	0x137
+ 2033 05e9 0D       		.uleb128 0xd
+ARM GAS  C:\Users\linar\AppData\Local\Temp\ccpLyYLJ.s 			page 45
+
+
+ 2034 05ea 32000000 		.4byte	.LVL92
+ 2035 05ee 040D0000 		.4byte	0xd04
+ 2036 05f2 FC050000 		.4byte	0x5fc
+ 2037 05f6 0E       		.uleb128 0xe
+ 2038 05f7 01       		.uleb128 0x1
+ 2039 05f8 50       		.byte	0x50
+ 2040 05f9 01       		.uleb128 0x1
+ 2041 05fa 30       		.byte	0x30
+ 2042 05fb 00       		.byte	0
+ 2043 05fc 0D       		.uleb128 0xd
+ 2044 05fd 38000000 		.4byte	.LVL93
+ 2045 0601 00010000 		.4byte	0x100
+ 2046 0605 0F060000 		.4byte	0x60f
+ 2047 0609 0E       		.uleb128 0xe
+ 2048 060a 01       		.uleb128 0x1
+ 2049 060b 50       		.byte	0x50
+ 2050 060c 01       		.uleb128 0x1
+ 2051 060d 32       		.byte	0x32
+ 2052 060e 00       		.byte	0
+ 2053 060f 0D       		.uleb128 0xd
+ 2054 0610 3E000000 		.4byte	.LVL94
+ 2055 0614 00010000 		.4byte	0x100
+ 2056 0618 23060000 		.4byte	0x623
+ 2057 061c 0E       		.uleb128 0xe
+ 2058 061d 01       		.uleb128 0x1
+ 2059 061e 50       		.byte	0x50
+ 2060 061f 02       		.uleb128 0x2
+ 2061 0620 78       		.byte	0x78
+ 2062 0621 00       		.sleb128 0
+ 2063 0622 00       		.byte	0
+ 2064 0623 0D       		.uleb128 0xd
+ 2065 0624 44000000 		.4byte	.LVL95
+ 2066 0628 00010000 		.4byte	0x100
+ 2067 062c 37060000 		.4byte	0x637
+ 2068 0630 0E       		.uleb128 0xe
+ 2069 0631 01       		.uleb128 0x1
+ 2070 0632 50       		.byte	0x50
+ 2071 0633 02       		.uleb128 0x2
+ 2072 0634 77       		.byte	0x77
+ 2073 0635 00       		.sleb128 0
+ 2074 0636 00       		.byte	0
+ 2075 0637 0D       		.uleb128 0xd
+ 2076 0638 4A000000 		.4byte	.LVL96
+ 2077 063c 00010000 		.4byte	0x100
+ 2078 0640 4B060000 		.4byte	0x64b
+ 2079 0644 0E       		.uleb128 0xe
+ 2080 0645 01       		.uleb128 0x1
+ 2081 0646 50       		.byte	0x50
+ 2082 0647 02       		.uleb128 0x2
+ 2083 0648 76       		.byte	0x76
+ 2084 0649 00       		.sleb128 0
+ 2085 064a 00       		.byte	0
+ 2086 064b 0F       		.uleb128 0xf
+ 2087 064c 62000000 		.4byte	.LVL102
+ 2088 0650 040D0000 		.4byte	0xd04
+ 2089 0654 0E       		.uleb128 0xe
+ 2090 0655 01       		.uleb128 0x1
+ARM GAS  C:\Users\linar\AppData\Local\Temp\ccpLyYLJ.s 			page 46
+
+
+ 2091 0656 50       		.byte	0x50
+ 2092 0657 01       		.uleb128 0x1
+ 2093 0658 31       		.byte	0x31
+ 2094 0659 00       		.byte	0
+ 2095 065a 00       		.byte	0
+ 2096 065b 1B       		.uleb128 0x1b
+ 2097 065c 31000000 		.4byte	.LASF44
+ 2098 0660 01       		.byte	0x1
+ 2099 0661 0001     		.2byte	0x100
+ 2100 0663 F5000000 		.4byte	0xf5
+ 2101 0667 00000000 		.4byte	.LFB74
+ 2102 066b 50000000 		.4byte	.LFE74-.LFB74
+ 2103 066f 01       		.uleb128 0x1
+ 2104 0670 9C       		.byte	0x9c
+ 2105 0671 5E070000 		.4byte	0x75e
+ 2106 0675 1C       		.uleb128 0x1c
+ 2107 0676 04010000 		.4byte	.LASF31
+ 2108 067a 01       		.byte	0x1
+ 2109 067b 0001     		.2byte	0x100
+ 2110 067d 8D000000 		.4byte	0x8d
+ 2111 0681 F5030000 		.4byte	.LLST20
+ 2112 0685 1D       		.uleb128 0x1d
+ 2113 0686 5B020000 		.4byte	.LASF35
+ 2114 068a 01       		.byte	0x1
+ 2115 068b 0201     		.2byte	0x102
+ 2116 068d F5000000 		.4byte	0xf5
+ 2117 0691 2C040000 		.4byte	.LLST21
+ 2118 0695 1D       		.uleb128 0x1d
+ 2119 0696 17000000 		.4byte	.LASF39
+ 2120 069a 01       		.byte	0x1
+ 2121 069b 0701     		.2byte	0x107
+ 2122 069d 81000000 		.4byte	0x81
+ 2123 06a1 58040000 		.4byte	.LLST22
+ 2124 06a5 1D       		.uleb128 0x1d
+ 2125 06a6 1D000000 		.4byte	.LASF40
+ 2126 06aa 01       		.byte	0x1
+ 2127 06ab 0801     		.2byte	0x108
+ 2128 06ad 81000000 		.4byte	0x81
+ 2129 06b1 6B040000 		.4byte	.LLST23
+ 2130 06b5 1D       		.uleb128 0x1d
+ 2131 06b6 23000000 		.4byte	.LASF41
+ 2132 06ba 01       		.byte	0x1
+ 2133 06bb 0901     		.2byte	0x109
+ 2134 06bd 81000000 		.4byte	0x81
+ 2135 06c1 7E040000 		.4byte	.LLST24
+ 2136 06c5 0B       		.uleb128 0xb
+ 2137 06c6 08000000 		.4byte	.LVL109
+ 2138 06ca 5D020000 		.4byte	0x25d
+ 2139 06ce 0D       		.uleb128 0xd
+ 2140 06cf 10000000 		.4byte	.LVL110
+ 2141 06d3 B2020000 		.4byte	0x2b2
+ 2142 06d7 E2060000 		.4byte	0x6e2
+ 2143 06db 0E       		.uleb128 0xe
+ 2144 06dc 01       		.uleb128 0x1
+ 2145 06dd 50       		.byte	0x50
+ 2146 06de 02       		.uleb128 0x2
+ 2147 06df 74       		.byte	0x74
+ARM GAS  C:\Users\linar\AppData\Local\Temp\ccpLyYLJ.s 			page 47
+
+
+ 2148 06e0 00       		.sleb128 0
+ 2149 06e1 00       		.byte	0
+ 2150 06e2 0B       		.uleb128 0xb
+ 2151 06e3 20000000 		.4byte	.LVL114
+ 2152 06e7 37010000 		.4byte	0x137
+ 2153 06eb 0D       		.uleb128 0xd
+ 2154 06ec 26000000 		.4byte	.LVL115
+ 2155 06f0 040D0000 		.4byte	0xd04
+ 2156 06f4 FE060000 		.4byte	0x6fe
+ 2157 06f8 0E       		.uleb128 0xe
+ 2158 06f9 01       		.uleb128 0x1
+ 2159 06fa 50       		.byte	0x50
+ 2160 06fb 01       		.uleb128 0x1
+ 2161 06fc 30       		.byte	0x30
+ 2162 06fd 00       		.byte	0
+ 2163 06fe 0D       		.uleb128 0xd
+ 2164 06ff 2C000000 		.4byte	.LVL116
+ 2165 0703 00010000 		.4byte	0x100
+ 2166 0707 12070000 		.4byte	0x712
+ 2167 070b 0E       		.uleb128 0xe
+ 2168 070c 01       		.uleb128 0x1
+ 2169 070d 50       		.byte	0x50
+ 2170 070e 02       		.uleb128 0x2
+ 2171 070f 08       		.byte	0x8
+ 2172 0710 20       		.byte	0x20
+ 2173 0711 00       		.byte	0
+ 2174 0712 0D       		.uleb128 0xd
+ 2175 0713 32000000 		.4byte	.LVL117
+ 2176 0717 00010000 		.4byte	0x100
+ 2177 071b 26070000 		.4byte	0x726
+ 2178 071f 0E       		.uleb128 0xe
+ 2179 0720 01       		.uleb128 0x1
+ 2180 0721 50       		.byte	0x50
+ 2181 0722 02       		.uleb128 0x2
+ 2182 0723 76       		.byte	0x76
+ 2183 0724 00       		.sleb128 0
+ 2184 0725 00       		.byte	0
+ 2185 0726 0D       		.uleb128 0xd
+ 2186 0727 38000000 		.4byte	.LVL118
+ 2187 072b 00010000 		.4byte	0x100
+ 2188 072f 3A070000 		.4byte	0x73a
+ 2189 0733 0E       		.uleb128 0xe
+ 2190 0734 01       		.uleb128 0x1
+ 2191 0735 50       		.byte	0x50
+ 2192 0736 02       		.uleb128 0x2
+ 2193 0737 75       		.byte	0x75
+ 2194 0738 00       		.sleb128 0
+ 2195 0739 00       		.byte	0
+ 2196 073a 0D       		.uleb128 0xd
+ 2197 073b 3E000000 		.4byte	.LVL119
+ 2198 073f 00010000 		.4byte	0x100
+ 2199 0743 4E070000 		.4byte	0x74e
+ 2200 0747 0E       		.uleb128 0xe
+ 2201 0748 01       		.uleb128 0x1
+ 2202 0749 50       		.byte	0x50
+ 2203 074a 02       		.uleb128 0x2
+ 2204 074b 74       		.byte	0x74
+ARM GAS  C:\Users\linar\AppData\Local\Temp\ccpLyYLJ.s 			page 48
+
+
+ 2205 074c 00       		.sleb128 0
+ 2206 074d 00       		.byte	0
+ 2207 074e 0F       		.uleb128 0xf
+ 2208 074f 44000000 		.4byte	.LVL120
+ 2209 0753 040D0000 		.4byte	0xd04
+ 2210 0757 0E       		.uleb128 0xe
+ 2211 0758 01       		.uleb128 0x1
+ 2212 0759 50       		.byte	0x50
+ 2213 075a 01       		.uleb128 0x1
+ 2214 075b 31       		.byte	0x31
+ 2215 075c 00       		.byte	0
+ 2216 075d 00       		.byte	0
+ 2217 075e 1B       		.uleb128 0x1b
+ 2218 075f C0020000 		.4byte	.LASF45
+ 2219 0763 01       		.byte	0x1
+ 2220 0764 1801     		.2byte	0x118
+ 2221 0766 F5000000 		.4byte	0xf5
+ 2222 076a 00000000 		.4byte	.LFB75
+ 2223 076e 50000000 		.4byte	.LFE75-.LFB75
+ 2224 0772 01       		.uleb128 0x1
+ 2225 0773 9C       		.byte	0x9c
+ 2226 0774 61080000 		.4byte	0x861
+ 2227 0778 1C       		.uleb128 0x1c
+ 2228 0779 04010000 		.4byte	.LASF31
+ 2229 077d 01       		.byte	0x1
+ 2230 077e 1801     		.2byte	0x118
+ 2231 0780 8D000000 		.4byte	0x8d
+ 2232 0784 91040000 		.4byte	.LLST25
+ 2233 0788 1D       		.uleb128 0x1d
+ 2234 0789 5B020000 		.4byte	.LASF35
+ 2235 078d 01       		.byte	0x1
+ 2236 078e 1A01     		.2byte	0x11a
+ 2237 0790 F5000000 		.4byte	0xf5
+ 2238 0794 C8040000 		.4byte	.LLST26
+ 2239 0798 1D       		.uleb128 0x1d
+ 2240 0799 17000000 		.4byte	.LASF39
+ 2241 079d 01       		.byte	0x1
+ 2242 079e 1F01     		.2byte	0x11f
+ 2243 07a0 81000000 		.4byte	0x81
+ 2244 07a4 F4040000 		.4byte	.LLST27
+ 2245 07a8 1D       		.uleb128 0x1d
+ 2246 07a9 1D000000 		.4byte	.LASF40
+ 2247 07ad 01       		.byte	0x1
+ 2248 07ae 2001     		.2byte	0x120
+ 2249 07b0 81000000 		.4byte	0x81
+ 2250 07b4 07050000 		.4byte	.LLST28
+ 2251 07b8 1D       		.uleb128 0x1d
+ 2252 07b9 23000000 		.4byte	.LASF41
+ 2253 07bd 01       		.byte	0x1
+ 2254 07be 2101     		.2byte	0x121
+ 2255 07c0 81000000 		.4byte	0x81
+ 2256 07c4 1A050000 		.4byte	.LLST29
+ 2257 07c8 0B       		.uleb128 0xb
+ 2258 07c9 08000000 		.4byte	.LVL125
+ 2259 07cd 5D020000 		.4byte	0x25d
+ 2260 07d1 0D       		.uleb128 0xd
+ 2261 07d2 10000000 		.4byte	.LVL126
+ARM GAS  C:\Users\linar\AppData\Local\Temp\ccpLyYLJ.s 			page 49
+
+
+ 2262 07d6 B2020000 		.4byte	0x2b2
+ 2263 07da E5070000 		.4byte	0x7e5
+ 2264 07de 0E       		.uleb128 0xe
+ 2265 07df 01       		.uleb128 0x1
+ 2266 07e0 50       		.byte	0x50
+ 2267 07e1 02       		.uleb128 0x2
+ 2268 07e2 74       		.byte	0x74
+ 2269 07e3 00       		.sleb128 0
+ 2270 07e4 00       		.byte	0
+ 2271 07e5 0B       		.uleb128 0xb
+ 2272 07e6 20000000 		.4byte	.LVL130
+ 2273 07ea 37010000 		.4byte	0x137
+ 2274 07ee 0D       		.uleb128 0xd
+ 2275 07ef 26000000 		.4byte	.LVL131
+ 2276 07f3 040D0000 		.4byte	0xd04
+ 2277 07f7 01080000 		.4byte	0x801
+ 2278 07fb 0E       		.uleb128 0xe
+ 2279 07fc 01       		.uleb128 0x1
+ 2280 07fd 50       		.byte	0x50
+ 2281 07fe 01       		.uleb128 0x1
+ 2282 07ff 30       		.byte	0x30
+ 2283 0800 00       		.byte	0
+ 2284 0801 0D       		.uleb128 0xd
+ 2285 0802 2C000000 		.4byte	.LVL132
+ 2286 0806 00010000 		.4byte	0x100
+ 2287 080a 15080000 		.4byte	0x815
+ 2288 080e 0E       		.uleb128 0xe
+ 2289 080f 01       		.uleb128 0x1
+ 2290 0810 50       		.byte	0x50
+ 2291 0811 02       		.uleb128 0x2
+ 2292 0812 09       		.byte	0x9
+ 2293 0813 D8       		.byte	0xd8
+ 2294 0814 00       		.byte	0
+ 2295 0815 0D       		.uleb128 0xd
+ 2296 0816 32000000 		.4byte	.LVL133
+ 2297 081a 00010000 		.4byte	0x100
+ 2298 081e 29080000 		.4byte	0x829
+ 2299 0822 0E       		.uleb128 0xe
+ 2300 0823 01       		.uleb128 0x1
+ 2301 0824 50       		.byte	0x50
+ 2302 0825 02       		.uleb128 0x2
+ 2303 0826 76       		.byte	0x76
+ 2304 0827 00       		.sleb128 0
+ 2305 0828 00       		.byte	0
+ 2306 0829 0D       		.uleb128 0xd
+ 2307 082a 38000000 		.4byte	.LVL134
+ 2308 082e 00010000 		.4byte	0x100
+ 2309 0832 3D080000 		.4byte	0x83d
+ 2310 0836 0E       		.uleb128 0xe
+ 2311 0837 01       		.uleb128 0x1
+ 2312 0838 50       		.byte	0x50
+ 2313 0839 02       		.uleb128 0x2
+ 2314 083a 75       		.byte	0x75
+ 2315 083b 00       		.sleb128 0
+ 2316 083c 00       		.byte	0
+ 2317 083d 0D       		.uleb128 0xd
+ 2318 083e 3E000000 		.4byte	.LVL135
+ARM GAS  C:\Users\linar\AppData\Local\Temp\ccpLyYLJ.s 			page 50
+
+
+ 2319 0842 00010000 		.4byte	0x100
+ 2320 0846 51080000 		.4byte	0x851
+ 2321 084a 0E       		.uleb128 0xe
+ 2322 084b 01       		.uleb128 0x1
+ 2323 084c 50       		.byte	0x50
+ 2324 084d 02       		.uleb128 0x2
+ 2325 084e 74       		.byte	0x74
+ 2326 084f 00       		.sleb128 0
+ 2327 0850 00       		.byte	0
+ 2328 0851 0F       		.uleb128 0xf
+ 2329 0852 44000000 		.4byte	.LVL136
+ 2330 0856 040D0000 		.4byte	0xd04
+ 2331 085a 0E       		.uleb128 0xe
+ 2332 085b 01       		.uleb128 0x1
+ 2333 085c 50       		.byte	0x50
+ 2334 085d 01       		.uleb128 0x1
+ 2335 085e 31       		.byte	0x31
+ 2336 085f 00       		.byte	0
+ 2337 0860 00       		.byte	0
+ 2338 0861 1E       		.uleb128 0x1e
+ 2339 0862 93000000 		.4byte	.LASF46
+ 2340 0866 01       		.byte	0x1
+ 2341 0867 3001     		.2byte	0x130
+ 2342 0869 F5000000 		.4byte	0xf5
+ 2343 086d 00000000 		.4byte	.LFB76
+ 2344 0871 34000000 		.4byte	.LFE76-.LFB76
+ 2345 0875 01       		.uleb128 0x1
+ 2346 0876 9C       		.byte	0x9c
+ 2347 0877 E6080000 		.4byte	0x8e6
+ 2348 087b 1D       		.uleb128 0x1d
+ 2349 087c 5B020000 		.4byte	.LASF35
+ 2350 0880 01       		.byte	0x1
+ 2351 0881 3201     		.2byte	0x132
+ 2352 0883 F5000000 		.4byte	0xf5
+ 2353 0887 2D050000 		.4byte	.LLST30
+ 2354 088b 0B       		.uleb128 0xb
+ 2355 088c 06000000 		.4byte	.LVL140
+ 2356 0890 5D020000 		.4byte	0x25d
+ 2357 0894 0B       		.uleb128 0xb
+ 2358 0895 0C000000 		.4byte	.LVL141
+ 2359 0899 80020000 		.4byte	0x280
+ 2360 089d 0B       		.uleb128 0xb
+ 2361 089e 12000000 		.4byte	.LVL142
+ 2362 08a2 0F0D0000 		.4byte	0xd0f
+ 2363 08a6 0B       		.uleb128 0xb
+ 2364 08a7 16000000 		.4byte	.LVL143
+ 2365 08ab 37010000 		.4byte	0x137
+ 2366 08af 0D       		.uleb128 0xd
+ 2367 08b0 1C000000 		.4byte	.LVL144
+ 2368 08b4 040D0000 		.4byte	0xd04
+ 2369 08b8 C2080000 		.4byte	0x8c2
+ 2370 08bc 0E       		.uleb128 0xe
+ 2371 08bd 01       		.uleb128 0x1
+ 2372 08be 50       		.byte	0x50
+ 2373 08bf 01       		.uleb128 0x1
+ 2374 08c0 30       		.byte	0x30
+ 2375 08c1 00       		.byte	0
+ARM GAS  C:\Users\linar\AppData\Local\Temp\ccpLyYLJ.s 			page 51
+
+
+ 2376 08c2 0D       		.uleb128 0xd
+ 2377 08c3 22000000 		.4byte	.LVL145
+ 2378 08c7 00010000 		.4byte	0x100
+ 2379 08cb D6080000 		.4byte	0x8d6
+ 2380 08cf 0E       		.uleb128 0xe
+ 2381 08d0 01       		.uleb128 0x1
+ 2382 08d1 50       		.byte	0x50
+ 2383 08d2 02       		.uleb128 0x2
+ 2384 08d3 09       		.byte	0x9
+ 2385 08d4 C7       		.byte	0xc7
+ 2386 08d5 00       		.byte	0
+ 2387 08d6 0F       		.uleb128 0xf
+ 2388 08d7 28000000 		.4byte	.LVL146
+ 2389 08db 040D0000 		.4byte	0xd04
+ 2390 08df 0E       		.uleb128 0xe
+ 2391 08e0 01       		.uleb128 0x1
+ 2392 08e1 50       		.byte	0x50
+ 2393 08e2 01       		.uleb128 0x1
+ 2394 08e3 31       		.byte	0x31
+ 2395 08e4 00       		.byte	0
+ 2396 08e5 00       		.byte	0
+ 2397 08e6 1E       		.uleb128 0x1e
+ 2398 08e7 16030000 		.4byte	.LASF47
+ 2399 08eb 01       		.byte	0x1
+ 2400 08ec 4301     		.2byte	0x143
+ 2401 08ee F5000000 		.4byte	0xf5
+ 2402 08f2 00000000 		.4byte	.LFB77
+ 2403 08f6 2A000000 		.4byte	.LFE77-.LFB77
+ 2404 08fa 01       		.uleb128 0x1
+ 2405 08fb 9C       		.byte	0x9c
+ 2406 08fc 62090000 		.4byte	0x962
+ 2407 0900 1D       		.uleb128 0x1d
+ 2408 0901 5B020000 		.4byte	.LASF35
+ 2409 0905 01       		.byte	0x1
+ 2410 0906 4501     		.2byte	0x145
+ 2411 0908 F5000000 		.4byte	0xf5
+ 2412 090c 59050000 		.4byte	.LLST31
+ 2413 0910 0B       		.uleb128 0xb
+ 2414 0911 06000000 		.4byte	.LVL149
+ 2415 0915 5D020000 		.4byte	0x25d
+ 2416 0919 0B       		.uleb128 0xb
+ 2417 091a 0C000000 		.4byte	.LVL150
+ 2418 091e 0F0D0000 		.4byte	0xd0f
+ 2419 0922 0B       		.uleb128 0xb
+ 2420 0923 10000000 		.4byte	.LVL151
+ 2421 0927 37010000 		.4byte	0x137
+ 2422 092b 0D       		.uleb128 0xd
+ 2423 092c 16000000 		.4byte	.LVL152
+ 2424 0930 040D0000 		.4byte	0xd04
+ 2425 0934 3E090000 		.4byte	0x93e
+ 2426 0938 0E       		.uleb128 0xe
+ 2427 0939 01       		.uleb128 0x1
+ 2428 093a 50       		.byte	0x50
+ 2429 093b 01       		.uleb128 0x1
+ 2430 093c 30       		.byte	0x30
+ 2431 093d 00       		.byte	0
+ 2432 093e 0D       		.uleb128 0xd
+ARM GAS  C:\Users\linar\AppData\Local\Temp\ccpLyYLJ.s 			page 52
+
+
+ 2433 093f 1C000000 		.4byte	.LVL153
+ 2434 0943 00010000 		.4byte	0x100
+ 2435 0947 52090000 		.4byte	0x952
+ 2436 094b 0E       		.uleb128 0xe
+ 2437 094c 01       		.uleb128 0x1
+ 2438 094d 50       		.byte	0x50
+ 2439 094e 02       		.uleb128 0x2
+ 2440 094f 09       		.byte	0x9
+ 2441 0950 B9       		.byte	0xb9
+ 2442 0951 00       		.byte	0
+ 2443 0952 0F       		.uleb128 0xf
+ 2444 0953 22000000 		.4byte	.LVL154
+ 2445 0957 040D0000 		.4byte	0xd04
+ 2446 095b 0E       		.uleb128 0xe
+ 2447 095c 01       		.uleb128 0x1
+ 2448 095d 50       		.byte	0x50
+ 2449 095e 01       		.uleb128 0x1
+ 2450 095f 31       		.byte	0x31
+ 2451 0960 00       		.byte	0
+ 2452 0961 00       		.byte	0
+ 2453 0962 1E       		.uleb128 0x1e
+ 2454 0963 47010000 		.4byte	.LASF48
+ 2455 0967 01       		.byte	0x1
+ 2456 0968 5501     		.2byte	0x155
+ 2457 096a F5000000 		.4byte	0xf5
+ 2458 096e 00000000 		.4byte	.LFB78
+ 2459 0972 1C000000 		.4byte	.LFE78-.LFB78
+ 2460 0976 01       		.uleb128 0x1
+ 2461 0977 9C       		.byte	0x9c
+ 2462 0978 CC090000 		.4byte	0x9cc
+ 2463 097c 1D       		.uleb128 0x1d
+ 2464 097d 5B020000 		.4byte	.LASF35
+ 2465 0981 01       		.byte	0x1
+ 2466 0982 5701     		.2byte	0x157
+ 2467 0984 F5000000 		.4byte	0xf5
+ 2468 0988 85050000 		.4byte	.LLST32
+ 2469 098c 0B       		.uleb128 0xb
+ 2470 098d 06000000 		.4byte	.LVL157
+ 2471 0991 0F0D0000 		.4byte	0xd0f
+ 2472 0995 0D       		.uleb128 0xd
+ 2473 0996 0C000000 		.4byte	.LVL158
+ 2474 099a 040D0000 		.4byte	0xd04
+ 2475 099e A8090000 		.4byte	0x9a8
+ 2476 09a2 0E       		.uleb128 0xe
+ 2477 09a3 01       		.uleb128 0x1
+ 2478 09a4 50       		.byte	0x50
+ 2479 09a5 01       		.uleb128 0x1
+ 2480 09a6 30       		.byte	0x30
+ 2481 09a7 00       		.byte	0
+ 2482 09a8 0D       		.uleb128 0xd
+ 2483 09a9 12000000 		.4byte	.LVL159
+ 2484 09ad 00010000 		.4byte	0x100
+ 2485 09b1 BC090000 		.4byte	0x9bc
+ 2486 09b5 0E       		.uleb128 0xe
+ 2487 09b6 01       		.uleb128 0x1
+ 2488 09b7 50       		.byte	0x50
+ 2489 09b8 02       		.uleb128 0x2
+ARM GAS  C:\Users\linar\AppData\Local\Temp\ccpLyYLJ.s 			page 53
+
+
+ 2490 09b9 09       		.byte	0x9
+ 2491 09ba AB       		.byte	0xab
+ 2492 09bb 00       		.byte	0
+ 2493 09bc 0F       		.uleb128 0xf
+ 2494 09bd 18000000 		.4byte	.LVL160
+ 2495 09c1 040D0000 		.4byte	0xd04
+ 2496 09c5 0E       		.uleb128 0xe
+ 2497 09c6 01       		.uleb128 0x1
+ 2498 09c7 50       		.byte	0x50
+ 2499 09c8 01       		.uleb128 0x1
+ 2500 09c9 31       		.byte	0x31
+ 2501 09ca 00       		.byte	0
+ 2502 09cb 00       		.byte	0
+ 2503 09cc 1E       		.uleb128 0x1e
+ 2504 09cd EA000000 		.4byte	.LASF49
+ 2505 09d1 01       		.byte	0x1
+ 2506 09d2 6401     		.2byte	0x164
+ 2507 09d4 81000000 		.4byte	0x81
+ 2508 09d8 00000000 		.4byte	.LFB79
+ 2509 09dc 36000000 		.4byte	.LFE79-.LFB79
+ 2510 09e0 01       		.uleb128 0x1
+ 2511 09e1 9C       		.byte	0x9c
+ 2512 09e2 8F0A0000 		.4byte	0xa8f
+ 2513 09e6 1D       		.uleb128 0x1d
+ 2514 09e7 74010000 		.4byte	.LASF50
+ 2515 09eb 01       		.byte	0x1
+ 2516 09ec 6601     		.2byte	0x166
+ 2517 09ee 81000000 		.4byte	0x81
+ 2518 09f2 A5050000 		.4byte	.LLST33
+ 2519 09f6 0B       		.uleb128 0xb
+ 2520 09f7 06000000 		.4byte	.LVL162
+ 2521 09fb 0F0D0000 		.4byte	0xd0f
+ 2522 09ff 0D       		.uleb128 0xd
+ 2523 0a00 0C000000 		.4byte	.LVL163
+ 2524 0a04 040D0000 		.4byte	0xd04
+ 2525 0a08 120A0000 		.4byte	0xa12
+ 2526 0a0c 0E       		.uleb128 0xe
+ 2527 0a0d 01       		.uleb128 0x1
+ 2528 0a0e 50       		.byte	0x50
+ 2529 0a0f 01       		.uleb128 0x1
+ 2530 0a10 30       		.byte	0x30
+ 2531 0a11 00       		.byte	0
+ 2532 0a12 0D       		.uleb128 0xd
+ 2533 0a13 12000000 		.4byte	.LVL164
+ 2534 0a17 00010000 		.4byte	0x100
+ 2535 0a1b 260A0000 		.4byte	0xa26
+ 2536 0a1f 0E       		.uleb128 0xe
+ 2537 0a20 01       		.uleb128 0x1
+ 2538 0a21 50       		.byte	0x50
+ 2539 0a22 02       		.uleb128 0x2
+ 2540 0a23 09       		.byte	0x9
+ 2541 0a24 AB       		.byte	0xab
+ 2542 0a25 00       		.byte	0
+ 2543 0a26 0D       		.uleb128 0xd
+ 2544 0a27 18000000 		.4byte	.LVL165
+ 2545 0a2b 00010000 		.4byte	0x100
+ 2546 0a2f 390A0000 		.4byte	0xa39
+ARM GAS  C:\Users\linar\AppData\Local\Temp\ccpLyYLJ.s 			page 54
+
+
+ 2547 0a33 0E       		.uleb128 0xe
+ 2548 0a34 01       		.uleb128 0x1
+ 2549 0a35 50       		.byte	0x50
+ 2550 0a36 01       		.uleb128 0x1
+ 2551 0a37 30       		.byte	0x30
+ 2552 0a38 00       		.byte	0
+ 2553 0a39 0D       		.uleb128 0xd
+ 2554 0a3a 1E000000 		.4byte	.LVL166
+ 2555 0a3e 00010000 		.4byte	0x100
+ 2556 0a42 4C0A0000 		.4byte	0xa4c
+ 2557 0a46 0E       		.uleb128 0xe
+ 2558 0a47 01       		.uleb128 0x1
+ 2559 0a48 50       		.byte	0x50
+ 2560 0a49 01       		.uleb128 0x1
+ 2561 0a4a 30       		.byte	0x30
+ 2562 0a4b 00       		.byte	0
+ 2563 0a4c 0D       		.uleb128 0xd
+ 2564 0a4d 24000000 		.4byte	.LVL167
+ 2565 0a51 00010000 		.4byte	0x100
+ 2566 0a55 5F0A0000 		.4byte	0xa5f
+ 2567 0a59 0E       		.uleb128 0xe
+ 2568 0a5a 01       		.uleb128 0x1
+ 2569 0a5b 50       		.byte	0x50
+ 2570 0a5c 01       		.uleb128 0x1
+ 2571 0a5d 30       		.byte	0x30
+ 2572 0a5e 00       		.byte	0
+ 2573 0a5f 0D       		.uleb128 0xd
+ 2574 0a60 2A000000 		.4byte	.LVL168
+ 2575 0a64 00010000 		.4byte	0x100
+ 2576 0a68 720A0000 		.4byte	0xa72
+ 2577 0a6c 0E       		.uleb128 0xe
+ 2578 0a6d 01       		.uleb128 0x1
+ 2579 0a6e 50       		.byte	0x50
+ 2580 0a6f 01       		.uleb128 0x1
+ 2581 0a70 30       		.byte	0x30
+ 2582 0a71 00       		.byte	0
+ 2583 0a72 0D       		.uleb128 0xd
+ 2584 0a73 30000000 		.4byte	.LVL169
+ 2585 0a77 040D0000 		.4byte	0xd04
+ 2586 0a7b 850A0000 		.4byte	0xa85
+ 2587 0a7f 0E       		.uleb128 0xe
+ 2588 0a80 01       		.uleb128 0x1
+ 2589 0a81 50       		.byte	0x50
+ 2590 0a82 01       		.uleb128 0x1
+ 2591 0a83 31       		.byte	0x31
+ 2592 0a84 00       		.byte	0
+ 2593 0a85 0B       		.uleb128 0xb
+ 2594 0a86 34000000 		.4byte	.LVL170
+ 2595 0a8a 1A0D0000 		.4byte	0xd1a
+ 2596 0a8e 00       		.byte	0
+ 2597 0a8f 1B       		.uleb128 0x1b
+ 2598 0a90 B1020000 		.4byte	.LASF51
+ 2599 0a94 01       		.byte	0x1
+ 2600 0a95 7701     		.2byte	0x177
+ 2601 0a97 F5000000 		.4byte	0xf5
+ 2602 0a9b 00000000 		.4byte	.LFB80
+ 2603 0a9f 74000000 		.4byte	.LFE80-.LFB80
+ARM GAS  C:\Users\linar\AppData\Local\Temp\ccpLyYLJ.s 			page 55
+
+
+ 2604 0aa3 01       		.uleb128 0x1
+ 2605 0aa4 9C       		.byte	0x9c
+ 2606 0aa5 B80B0000 		.4byte	0xbb8
+ 2607 0aa9 1C       		.uleb128 0x1c
+ 2608 0aaa 10030000 		.4byte	.LASF52
+ 2609 0aae 01       		.byte	0x1
+ 2610 0aaf 7701     		.2byte	0x177
+ 2611 0ab1 07050000 		.4byte	0x507
+ 2612 0ab5 C4050000 		.4byte	.LLST34
+ 2613 0ab9 1C       		.uleb128 0x1c
+ 2614 0aba 74010000 		.4byte	.LASF50
+ 2615 0abe 01       		.byte	0x1
+ 2616 0abf 7701     		.2byte	0x177
+ 2617 0ac1 07050000 		.4byte	0x507
+ 2618 0ac5 E2050000 		.4byte	.LLST35
+ 2619 0ac9 1F       		.uleb128 0x1f
+ 2620 0aca 5B020000 		.4byte	.LASF35
+ 2621 0ace 01       		.byte	0x1
+ 2622 0acf 7901     		.2byte	0x179
+ 2623 0ad1 F5000000 		.4byte	0xf5
+ 2624 0ad5 01       		.byte	0x1
+ 2625 0ad6 0B       		.uleb128 0xb
+ 2626 0ad7 0A000000 		.4byte	.LVL173
+ 2627 0adb 5D020000 		.4byte	0x25d
+ 2628 0adf 0B       		.uleb128 0xb
+ 2629 0ae0 10000000 		.4byte	.LVL174
+ 2630 0ae4 0F0D0000 		.4byte	0xd0f
+ 2631 0ae8 0D       		.uleb128 0xd
+ 2632 0ae9 16000000 		.4byte	.LVL175
+ 2633 0aed 040D0000 		.4byte	0xd04
+ 2634 0af1 FB0A0000 		.4byte	0xafb
+ 2635 0af5 0E       		.uleb128 0xe
+ 2636 0af6 01       		.uleb128 0x1
+ 2637 0af7 50       		.byte	0x50
+ 2638 0af8 01       		.uleb128 0x1
+ 2639 0af9 30       		.byte	0x30
+ 2640 0afa 00       		.byte	0
+ 2641 0afb 0D       		.uleb128 0xd
+ 2642 0afc 1C000000 		.4byte	.LVL176
+ 2643 0b00 00010000 		.4byte	0x100
+ 2644 0b04 0F0B0000 		.4byte	0xb0f
+ 2645 0b08 0E       		.uleb128 0xe
+ 2646 0b09 01       		.uleb128 0x1
+ 2647 0b0a 50       		.byte	0x50
+ 2648 0b0b 02       		.uleb128 0x2
+ 2649 0b0c 09       		.byte	0x9
+ 2650 0b0d 90       		.byte	0x90
+ 2651 0b0e 00       		.byte	0
+ 2652 0b0f 0D       		.uleb128 0xd
+ 2653 0b10 22000000 		.4byte	.LVL177
+ 2654 0b14 00010000 		.4byte	0x100
+ 2655 0b18 220B0000 		.4byte	0xb22
+ 2656 0b1c 0E       		.uleb128 0xe
+ 2657 0b1d 01       		.uleb128 0x1
+ 2658 0b1e 50       		.byte	0x50
+ 2659 0b1f 01       		.uleb128 0x1
+ 2660 0b20 30       		.byte	0x30
+ARM GAS  C:\Users\linar\AppData\Local\Temp\ccpLyYLJ.s 			page 56
+
+
+ 2661 0b21 00       		.byte	0
+ 2662 0b22 0D       		.uleb128 0xd
+ 2663 0b23 28000000 		.4byte	.LVL178
+ 2664 0b27 00010000 		.4byte	0x100
+ 2665 0b2b 350B0000 		.4byte	0xb35
+ 2666 0b2f 0E       		.uleb128 0xe
+ 2667 0b30 01       		.uleb128 0x1
+ 2668 0b31 50       		.byte	0x50
+ 2669 0b32 01       		.uleb128 0x1
+ 2670 0b33 30       		.byte	0x30
+ 2671 0b34 00       		.byte	0
+ 2672 0b35 0D       		.uleb128 0xd
+ 2673 0b36 2E000000 		.4byte	.LVL179
+ 2674 0b3a 00010000 		.4byte	0x100
+ 2675 0b3e 480B0000 		.4byte	0xb48
+ 2676 0b42 0E       		.uleb128 0xe
+ 2677 0b43 01       		.uleb128 0x1
+ 2678 0b44 50       		.byte	0x50
+ 2679 0b45 01       		.uleb128 0x1
+ 2680 0b46 30       		.byte	0x30
+ 2681 0b47 00       		.byte	0
+ 2682 0b48 0D       		.uleb128 0xd
+ 2683 0b49 34000000 		.4byte	.LVL180
+ 2684 0b4d 00010000 		.4byte	0x100
+ 2685 0b51 5B0B0000 		.4byte	0xb5b
+ 2686 0b55 0E       		.uleb128 0xe
+ 2687 0b56 01       		.uleb128 0x1
+ 2688 0b57 50       		.byte	0x50
+ 2689 0b58 01       		.uleb128 0x1
+ 2690 0b59 30       		.byte	0x30
+ 2691 0b5a 00       		.byte	0
+ 2692 0b5b 0D       		.uleb128 0xd
+ 2693 0b5c 3A000000 		.4byte	.LVL181
+ 2694 0b60 00010000 		.4byte	0x100
+ 2695 0b64 6E0B0000 		.4byte	0xb6e
+ 2696 0b68 0E       		.uleb128 0xe
+ 2697 0b69 01       		.uleb128 0x1
+ 2698 0b6a 50       		.byte	0x50
+ 2699 0b6b 01       		.uleb128 0x1
+ 2700 0b6c 30       		.byte	0x30
+ 2701 0b6d 00       		.byte	0
+ 2702 0b6e 0D       		.uleb128 0xd
+ 2703 0b6f 40000000 		.4byte	.LVL182
+ 2704 0b73 040D0000 		.4byte	0xd04
+ 2705 0b77 810B0000 		.4byte	0xb81
+ 2706 0b7b 0E       		.uleb128 0xe
+ 2707 0b7c 01       		.uleb128 0x1
+ 2708 0b7d 50       		.byte	0x50
+ 2709 0b7e 01       		.uleb128 0x1
+ 2710 0b7f 31       		.byte	0x31
+ 2711 0b80 00       		.byte	0
+ 2712 0b81 0B       		.uleb128 0xb
+ 2713 0b82 46000000 		.4byte	.LVL183
+ 2714 0b86 250D0000 		.4byte	0xd25
+ 2715 0b8a 0B       		.uleb128 0xb
+ 2716 0b8b 4E000000 		.4byte	.LVL184
+ 2717 0b8f 1A0D0000 		.4byte	0xd1a
+ARM GAS  C:\Users\linar\AppData\Local\Temp\ccpLyYLJ.s 			page 57
+
+
+ 2718 0b93 0B       		.uleb128 0xb
+ 2719 0b94 56000000 		.4byte	.LVL185
+ 2720 0b98 250D0000 		.4byte	0xd25
+ 2721 0b9c 0B       		.uleb128 0xb
+ 2722 0b9d 5E000000 		.4byte	.LVL186
+ 2723 0ba1 1A0D0000 		.4byte	0xd1a
+ 2724 0ba5 0B       		.uleb128 0xb
+ 2725 0ba6 66000000 		.4byte	.LVL187
+ 2726 0baa 1A0D0000 		.4byte	0xd1a
+ 2727 0bae 0B       		.uleb128 0xb
+ 2728 0baf 6A000000 		.4byte	.LVL188
+ 2729 0bb3 250D0000 		.4byte	0xd25
+ 2730 0bb7 00       		.byte	0
+ 2731 0bb8 1B       		.uleb128 0x1b
+ 2732 0bb9 7E000000 		.4byte	.LASF53
+ 2733 0bbd 01       		.byte	0x1
+ 2734 0bbe 9401     		.2byte	0x194
+ 2735 0bc0 F5000000 		.4byte	0xf5
+ 2736 0bc4 00000000 		.4byte	.LFB81
+ 2737 0bc8 7A000000 		.4byte	.LFE81-.LFB81
+ 2738 0bcc 01       		.uleb128 0x1
+ 2739 0bcd 9C       		.byte	0x9c
+ 2740 0bce DD0C0000 		.4byte	0xcdd
+ 2741 0bd2 1C       		.uleb128 0x1c
+ 2742 0bd3 10030000 		.4byte	.LASF52
+ 2743 0bd7 01       		.byte	0x1
+ 2744 0bd8 9401     		.2byte	0x194
+ 2745 0bda 07050000 		.4byte	0x507
+ 2746 0bde 00060000 		.4byte	.LLST36
+ 2747 0be2 1C       		.uleb128 0x1c
+ 2748 0be3 A6010000 		.4byte	.LASF54
+ 2749 0be7 01       		.byte	0x1
+ 2750 0be8 9401     		.2byte	0x194
+ 2751 0bea 07050000 		.4byte	0x507
+ 2752 0bee 1E060000 		.4byte	.LLST37
+ 2753 0bf2 1C       		.uleb128 0x1c
+ 2754 0bf3 86010000 		.4byte	.LASF55
+ 2755 0bf7 01       		.byte	0x1
+ 2756 0bf8 9401     		.2byte	0x194
+ 2757 0bfa 07050000 		.4byte	0x507
+ 2758 0bfe 3C060000 		.4byte	.LLST38
+ 2759 0c02 1F       		.uleb128 0x1f
+ 2760 0c03 5B020000 		.4byte	.LASF35
+ 2761 0c07 01       		.byte	0x1
+ 2762 0c08 9601     		.2byte	0x196
+ 2763 0c0a F5000000 		.4byte	0xf5
+ 2764 0c0e 01       		.byte	0x1
+ 2765 0c0f 0B       		.uleb128 0xb
+ 2766 0c10 0C000000 		.4byte	.LVL192
+ 2767 0c14 5D020000 		.4byte	0x25d
+ 2768 0c18 0B       		.uleb128 0xb
+ 2769 0c19 12000000 		.4byte	.LVL193
+ 2770 0c1d 0F0D0000 		.4byte	0xd0f
+ 2771 0c21 0D       		.uleb128 0xd
+ 2772 0c22 18000000 		.4byte	.LVL194
+ 2773 0c26 040D0000 		.4byte	0xd04
+ 2774 0c2a 340C0000 		.4byte	0xc34
+ARM GAS  C:\Users\linar\AppData\Local\Temp\ccpLyYLJ.s 			page 58
+
+
+ 2775 0c2e 0E       		.uleb128 0xe
+ 2776 0c2f 01       		.uleb128 0x1
+ 2777 0c30 50       		.byte	0x50
+ 2778 0c31 01       		.uleb128 0x1
+ 2779 0c32 30       		.byte	0x30
+ 2780 0c33 00       		.byte	0
+ 2781 0c34 0D       		.uleb128 0xd
+ 2782 0c35 1E000000 		.4byte	.LVL195
+ 2783 0c39 00010000 		.4byte	0x100
+ 2784 0c3d 480C0000 		.4byte	0xc48
+ 2785 0c41 0E       		.uleb128 0xe
+ 2786 0c42 01       		.uleb128 0x1
+ 2787 0c43 50       		.byte	0x50
+ 2788 0c44 02       		.uleb128 0x2
+ 2789 0c45 09       		.byte	0x9
+ 2790 0c46 9F       		.byte	0x9f
+ 2791 0c47 00       		.byte	0
+ 2792 0c48 0D       		.uleb128 0xd
+ 2793 0c49 24000000 		.4byte	.LVL196
+ 2794 0c4d 00010000 		.4byte	0x100
+ 2795 0c51 5B0C0000 		.4byte	0xc5b
+ 2796 0c55 0E       		.uleb128 0xe
+ 2797 0c56 01       		.uleb128 0x1
+ 2798 0c57 50       		.byte	0x50
+ 2799 0c58 01       		.uleb128 0x1
+ 2800 0c59 30       		.byte	0x30
+ 2801 0c5a 00       		.byte	0
+ 2802 0c5b 0D       		.uleb128 0xd
+ 2803 0c5c 2A000000 		.4byte	.LVL197
+ 2804 0c60 00010000 		.4byte	0x100
+ 2805 0c64 6E0C0000 		.4byte	0xc6e
+ 2806 0c68 0E       		.uleb128 0xe
+ 2807 0c69 01       		.uleb128 0x1
+ 2808 0c6a 50       		.byte	0x50
+ 2809 0c6b 01       		.uleb128 0x1
+ 2810 0c6c 30       		.byte	0x30
+ 2811 0c6d 00       		.byte	0
+ 2812 0c6e 0D       		.uleb128 0xd
+ 2813 0c6f 30000000 		.4byte	.LVL198
+ 2814 0c73 00010000 		.4byte	0x100
+ 2815 0c77 810C0000 		.4byte	0xc81
+ 2816 0c7b 0E       		.uleb128 0xe
+ 2817 0c7c 01       		.uleb128 0x1
+ 2818 0c7d 50       		.byte	0x50
+ 2819 0c7e 01       		.uleb128 0x1
+ 2820 0c7f 30       		.byte	0x30
+ 2821 0c80 00       		.byte	0
+ 2822 0c81 0D       		.uleb128 0xd
+ 2823 0c82 36000000 		.4byte	.LVL199
+ 2824 0c86 040D0000 		.4byte	0xd04
+ 2825 0c8a 940C0000 		.4byte	0xc94
+ 2826 0c8e 0E       		.uleb128 0xe
+ 2827 0c8f 01       		.uleb128 0x1
+ 2828 0c90 50       		.byte	0x50
+ 2829 0c91 01       		.uleb128 0x1
+ 2830 0c92 31       		.byte	0x31
+ 2831 0c93 00       		.byte	0
+ARM GAS  C:\Users\linar\AppData\Local\Temp\ccpLyYLJ.s 			page 59
+
+
+ 2832 0c94 0B       		.uleb128 0xb
+ 2833 0c95 3C000000 		.4byte	.LVL200
+ 2834 0c99 250D0000 		.4byte	0xd25
+ 2835 0c9d 0B       		.uleb128 0xb
+ 2836 0c9e 44000000 		.4byte	.LVL201
+ 2837 0ca2 1A0D0000 		.4byte	0xd1a
+ 2838 0ca6 0B       		.uleb128 0xb
+ 2839 0ca7 4C000000 		.4byte	.LVL202
+ 2840 0cab 250D0000 		.4byte	0xd25
+ 2841 0caf 0B       		.uleb128 0xb
+ 2842 0cb0 54000000 		.4byte	.LVL203
+ 2843 0cb4 1A0D0000 		.4byte	0xd1a
+ 2844 0cb8 0B       		.uleb128 0xb
+ 2845 0cb9 5C000000 		.4byte	.LVL204
+ 2846 0cbd 250D0000 		.4byte	0xd25
+ 2847 0cc1 0B       		.uleb128 0xb
+ 2848 0cc2 64000000 		.4byte	.LVL205
+ 2849 0cc6 1A0D0000 		.4byte	0xd1a
+ 2850 0cca 0B       		.uleb128 0xb
+ 2851 0ccb 6C000000 		.4byte	.LVL206
+ 2852 0ccf 1A0D0000 		.4byte	0xd1a
+ 2853 0cd3 0B       		.uleb128 0xb
+ 2854 0cd4 70000000 		.4byte	.LVL207
+ 2855 0cd8 250D0000 		.4byte	0xd25
+ 2856 0cdc 00       		.byte	0
+ 2857 0cdd 20       		.uleb128 0x20
+ 2858 0cde 24030000 		.4byte	.LASF65
+ 2859 0ce2 08       		.byte	0x8
+ 2860 0ce3 1207     		.2byte	0x712
+ 2861 0ce5 E90C0000 		.4byte	0xce9
+ 2862 0ce9 21       		.uleb128 0x21
+ 2863 0cea 76000000 		.4byte	0x76
+ 2864 0cee 22       		.uleb128 0x22
+ 2865 0cef 28010000 		.4byte	.LASF56
+ 2866 0cf3 28010000 		.4byte	.LASF56
+ 2867 0cf7 06       		.byte	0x6
+ 2868 0cf8 5E       		.byte	0x5e
+ 2869 0cf9 22       		.uleb128 0x22
+ 2870 0cfa 65000000 		.4byte	.LASF57
+ 2871 0cfe 65000000 		.4byte	.LASF57
+ 2872 0d02 06       		.byte	0x6
+ 2873 0d03 5C       		.byte	0x5c
+ 2874 0d04 22       		.uleb128 0x22
+ 2875 0d05 8A000000 		.4byte	.LASF58
+ 2876 0d09 8A000000 		.4byte	.LASF58
+ 2877 0d0d 07       		.byte	0x7
+ 2878 0d0e 26       		.byte	0x26
+ 2879 0d0f 22       		.uleb128 0x22
+ 2880 0d10 50000000 		.4byte	.LASF59
+ 2881 0d14 50000000 		.4byte	.LASF59
+ 2882 0d18 06       		.byte	0x6
+ 2883 0d19 64       		.byte	0x64
+ 2884 0d1a 22       		.uleb128 0x22
+ 2885 0d1b 9F020000 		.4byte	.LASF60
+ 2886 0d1f 9F020000 		.4byte	.LASF60
+ 2887 0d23 06       		.byte	0x6
+ 2888 0d24 60       		.byte	0x60
+ARM GAS  C:\Users\linar\AppData\Local\Temp\ccpLyYLJ.s 			page 60
+
+
+ 2889 0d25 22       		.uleb128 0x22
+ 2890 0d26 AD000000 		.4byte	.LASF61
+ 2891 0d2a AD000000 		.4byte	.LASF61
+ 2892 0d2e 06       		.byte	0x6
+ 2893 0d2f 62       		.byte	0x62
+ 2894 0d30 00       		.byte	0
+ 2895              		.section	.debug_abbrev,"",%progbits
+ 2896              	.Ldebug_abbrev0:
+ 2897 0000 01       		.uleb128 0x1
+ 2898 0001 11       		.uleb128 0x11
+ 2899 0002 01       		.byte	0x1
+ 2900 0003 25       		.uleb128 0x25
+ 2901 0004 0E       		.uleb128 0xe
+ 2902 0005 13       		.uleb128 0x13
+ 2903 0006 0B       		.uleb128 0xb
+ 2904 0007 03       		.uleb128 0x3
+ 2905 0008 0E       		.uleb128 0xe
+ 2906 0009 1B       		.uleb128 0x1b
+ 2907 000a 0E       		.uleb128 0xe
+ 2908 000b 55       		.uleb128 0x55
+ 2909 000c 17       		.uleb128 0x17
+ 2910 000d 11       		.uleb128 0x11
+ 2911 000e 01       		.uleb128 0x1
+ 2912 000f 10       		.uleb128 0x10
+ 2913 0010 17       		.uleb128 0x17
+ 2914 0011 00       		.byte	0
+ 2915 0012 00       		.byte	0
+ 2916 0013 02       		.uleb128 0x2
+ 2917 0014 24       		.uleb128 0x24
+ 2918 0015 00       		.byte	0
+ 2919 0016 0B       		.uleb128 0xb
+ 2920 0017 0B       		.uleb128 0xb
+ 2921 0018 3E       		.uleb128 0x3e
+ 2922 0019 0B       		.uleb128 0xb
+ 2923 001a 03       		.uleb128 0x3
+ 2924 001b 0E       		.uleb128 0xe
+ 2925 001c 00       		.byte	0
+ 2926 001d 00       		.byte	0
+ 2927 001e 03       		.uleb128 0x3
+ 2928 001f 16       		.uleb128 0x16
+ 2929 0020 00       		.byte	0
+ 2930 0021 03       		.uleb128 0x3
+ 2931 0022 0E       		.uleb128 0xe
+ 2932 0023 3A       		.uleb128 0x3a
+ 2933 0024 0B       		.uleb128 0xb
+ 2934 0025 3B       		.uleb128 0x3b
+ 2935 0026 0B       		.uleb128 0xb
+ 2936 0027 49       		.uleb128 0x49
+ 2937 0028 13       		.uleb128 0x13
+ 2938 0029 00       		.byte	0
+ 2939 002a 00       		.byte	0
+ 2940 002b 04       		.uleb128 0x4
+ 2941 002c 24       		.uleb128 0x24
+ 2942 002d 00       		.byte	0
+ 2943 002e 0B       		.uleb128 0xb
+ 2944 002f 0B       		.uleb128 0xb
+ 2945 0030 3E       		.uleb128 0x3e
+ARM GAS  C:\Users\linar\AppData\Local\Temp\ccpLyYLJ.s 			page 61
+
+
+ 2946 0031 0B       		.uleb128 0xb
+ 2947 0032 03       		.uleb128 0x3
+ 2948 0033 08       		.uleb128 0x8
+ 2949 0034 00       		.byte	0
+ 2950 0035 00       		.byte	0
+ 2951 0036 05       		.uleb128 0x5
+ 2952 0037 16       		.uleb128 0x16
+ 2953 0038 00       		.byte	0
+ 2954 0039 03       		.uleb128 0x3
+ 2955 003a 0E       		.uleb128 0xe
+ 2956 003b 3A       		.uleb128 0x3a
+ 2957 003c 0B       		.uleb128 0xb
+ 2958 003d 3B       		.uleb128 0x3b
+ 2959 003e 05       		.uleb128 0x5
+ 2960 003f 49       		.uleb128 0x49
+ 2961 0040 13       		.uleb128 0x13
+ 2962 0041 00       		.byte	0
+ 2963 0042 00       		.byte	0
+ 2964 0043 06       		.uleb128 0x6
+ 2965 0044 04       		.uleb128 0x4
+ 2966 0045 01       		.byte	0x1
+ 2967 0046 03       		.uleb128 0x3
+ 2968 0047 0E       		.uleb128 0xe
+ 2969 0048 0B       		.uleb128 0xb
+ 2970 0049 0B       		.uleb128 0xb
+ 2971 004a 49       		.uleb128 0x49
+ 2972 004b 13       		.uleb128 0x13
+ 2973 004c 3A       		.uleb128 0x3a
+ 2974 004d 0B       		.uleb128 0xb
+ 2975 004e 3B       		.uleb128 0x3b
+ 2976 004f 0B       		.uleb128 0xb
+ 2977 0050 01       		.uleb128 0x1
+ 2978 0051 13       		.uleb128 0x13
+ 2979 0052 00       		.byte	0
+ 2980 0053 00       		.byte	0
+ 2981 0054 07       		.uleb128 0x7
+ 2982 0055 28       		.uleb128 0x28
+ 2983 0056 00       		.byte	0
+ 2984 0057 03       		.uleb128 0x3
+ 2985 0058 08       		.uleb128 0x8
+ 2986 0059 1C       		.uleb128 0x1c
+ 2987 005a 0B       		.uleb128 0xb
+ 2988 005b 00       		.byte	0
+ 2989 005c 00       		.byte	0
+ 2990 005d 08       		.uleb128 0x8
+ 2991 005e 28       		.uleb128 0x28
+ 2992 005f 00       		.byte	0
+ 2993 0060 03       		.uleb128 0x3
+ 2994 0061 0E       		.uleb128 0xe
+ 2995 0062 1C       		.uleb128 0x1c
+ 2996 0063 0B       		.uleb128 0xb
+ 2997 0064 00       		.byte	0
+ 2998 0065 00       		.byte	0
+ 2999 0066 09       		.uleb128 0x9
+ 3000 0067 2E       		.uleb128 0x2e
+ 3001 0068 01       		.byte	0x1
+ 3002 0069 3F       		.uleb128 0x3f
+ARM GAS  C:\Users\linar\AppData\Local\Temp\ccpLyYLJ.s 			page 62
+
+
+ 3003 006a 19       		.uleb128 0x19
+ 3004 006b 03       		.uleb128 0x3
+ 3005 006c 0E       		.uleb128 0xe
+ 3006 006d 3A       		.uleb128 0x3a
+ 3007 006e 0B       		.uleb128 0xb
+ 3008 006f 3B       		.uleb128 0x3b
+ 3009 0070 0B       		.uleb128 0xb
+ 3010 0071 27       		.uleb128 0x27
+ 3011 0072 19       		.uleb128 0x19
+ 3012 0073 11       		.uleb128 0x11
+ 3013 0074 01       		.uleb128 0x1
+ 3014 0075 12       		.uleb128 0x12
+ 3015 0076 06       		.uleb128 0x6
+ 3016 0077 40       		.uleb128 0x40
+ 3017 0078 18       		.uleb128 0x18
+ 3018 0079 9742     		.uleb128 0x2117
+ 3019 007b 19       		.uleb128 0x19
+ 3020 007c 01       		.uleb128 0x1
+ 3021 007d 13       		.uleb128 0x13
+ 3022 007e 00       		.byte	0
+ 3023 007f 00       		.byte	0
+ 3024 0080 0A       		.uleb128 0xa
+ 3025 0081 05       		.uleb128 0x5
+ 3026 0082 00       		.byte	0
+ 3027 0083 03       		.uleb128 0x3
+ 3028 0084 08       		.uleb128 0x8
+ 3029 0085 3A       		.uleb128 0x3a
+ 3030 0086 0B       		.uleb128 0xb
+ 3031 0087 3B       		.uleb128 0x3b
+ 3032 0088 0B       		.uleb128 0xb
+ 3033 0089 49       		.uleb128 0x49
+ 3034 008a 13       		.uleb128 0x13
+ 3035 008b 02       		.uleb128 0x2
+ 3036 008c 17       		.uleb128 0x17
+ 3037 008d 00       		.byte	0
+ 3038 008e 00       		.byte	0
+ 3039 008f 0B       		.uleb128 0xb
+ 3040 0090 898201   		.uleb128 0x4109
+ 3041 0093 00       		.byte	0
+ 3042 0094 11       		.uleb128 0x11
+ 3043 0095 01       		.uleb128 0x1
+ 3044 0096 31       		.uleb128 0x31
+ 3045 0097 13       		.uleb128 0x13
+ 3046 0098 00       		.byte	0
+ 3047 0099 00       		.byte	0
+ 3048 009a 0C       		.uleb128 0xc
+ 3049 009b 2E       		.uleb128 0x2e
+ 3050 009c 01       		.byte	0x1
+ 3051 009d 3F       		.uleb128 0x3f
+ 3052 009e 19       		.uleb128 0x19
+ 3053 009f 03       		.uleb128 0x3
+ 3054 00a0 0E       		.uleb128 0xe
+ 3055 00a1 3A       		.uleb128 0x3a
+ 3056 00a2 0B       		.uleb128 0xb
+ 3057 00a3 3B       		.uleb128 0x3b
+ 3058 00a4 0B       		.uleb128 0xb
+ 3059 00a5 11       		.uleb128 0x11
+ARM GAS  C:\Users\linar\AppData\Local\Temp\ccpLyYLJ.s 			page 63
+
+
+ 3060 00a6 01       		.uleb128 0x1
+ 3061 00a7 12       		.uleb128 0x12
+ 3062 00a8 06       		.uleb128 0x6
+ 3063 00a9 40       		.uleb128 0x40
+ 3064 00aa 18       		.uleb128 0x18
+ 3065 00ab 9742     		.uleb128 0x2117
+ 3066 00ad 19       		.uleb128 0x19
+ 3067 00ae 01       		.uleb128 0x1
+ 3068 00af 13       		.uleb128 0x13
+ 3069 00b0 00       		.byte	0
+ 3070 00b1 00       		.byte	0
+ 3071 00b2 0D       		.uleb128 0xd
+ 3072 00b3 898201   		.uleb128 0x4109
+ 3073 00b6 01       		.byte	0x1
+ 3074 00b7 11       		.uleb128 0x11
+ 3075 00b8 01       		.uleb128 0x1
+ 3076 00b9 31       		.uleb128 0x31
+ 3077 00ba 13       		.uleb128 0x13
+ 3078 00bb 01       		.uleb128 0x1
+ 3079 00bc 13       		.uleb128 0x13
+ 3080 00bd 00       		.byte	0
+ 3081 00be 00       		.byte	0
+ 3082 00bf 0E       		.uleb128 0xe
+ 3083 00c0 8A8201   		.uleb128 0x410a
+ 3084 00c3 00       		.byte	0
+ 3085 00c4 02       		.uleb128 0x2
+ 3086 00c5 18       		.uleb128 0x18
+ 3087 00c6 9142     		.uleb128 0x2111
+ 3088 00c8 18       		.uleb128 0x18
+ 3089 00c9 00       		.byte	0
+ 3090 00ca 00       		.byte	0
+ 3091 00cb 0F       		.uleb128 0xf
+ 3092 00cc 898201   		.uleb128 0x4109
+ 3093 00cf 01       		.byte	0x1
+ 3094 00d0 11       		.uleb128 0x11
+ 3095 00d1 01       		.uleb128 0x1
+ 3096 00d2 31       		.uleb128 0x31
+ 3097 00d3 13       		.uleb128 0x13
+ 3098 00d4 00       		.byte	0
+ 3099 00d5 00       		.byte	0
+ 3100 00d6 10       		.uleb128 0x10
+ 3101 00d7 2E       		.uleb128 0x2e
+ 3102 00d8 01       		.byte	0x1
+ 3103 00d9 3F       		.uleb128 0x3f
+ 3104 00da 19       		.uleb128 0x19
+ 3105 00db 03       		.uleb128 0x3
+ 3106 00dc 0E       		.uleb128 0xe
+ 3107 00dd 3A       		.uleb128 0x3a
+ 3108 00de 0B       		.uleb128 0xb
+ 3109 00df 3B       		.uleb128 0x3b
+ 3110 00e0 0B       		.uleb128 0xb
+ 3111 00e1 49       		.uleb128 0x49
+ 3112 00e2 13       		.uleb128 0x13
+ 3113 00e3 11       		.uleb128 0x11
+ 3114 00e4 01       		.uleb128 0x1
+ 3115 00e5 12       		.uleb128 0x12
+ 3116 00e6 06       		.uleb128 0x6
+ARM GAS  C:\Users\linar\AppData\Local\Temp\ccpLyYLJ.s 			page 64
+
+
+ 3117 00e7 40       		.uleb128 0x40
+ 3118 00e8 18       		.uleb128 0x18
+ 3119 00e9 9742     		.uleb128 0x2117
+ 3120 00eb 19       		.uleb128 0x19
+ 3121 00ec 01       		.uleb128 0x1
+ 3122 00ed 13       		.uleb128 0x13
+ 3123 00ee 00       		.byte	0
+ 3124 00ef 00       		.byte	0
+ 3125 00f0 11       		.uleb128 0x11
+ 3126 00f1 34       		.uleb128 0x34
+ 3127 00f2 00       		.byte	0
+ 3128 00f3 03       		.uleb128 0x3
+ 3129 00f4 08       		.uleb128 0x8
+ 3130 00f5 3A       		.uleb128 0x3a
+ 3131 00f6 0B       		.uleb128 0xb
+ 3132 00f7 3B       		.uleb128 0x3b
+ 3133 00f8 0B       		.uleb128 0xb
+ 3134 00f9 49       		.uleb128 0x49
+ 3135 00fa 13       		.uleb128 0x13
+ 3136 00fb 02       		.uleb128 0x2
+ 3137 00fc 17       		.uleb128 0x17
+ 3138 00fd 00       		.byte	0
+ 3139 00fe 00       		.byte	0
+ 3140 00ff 12       		.uleb128 0x12
+ 3141 0100 34       		.uleb128 0x34
+ 3142 0101 00       		.byte	0
+ 3143 0102 03       		.uleb128 0x3
+ 3144 0103 0E       		.uleb128 0xe
+ 3145 0104 3A       		.uleb128 0x3a
+ 3146 0105 0B       		.uleb128 0xb
+ 3147 0106 3B       		.uleb128 0x3b
+ 3148 0107 0B       		.uleb128 0xb
+ 3149 0108 49       		.uleb128 0x49
+ 3150 0109 13       		.uleb128 0x13
+ 3151 010a 02       		.uleb128 0x2
+ 3152 010b 17       		.uleb128 0x17
+ 3153 010c 00       		.byte	0
+ 3154 010d 00       		.byte	0
+ 3155 010e 13       		.uleb128 0x13
+ 3156 010f 2E       		.uleb128 0x2e
+ 3157 0110 01       		.byte	0x1
+ 3158 0111 3F       		.uleb128 0x3f
+ 3159 0112 19       		.uleb128 0x19
+ 3160 0113 03       		.uleb128 0x3
+ 3161 0114 0E       		.uleb128 0xe
+ 3162 0115 3A       		.uleb128 0x3a
+ 3163 0116 0B       		.uleb128 0xb
+ 3164 0117 3B       		.uleb128 0x3b
+ 3165 0118 0B       		.uleb128 0xb
+ 3166 0119 27       		.uleb128 0x27
+ 3167 011a 19       		.uleb128 0x19
+ 3168 011b 49       		.uleb128 0x49
+ 3169 011c 13       		.uleb128 0x13
+ 3170 011d 11       		.uleb128 0x11
+ 3171 011e 01       		.uleb128 0x1
+ 3172 011f 12       		.uleb128 0x12
+ 3173 0120 06       		.uleb128 0x6
+ARM GAS  C:\Users\linar\AppData\Local\Temp\ccpLyYLJ.s 			page 65
+
+
+ 3174 0121 40       		.uleb128 0x40
+ 3175 0122 18       		.uleb128 0x18
+ 3176 0123 9742     		.uleb128 0x2117
+ 3177 0125 19       		.uleb128 0x19
+ 3178 0126 01       		.uleb128 0x1
+ 3179 0127 13       		.uleb128 0x13
+ 3180 0128 00       		.byte	0
+ 3181 0129 00       		.byte	0
+ 3182 012a 14       		.uleb128 0x14
+ 3183 012b 05       		.uleb128 0x5
+ 3184 012c 00       		.byte	0
+ 3185 012d 03       		.uleb128 0x3
+ 3186 012e 0E       		.uleb128 0xe
+ 3187 012f 3A       		.uleb128 0x3a
+ 3188 0130 0B       		.uleb128 0xb
+ 3189 0131 3B       		.uleb128 0x3b
+ 3190 0132 0B       		.uleb128 0xb
+ 3191 0133 49       		.uleb128 0x49
+ 3192 0134 13       		.uleb128 0x13
+ 3193 0135 02       		.uleb128 0x2
+ 3194 0136 17       		.uleb128 0x17
+ 3195 0137 00       		.byte	0
+ 3196 0138 00       		.byte	0
+ 3197 0139 15       		.uleb128 0x15
+ 3198 013a 34       		.uleb128 0x34
+ 3199 013b 00       		.byte	0
+ 3200 013c 03       		.uleb128 0x3
+ 3201 013d 0E       		.uleb128 0xe
+ 3202 013e 3A       		.uleb128 0x3a
+ 3203 013f 0B       		.uleb128 0xb
+ 3204 0140 3B       		.uleb128 0x3b
+ 3205 0141 0B       		.uleb128 0xb
+ 3206 0142 49       		.uleb128 0x49
+ 3207 0143 13       		.uleb128 0x13
+ 3208 0144 1C       		.uleb128 0x1c
+ 3209 0145 0B       		.uleb128 0xb
+ 3210 0146 00       		.byte	0
+ 3211 0147 00       		.byte	0
+ 3212 0148 16       		.uleb128 0x16
+ 3213 0149 34       		.uleb128 0x34
+ 3214 014a 00       		.byte	0
+ 3215 014b 03       		.uleb128 0x3
+ 3216 014c 0E       		.uleb128 0xe
+ 3217 014d 3A       		.uleb128 0x3a
+ 3218 014e 0B       		.uleb128 0xb
+ 3219 014f 3B       		.uleb128 0x3b
+ 3220 0150 0B       		.uleb128 0xb
+ 3221 0151 49       		.uleb128 0x49
+ 3222 0152 13       		.uleb128 0x13
+ 3223 0153 02       		.uleb128 0x2
+ 3224 0154 18       		.uleb128 0x18
+ 3225 0155 00       		.byte	0
+ 3226 0156 00       		.byte	0
+ 3227 0157 17       		.uleb128 0x17
+ 3228 0158 0B       		.uleb128 0xb
+ 3229 0159 01       		.byte	0x1
+ 3230 015a 11       		.uleb128 0x11
+ARM GAS  C:\Users\linar\AppData\Local\Temp\ccpLyYLJ.s 			page 66
+
+
+ 3231 015b 01       		.uleb128 0x1
+ 3232 015c 12       		.uleb128 0x12
+ 3233 015d 06       		.uleb128 0x6
+ 3234 015e 01       		.uleb128 0x1
+ 3235 015f 13       		.uleb128 0x13
+ 3236 0160 00       		.byte	0
+ 3237 0161 00       		.byte	0
+ 3238 0162 18       		.uleb128 0x18
+ 3239 0163 0F       		.uleb128 0xf
+ 3240 0164 00       		.byte	0
+ 3241 0165 0B       		.uleb128 0xb
+ 3242 0166 0B       		.uleb128 0xb
+ 3243 0167 49       		.uleb128 0x49
+ 3244 0168 13       		.uleb128 0x13
+ 3245 0169 00       		.byte	0
+ 3246 016a 00       		.byte	0
+ 3247 016b 19       		.uleb128 0x19
+ 3248 016c 01       		.uleb128 0x1
+ 3249 016d 01       		.byte	0x1
+ 3250 016e 49       		.uleb128 0x49
+ 3251 016f 13       		.uleb128 0x13
+ 3252 0170 01       		.uleb128 0x1
+ 3253 0171 13       		.uleb128 0x13
+ 3254 0172 00       		.byte	0
+ 3255 0173 00       		.byte	0
+ 3256 0174 1A       		.uleb128 0x1a
+ 3257 0175 21       		.uleb128 0x21
+ 3258 0176 00       		.byte	0
+ 3259 0177 49       		.uleb128 0x49
+ 3260 0178 13       		.uleb128 0x13
+ 3261 0179 2F       		.uleb128 0x2f
+ 3262 017a 0B       		.uleb128 0xb
+ 3263 017b 00       		.byte	0
+ 3264 017c 00       		.byte	0
+ 3265 017d 1B       		.uleb128 0x1b
+ 3266 017e 2E       		.uleb128 0x2e
+ 3267 017f 01       		.byte	0x1
+ 3268 0180 3F       		.uleb128 0x3f
+ 3269 0181 19       		.uleb128 0x19
+ 3270 0182 03       		.uleb128 0x3
+ 3271 0183 0E       		.uleb128 0xe
+ 3272 0184 3A       		.uleb128 0x3a
+ 3273 0185 0B       		.uleb128 0xb
+ 3274 0186 3B       		.uleb128 0x3b
+ 3275 0187 05       		.uleb128 0x5
+ 3276 0188 27       		.uleb128 0x27
+ 3277 0189 19       		.uleb128 0x19
+ 3278 018a 49       		.uleb128 0x49
+ 3279 018b 13       		.uleb128 0x13
+ 3280 018c 11       		.uleb128 0x11
+ 3281 018d 01       		.uleb128 0x1
+ 3282 018e 12       		.uleb128 0x12
+ 3283 018f 06       		.uleb128 0x6
+ 3284 0190 40       		.uleb128 0x40
+ 3285 0191 18       		.uleb128 0x18
+ 3286 0192 9742     		.uleb128 0x2117
+ 3287 0194 19       		.uleb128 0x19
+ARM GAS  C:\Users\linar\AppData\Local\Temp\ccpLyYLJ.s 			page 67
+
+
+ 3288 0195 01       		.uleb128 0x1
+ 3289 0196 13       		.uleb128 0x13
+ 3290 0197 00       		.byte	0
+ 3291 0198 00       		.byte	0
+ 3292 0199 1C       		.uleb128 0x1c
+ 3293 019a 05       		.uleb128 0x5
+ 3294 019b 00       		.byte	0
+ 3295 019c 03       		.uleb128 0x3
+ 3296 019d 0E       		.uleb128 0xe
+ 3297 019e 3A       		.uleb128 0x3a
+ 3298 019f 0B       		.uleb128 0xb
+ 3299 01a0 3B       		.uleb128 0x3b
+ 3300 01a1 05       		.uleb128 0x5
+ 3301 01a2 49       		.uleb128 0x49
+ 3302 01a3 13       		.uleb128 0x13
+ 3303 01a4 02       		.uleb128 0x2
+ 3304 01a5 17       		.uleb128 0x17
+ 3305 01a6 00       		.byte	0
+ 3306 01a7 00       		.byte	0
+ 3307 01a8 1D       		.uleb128 0x1d
+ 3308 01a9 34       		.uleb128 0x34
+ 3309 01aa 00       		.byte	0
+ 3310 01ab 03       		.uleb128 0x3
+ 3311 01ac 0E       		.uleb128 0xe
+ 3312 01ad 3A       		.uleb128 0x3a
+ 3313 01ae 0B       		.uleb128 0xb
+ 3314 01af 3B       		.uleb128 0x3b
+ 3315 01b0 05       		.uleb128 0x5
+ 3316 01b1 49       		.uleb128 0x49
+ 3317 01b2 13       		.uleb128 0x13
+ 3318 01b3 02       		.uleb128 0x2
+ 3319 01b4 17       		.uleb128 0x17
+ 3320 01b5 00       		.byte	0
+ 3321 01b6 00       		.byte	0
+ 3322 01b7 1E       		.uleb128 0x1e
+ 3323 01b8 2E       		.uleb128 0x2e
+ 3324 01b9 01       		.byte	0x1
+ 3325 01ba 3F       		.uleb128 0x3f
+ 3326 01bb 19       		.uleb128 0x19
+ 3327 01bc 03       		.uleb128 0x3
+ 3328 01bd 0E       		.uleb128 0xe
+ 3329 01be 3A       		.uleb128 0x3a
+ 3330 01bf 0B       		.uleb128 0xb
+ 3331 01c0 3B       		.uleb128 0x3b
+ 3332 01c1 05       		.uleb128 0x5
+ 3333 01c2 49       		.uleb128 0x49
+ 3334 01c3 13       		.uleb128 0x13
+ 3335 01c4 11       		.uleb128 0x11
+ 3336 01c5 01       		.uleb128 0x1
+ 3337 01c6 12       		.uleb128 0x12
+ 3338 01c7 06       		.uleb128 0x6
+ 3339 01c8 40       		.uleb128 0x40
+ 3340 01c9 18       		.uleb128 0x18
+ 3341 01ca 9742     		.uleb128 0x2117
+ 3342 01cc 19       		.uleb128 0x19
+ 3343 01cd 01       		.uleb128 0x1
+ 3344 01ce 13       		.uleb128 0x13
+ARM GAS  C:\Users\linar\AppData\Local\Temp\ccpLyYLJ.s 			page 68
+
+
+ 3345 01cf 00       		.byte	0
+ 3346 01d0 00       		.byte	0
+ 3347 01d1 1F       		.uleb128 0x1f
+ 3348 01d2 34       		.uleb128 0x34
+ 3349 01d3 00       		.byte	0
+ 3350 01d4 03       		.uleb128 0x3
+ 3351 01d5 0E       		.uleb128 0xe
+ 3352 01d6 3A       		.uleb128 0x3a
+ 3353 01d7 0B       		.uleb128 0xb
+ 3354 01d8 3B       		.uleb128 0x3b
+ 3355 01d9 05       		.uleb128 0x5
+ 3356 01da 49       		.uleb128 0x49
+ 3357 01db 13       		.uleb128 0x13
+ 3358 01dc 1C       		.uleb128 0x1c
+ 3359 01dd 0B       		.uleb128 0xb
+ 3360 01de 00       		.byte	0
+ 3361 01df 00       		.byte	0
+ 3362 01e0 20       		.uleb128 0x20
+ 3363 01e1 34       		.uleb128 0x34
+ 3364 01e2 00       		.byte	0
+ 3365 01e3 03       		.uleb128 0x3
+ 3366 01e4 0E       		.uleb128 0xe
+ 3367 01e5 3A       		.uleb128 0x3a
+ 3368 01e6 0B       		.uleb128 0xb
+ 3369 01e7 3B       		.uleb128 0x3b
+ 3370 01e8 05       		.uleb128 0x5
+ 3371 01e9 49       		.uleb128 0x49
+ 3372 01ea 13       		.uleb128 0x13
+ 3373 01eb 3F       		.uleb128 0x3f
+ 3374 01ec 19       		.uleb128 0x19
+ 3375 01ed 3C       		.uleb128 0x3c
+ 3376 01ee 19       		.uleb128 0x19
+ 3377 01ef 00       		.byte	0
+ 3378 01f0 00       		.byte	0
+ 3379 01f1 21       		.uleb128 0x21
+ 3380 01f2 35       		.uleb128 0x35
+ 3381 01f3 00       		.byte	0
+ 3382 01f4 49       		.uleb128 0x49
+ 3383 01f5 13       		.uleb128 0x13
+ 3384 01f6 00       		.byte	0
+ 3385 01f7 00       		.byte	0
+ 3386 01f8 22       		.uleb128 0x22
+ 3387 01f9 2E       		.uleb128 0x2e
+ 3388 01fa 00       		.byte	0
+ 3389 01fb 3F       		.uleb128 0x3f
+ 3390 01fc 19       		.uleb128 0x19
+ 3391 01fd 3C       		.uleb128 0x3c
+ 3392 01fe 19       		.uleb128 0x19
+ 3393 01ff 6E       		.uleb128 0x6e
+ 3394 0200 0E       		.uleb128 0xe
+ 3395 0201 03       		.uleb128 0x3
+ 3396 0202 0E       		.uleb128 0xe
+ 3397 0203 3A       		.uleb128 0x3a
+ 3398 0204 0B       		.uleb128 0xb
+ 3399 0205 3B       		.uleb128 0x3b
+ 3400 0206 0B       		.uleb128 0xb
+ 3401 0207 00       		.byte	0
+ARM GAS  C:\Users\linar\AppData\Local\Temp\ccpLyYLJ.s 			page 69
+
+
+ 3402 0208 00       		.byte	0
+ 3403 0209 00       		.byte	0
+ 3404              		.section	.debug_loc,"",%progbits
+ 3405              	.Ldebug_loc0:
+ 3406              	.LLST0:
+ 3407 0000 00000000 		.4byte	.LVL0
+ 3408 0004 05000000 		.4byte	.LVL1-1
+ 3409 0008 0100     		.2byte	0x1
+ 3410 000a 50       		.byte	0x50
+ 3411 000b 05000000 		.4byte	.LVL1-1
+ 3412 000f 12000000 		.4byte	.LFE64
+ 3413 0013 0400     		.2byte	0x4
+ 3414 0015 F3       		.byte	0xf3
+ 3415 0016 01       		.uleb128 0x1
+ 3416 0017 50       		.byte	0x50
+ 3417 0018 9F       		.byte	0x9f
+ 3418 0019 00000000 		.4byte	0
+ 3419 001d 00000000 		.4byte	0
+ 3420              	.LLST1:
+ 3421 0021 02000000 		.4byte	.LVL9
+ 3422 0025 26000000 		.4byte	.LVL16
+ 3423 0029 0200     		.2byte	0x2
+ 3424 002b 30       		.byte	0x30
+ 3425 002c 9F       		.byte	0x9f
+ 3426 002d 26000000 		.4byte	.LVL16
+ 3427 0031 28000000 		.4byte	.LFE67
+ 3428 0035 0100     		.2byte	0x1
+ 3429 0037 50       		.byte	0x50
+ 3430 0038 00000000 		.4byte	0
+ 3431 003c 00000000 		.4byte	0
+ 3432              	.LLST2:
+ 3433 0040 02000000 		.4byte	.LVL18
+ 3434 0044 12000000 		.4byte	.LVL20
+ 3435 0048 0200     		.2byte	0x2
+ 3436 004a 31       		.byte	0x31
+ 3437 004b 9F       		.byte	0x9f
+ 3438 004c 12000000 		.4byte	.LVL20
+ 3439 0050 14000000 		.4byte	.LFE69
+ 3440 0054 0100     		.2byte	0x1
+ 3441 0056 50       		.byte	0x50
+ 3442 0057 00000000 		.4byte	0
+ 3443 005b 00000000 		.4byte	0
+ 3444              	.LLST3:
+ 3445 005f 00000000 		.4byte	.LVL21
+ 3446 0063 07000000 		.4byte	.LVL23-1
+ 3447 0067 0100     		.2byte	0x1
+ 3448 0069 50       		.byte	0x50
+ 3449 006a 07000000 		.4byte	.LVL23-1
+ 3450 006e 2C000000 		.4byte	.LVL26
+ 3451 0072 0100     		.2byte	0x1
+ 3452 0074 54       		.byte	0x54
+ 3453 0075 2C000000 		.4byte	.LVL26
+ 3454 0079 36000000 		.4byte	.LVL27
+ 3455 007d 0600     		.2byte	0x6
+ 3456 007f 74       		.byte	0x74
+ 3457 0080 8080FC00 		.sleb128 2031616
+ 3458 0084 9F       		.byte	0x9f
+ARM GAS  C:\Users\linar\AppData\Local\Temp\ccpLyYLJ.s 			page 70
+
+
+ 3459 0085 36000000 		.4byte	.LVL27
+ 3460 0089 3A000000 		.4byte	.LVL28
+ 3461 008d 0100     		.2byte	0x1
+ 3462 008f 54       		.byte	0x54
+ 3463 0090 3A000000 		.4byte	.LVL28
+ 3464 0094 44000000 		.4byte	.LVL29
+ 3465 0098 0600     		.2byte	0x6
+ 3466 009a 74       		.byte	0x74
+ 3467 009b 8080F800 		.sleb128 1966080
+ 3468 009f 9F       		.byte	0x9f
+ 3469 00a0 44000000 		.4byte	.LVL29
+ 3470 00a4 48000000 		.4byte	.LVL30
+ 3471 00a8 0100     		.2byte	0x1
+ 3472 00aa 54       		.byte	0x54
+ 3473 00ab 48000000 		.4byte	.LVL30
+ 3474 00af 52000000 		.4byte	.LVL31
+ 3475 00b3 0600     		.2byte	0x6
+ 3476 00b5 74       		.byte	0x74
+ 3477 00b6 8080F000 		.sleb128 1835008
+ 3478 00ba 9F       		.byte	0x9f
+ 3479 00bb 52000000 		.4byte	.LVL31
+ 3480 00bf 56000000 		.4byte	.LVL32
+ 3481 00c3 0100     		.2byte	0x1
+ 3482 00c5 54       		.byte	0x54
+ 3483 00c6 56000000 		.4byte	.LVL32
+ 3484 00ca 60000000 		.4byte	.LVL33
+ 3485 00ce 0600     		.2byte	0x6
+ 3486 00d0 74       		.byte	0x74
+ 3487 00d1 8080E000 		.sleb128 1572864
+ 3488 00d5 9F       		.byte	0x9f
+ 3489 00d6 60000000 		.4byte	.LVL33
+ 3490 00da 64000000 		.4byte	.LVL34
+ 3491 00de 0100     		.2byte	0x1
+ 3492 00e0 54       		.byte	0x54
+ 3493 00e1 64000000 		.4byte	.LVL34
+ 3494 00e5 6E000000 		.4byte	.LVL35
+ 3495 00e9 0600     		.2byte	0x6
+ 3496 00eb 74       		.byte	0x74
+ 3497 00ec 8080C000 		.sleb128 1048576
+ 3498 00f0 9F       		.byte	0x9f
+ 3499 00f1 6E000000 		.4byte	.LVL35
+ 3500 00f5 A4000000 		.4byte	.LVL41
+ 3501 00f9 0100     		.2byte	0x1
+ 3502 00fb 54       		.byte	0x54
+ 3503 00fc A4000000 		.4byte	.LVL41
+ 3504 0100 A8000000 		.4byte	.LVL42
+ 3505 0104 0600     		.2byte	0x6
+ 3506 0106 74       		.byte	0x74
+ 3507 0107 8080FC00 		.sleb128 2031616
+ 3508 010b 9F       		.byte	0x9f
+ 3509 010c A8000000 		.4byte	.LVL42
+ 3510 0110 AC000000 		.4byte	.LVL43
+ 3511 0114 0600     		.2byte	0x6
+ 3512 0116 74       		.byte	0x74
+ 3513 0117 8080F800 		.sleb128 1966080
+ 3514 011b 9F       		.byte	0x9f
+ 3515 011c AC000000 		.4byte	.LVL43
+ARM GAS  C:\Users\linar\AppData\Local\Temp\ccpLyYLJ.s 			page 71
+
+
+ 3516 0120 B0000000 		.4byte	.LVL44
+ 3517 0124 0600     		.2byte	0x6
+ 3518 0126 74       		.byte	0x74
+ 3519 0127 8080F000 		.sleb128 1835008
+ 3520 012b 9F       		.byte	0x9f
+ 3521 012c B0000000 		.4byte	.LVL44
+ 3522 0130 B4000000 		.4byte	.LVL45
+ 3523 0134 0600     		.2byte	0x6
+ 3524 0136 74       		.byte	0x74
+ 3525 0137 8080E000 		.sleb128 1572864
+ 3526 013b 9F       		.byte	0x9f
+ 3527 013c B4000000 		.4byte	.LVL45
+ 3528 0140 B8000000 		.4byte	.LVL46
+ 3529 0144 0600     		.2byte	0x6
+ 3530 0146 74       		.byte	0x74
+ 3531 0147 8080C000 		.sleb128 1048576
+ 3532 014b 9F       		.byte	0x9f
+ 3533 014c B8000000 		.4byte	.LVL46
+ 3534 0150 CC000000 		.4byte	.LFE70
+ 3535 0154 0100     		.2byte	0x1
+ 3536 0156 54       		.byte	0x54
+ 3537 0157 00000000 		.4byte	0
+ 3538 015b 00000000 		.4byte	0
+ 3539              	.LLST4:
+ 3540 015f 08000000 		.4byte	.LVL23
+ 3541 0163 0C000000 		.4byte	.LVL24
+ 3542 0167 0600     		.2byte	0x6
+ 3543 0169 70       		.byte	0x70
+ 3544 016a 00       		.sleb128 0
+ 3545 016b 09       		.byte	0x9
+ 3546 016c FE       		.byte	0xfe
+ 3547 016d 24       		.byte	0x24
+ 3548 016e 9F       		.byte	0x9f
+ 3549 016f 00000000 		.4byte	0
+ 3550 0173 00000000 		.4byte	0
+ 3551              	.LLST5:
+ 3552 0177 00000000 		.4byte	.LVL51
+ 3553 017b 0D000000 		.4byte	.LVL52-1
+ 3554 017f 0100     		.2byte	0x1
+ 3555 0181 50       		.byte	0x50
+ 3556 0182 0D000000 		.4byte	.LVL52-1
+ 3557 0186 3C000000 		.4byte	.LVL59
+ 3558 018a 0400     		.2byte	0x4
+ 3559 018c F3       		.byte	0xf3
+ 3560 018d 01       		.uleb128 0x1
+ 3561 018e 50       		.byte	0x50
+ 3562 018f 9F       		.byte	0x9f
+ 3563 0190 3C000000 		.4byte	.LVL59
+ 3564 0194 3E000000 		.4byte	.LVL60
+ 3565 0198 0100     		.2byte	0x1
+ 3566 019a 50       		.byte	0x50
+ 3567 019b 3E000000 		.4byte	.LVL60
+ 3568 019f 48000000 		.4byte	.LFE71
+ 3569 01a3 0400     		.2byte	0x4
+ 3570 01a5 F3       		.byte	0xf3
+ 3571 01a6 01       		.uleb128 0x1
+ 3572 01a7 50       		.byte	0x50
+ARM GAS  C:\Users\linar\AppData\Local\Temp\ccpLyYLJ.s 			page 72
+
+
+ 3573 01a8 9F       		.byte	0x9f
+ 3574 01a9 00000000 		.4byte	0
+ 3575 01ad 00000000 		.4byte	0
+ 3576              	.LLST6:
+ 3577 01b1 00000000 		.4byte	.LVL61
+ 3578 01b5 23000000 		.4byte	.LVL66-1
+ 3579 01b9 0100     		.2byte	0x1
+ 3580 01bb 50       		.byte	0x50
+ 3581 01bc 23000000 		.4byte	.LVL66-1
+ 3582 01c0 80000000 		.4byte	.LFE72
+ 3583 01c4 0400     		.2byte	0x4
+ 3584 01c6 F3       		.byte	0xf3
+ 3585 01c7 01       		.uleb128 0x1
+ 3586 01c8 50       		.byte	0x50
+ 3587 01c9 9F       		.byte	0x9f
+ 3588 01ca 00000000 		.4byte	0
+ 3589 01ce 00000000 		.4byte	0
+ 3590              	.LLST7:
+ 3591 01d2 00000000 		.4byte	.LVL61
+ 3592 01d6 23000000 		.4byte	.LVL66-1
+ 3593 01da 0100     		.2byte	0x1
+ 3594 01dc 51       		.byte	0x51
+ 3595 01dd 23000000 		.4byte	.LVL66-1
+ 3596 01e1 80000000 		.4byte	.LFE72
+ 3597 01e5 0100     		.2byte	0x1
+ 3598 01e7 56       		.byte	0x56
+ 3599 01e8 00000000 		.4byte	0
+ 3600 01ec 00000000 		.4byte	0
+ 3601              	.LLST8:
+ 3602 01f0 00000000 		.4byte	.LVL61
+ 3603 01f4 23000000 		.4byte	.LVL66-1
+ 3604 01f8 0100     		.2byte	0x1
+ 3605 01fa 52       		.byte	0x52
+ 3606 01fb 23000000 		.4byte	.LVL66-1
+ 3607 01ff 80000000 		.4byte	.LFE72
+ 3608 0203 0100     		.2byte	0x1
+ 3609 0205 55       		.byte	0x55
+ 3610 0206 00000000 		.4byte	0
+ 3611 020a 00000000 		.4byte	0
+ 3612              	.LLST9:
+ 3613 020e 0A000000 		.4byte	.LVL62
+ 3614 0212 74000000 		.4byte	.LVL82
+ 3615 0216 0200     		.2byte	0x2
+ 3616 0218 31       		.byte	0x31
+ 3617 0219 9F       		.byte	0x9f
+ 3618 021a 74000000 		.4byte	.LVL82
+ 3619 021e 78000000 		.4byte	.LVL83
+ 3620 0222 0200     		.2byte	0x2
+ 3621 0224 30       		.byte	0x30
+ 3622 0225 9F       		.byte	0x9f
+ 3623 0226 78000000 		.4byte	.LVL83
+ 3624 022a 7A000000 		.4byte	.LVL84
+ 3625 022e 0200     		.2byte	0x2
+ 3626 0230 31       		.byte	0x31
+ 3627 0231 9F       		.byte	0x9f
+ 3628 0232 00000000 		.4byte	0
+ 3629 0236 00000000 		.4byte	0
+ARM GAS  C:\Users\linar\AppData\Local\Temp\ccpLyYLJ.s 			page 73
+
+
+ 3630              	.LLST10:
+ 3631 023a 14000000 		.4byte	.LVL65
+ 3632 023e 5A000000 		.4byte	.LVL77
+ 3633 0242 0100     		.2byte	0x1
+ 3634 0244 54       		.byte	0x54
+ 3635 0245 5A000000 		.4byte	.LVL77
+ 3636 0249 78000000 		.4byte	.LVL83
+ 3637 024d 0400     		.2byte	0x4
+ 3638 024f F3       		.byte	0xf3
+ 3639 0250 01       		.uleb128 0x1
+ 3640 0251 50       		.byte	0x50
+ 3641 0252 9F       		.byte	0x9f
+ 3642 0253 78000000 		.4byte	.LVL83
+ 3643 0257 7A000000 		.4byte	.LVL84
+ 3644 025b 0100     		.2byte	0x1
+ 3645 025d 54       		.byte	0x54
+ 3646 025e 7A000000 		.4byte	.LVL84
+ 3647 0262 80000000 		.4byte	.LFE72
+ 3648 0266 0400     		.2byte	0x4
+ 3649 0268 F3       		.byte	0xf3
+ 3650 0269 01       		.uleb128 0x1
+ 3651 026a 50       		.byte	0x50
+ 3652 026b 9F       		.byte	0x9f
+ 3653 026c 00000000 		.4byte	0
+ 3654 0270 00000000 		.4byte	0
+ 3655              	.LLST11:
+ 3656 0274 58000000 		.4byte	.LVL76
+ 3657 0278 5C000000 		.4byte	.LVL78
+ 3658 027c 0200     		.2byte	0x2
+ 3659 027e 30       		.byte	0x30
+ 3660 027f 9F       		.byte	0x9f
+ 3661 0280 5C000000 		.4byte	.LVL78
+ 3662 0284 78000000 		.4byte	.LVL83
+ 3663 0288 0100     		.2byte	0x1
+ 3664 028a 54       		.byte	0x54
+ 3665 028b 00000000 		.4byte	0
+ 3666 028f 00000000 		.4byte	0
+ 3667              	.LLST12:
+ 3668 0293 00000000 		.4byte	.LVL85
+ 3669 0297 13000000 		.4byte	.LVL86-1
+ 3670 029b 0100     		.2byte	0x1
+ 3671 029d 50       		.byte	0x50
+ 3672 029e 13000000 		.4byte	.LVL86-1
+ 3673 02a2 28000000 		.4byte	.LVL90
+ 3674 02a6 0100     		.2byte	0x1
+ 3675 02a8 56       		.byte	0x56
+ 3676 02a9 28000000 		.4byte	.LVL90
+ 3677 02ad 68000000 		.4byte	.LVL103
+ 3678 02b1 0400     		.2byte	0x4
+ 3679 02b3 F3       		.byte	0xf3
+ 3680 02b4 01       		.uleb128 0x1
+ 3681 02b5 50       		.byte	0x50
+ 3682 02b6 9F       		.byte	0x9f
+ 3683 02b7 68000000 		.4byte	.LVL103
+ 3684 02bb 6A000000 		.4byte	.LVL104
+ 3685 02bf 0100     		.2byte	0x1
+ 3686 02c1 50       		.byte	0x50
+ARM GAS  C:\Users\linar\AppData\Local\Temp\ccpLyYLJ.s 			page 74
+
+
+ 3687 02c2 6A000000 		.4byte	.LVL104
+ 3688 02c6 6C000000 		.4byte	.LVL105
+ 3689 02ca 0400     		.2byte	0x4
+ 3690 02cc F3       		.byte	0xf3
+ 3691 02cd 01       		.uleb128 0x1
+ 3692 02ce 50       		.byte	0x50
+ 3693 02cf 9F       		.byte	0x9f
+ 3694 02d0 6C000000 		.4byte	.LVL105
+ 3695 02d4 78000000 		.4byte	.LFE73
+ 3696 02d8 0100     		.2byte	0x1
+ 3697 02da 56       		.byte	0x56
+ 3698 02db 00000000 		.4byte	0
+ 3699 02df 00000000 		.4byte	0
+ 3700              	.LLST13:
+ 3701 02e3 00000000 		.4byte	.LVL85
+ 3702 02e7 13000000 		.4byte	.LVL86-1
+ 3703 02eb 0100     		.2byte	0x1
+ 3704 02ed 51       		.byte	0x51
+ 3705 02ee 13000000 		.4byte	.LVL86-1
+ 3706 02f2 52000000 		.4byte	.LVL99
+ 3707 02f6 0100     		.2byte	0x1
+ 3708 02f8 55       		.byte	0x55
+ 3709 02f9 52000000 		.4byte	.LVL99
+ 3710 02fd 56000000 		.4byte	.LVL100
+ 3711 0301 0300     		.2byte	0x3
+ 3712 0303 75       		.byte	0x75
+ 3713 0304 7F       		.sleb128 -1
+ 3714 0305 9F       		.byte	0x9f
+ 3715 0306 56000000 		.4byte	.LVL100
+ 3716 030a 68000000 		.4byte	.LVL103
+ 3717 030e 0100     		.2byte	0x1
+ 3718 0310 55       		.byte	0x55
+ 3719 0311 68000000 		.4byte	.LVL103
+ 3720 0315 6C000000 		.4byte	.LVL105
+ 3721 0319 0100     		.2byte	0x1
+ 3722 031b 51       		.byte	0x51
+ 3723 031c 6C000000 		.4byte	.LVL105
+ 3724 0320 78000000 		.4byte	.LFE73
+ 3725 0324 0100     		.2byte	0x1
+ 3726 0326 55       		.byte	0x55
+ 3727 0327 00000000 		.4byte	0
+ 3728 032b 00000000 		.4byte	0
+ 3729              	.LLST14:
+ 3730 032f 00000000 		.4byte	.LVL85
+ 3731 0333 13000000 		.4byte	.LVL86-1
+ 3732 0337 0100     		.2byte	0x1
+ 3733 0339 52       		.byte	0x52
+ 3734 033a 13000000 		.4byte	.LVL86-1
+ 3735 033e 68000000 		.4byte	.LVL103
+ 3736 0342 0100     		.2byte	0x1
+ 3737 0344 54       		.byte	0x54
+ 3738 0345 68000000 		.4byte	.LVL103
+ 3739 0349 6C000000 		.4byte	.LVL105
+ 3740 034d 0100     		.2byte	0x1
+ 3741 034f 52       		.byte	0x52
+ 3742 0350 6C000000 		.4byte	.LVL105
+ 3743 0354 78000000 		.4byte	.LFE73
+ARM GAS  C:\Users\linar\AppData\Local\Temp\ccpLyYLJ.s 			page 75
+
+
+ 3744 0358 0100     		.2byte	0x1
+ 3745 035a 54       		.byte	0x54
+ 3746 035b 00000000 		.4byte	0
+ 3747 035f 00000000 		.4byte	0
+ 3748              	.LLST15:
+ 3749 0363 00000000 		.4byte	.LVL85
+ 3750 0367 62000000 		.4byte	.LVL102
+ 3751 036b 0200     		.2byte	0x2
+ 3752 036d 31       		.byte	0x31
+ 3753 036e 9F       		.byte	0x9f
+ 3754 036f 62000000 		.4byte	.LVL102
+ 3755 0373 68000000 		.4byte	.LVL103
+ 3756 0377 0200     		.2byte	0x2
+ 3757 0379 30       		.byte	0x30
+ 3758 037a 9F       		.byte	0x9f
+ 3759 037b 68000000 		.4byte	.LVL103
+ 3760 037f 78000000 		.4byte	.LFE73
+ 3761 0383 0200     		.2byte	0x2
+ 3762 0385 31       		.byte	0x31
+ 3763 0386 9F       		.byte	0x9f
+ 3764 0387 00000000 		.4byte	0
+ 3765 038b 00000000 		.4byte	0
+ 3766              	.LLST16:
+ 3767 038f 22000000 		.4byte	.LVL88
+ 3768 0393 68000000 		.4byte	.LVL103
+ 3769 0397 0100     		.2byte	0x1
+ 3770 0399 58       		.byte	0x58
+ 3771 039a 00000000 		.4byte	0
+ 3772 039e 00000000 		.4byte	0
+ 3773              	.LLST17:
+ 3774 03a2 26000000 		.4byte	.LVL89
+ 3775 03a6 68000000 		.4byte	.LVL103
+ 3776 03aa 0100     		.2byte	0x1
+ 3777 03ac 57       		.byte	0x57
+ 3778 03ad 00000000 		.4byte	0
+ 3779 03b1 00000000 		.4byte	0
+ 3780              	.LLST18:
+ 3781 03b5 28000000 		.4byte	.LVL90
+ 3782 03b9 4C000000 		.4byte	.LVL97
+ 3783 03bd 0100     		.2byte	0x1
+ 3784 03bf 56       		.byte	0x56
+ 3785 03c0 4C000000 		.4byte	.LVL97
+ 3786 03c4 68000000 		.4byte	.LVL103
+ 3787 03c8 0400     		.2byte	0x4
+ 3788 03ca F3       		.byte	0xf3
+ 3789 03cb 01       		.uleb128 0x1
+ 3790 03cc 50       		.byte	0x50
+ 3791 03cd 9F       		.byte	0x9f
+ 3792 03ce 00000000 		.4byte	0
+ 3793 03d2 00000000 		.4byte	0
+ 3794              	.LLST19:
+ 3795 03d6 4A000000 		.4byte	.LVL96
+ 3796 03da 4E000000 		.4byte	.LVL98
+ 3797 03de 0200     		.2byte	0x2
+ 3798 03e0 30       		.byte	0x30
+ 3799 03e1 9F       		.byte	0x9f
+ 3800 03e2 4E000000 		.4byte	.LVL98
+ARM GAS  C:\Users\linar\AppData\Local\Temp\ccpLyYLJ.s 			page 76
+
+
+ 3801 03e6 68000000 		.4byte	.LVL103
+ 3802 03ea 0100     		.2byte	0x1
+ 3803 03ec 56       		.byte	0x56
+ 3804 03ed 00000000 		.4byte	0
+ 3805 03f1 00000000 		.4byte	0
+ 3806              	.LLST20:
+ 3807 03f5 00000000 		.4byte	.LVL107
+ 3808 03f9 07000000 		.4byte	.LVL109-1
+ 3809 03fd 0100     		.2byte	0x1
+ 3810 03ff 50       		.byte	0x50
+ 3811 0400 07000000 		.4byte	.LVL109-1
+ 3812 0404 1C000000 		.4byte	.LVL113
+ 3813 0408 0100     		.2byte	0x1
+ 3814 040a 54       		.byte	0x54
+ 3815 040b 1C000000 		.4byte	.LVL113
+ 3816 040f 48000000 		.4byte	.LVL121
+ 3817 0413 0400     		.2byte	0x4
+ 3818 0415 F3       		.byte	0xf3
+ 3819 0416 01       		.uleb128 0x1
+ 3820 0417 50       		.byte	0x50
+ 3821 0418 9F       		.byte	0x9f
+ 3822 0419 48000000 		.4byte	.LVL121
+ 3823 041d 50000000 		.4byte	.LFE74
+ 3824 0421 0100     		.2byte	0x1
+ 3825 0423 54       		.byte	0x54
+ 3826 0424 00000000 		.4byte	0
+ 3827 0428 00000000 		.4byte	0
+ 3828              	.LLST21:
+ 3829 042c 04000000 		.4byte	.LVL108
+ 3830 0430 44000000 		.4byte	.LVL120
+ 3831 0434 0200     		.2byte	0x2
+ 3832 0436 31       		.byte	0x31
+ 3833 0437 9F       		.byte	0x9f
+ 3834 0438 44000000 		.4byte	.LVL120
+ 3835 043c 48000000 		.4byte	.LVL121
+ 3836 0440 0200     		.2byte	0x2
+ 3837 0442 30       		.byte	0x30
+ 3838 0443 9F       		.byte	0x9f
+ 3839 0444 48000000 		.4byte	.LVL121
+ 3840 0448 50000000 		.4byte	.LFE74
+ 3841 044c 0200     		.2byte	0x2
+ 3842 044e 31       		.byte	0x31
+ 3843 044f 9F       		.byte	0x9f
+ 3844 0450 00000000 		.4byte	0
+ 3845 0454 00000000 		.4byte	0
+ 3846              	.LLST22:
+ 3847 0458 16000000 		.4byte	.LVL111
+ 3848 045c 48000000 		.4byte	.LVL121
+ 3849 0460 0100     		.2byte	0x1
+ 3850 0462 56       		.byte	0x56
+ 3851 0463 00000000 		.4byte	0
+ 3852 0467 00000000 		.4byte	0
+ 3853              	.LLST23:
+ 3854 046b 1A000000 		.4byte	.LVL112
+ 3855 046f 48000000 		.4byte	.LVL121
+ 3856 0473 0100     		.2byte	0x1
+ 3857 0475 55       		.byte	0x55
+ARM GAS  C:\Users\linar\AppData\Local\Temp\ccpLyYLJ.s 			page 77
+
+
+ 3858 0476 00000000 		.4byte	0
+ 3859 047a 00000000 		.4byte	0
+ 3860              	.LLST24:
+ 3861 047e 1C000000 		.4byte	.LVL113
+ 3862 0482 48000000 		.4byte	.LVL121
+ 3863 0486 0100     		.2byte	0x1
+ 3864 0488 54       		.byte	0x54
+ 3865 0489 00000000 		.4byte	0
+ 3866 048d 00000000 		.4byte	0
+ 3867              	.LLST25:
+ 3868 0491 00000000 		.4byte	.LVL123
+ 3869 0495 07000000 		.4byte	.LVL125-1
+ 3870 0499 0100     		.2byte	0x1
+ 3871 049b 50       		.byte	0x50
+ 3872 049c 07000000 		.4byte	.LVL125-1
+ 3873 04a0 1C000000 		.4byte	.LVL129
+ 3874 04a4 0100     		.2byte	0x1
+ 3875 04a6 54       		.byte	0x54
+ 3876 04a7 1C000000 		.4byte	.LVL129
+ 3877 04ab 48000000 		.4byte	.LVL137
+ 3878 04af 0400     		.2byte	0x4
+ 3879 04b1 F3       		.byte	0xf3
+ 3880 04b2 01       		.uleb128 0x1
+ 3881 04b3 50       		.byte	0x50
+ 3882 04b4 9F       		.byte	0x9f
+ 3883 04b5 48000000 		.4byte	.LVL137
+ 3884 04b9 50000000 		.4byte	.LFE75
+ 3885 04bd 0100     		.2byte	0x1
+ 3886 04bf 54       		.byte	0x54
+ 3887 04c0 00000000 		.4byte	0
+ 3888 04c4 00000000 		.4byte	0
+ 3889              	.LLST26:
+ 3890 04c8 04000000 		.4byte	.LVL124
+ 3891 04cc 44000000 		.4byte	.LVL136
+ 3892 04d0 0200     		.2byte	0x2
+ 3893 04d2 31       		.byte	0x31
+ 3894 04d3 9F       		.byte	0x9f
+ 3895 04d4 44000000 		.4byte	.LVL136
+ 3896 04d8 48000000 		.4byte	.LVL137
+ 3897 04dc 0200     		.2byte	0x2
+ 3898 04de 30       		.byte	0x30
+ 3899 04df 9F       		.byte	0x9f
+ 3900 04e0 48000000 		.4byte	.LVL137
+ 3901 04e4 50000000 		.4byte	.LFE75
+ 3902 04e8 0200     		.2byte	0x2
+ 3903 04ea 31       		.byte	0x31
+ 3904 04eb 9F       		.byte	0x9f
+ 3905 04ec 00000000 		.4byte	0
+ 3906 04f0 00000000 		.4byte	0
+ 3907              	.LLST27:
+ 3908 04f4 16000000 		.4byte	.LVL127
+ 3909 04f8 48000000 		.4byte	.LVL137
+ 3910 04fc 0100     		.2byte	0x1
+ 3911 04fe 56       		.byte	0x56
+ 3912 04ff 00000000 		.4byte	0
+ 3913 0503 00000000 		.4byte	0
+ 3914              	.LLST28:
+ARM GAS  C:\Users\linar\AppData\Local\Temp\ccpLyYLJ.s 			page 78
+
+
+ 3915 0507 1A000000 		.4byte	.LVL128
+ 3916 050b 48000000 		.4byte	.LVL137
+ 3917 050f 0100     		.2byte	0x1
+ 3918 0511 55       		.byte	0x55
+ 3919 0512 00000000 		.4byte	0
+ 3920 0516 00000000 		.4byte	0
+ 3921              	.LLST29:
+ 3922 051a 1C000000 		.4byte	.LVL129
+ 3923 051e 48000000 		.4byte	.LVL137
+ 3924 0522 0100     		.2byte	0x1
+ 3925 0524 54       		.byte	0x54
+ 3926 0525 00000000 		.4byte	0
+ 3927 0529 00000000 		.4byte	0
+ 3928              	.LLST30:
+ 3929 052d 02000000 		.4byte	.LVL139
+ 3930 0531 28000000 		.4byte	.LVL146
+ 3931 0535 0200     		.2byte	0x2
+ 3932 0537 31       		.byte	0x31
+ 3933 0538 9F       		.byte	0x9f
+ 3934 0539 28000000 		.4byte	.LVL146
+ 3935 053d 2C000000 		.4byte	.LVL147
+ 3936 0541 0200     		.2byte	0x2
+ 3937 0543 30       		.byte	0x30
+ 3938 0544 9F       		.byte	0x9f
+ 3939 0545 2C000000 		.4byte	.LVL147
+ 3940 0549 34000000 		.4byte	.LFE76
+ 3941 054d 0200     		.2byte	0x2
+ 3942 054f 31       		.byte	0x31
+ 3943 0550 9F       		.byte	0x9f
+ 3944 0551 00000000 		.4byte	0
+ 3945 0555 00000000 		.4byte	0
+ 3946              	.LLST31:
+ 3947 0559 02000000 		.4byte	.LVL148
+ 3948 055d 22000000 		.4byte	.LVL154
+ 3949 0561 0200     		.2byte	0x2
+ 3950 0563 31       		.byte	0x31
+ 3951 0564 9F       		.byte	0x9f
+ 3952 0565 22000000 		.4byte	.LVL154
+ 3953 0569 26000000 		.4byte	.LVL155
+ 3954 056d 0200     		.2byte	0x2
+ 3955 056f 30       		.byte	0x30
+ 3956 0570 9F       		.byte	0x9f
+ 3957 0571 26000000 		.4byte	.LVL155
+ 3958 0575 2A000000 		.4byte	.LFE77
+ 3959 0579 0200     		.2byte	0x2
+ 3960 057b 31       		.byte	0x31
+ 3961 057c 9F       		.byte	0x9f
+ 3962 057d 00000000 		.4byte	0
+ 3963 0581 00000000 		.4byte	0
+ 3964              	.LLST32:
+ 3965 0585 02000000 		.4byte	.LVL156
+ 3966 0589 18000000 		.4byte	.LVL160
+ 3967 058d 0200     		.2byte	0x2
+ 3968 058f 31       		.byte	0x31
+ 3969 0590 9F       		.byte	0x9f
+ 3970 0591 18000000 		.4byte	.LVL160
+ 3971 0595 1C000000 		.4byte	.LFE78
+ARM GAS  C:\Users\linar\AppData\Local\Temp\ccpLyYLJ.s 			page 79
+
+
+ 3972 0599 0200     		.2byte	0x2
+ 3973 059b 30       		.byte	0x30
+ 3974 059c 9F       		.byte	0x9f
+ 3975 059d 00000000 		.4byte	0
+ 3976 05a1 00000000 		.4byte	0
+ 3977              	.LLST33:
+ 3978 05a5 02000000 		.4byte	.LVL161
+ 3979 05a9 34000000 		.4byte	.LVL170
+ 3980 05ad 0200     		.2byte	0x2
+ 3981 05af 30       		.byte	0x30
+ 3982 05b0 9F       		.byte	0x9f
+ 3983 05b1 34000000 		.4byte	.LVL170
+ 3984 05b5 36000000 		.4byte	.LFE79
+ 3985 05b9 0100     		.2byte	0x1
+ 3986 05bb 50       		.byte	0x50
+ 3987 05bc 00000000 		.4byte	0
+ 3988 05c0 00000000 		.4byte	0
+ 3989              	.LLST34:
+ 3990 05c4 00000000 		.4byte	.LVL171
+ 3991 05c8 09000000 		.4byte	.LVL173-1
+ 3992 05cc 0100     		.2byte	0x1
+ 3993 05ce 50       		.byte	0x50
+ 3994 05cf 09000000 		.4byte	.LVL173-1
+ 3995 05d3 74000000 		.4byte	.LFE80
+ 3996 05d7 0100     		.2byte	0x1
+ 3997 05d9 54       		.byte	0x54
+ 3998 05da 00000000 		.4byte	0
+ 3999 05de 00000000 		.4byte	0
+ 4000              	.LLST35:
+ 4001 05e2 00000000 		.4byte	.LVL171
+ 4002 05e6 09000000 		.4byte	.LVL173-1
+ 4003 05ea 0100     		.2byte	0x1
+ 4004 05ec 51       		.byte	0x51
+ 4005 05ed 09000000 		.4byte	.LVL173-1
+ 4006 05f1 74000000 		.4byte	.LFE80
+ 4007 05f5 0100     		.2byte	0x1
+ 4008 05f7 55       		.byte	0x55
+ 4009 05f8 00000000 		.4byte	0
+ 4010 05fc 00000000 		.4byte	0
+ 4011              	.LLST36:
+ 4012 0600 00000000 		.4byte	.LVL190
+ 4013 0604 0B000000 		.4byte	.LVL192-1
+ 4014 0608 0100     		.2byte	0x1
+ 4015 060a 50       		.byte	0x50
+ 4016 060b 0B000000 		.4byte	.LVL192-1
+ 4017 060f 7A000000 		.4byte	.LFE81
+ 4018 0613 0100     		.2byte	0x1
+ 4019 0615 54       		.byte	0x54
+ 4020 0616 00000000 		.4byte	0
+ 4021 061a 00000000 		.4byte	0
+ 4022              	.LLST37:
+ 4023 061e 00000000 		.4byte	.LVL190
+ 4024 0622 0B000000 		.4byte	.LVL192-1
+ 4025 0626 0100     		.2byte	0x1
+ 4026 0628 51       		.byte	0x51
+ 4027 0629 0B000000 		.4byte	.LVL192-1
+ 4028 062d 7A000000 		.4byte	.LFE81
+ARM GAS  C:\Users\linar\AppData\Local\Temp\ccpLyYLJ.s 			page 80
+
+
+ 4029 0631 0100     		.2byte	0x1
+ 4030 0633 55       		.byte	0x55
+ 4031 0634 00000000 		.4byte	0
+ 4032 0638 00000000 		.4byte	0
+ 4033              	.LLST38:
+ 4034 063c 00000000 		.4byte	.LVL190
+ 4035 0640 0B000000 		.4byte	.LVL192-1
+ 4036 0644 0100     		.2byte	0x1
+ 4037 0646 52       		.byte	0x52
+ 4038 0647 0B000000 		.4byte	.LVL192-1
+ 4039 064b 7A000000 		.4byte	.LFE81
+ 4040 064f 0100     		.2byte	0x1
+ 4041 0651 56       		.byte	0x56
+ 4042 0652 00000000 		.4byte	0
+ 4043 0656 00000000 		.4byte	0
+ 4044              		.section	.debug_aranges,"",%progbits
+ 4045 0000 A4000000 		.4byte	0xa4
+ 4046 0004 0200     		.2byte	0x2
+ 4047 0006 00000000 		.4byte	.Ldebug_info0
+ 4048 000a 04       		.byte	0x4
+ 4049 000b 00       		.byte	0
+ 4050 000c 0000     		.2byte	0
+ 4051 000e 0000     		.2byte	0
+ 4052 0010 00000000 		.4byte	.LFB64
+ 4053 0014 12000000 		.4byte	.LFE64-.LFB64
+ 4054 0018 00000000 		.4byte	.LFB65
+ 4055 001c 16000000 		.4byte	.LFE65-.LFB65
+ 4056 0020 00000000 		.4byte	.LFB66
+ 4057 0024 16000000 		.4byte	.LFE66-.LFB66
+ 4058 0028 00000000 		.4byte	.LFB67
+ 4059 002c 28000000 		.4byte	.LFE67-.LFB67
+ 4060 0030 00000000 		.4byte	.LFB68
+ 4061 0034 10000000 		.4byte	.LFE68-.LFB68
+ 4062 0038 00000000 		.4byte	.LFB69
+ 4063 003c 14000000 		.4byte	.LFE69-.LFB69
+ 4064 0040 00000000 		.4byte	.LFB70
+ 4065 0044 CC000000 		.4byte	.LFE70-.LFB70
+ 4066 0048 00000000 		.4byte	.LFB71
+ 4067 004c 48000000 		.4byte	.LFE71-.LFB71
+ 4068 0050 00000000 		.4byte	.LFB72
+ 4069 0054 80000000 		.4byte	.LFE72-.LFB72
+ 4070 0058 00000000 		.4byte	.LFB73
+ 4071 005c 78000000 		.4byte	.LFE73-.LFB73
+ 4072 0060 00000000 		.4byte	.LFB74
+ 4073 0064 50000000 		.4byte	.LFE74-.LFB74
+ 4074 0068 00000000 		.4byte	.LFB75
+ 4075 006c 50000000 		.4byte	.LFE75-.LFB75
+ 4076 0070 00000000 		.4byte	.LFB76
+ 4077 0074 34000000 		.4byte	.LFE76-.LFB76
+ 4078 0078 00000000 		.4byte	.LFB77
+ 4079 007c 2A000000 		.4byte	.LFE77-.LFB77
+ 4080 0080 00000000 		.4byte	.LFB78
+ 4081 0084 1C000000 		.4byte	.LFE78-.LFB78
+ 4082 0088 00000000 		.4byte	.LFB79
+ 4083 008c 36000000 		.4byte	.LFE79-.LFB79
+ 4084 0090 00000000 		.4byte	.LFB80
+ 4085 0094 74000000 		.4byte	.LFE80-.LFB80
+ARM GAS  C:\Users\linar\AppData\Local\Temp\ccpLyYLJ.s 			page 81
+
+
+ 4086 0098 00000000 		.4byte	.LFB81
+ 4087 009c 7A000000 		.4byte	.LFE81-.LFB81
+ 4088 00a0 00000000 		.4byte	0
+ 4089 00a4 00000000 		.4byte	0
+ 4090              		.section	.debug_ranges,"",%progbits
+ 4091              	.Ldebug_ranges0:
+ 4092 0000 00000000 		.4byte	.LFB64
+ 4093 0004 12000000 		.4byte	.LFE64
+ 4094 0008 00000000 		.4byte	.LFB65
+ 4095 000c 16000000 		.4byte	.LFE65
+ 4096 0010 00000000 		.4byte	.LFB66
+ 4097 0014 16000000 		.4byte	.LFE66
+ 4098 0018 00000000 		.4byte	.LFB67
+ 4099 001c 28000000 		.4byte	.LFE67
+ 4100 0020 00000000 		.4byte	.LFB68
+ 4101 0024 10000000 		.4byte	.LFE68
+ 4102 0028 00000000 		.4byte	.LFB69
+ 4103 002c 14000000 		.4byte	.LFE69
+ 4104 0030 00000000 		.4byte	.LFB70
+ 4105 0034 CC000000 		.4byte	.LFE70
+ 4106 0038 00000000 		.4byte	.LFB71
+ 4107 003c 48000000 		.4byte	.LFE71
+ 4108 0040 00000000 		.4byte	.LFB72
+ 4109 0044 80000000 		.4byte	.LFE72
+ 4110 0048 00000000 		.4byte	.LFB73
+ 4111 004c 78000000 		.4byte	.LFE73
+ 4112 0050 00000000 		.4byte	.LFB74
+ 4113 0054 50000000 		.4byte	.LFE74
+ 4114 0058 00000000 		.4byte	.LFB75
+ 4115 005c 50000000 		.4byte	.LFE75
+ 4116 0060 00000000 		.4byte	.LFB76
+ 4117 0064 34000000 		.4byte	.LFE76
+ 4118 0068 00000000 		.4byte	.LFB77
+ 4119 006c 2A000000 		.4byte	.LFE77
+ 4120 0070 00000000 		.4byte	.LFB78
+ 4121 0074 1C000000 		.4byte	.LFE78
+ 4122 0078 00000000 		.4byte	.LFB79
+ 4123 007c 36000000 		.4byte	.LFE79
+ 4124 0080 00000000 		.4byte	.LFB80
+ 4125 0084 74000000 		.4byte	.LFE80
+ 4126 0088 00000000 		.4byte	.LFB81
+ 4127 008c 7A000000 		.4byte	.LFE81
+ 4128 0090 00000000 		.4byte	0
+ 4129 0094 00000000 		.4byte	0
+ 4130              		.section	.debug_line,"",%progbits
+ 4131              	.Ldebug_line0:
+ 4132 0000 D9030000 		.section	.debug_str,"MS",%progbits,1
+ 4132      02006C01 
+ 4132      00000201 
+ 4132      FB0E0D00 
+ 4132      01010101 
+ 4133              	.LASF32:
+ 4134 0000 5F636865 		.ascii	"_checkIfProtected\000"
+ 4134      636B4966 
+ 4134      50726F74 
+ 4134      65637465 
+ 4134      6400
+ARM GAS  C:\Users\linar\AppData\Local\Temp\ccpLyYLJ.s 			page 82
+
+
+ 4135              	.LASF18:
+ 4136 0012 424F4F4C 		.ascii	"BOOL\000"
+ 4136      00
+ 4137              	.LASF39:
+ 4138 0017 61646472 		.ascii	"addr1\000"
+ 4138      3100
+ 4139              	.LASF40:
+ 4140 001d 61646472 		.ascii	"addr2\000"
+ 4140      3200
+ 4141              	.LASF41:
+ 4142 0023 61646472 		.ascii	"addr3\000"
+ 4142      3300
+ 4143              	.LASF63:
+ 4144 0029 666C6173 		.ascii	"flash.c\000"
+ 4144      682E6300 
+ 4145              	.LASF44:
+ 4146 0031 73656374 		.ascii	"sectorErase\000"
+ 4146      6F724572 
+ 4146      61736500 
+ 4147              	.LASF2:
+ 4148 003d 73686F72 		.ascii	"short int\000"
+ 4148      7420696E 
+ 4148      7400
+ 4149              	.LASF17:
+ 4150 0047 73697A65 		.ascii	"sizetype\000"
+ 4150      74797065 
+ 4150      00
+ 4151              	.LASF59:
+ 4152 0050 5350494D 		.ascii	"SPIM_1_ClearRxBuffer\000"
+ 4152      5F315F43 
+ 4152      6C656172 
+ 4152      52784275 
+ 4152      66666572 
+ 4153              	.LASF57:
+ 4154 0065 5350494D 		.ascii	"SPIM_1_ReadTxStatus\000"
+ 4154      5F315F52 
+ 4154      65616454 
+ 4154      78537461 
+ 4154      74757300 
+ 4155              	.LASF37:
+ 4156 0079 62756666 		.ascii	"buff\000"
+ 4156      00
+ 4157              	.LASF53:
+ 4158 007e 72656164 		.ascii	"readJEDECId\000"
+ 4158      4A454445 
+ 4158      43496400 
+ 4159              	.LASF58:
+ 4160 008a 63735F57 		.ascii	"cs_Write\000"
+ 4160      72697465 
+ 4160      00
+ 4161              	.LASF46:
+ 4162 0093 63686970 		.ascii	"chipErase\000"
+ 4162      45726173 
+ 4162      6500
+ 4163              	.LASF11:
+ 4164 009d 75696E74 		.ascii	"uint8\000"
+ 4164      3800
+ARM GAS  C:\Users\linar\AppData\Local\Temp\ccpLyYLJ.s 			page 83
+
+
+ 4165              	.LASF30:
+ 4166 00a3 70726F74 		.ascii	"protected\000"
+ 4166      65637465 
+ 4166      6400
+ 4167              	.LASF61:
+ 4168 00ad 5350494D 		.ascii	"SPIM_1_GetRxBufferSize\000"
+ 4168      5F315F47 
+ 4168      65745278 
+ 4168      42756666 
+ 4168      65725369 
+ 4169              	.LASF13:
+ 4170 00c4 666C6F61 		.ascii	"float\000"
+ 4170      7400
+ 4171              	.LASF36:
+ 4172 00ca 72656164 		.ascii	"readData\000"
+ 4172      44617461 
+ 4172      00
+ 4173              	.LASF6:
+ 4174 00d3 6C6F6E67 		.ascii	"long long int\000"
+ 4174      206C6F6E 
+ 4174      6720696E 
+ 4174      7400
+ 4175              	.LASF4:
+ 4176 00e1 6C6F6E67 		.ascii	"long int\000"
+ 4176      20696E74 
+ 4176      00
+ 4177              	.LASF49:
+ 4178 00ea 72656C65 		.ascii	"releaseDeepPowerDownDevID\000"
+ 4178      61736544 
+ 4178      65657050 
+ 4178      6F776572 
+ 4178      446F776E 
+ 4179              	.LASF31:
+ 4180 0104 61646472 		.ascii	"address\000"
+ 4180      65737300 
+ 4181              	.LASF26:
+ 4182 010c 5F73656E 		.ascii	"_sendCmd\000"
+ 4182      64436D64 
+ 4182      00
+ 4183              	.LASF24:
+ 4184 0115 5F777269 		.ascii	"_writeEnable\000"
+ 4184      7465456E 
+ 4184      61626C65 
+ 4184      00
+ 4185              	.LASF19:
+ 4186 0122 4552524F 		.ascii	"ERROR\000"
+ 4186      5200
+ 4187              	.LASF56:
+ 4188 0128 5350494D 		.ascii	"SPIM_1_WriteTxData\000"
+ 4188      5F315F57 
+ 4188      72697465 
+ 4188      54784461 
+ 4188      746100
+ 4189              	.LASF16:
+ 4190 013b 6C6F6E67 		.ascii	"long double\000"
+ 4190      20646F75 
+ 4190      626C6500 
+ARM GAS  C:\Users\linar\AppData\Local\Temp\ccpLyYLJ.s 			page 84
+
+
+ 4191              	.LASF48:
+ 4192 0147 72656C65 		.ascii	"releaseDeepPowerDown\000"
+ 4192      61736544 
+ 4192      65657050 
+ 4192      6F776572 
+ 4192      446F776E 
+ 4193              	.LASF1:
+ 4194 015c 756E7369 		.ascii	"unsigned char\000"
+ 4194      676E6564 
+ 4194      20636861 
+ 4194      7200
+ 4195              	.LASF22:
+ 4196 016a 50524F54 		.ascii	"PROTECTED\000"
+ 4196      45435445 
+ 4196      4400
+ 4197              	.LASF50:
+ 4198 0174 64657649 		.ascii	"devId\000"
+ 4198      6400
+ 4199              	.LASF0:
+ 4200 017a 7369676E 		.ascii	"signed char\000"
+ 4200      65642063 
+ 4200      68617200 
+ 4201              	.LASF55:
+ 4202 0186 63617061 		.ascii	"capacity\000"
+ 4202      63697479 
+ 4202      00
+ 4203              	.LASF7:
+ 4204 018f 6C6F6E67 		.ascii	"long long unsigned int\000"
+ 4204      206C6F6E 
+ 4204      6720756E 
+ 4204      7369676E 
+ 4204      65642069 
+ 4205              	.LASF54:
+ 4206 01a6 74797065 		.ascii	"type\000"
+ 4206      00
+ 4207              	.LASF8:
+ 4208 01ab 756E7369 		.ascii	"unsigned int\000"
+ 4208      676E6564 
+ 4208      20696E74 
+ 4208      00
+ 4209              	.LASF5:
+ 4210 01b8 6C6F6E67 		.ascii	"long unsigned int\000"
+ 4210      20756E73 
+ 4210      69676E65 
+ 4210      6420696E 
+ 4210      7400
+ 4211              	.LASF27:
+ 4212 01ca 5F726561 		.ascii	"_readStatusReg\000"
+ 4212      64537461 
+ 4212      74757352 
+ 4212      656700
+ 4213              	.LASF34:
+ 4214 01d9 636F6465 		.ascii	"code\000"
+ 4214      00
+ 4215              	.LASF64:
+ 4216 01de 433A5C55 		.ascii	"C:\\Users\\linar\\OneDrive\\Documents\\PSoC Creator"
+ 4216      73657273 
+ARM GAS  C:\Users\linar\AppData\Local\Temp\ccpLyYLJ.s 			page 85
+
+
+ 4216      5C6C696E 
+ 4216      61725C4F 
+ 4216      6E654472 
+ 4217 020c 5C70736F 		.ascii	"\\psocRandomWorkspace\\usb-fatfs-flash-usbfs.cydsn\000"
+ 4217      6352616E 
+ 4217      646F6D57 
+ 4217      6F726B73 
+ 4217      70616365 
+ 4218              	.LASF29:
+ 4219 023d 5F636865 		.ascii	"_checkIfProtectedBitsSet\000"
+ 4219      636B4966 
+ 4219      50726F74 
+ 4219      65637465 
+ 4219      64426974 
+ 4220              	.LASF21:
+ 4221 0256 42555359 		.ascii	"BUSY\000"
+ 4221      00
+ 4222              	.LASF35:
+ 4223 025b 73746174 		.ascii	"status\000"
+ 4223      757300
+ 4224              	.LASF25:
+ 4225 0262 5F777269 		.ascii	"_writeDisable\000"
+ 4225      74654469 
+ 4225      7361626C 
+ 4225      6500
+ 4226              	.LASF33:
+ 4227 0270 77726974 		.ascii	"writeStatusReg\000"
+ 4227      65537461 
+ 4227      74757352 
+ 4227      656700
+ 4228              	.LASF15:
+ 4229 027f 63686172 		.ascii	"char\000"
+ 4229      00
+ 4230              	.LASF10:
+ 4231 0284 696E7433 		.ascii	"int32_t\000"
+ 4231      325F7400 
+ 4232              	.LASF3:
+ 4233 028c 73686F72 		.ascii	"short unsigned int\000"
+ 4233      7420756E 
+ 4233      7369676E 
+ 4233      65642069 
+ 4233      6E7400
+ 4234              	.LASF60:
+ 4235 029f 5350494D 		.ascii	"SPIM_1_ReadRxData\000"
+ 4235      5F315F52 
+ 4235      65616452 
+ 4235      78446174 
+ 4235      6100
+ 4236              	.LASF51:
+ 4237 02b1 72656164 		.ascii	"readMnfctDevId\000"
+ 4237      4D6E6663 
+ 4237      74446576 
+ 4237      496400
+ 4238              	.LASF45:
+ 4239 02c0 626C6F63 		.ascii	"blockErase\000"
+ 4239      6B457261 
+ 4239      736500
+ARM GAS  C:\Users\linar\AppData\Local\Temp\ccpLyYLJ.s 			page 86
+
+
+ 4240              	.LASF12:
+ 4241 02cb 75696E74 		.ascii	"uint32\000"
+ 4241      333200
+ 4242              	.LASF20:
+ 4243 02d2 494E5641 		.ascii	"INVALID_INPUT\000"
+ 4243      4C49445F 
+ 4243      494E5055 
+ 4243      5400
+ 4244              	.LASF14:
+ 4245 02e0 646F7562 		.ascii	"double\000"
+ 4245      6C6500
+ 4246              	.LASF38:
+ 4247 02e7 73697A65 		.ascii	"size\000"
+ 4247      00
+ 4248              	.LASF23:
+ 4249 02ec 636D6453 		.ascii	"cmdStatusTypedef\000"
+ 4249      74617475 
+ 4249      73547970 
+ 4249      65646566 
+ 4249      00
+ 4250              	.LASF42:
+ 4251 02fd 73656E64 		.ascii	"sendbuff\000"
+ 4251      62756666 
+ 4251      00
+ 4252              	.LASF9:
+ 4253 0306 5F5F696E 		.ascii	"__int32_t\000"
+ 4253      7433325F 
+ 4253      7400
+ 4254              	.LASF52:
+ 4255 0310 6D6E6663 		.ascii	"mnfct\000"
+ 4255      7400
+ 4256              	.LASF47:
+ 4257 0316 64656570 		.ascii	"deepPowerDown\000"
+ 4257      506F7765 
+ 4257      72446F77 
+ 4257      6E00
+ 4258              	.LASF65:
+ 4259 0324 49544D5F 		.ascii	"ITM_RxBuffer\000"
+ 4259      52784275 
+ 4259      66666572 
+ 4259      00
+ 4260              	.LASF62:
+ 4261 0331 474E5520 		.ascii	"GNU C11 5.4.1 20160609 (release) [ARM/embedded-5-br"
+ 4261      43313120 
+ 4261      352E342E 
+ 4261      31203230 
+ 4261      31363036 
+ 4262 0364 616E6368 		.ascii	"anch revision 237715] -mcpu=cortex-m3 -mthumb -g -O"
+ 4262      20726576 
+ 4262      6973696F 
+ 4262      6E203233 
+ 4262      37373135 
+ 4263 0397 67202D66 		.ascii	"g -ffunction-sections -ffat-lto-objects\000"
+ 4263      66756E63 
+ 4263      74696F6E 
+ 4263      2D736563 
+ 4263      74696F6E 
+ARM GAS  C:\Users\linar\AppData\Local\Temp\ccpLyYLJ.s 			page 87
+
+
+ 4264              	.LASF43:
+ 4265 03bf 70616765 		.ascii	"pageProgram\000"
+ 4265      50726F67 
+ 4265      72616D00 
+ 4266              	.LASF28:
+ 4267 03cb 5F636865 		.ascii	"_checkWIP\000"
+ 4267      636B5749 
+ 4267      5000
+ 4268              		.ident	"GCC: (GNU Tools for ARM Embedded Processors) 5.4.1 20160609 (release) [ARM/embedded-5-bran
